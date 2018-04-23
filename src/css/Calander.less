@@ -1,0 +1,49 @@
+.ck-calendar {
+  box-shadow: 0 .1rem 1rem rgba(0,0,0,.1)!important;
+  color: #555555;
+  display: inline-block;
+  table {
+    max-width: 100%;
+    background-color: transparent;
+    empty-cells: show;
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+
+  th,td {
+    width: 34px;
+    height: 34px;
+    text-align: center;
+    display: table-cell;
+    vertical-align: inherit;
+  }
+
+  .top-header {
+    background-color: #17a2b8!important;
+    color: white;
+    height: 40px;
+    .th-btn {
+      cursor: pointer;
+    }
+    .th-btn:hover {
+      color: #555;
+      background-color: #FFFFFF;
+    }
+    .th-btn:active {
+      background-color: #F0F0F0;
+    }
+  }
+
+  .header {
+    color: #0c80ba;
+    border-top: 1px solid #F0F0F0;
+  }
+
+  .day {
+    cursor: pointer;
+  }
+
+  .day:hover {
+    background-color: #F0F0F0;
+  }
+}

@@ -129,7 +129,7 @@ class Main extends React.Component {
                     <Pagination count={1000} current={1} number={30} showPage={10}/>
                 </Card>
                 <Card header='Dropdown'>
-                    <Calendar/>
+                    <Calendar value='2018-9-10' lang='en' shadow/>
                 </Card>
             </Container>
         );

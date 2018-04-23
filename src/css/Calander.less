@@ -1,5 +1,4 @@
 .ck-calendar {
-  box-shadow: 0 .1rem 1rem rgba(0,0,0,.1)!important;
   color: #555555;
   display: inline-block;
   table {
@@ -27,7 +26,7 @@
     }
     .th-btn:hover {
       color: #555;
-      background-color: #FFFFFF;
+      background-color: #FEFEFE;
     }
     .th-btn:active {
       background-color: #F0F0F0;
@@ -46,4 +45,21 @@
   .day:hover {
     background-color: #F0F0F0;
   }
+
+  .active {
+    background-color: #17a2b8;
+    color: white;
+    cursor: pointer;
+  }
+  .active:hover {
+    background-color: #17a2b8;
+  }
+
+  .disable {
+    color: #dddddd!important;
+  }
+}
+
+.ck-shadow {
+  box-shadow: 0 .1rem 1rem rgba(0,0,0,.1)!important;
 }

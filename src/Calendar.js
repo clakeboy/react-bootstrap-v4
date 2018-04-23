@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
-import './css/Calander.less';
+import './css/Calender.less';
 import Icon from './Icon';
 
 let i18n = {
@@ -139,7 +139,7 @@ class Calendar extends React.PureComponent {
     }
 
     getClasses() {
-        let base = 'ck-calendar border p-1';
+        let base = 'ck-calendar ck-calendar-up border p-1';
         //display none
         if (this.props.none) {
             base = classNames(base, 'none');
@@ -161,8 +161,8 @@ class Calendar extends React.PureComponent {
                         <th className='th-btn' onClick={e => this.privMonth()}><Icon icon='arrow-left'/></th>
                         <th colSpan={5}>
                             <div className='row no-gutters'>
-                                <div className='col-6 text-center th-btn'>{this.show_date.getFullYear()}</div>
-                                <div className='col-6 text-center th-btn'>{lang['month'][this.show_date.getMonth()]}</div>
+                                <div className='col-6 text-center th-btn th-div'>{this.show_date.getFullYear()}</div>
+                                <div className='col-6 text-center th-btn th-div'>{lang['month'][this.show_date.getMonth()]}</div>
                             </div>
                         </th>
                         <th className='th-btn' onClick={e => this.nextMonth()}><Icon icon='arrow-right'/></th>

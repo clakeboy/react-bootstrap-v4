@@ -130,6 +130,7 @@ class Main extends React.Component {
                 </Card>
                 <Card header='Dropdown'>
                     <Calendar value='2018-9-10' lang='en' shadow/>
+                    <Calendar shadow/>
                 </Card>
             </Container>
         );

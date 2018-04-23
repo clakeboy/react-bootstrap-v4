@@ -1,6 +1,9 @@
 .ck-calendar {
+  position: relative;
   color: #555555;
   display: inline-block;
+  z-index: 1001;
+
   table {
     max-width: 100%;
     background-color: transparent;
@@ -24,12 +27,14 @@
     .th-btn {
       cursor: pointer;
     }
+    .th-div {
+      height:100%;
+    }
     .th-btn:hover {
-      color: #555;
-      background-color: #FEFEFE;
+      background-color: #1d86a2;
     }
     .th-btn:active {
-      background-color: #F0F0F0;
+      background-color: #2198b8;
     }
   }
 
@@ -58,7 +63,33 @@
   .disable {
     color: #dddddd!important;
   }
+
+  &:before,&:after {
+    position:absolute;
+    display:block;
+    content:'';
+    border: solid transparent;
+  }
 }
+
+.ck-calendar-up:before{
+  border-width: 10px;
+  border-bottom-color: #dee2e6;
+  /* 定位 */
+
+  left:8px;
+  top:-20px;
+}
+
+.ck-calendar-up:after{
+  border-width: 8px;
+  border-bottom-color: #ffffff;
+
+  /* 定位 */
+  left:10px;
+  top:-16px;
+}
+
 
 .ck-shadow {
   box-shadow: 0 .1rem 1rem rgba(0,0,0,.1)!important;

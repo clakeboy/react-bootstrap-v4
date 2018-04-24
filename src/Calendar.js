@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{ReactFragment}from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import './css/Calender.less';
@@ -65,6 +65,7 @@ class Calendar extends React.PureComponent {
 
         this.state = {
             days: this.fillDateList(),
+            month: false,
         };
     }
 
@@ -114,16 +115,18 @@ class Calendar extends React.PureComponent {
     };
 
     privMonth() {
-        this.show_date.setMonth(this.show_date.getMonth() - 1);
-        this.setState({
-            days: this.fillDateList()
-        });
+        this.setMonth(this.show_date.getMonth() - 1)
     }
 
     nextMonth() {
-        this.show_date.setMonth(this.show_date.getMonth() + 1);
+        this.setMonth(this.show_date.getMonth() + 1)
+    }
+
+    setMonth(month) {
+        this.show_date.setMonth(month);
         this.setState({
-            days: this.fillDateList()
+            days: this.fillDateList(),
+            month: false,
         });
     }
 
@@ -139,7 +142,7 @@ class Calendar extends React.PureComponent {
     }
 
     getClasses() {
-        let base = 'ck-calendar ck-calendar-up border p-1';
+        let base = 'ck-calendar ck-calendar-bottom border p-1';
         //display none
         if (this.props.none) {
             base = classNames(base, 'none');
@@ -149,6 +152,53 @@ class Calendar extends React.PureComponent {
             base = classNames(base, 'ck-shadow');
         }
         return classNames(base, this.props.className);
+    }
+
+    renderMonth() {
+        let lang = i18n[this.props.lang];
+        return (
+            <tr>
+                <td colSpan={7}>
+                    <div className='ck-calendar-list'>
+                        {lang.month.map((item,i)=>{
+                            let class_name = 'item';
+                            if (this.show_date.getMonth() === i) {
+                                class_name = 'item active';
+                            }
+                            return  <span className={class_name} onClick={c=>{
+                                this.setMonth(i)
+                            }}>{item}</span>
+                        })}
+                    </div>
+                </td>
+            </tr>
+        )
+    }
+
+    renderDays() {
+        return (
+            <React.Fragment>
+            {this.state.days.map((row) => {
+                return <tr>
+                    {row.map((item) => {
+                        if (item.disabled) {
+                            return <td className='disable'>{item.value}</td>
+                        }
+                        let class_name = 'day';
+                        if (item.value === this.current_date.getDate() &&
+                            this.current_date.getFullYear() === this.show_date.getFullYear() &&
+                            this.current_date.getMonth() === this.show_date.getMonth()) {
+                            class_name = classNames(class_name, 'active');
+                        }
+
+                        return <td className={class_name} onClick={e => {
+                            this.choseDay(this.show_date.getFullYear(), this.show_date.getMonth(), item.value);
+                        }}>{item.value}</td>
+                    })}
+                </tr>
+            })}
+            </React.Fragment>
+        )
     }
 
     render() {
@@ -162,41 +212,25 @@ class Calendar extends React.PureComponent {
                         <th colSpan={5}>
                             <div className='row no-gutters'>
                                 <div className='col-6 text-center th-btn th-div'>{this.show_date.getFullYear()}</div>
-                                <div className='col-6 text-center th-btn th-div'>{lang['month'][this.show_date.getMonth()]}</div>
+                                <div className='col-6 text-center th-btn th-div' onClick={e=>{
+                                    this.setState({
+                                        month:true,
+                                    });
+                                }}>
+                                    {lang['month'][this.show_date.getMonth()]}
+                                </div>
                             </div>
                         </th>
                         <th className='th-btn' onClick={e => this.nextMonth()}><Icon icon='arrow-right'/></th>
                     </tr>
                     <tr className='header'>
-                        <th>{lang['week'][0]}</th>
-                        <th>{lang['week'][1]}</th>
-                        <th>{lang['week'][2]}</th>
-                        <th>{lang['week'][3]}</th>
-                        <th>{lang['week'][4]}</th>
-                        <th>{lang['week'][5]}</th>
-                        <th>{lang['week'][6]}</th>
+                        {lang.week.map((item)=>{
+                            return <th>{item}</th>
+                        })}
                     </tr>
                     </thead>
                     <tbody>
-                    {this.state.days.map((row) => {
-                        return <tr>
-                            {row.map((item) => {
-                                if (item.disabled) {
-                                    return <td className='disable'>{item.value}</td>
-                                }
-                                let class_name = 'day';
-                                if (item.value === this.current_date.getDate() &&
-                                    this.current_date.getFullYear() === this.show_date.getFullYear() &&
-                                    this.current_date.getMonth() === this.show_date.getMonth()) {
-                                    class_name = classNames(class_name, 'active');
-                                }
-
-                                return <td className={class_name} onClick={e => {
-                                    this.choseDay(this.show_date.getFullYear(), this.show_date.getMonth(), item.value);
-                                }}>{item.value}</td>
-                            })}
-                        </tr>
-                    })}
+                    {this.state.month?this.renderMonth():this.renderDays()}
                     </tbody>
                 </table>
             </div>

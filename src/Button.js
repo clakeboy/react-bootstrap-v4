@@ -1,6 +1,4 @@
-import React,{
-    ReactFragment
-} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import Icon from './Icon';

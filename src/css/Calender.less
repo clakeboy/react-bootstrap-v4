@@ -90,7 +90,87 @@
   top:-16px;
 }
 
+.ck-calendar-left:before{
+  border-width: 10px;
+  border-right-color: #dee2e6;
+  /* 定位 */
+
+  left:-20px;
+  top:8px;
+}
+
+.ck-calendar-left:after{
+  border-width: 8px;
+  border-right-color: #ffffff;
+
+  /* 定位 */
+  left:-16px;
+  top:10px;
+}
+
+.ck-calendar-right:before{
+  border-width: 10px;
+  border-left-color: #dee2e6;
+  /* 定位 */
+
+  right:-20px;
+  top:8px;
+}
+
+.ck-calendar-right:after{
+  border-width: 8px;
+  border-left-color: #ffffff;
+
+  /* 定位 */
+  right:-16px;
+  top:10px;
+}
+
+.ck-calendar-bottom:before{
+  border-width: 10px;
+  border-top-color: #dee2e6;
+  /* 定位 */
+
+  bottom:-20px;
+  left:8px;
+}
+
+.ck-calendar-bottom:after{
+  border-width: 8px;
+  border-top-color: #ffffff;
+
+  /* 定位 */
+  bottom:-16px;
+  left:10px;
+}
 
 .ck-shadow {
   box-shadow: 0 .1rem 1rem rgba(0,0,0,.1)!important;
+}
+
+.ck-calendar-list {
+  background-color: white;
+  border: 1px solid #dee2e6;
+  padding: 0.3rem;
+  text-align: center;
+  .item {
+    display: inline-block;
+    width: 33%;
+    cursor: pointer;
+    padding: 5px 0;
+    &:hover {
+      background-color: #F0F0F0;
+    }
+    &:active {
+      background-color: #dedede;
+    }
+
+    .active {
+      background-color: #17a2b8;
+      color: white;
+    }
+    .active:hover {
+      background-color: #17a2b8!important;
+    }
+  }
 }

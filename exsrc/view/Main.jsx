@@ -83,6 +83,10 @@ class Main extends React.Component {
                         <Select className='col-6' label='City Object' data={this.dataList} defaultValue='3'/>
                         <Select className='col-6' label='City Text' data={this.dataArrList} defaultValue='Dropdown Text2' summary='下载文本'/>
                     </div>
+                    <div className='form-row'>
+                        <Input className='col-6' label='Calendar' data='Lee' type='date'/>
+                        <Input className='col-6' label='Calendar' data='Lee' type='number'/>
+                    </div>
                 </Card>
 
                 <Input label='Email' placeholder='Please enter your email address' size='sm'/>
@@ -128,7 +132,7 @@ class Main extends React.Component {
                     </Table>
                     <Pagination count={1000} current={1} number={30} showPage={10}/>
                 </Card>
-                <Card header='Dropdown'>
+                <Card header='Calendar'>
                     <Calendar value='2018-9-10' lang='en' shadow/>
                     <Calendar shadow/>
                 </Card>

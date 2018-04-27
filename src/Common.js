@@ -93,7 +93,7 @@ export var LoadScript = {
  * @returns {{}}
  * @constructor
  */
-export var GetElementXY = (e) => {
+export var GetDomXY = (e) => {
     let parent = arguments[1]?arguments[1]:undefined;
     let t = {};
     t['top'] = e.offsetTop;
@@ -179,6 +179,7 @@ export var map = (obj,func) => {
 
 export default {
     extend:extend,
+    GetDomXY:GetDomXY,
     InArray:InArray,
     GetDPI:GetDPI,
     LoadScript:LoadScript,

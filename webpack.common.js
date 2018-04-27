@@ -23,7 +23,7 @@ export default {
     },
     //插件项
     plugins: [
-        new webpack.optimize.CommonsChunkPlugin('common'),
+        // new webpack.optimize.CommonsChunkPlugin('common'),
         // new ExtractTextPlugin("[name].css"),
         new webpack.optimize.UglifyJsPlugin({
             compress: {

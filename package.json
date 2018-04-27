@@ -1,8 +1,8 @@
 {
-  "name": "react-bootstrap-v4",
-  "version": "1.0.0",
+  "name": "@clake/react-bootstrap4",
+  "version": "0.0.1",
   "description": "react bootstrap v4",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "test",
     "clean": "gulp clean",
@@ -10,7 +10,8 @@
     "start-win": "set NODE_ENV=development&gulp",
     "build": "NODE_ENV=production gulp build",
     "build-win": "set NODE_ENV=production&gulp build",
-    "build-gulp": "set NODE_ENV=production&gulp build:pack"
+    "build-gulp": "set NODE_ENV=production&gulp build:pack",
+    "pack": "gulp publish"
   },
   "repository": {
     "type": "git",

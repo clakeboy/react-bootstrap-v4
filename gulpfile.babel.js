@@ -12,16 +12,18 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 // import webpackConfigDev from './webpack.dev.config';
 import gutil from 'gulp-util';
 import pkg from './package.json';
+import babel from 'gulp-babel';
 
 import historyApiFallback from 'connect-history-api-fallback';
+import header from 'gulp-header';
 
 const $ = gulpLoadPlugins();
 
-const banner = `/** ${pkg.title} v${pkg.version} | by Clake
-  * (c) ${$.util.date(Date.now(), 'UTC:yyyy')} Clake,
-  * ${$.util.date(Date.now(), 'isoDateTime')}
-  */
-  `;
+const banner = `/* ${pkg.name} v${pkg.version} | by Clake
+ * Copyright (c) ${$.util.date(Date.now(), 'UTC:yyyy')} Clake,
+ * ${$.util.date(Date.now(), 'isoDateTime')}
+ */
+`;
 
 const paths = {
     jsEntry: 'src/app.jsx',
@@ -62,16 +64,33 @@ gulp.task('server', () => {
     });
 });
 
-gulp.task('clean', () => {
+gulp.task('clean:publish', () => {
     return del([
-        'dist/*',
-        '!dist/vendor',
-        '!dist/index.html',
-        '!dist/manage.html',
-        '!dist/static',
-        '!dist/favicon.ico'
+        'lib/*'
     ]);
 });
+
+gulp.task('clean:build', () => {
+    return del([
+        'dist/*'
+    ]);
+});
+
+gulp.task('publish:pack',(callback)=>{
+    return gulp.src('src/**/*.js')
+        .pipe(babel())
+        .pipe(header(banner))
+        .pipe(gulp.dest('lib'));
+});
+
+gulp.task('publish:css',()=>{
+    return gulp.src('src/css/*.less')
+        .pipe(gulp.dest('lib/css'));
+});
+
+// gulp.task('publish:header',()=>{
+//     return gulp.src('lib/**/*.js').pipe(header(banner));
+// });
 
 gulp.task('build:pack', (callback)=>{
     let webpackConfig = require('./webpack.common').default;
@@ -94,11 +113,12 @@ gulp.task('build:pack', (callback)=>{
         gutil.log("[webpack]", stats.toString({
             colors:true
         }));
-        gulp.src('dist/*.js').pipe(replaceVersion()).pipe(addBanner());
+        gulp.src('dist/*.js').pipe(addBanner());
         callback();
     });
 });
 
 gulp.task('default', ['server']);
 
-gulp.task('build',['clean','build:pack']);
+gulp.task('build',['clean:build','build:pack']);
+gulp.task('publish',['clean:publish','publish:css','publish:pack']);

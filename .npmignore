@@ -6,12 +6,16 @@ node_modules
 #/scripts
 
 *.log*
-
+examples/
+exsrc/
+src/
+dist/
 .editorconfig
 .eslintignore
 .eslintrc
 .gitignore
 .npmignore
+.babelrc
 .travis.yml
 gulpfile.babel.js
 webpack.common.js

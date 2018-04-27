@@ -38,7 +38,6 @@
     "babel-preset-stage-0": "^6.24.1",
     "babel-register": "^6.26.0",
     "browser-sync": "^2.18.13",
-    "classnames": "^2.2.5",
     "connect-history-api-fallback": "^1.5.0",
     "css-loader": "^0.28.7",
     "del": "^3.0.0",
@@ -67,6 +66,7 @@
     "webpack-require-http": "^0.4.3"
   },
   "dependencies": {
-    "jquery": "^3.3.1"
+    "jquery": "^3.3.1",
+    "classnames": "^2.2.5"
   }
 }

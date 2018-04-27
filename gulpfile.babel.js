@@ -13,7 +13,7 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 import gutil from 'gulp-util';
 import pkg from './package.json';
 import babel from 'gulp-babel';
-
+import sourcemaps from 'gulp-sourcemaps';
 import historyApiFallback from 'connect-history-api-fallback';
 import header from 'gulp-header';
 
@@ -64,21 +64,25 @@ gulp.task('server', () => {
     });
 });
 
-gulp.task('clean:publish', () => {
-    return del([
+gulp.task('clean:publish', (callback) => {
+    del([
         'lib/*'
     ]);
+    callback();
 });
 
-gulp.task('clean:build', () => {
-    return del([
+gulp.task('clean:build', (callback) => {
+    del([
         'dist/*'
     ]);
+    callback();
 });
 
 gulp.task('publish:pack',(callback)=>{
     return gulp.src('src/**/*.js')
-        .pipe(babel())
+        .pipe(sourcemaps.init())
+        .pipe(babel({presets: ['env','es2015', 'stage-0', 'react']}))
+        .pipe(sourcemaps.write('.'))
         .pipe(header(banner))
         .pipe(gulp.dest('lib'));
 });

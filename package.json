@@ -2,7 +2,7 @@
   "name": "@clake/react-bootstrap4",
   "version": "0.0.2",
   "description": "react bootstrap v4",
-  "main": "dist/index.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "test",
     "clean": "gulp clean",

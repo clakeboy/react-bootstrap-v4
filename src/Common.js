@@ -177,6 +177,28 @@ export var map = (obj,func) => {
     }
 };
 
+export var str_pad = (text, length, padstring) => {
+    let type = arguments[3] || "left";
+    text += '';
+    padstring += '';
+    let padtext = null;
+    if(text.length < length) {
+        padtext = padstring;
+
+        while(padtext.length < (length - text.length)) {
+            padtext += padstring;
+        }
+        if (type === "left") {
+            text = padtext.substr(0, (length - text.length)) + text;
+        } else if (type === "right") {
+            text = text + padtext.substr(0, (length - text.length));
+        }
+
+    }
+    padtext = null;
+    return text;
+}
+
 export default {
     extend:extend,
     GetDomXY:GetDomXY,
@@ -185,4 +207,5 @@ export default {
     LoadScript:LoadScript,
     RandomString:RandomString,
     map:map,
+    strpad:str_pad,
 };

@@ -1,9 +1,11 @@
 import React,{ReactFragment}from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import './css/Calender.less';
 import Icon from './Icon';
-
+import $ from 'jquery';
+import common from './Common';
 let i18n = {
     'cn': {
         'week' : [
@@ -69,6 +71,10 @@ class Calendar extends React.PureComponent {
         };
     }
 
+    componentDidMount() {
+
+    }
+
     componentWillReceiveProps(nextProp) {
         if (this.props.value !== nextProp.value) {
             this.setCurrentDate(nextProp.value);
@@ -81,6 +87,9 @@ class Calendar extends React.PureComponent {
     setCurrentDate(value) {
         if (value) {
             this.current_date = new Date(value);
+            if (this.current_date.toDateString() === "Invalid Date") {
+                this.current_date = new Date();
+            }
         } else {
             this.current_date = new Date();
         }
@@ -137,19 +146,64 @@ class Calendar extends React.PureComponent {
             days: this.fillDateList()
         });
         if (typeof this.props.onSelect === 'function') {
-            this.props.onSelect(year, month, day);
+            this.props.onSelect(this.format());
+        }
+        if (this.props.absolute) {
+            this.hide();
         }
     }
 
+    format() {
+        let keys = {
+            "YYYY":this.show_date.getFullYear().toString(),
+            "MM":common.strpad(this.show_date.getMonth()+1,2,"0"),
+            "DD":common.strpad(this.show_date.getDate(),2,"0"),
+            "yy":this.show_date.getFullYear().toString().substr(2),
+            "mm":(this.show_date.getMonth()+1).toString(),
+            "dd":this.show_date.getDate().toString(),
+            "H":common.strpad(this.show_date.getHours(),2,"0"),
+            "h":this.show_date.getHours().toString(),
+            "I":common.strpad(this.show_date.getMinutes(),2,"0"),
+            "i":this.show_date.getMinutes().toString(),
+            "S":common.strpad(this.show_date.getSeconds(),2,"0"),
+            "s":this.show_date.getSeconds().toString()
+        };
+        let time_str = this.props.format;
+        let regx;
+        for (let s in keys) {
+            regx = new RegExp(s,"g");
+            time_str = time_str.replace(regx, keys[s]);
+            regx = null;
+        }
+        return time_str;
+    }
+
+    hide = (e) => {
+        $(ReactDOM.findDOMNode(this)).hide();
+        $(window).off('mousedown',this.hide);
+    };
+
+    show() {
+        $(ReactDOM.findDOMNode(this)).show();
+        $(window).on('mousedown',this.hide);
+    }
+
     getClasses() {
-        let base = 'ck-calendar ck-calendar-bottom border p-1';
+        let base = 'ck-calendar border p-1';
         //display none
         if (this.props.none) {
-            base = classNames(base, 'none');
+            base = classNames(base, 'ck-calendar-none');
         }
         //shadow
         if (this.props.shadow) {
             base = classNames(base, 'ck-shadow');
+        }
+        //absolute
+        if (this.props.absolute) {
+            base = classNames(base,'ck-calendar-absolute');
+        }
+        if (this.props.triangular) {
+            base = classNames(base,'ck-calendar-'+this.props.triangular)
         }
         return classNames(base, this.props.className);
     }
@@ -204,7 +258,9 @@ class Calendar extends React.PureComponent {
     render() {
         let lang = i18n[this.props.lang];
         return (
-            <div className={this.getClasses()}>
+            <div className={this.getClasses()} onMouseDown={(e)=>{
+                e.stopPropagation();
+            }}>
                 <table>
                     <thead>
                     <tr className='top-header'>
@@ -243,11 +299,15 @@ Calendar.propTypes = {
     shadow  : PropTypes.bool,
     value   : PropTypes.string,
     lang    : PropTypes.string,
+    absolute: PropTypes.bool,
     onSelect: PropTypes.func,
+    triangular: PropTypes.oneOf(['up','left','bottom','right']),
+    format:   PropTypes.string,
 };
 
 Calendar.defaultProps = {
-    lang: 'cn'
+    lang: 'cn',
+    format: 'YYYY-MM-DD',
 };
 
 export default Calendar;

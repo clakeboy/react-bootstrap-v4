@@ -12,3 +12,5 @@ export Checkbox from './Checkbox';
 export Table from './Table';
 export Select from './Select';
 export Calendar from './Calendar';
+export TextArea from './TextArea';
+export Modal from './Modal';

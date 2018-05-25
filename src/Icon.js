@@ -26,7 +26,10 @@ class Icon extends React.Component {
             default:
                 base = 'fas';
         }
-        icon = 'fa-'+this.props.icon;
+        base = classNames(base,'fa-'+this.props.icon);
+        if (this.props.spin) {
+            base = classNames(base,'fa-spin');
+        }
 
         return classNames(base,icon);
     }
@@ -41,6 +44,8 @@ class Icon extends React.Component {
 Icon.propTypes = {
     iconType: PropTypes.oneOf(['solid','regular','light','brands']),
     icon: PropTypes.string,
+    //icon to rotate
+    spin: PropTypes.bool,
 };
 
 Icon.defaultProps = {

@@ -35,8 +35,8 @@ export default class App extends React.Component {
         } else {
             module = this.under2hump(module)
         }
-
-        return arr.join('/') + "/" + module;
+        let ext_path = arr.length > 0 ? '/' : '';
+        return ext_path + arr.join('/') + "/" + module;
     }
 
     render() {

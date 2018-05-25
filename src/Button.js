@@ -65,7 +65,7 @@ class Button extends React.PureComponent {
 }
 
 Button.propTypes = {
-    theme: PropTypes.oneOf(['primary','secondary','success','danger','warning','info','light','dark']),
+    theme: PropTypes.oneOf(['primary','secondary','success','danger','warning','info','light','dark','link']),
     outline: PropTypes.bool,
     size: PropTypes.oneOf(['df','sm','lg']),
     onClick: PropTypes.func,

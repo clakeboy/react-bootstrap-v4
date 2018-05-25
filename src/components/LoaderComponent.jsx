@@ -24,24 +24,19 @@ export default class LoaderComponent extends React.Component {
     }
 
     loadComponent(loadPath) {
-        if (this.props.modal) {
-            GetModalView(loadPath).then(this.setComponent);
-        } else {
-            GetComponent(loadPath).then(this.setComponent);
-        }
+        this.props.import(loadPath).then(component=>{
+            if (typeof component === "string") {
+                console.log(component);
+                this.setState({
+                    noFound:true
+                });
+            } else {
+                this.setState({
+                    instance:component
+                });
+            }
+        });
     }
-
-    setComponent = (component)=>{
-        if (typeof component === "string") {
-            this.setState({
-                noFound:true
-            });
-        } else {
-            this.setState({
-                instance:component
-            });
-        }
-    };
 
     render() {
         if (this.state.instance) {
@@ -63,29 +58,18 @@ export default class LoaderComponent extends React.Component {
 
 LoaderComponent.propTypes = {
     loadPath: PropTypes.string,
-    modal: PropTypes.bool
+    import: PropTypes.func,
 };
 
 LoaderComponent.defaultProps = {
     loadPath:""
 };
 
-function GetComponent(path) {
-    console.log(path);
-    return import(`../view${path}`).then(component=>{
-        return component.default;
-    }).catch(error=>{
-        console.log(path);
-        return 'An error occurred while loading the component '+error
-    });
-}
-
-function GetModalView(path) {
-    console.log(path);
-    return import(`../modalview${path}`).then(component=>{
-        return component.default;
-    }).catch(error=>{
-        console.log(path);
-        return 'An error occurred while loading the component '+error
-    });
-}
+// function GetComponent(path) {
+//     return import(`../view${path}`).then(component=>{
+//         return component.default;
+//     }).catch(error=>{
+//         console.log(path);
+//         return 'An error occurred while loading the component '+error
+//     });
+// }

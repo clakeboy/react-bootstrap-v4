@@ -5,6 +5,7 @@ import TableHeader from './TableHeader';
 import Checkbox from './Checkbox';
 import Button from './Button';
 import common from "./Common";
+import Icon from './Icon';
 
 class Table extends React.Component {
     constructor(props) {
@@ -142,12 +143,8 @@ class Table extends React.Component {
                         return null;
                     }
                     return (
-                        <th data-key={'head_' + key}>{item.props.text}&nbsp;{item.props.onSort ?
-                            <div className="am-icon-sort"><a href="javascript://" onClick={() => {
-                                item.props.onSort('asc')
-                            }}>&nbsp;</a><a href="javascript://" onClick={() => {
-                                item.props.onSort('desc')
-                            }}>&nbsp;</a></div> : null}
+                        <th data-key={'head_' + key}>
+                            {item.props.onSort? <a href='javascript://'>{item.props.text}{'\u0020'}<Icon icon='sort'/></a>:item.props.text}
                         </th>
                     );
                 })}

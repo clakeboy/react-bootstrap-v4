@@ -1,12 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
-import common from './Common';
-import Calendar from './Calendar';
-import $ from "jquery";
-import ReactDOM from "react-dom";
+import common from "./Common";
 
-class Input extends React.PureComponent {
+class TextArea extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {
@@ -19,19 +16,8 @@ class Input extends React.PureComponent {
         }
     }
 
-    componentDidMount() {
-        if (this.props.calendar) {
-            $(ReactDOM.findDOMNode(this.input)).on('focus',(e)=>{
-                this.calendar.show();
-            });
-            $(ReactDOM.findDOMNode(this.input)).on('mousedown',(e)=>{
-                e.stopPropagation();
-            });
-        }
-    }
-
     componentWillReceiveProps(nextProp) {
-        this.setState({value:nextProp.data});
+        this.setState({value: nextProp.data});
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -43,7 +29,7 @@ class Input extends React.PureComponent {
     }
 
     setValue(val) {
-        this.setState({value:val});
+        this.setState({value: val});
     }
 
     getMainClasses() {
@@ -53,9 +39,15 @@ class Input extends React.PureComponent {
 
     getMainStyles() {
         //default style
-        let def_style = {
-            "width": this.props.width + "px"
-        };
+        let def_style = {};
+        //width
+        if (this.props.width) {
+            def_style['width'] = this.props.width + 'px';
+        }
+        //height
+        if (this.props.height) {
+            def_style['height'] = this.props.height + 'px';
+        }
 
         return common.extend(def_style, this.props.style)
     }
@@ -65,7 +57,6 @@ class Input extends React.PureComponent {
         //readonly
         if (this.props.plaintext) {
             base = 'form-control-plaintext';
-            this.props.readOnly = true;
         }
         //size
         let size;
@@ -88,11 +79,11 @@ class Input extends React.PureComponent {
      *********************/
     changeHandler = (e) => {
         this.setState({
-            value:e.target.value
+            value: e.target.value
         });
 
         if (this.props.onChange && typeof this.props.onChange === 'function') {
-            this.props.onChange(e.target.value,this);
+            this.props.onChange(e.target.value, this);
         }
     };
 
@@ -119,55 +110,37 @@ class Input extends React.PureComponent {
         )
     }
 
-    renderCalendar() {
-        if (!this.props.calendar) {
-            return null;
-        }
-        return (
-            <Calendar ref={c=>this.calendar=c} onSelect={(val)=>{
-                this.setState({
-                    value:val,
-                });
-                if (this.props.onChange && typeof this.props.onChange === 'function') {
-                    this.props.onChange(val,this);
-                }
-            }} value={this.state.value} none shadow absolute triangular='up'/>
-        )
-    }
-
     render() {
         return (
             <div className={this.getMainClasses()} style={this.getMainStyles()}>
                 {this.renderLabel()}
-                <input ref={c=>this.input=c} type="text" {...this.props} onChange={this.changeHandler} value={this.state.value} className={this.getInputClasses()} id={this.domId}/>
+                <textarea ref={c => this.input = c} {...this.props} onChange={this.changeHandler} value={this.state.value} className={this.getInputClasses()} id={this.domId}/>
                 {this.renderSummary()}
-                {this.renderCalendar()}
             </div>
         );
     }
 }
 
-Input.propTypes = {
+TextArea.propTypes = {
     id         : PropTypes.string,
-    size       : PropTypes.oneOf(['df', 'sm', 'lg']),
     label      : PropTypes.string,
     data       : PropTypes.any,
     summary    : PropTypes.string,
     readOnly   : PropTypes.bool,
     width      : PropTypes.number,
+    height     : PropTypes.number,
     placeholder: PropTypes.string,
-    calendar: PropTypes.bool,
+    calendar   : PropTypes.bool,
     onChange   : PropTypes.func,
-    plaintext: PropTypes.bool,
+    plaintext  : PropTypes.bool,
+    row        : PropTypes.number,
 };
 
-Input.defaultProps = {
-    id      : '',
-    size    : 'df',
+TextArea.defaultProps = {
     label   : '',
     data    : null,
     summary : '',
     readOnly: false,
 };
 
-export default Input;
+export default TextArea;

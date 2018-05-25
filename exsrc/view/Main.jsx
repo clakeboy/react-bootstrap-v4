@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
     Container,
     Input,
@@ -12,6 +13,7 @@ import {
     Dropdown,
     Select,
     Calendar,
+    TextArea,
 } from '../../src/index';
 
 class Main extends React.Component {
@@ -21,6 +23,7 @@ class Main extends React.Component {
         this.state = {
             testChecked: false,
             pageData:{},
+            chose_date:'2018-8-3',
         };
 
         this.dataList = [
@@ -49,7 +52,7 @@ class Main extends React.Component {
     }
 
     componentDidMount() {
-
+        console.log(this.props.history)
     }
 
     changeHandler(name){
@@ -66,17 +69,23 @@ class Main extends React.Component {
         return (
             <Container>
                 <h1>React Bootstrap v4 Demo</h1>
+                <Button onClick={e=>{
+                    this.props.history.push('/skill/jump',this.state);
+                }}>转到内联</Button>
+                <Button onClick={e=>{
+                    this.props.history.push('/coupon',this.state);
+                }}>转到输入</Button>
                 <Container className='p-0 mb-1' inline fluid>
                     <Input className='mr-1' disabled placeholder='用户名' onChange={this.changeHandler('user_name')} data={this.state.pageData.user_name}/>
                     <Input className='mr-1' placeholder='密码' type='password'/>
-                    <InputGroup className='mr-1' ref={c=>this.ing=c} width={200} label="测试" df="11111"/>
+                    <InputGroup className='mr-1' ref={c=>this.ing=c} width={200} label="测试" data="11111"/>
                     <Dropdown className='mr-1' text='JSON数组' data={this.dataList}/>
                     <Dropdown className='mr-1' text='普通数组' data={this.dataArrList}/>
                     <Button>搜索</Button>
                 </Container>
                 <Card className='mb-2' header='User Info'>
                     <div className='form-row'>
-                        <Input className='col-6' label='Name' readOnly data='Clake'/>
+                        <Input className='col-6' label='Name' plaintext data='Clake'/>
                         <Input className='col-6' label='Last Name' data='Lee'/>
                     </div>
                     <div className='form-row'>
@@ -84,12 +93,11 @@ class Main extends React.Component {
                         <Select className='col-6' label='City Text' data={this.dataArrList} defaultValue='Dropdown Text2' summary='下载文本'/>
                     </div>
                     <div className='form-row'>
-                        <Input className='col-6' label='Calendar' data='Lee' type='date'/>
-                        <Input className='col-6' label='Calendar' data='Lee' type='number'/>
+                        <Input className='col-6' label='Calendar' data='1518427253' calendar readOnly/>
+                        <Input className='col-6' label='Calendar' data='Lee' calendar disabled/>
                     </div>
+                    <TextArea label='Summary' summary='input some' rows={10}/>
                 </Card>
-
-                <Input label='Email' placeholder='Please enter your email address' size='sm'/>
                 <Card className='bg-light mb-3' header='Small size'>
                     <Container className='p-0 mb-1' inline>
                         <InputGroup className='mr-1' ref={c=>this.ing=c} width={200} label="测试" size='sm' placeholder='测试数据填写' df="11111"/>
@@ -117,10 +125,11 @@ class Main extends React.Component {
                             setValue 方式测试
                         </Button>
                     </Container>
+                    <Input label='Email' placeholder='Please enter your email address' size='sm'/>
                 </Card>
                 <Card className='mb-2' header='Table'>
-                    <Table hover={true} select={false} headerTheme='light' data={this.dataTable}>
-                        <Table.Header text='Name' field='name'/>
+                    <Table hover={true} select={true} headerTheme='light' data={this.dataTable}>
+                        <Table.Header text='Name' field='name' onSort={(sort)=>{alert(sort)}}/>
                         <Table.Header text='Age' field='age'/>
                         <Table.Header text='Birthday' field='birthday'/>
                         <Table.Header text='Address' field='address'/>
@@ -133,12 +142,18 @@ class Main extends React.Component {
                     <Pagination count={1000} current={1} number={30} showPage={10}/>
                 </Card>
                 <Card header='Calendar'>
-                    <Calendar value='2018-9-10' lang='en' shadow/>
-                    <Calendar shadow/>
+                    <Calendar value={this.state.chose_date} lang='en' shadow/>
+                    <Calendar value={this.state.chose_date} onSelect={(value)=>{
+                        this.setState({chose_date:value})
+                    }} shadow/>
                 </Card>
             </Container>
         );
     }
 }
+
+Main.contextTypes = {
+    router: PropTypes.object
+};
 
 export default Main;

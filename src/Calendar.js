@@ -86,7 +86,11 @@ class Calendar extends React.PureComponent {
 
     setCurrentDate(value) {
         if (value) {
-            this.current_date = new Date(value);
+            if (/\d{10}/.test(value)) {
+                this.current_date = new Date(value*1000);
+            } else {
+                this.current_date = new Date(value);
+            }
             if (this.current_date.toDateString() === "Invalid Date") {
                 this.current_date = new Date();
             }
@@ -155,6 +159,7 @@ class Calendar extends React.PureComponent {
 
     format() {
         let keys = {
+            "unix":Math.round(this.show_date.valueOf()/1000),
             "YYYY":this.show_date.getFullYear().toString(),
             "MM":common.strpad(this.show_date.getMonth()+1,2,"0"),
             "DD":common.strpad(this.show_date.getDate(),2,"0"),
@@ -166,7 +171,7 @@ class Calendar extends React.PureComponent {
             "I":common.strpad(this.show_date.getMinutes(),2,"0"),
             "i":this.show_date.getMinutes().toString(),
             "S":common.strpad(this.show_date.getSeconds(),2,"0"),
-            "s":this.show_date.getSeconds().toString()
+            "s":this.show_date.getSeconds().toString(),
         };
         let time_str = this.props.format;
         let regx;
@@ -307,7 +312,7 @@ Calendar.propTypes = {
 
 Calendar.defaultProps = {
     lang: 'cn',
-    format: 'YYYY-MM-DD',
+    format: 'YYYY-MM-DD'//unix,
 };
 
 export default Calendar;

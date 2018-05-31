@@ -12,7 +12,7 @@ class Icon extends React.Component {
     }
 
     getClasses() {
-        let base,icon;
+        let base;
         switch(this.props.iconType) {
             case 'regular':
                 base = 'far';
@@ -31,7 +31,7 @@ class Icon extends React.Component {
             base = classNames(base,'fa-spin');
         }
 
-        return classNames(base,icon);
+        return classNames(base,this.props.className);
     }
 
     render() {

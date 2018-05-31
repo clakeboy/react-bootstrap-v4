@@ -143,7 +143,7 @@ class Table extends React.Component {
                         return null;
                     }
                     return (
-                        <th data-key={'head_' + key}>
+                        <th data-key={'head_' + key} align={item.props.align}>
                             {item.props.onSort? <a href='javascript://'>{item.props.text}{'\u0020'}<Icon icon='sort'/></a>:item.props.text}
                         </th>
                     );

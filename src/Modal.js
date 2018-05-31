@@ -256,7 +256,7 @@ Modal.propTypes = {
 };
 
 Modal.defaultProps = {
-    center:true
+
 };
 
 export default Modal;

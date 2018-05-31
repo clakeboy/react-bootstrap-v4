@@ -131,7 +131,7 @@ class Input extends React.PureComponent {
                 if (this.props.onChange && typeof this.props.onChange === 'function') {
                     this.props.onChange(val,this);
                 }
-            }} value={this.state.value} none shadow absolute triangular='up'/>
+            }} value={this.state.value} format={this.props.calendarFormat} none shadow absolute triangular='up'/>
         )
     }
 
@@ -159,6 +159,7 @@ Input.propTypes = {
     calendar: PropTypes.bool,
     onChange   : PropTypes.func,
     plaintext: PropTypes.bool,
+    calendarFormat: PropTypes.string,
 };
 
 Input.defaultProps = {

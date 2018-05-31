@@ -56,9 +56,9 @@ class Main extends React.Component {
     }
 
     changeHandler(name){
-        return (e)=>{
+        return (val)=>{
             let data = this.state.pageData;
-            data[name] = e.target.value;
+            data[name] = val;
             this.setState({
                 data:data
             })
@@ -93,10 +93,10 @@ class Main extends React.Component {
                         <Select className='col-6' label='City Text' data={this.dataArrList} defaultValue='Dropdown Text2' summary='下载文本'/>
                     </div>
                     <div className='form-row'>
-                        <Input className='col-6' label='Calendar' data='1518427253' calendar readOnly/>
-                        <Input className='col-6' label='Calendar' data='Lee' calendar disabled/>
+                        <Input className='col-6' label='Calendar Unix Timestamp' data='1518427253' calendarFormat='unix' calendar readOnly/>
+                        <Input className='col-6' label='Calendar' data={this.state.pageData.chose_date} onChange={this.changeHandler('chose_date')} calendar readOnly/>
                     </div>
-                    <TextArea label='Summary' summary='input some' rows={10}/>
+                    <TextArea label='Summary' summary='input something' data={this.state.pageData.text_area} rows={10}/>
                 </Card>
                 <Card className='bg-light mb-3' header='Small size'>
                     <Container className='p-0 mb-1' inline>
@@ -140,6 +140,17 @@ class Main extends React.Component {
                         }} />
                     </Table>
                     <Pagination count={1000} current={1} number={30} showPage={10}/>
+                    <Table hover={true} select={true} sm data={this.dataTable}>
+                        <Table.Header text='Name' field='name' onSort={(sort)=>{alert(sort)}}/>
+                        <Table.Header text='Age' field='age'/>
+                        <Table.Header text='Birthday' field='birthday'/>
+                        <Table.Header text='Address' field='address'/>
+                        <Table.Header text='Both' field='both'/>
+                        <Table.Header text='Test' field='test'/>
+                        <Table.Header text='Action' onFormat={row=>{
+                            return <Button className='color-blue' size='sm' icon='plus'>Add</Button>
+                        }} />
+                    </Table>
                 </Card>
                 <Card header='Calendar'>
                     <Calendar value={this.state.chose_date} lang='en' shadow/>

@@ -6,6 +6,7 @@ import {
     Input,
     InputGroup,
     Button,
+    ButtonGroup,
     Card,
     CCheckbox,
     Checkbox,
@@ -14,13 +15,59 @@ import {
     Dropdown,
     Select,
     Calendar,
-    Modal
+    Modal,
+    Tree,
+    Title,
 } from '../../src/index';
 import Loader from '../components/LoaderComponent';
 
 class Coupon extends React.PureComponent {
     constructor(props) {
         super(props);
+        this.state = {
+            tree:[
+                {
+                    icon:'',
+                    key:'main',
+                    text:'这是主树',
+                    children:[
+                        {icon:'',key:'',text:'这是三儿子'},
+                        {icon:'',key:'',text:'这是三儿子'},
+                        {icon:'',key:'',text:'这是三儿子'},
+                        {icon:'',key:'',text:'这是三儿子'},
+                        {icon:'',key:'',text:'这是三儿子'}
+                    ]
+                },
+                {
+                    icon:'',
+                    key:'main',
+                    text:'这是主树2',
+                    children:[
+                        {
+                            icon:'',
+                            key:'child',
+                            text:'这是主树2儿子',
+                            children:[
+                                {icon:'',key:'',text:'这是三儿子'}
+                            ]
+                        }
+                    ]
+                },
+                {icon:'',key:'',text:'没有儿子的'},
+                {
+                    icon:'',
+                    key:'main',
+                    text:'这是主树3',
+                    children:[
+                        {
+                            icon:'',
+                            key:'child',
+                            text:'这是主树3儿子',
+                        }
+                    ]
+                }
+            ]
+        };
     }
 
     componentDidMount() {
@@ -30,40 +77,59 @@ class Coupon extends React.PureComponent {
     render() {
         return (
             <Container>
-                <Card header="优惠券添加">
+                <h1>React Bootstrap v4 Demo 2</h1>
+                <Button onClick={()=>{
+                    this.props.history.goBack();
+                }}>返回主页</Button>
+                <Card className='mt-2' header="优惠券添加">
                     <div className='form-row'>
                         <Input className='col-6' label='Name' plaintext data='Clake'/>
                         <Input className='col-6' label='Last Name' data='Lee'/>
                     </div>
                     <div className='form-row'>
-                        <div className='col-3 p-1 text-center'><h5 className=''>middle垂直居中</h5></div>
-                        <Input className='col-9' data='Lee'/>
+                        <div className='col-2 form-group pt-2'><label>middle垂直居中</label></div>
+                        <Input className='col-10' data='Lee'/>
                     </div>
                 </Card>
-                <Card header="模态窗口">
-                    <Button className='mr-4' onClick={e=>this.modal.alert({
+                <Card className='mt-2' header="模态窗口">
+                    <ButtonGroup>
+                    <Button onClick={e=>this.modal.alert({
                         title:'测试',
                         content:'测试一下效果'
                     })}>测试 alert 警告 Modal</Button>
-                    <Button className='mr-4' theme='success' onClick={e=>this.modal.confirm({
+                    <Button theme='success' onClick={e=>this.modal.confirm({
                         content:'确定要按下这个按钮?',
                         callback:(flag)=>{
                             console.log(flag);
                         },
                     })}>测试 confirm 警告 Modal</Button>
-                    <Button className='mr-4' theme='secondary' onClick={e=>{
-                        this.modal.loading('加载中....是的...正在加载...');
-                        setTimeout(()=>{
-                            this.modal.close();
-                        },1000);
-                    }}>测试 confirm 警告 Modal</Button>
+                    <Button theme='secondary' onClick={e=>{
+                        let idx = 3;
+                        let callLoad = ()=>{
+                            if (idx === 0) {
+                                this.modal.close();
+                            } else {
+                                this.modal.loading('加载中....读秒('+idx+')');
+                                idx--;
+                                setTimeout(callLoad,1000);
+                            }
+                        };
+                        callLoad();
+                    }}>测试 loading 加载 Modal</Button>
                     <Button theme='info' onClick={e=>this.modal.view({
                         title:'添加优惠券',
                         content:<Loader loadPath='/AddCoupon' modal/>,
                         callback:(args)=>{
 
                         },
-                    })}>测试 confirm 警告 Modal</Button>
+                    })}>测试 view 自定义内容 Modal</Button>
+                    </ButtonGroup>
+                    <Button className='mt-4' block>Button Block</Button>
+                </Card>
+                <Card className='mt-2' header='树控件 Card 自定义头' custom border='light'>
+                    <Tree data={this.state.tree} onSelect={(item)=>{
+                        console.log(item);
+                    }}/>
                 </Card>
                 <Modal ref={c=>this.modal=c}/>
             </Container>

@@ -20,6 +20,7 @@ TableHeader.propTypes = {
     value: PropTypes.string,
     row: PropTypes.any,
     onSort: PropTypes.func,
+    align: PropTypes.string,
 };
 
 TableHeader.defaultProps = {
@@ -28,7 +29,8 @@ TableHeader.defaultProps = {
     value:'',
     row:null,
     onFormat:null,
-    onSort:null
+    onSort:null,
+    align:'left'
 };
 
 export default TableHeader;

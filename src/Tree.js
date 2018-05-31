@@ -47,7 +47,7 @@ class Tree extends React.PureComponent {
                 return
             }
             if (typeof this.props.onSelect === 'function') {
-                this.props.onSelect(item);
+                this.props.onSelect(item,id);
             }
         };
     };

@@ -18,6 +18,8 @@ import {
     Modal,
     Tree,
     Title,
+    Tabs,
+    TabsContent
 } from '../../src/index';
 import Loader from '../components/LoaderComponent';
 
@@ -126,10 +128,30 @@ class Coupon extends React.PureComponent {
                     </ButtonGroup>
                     <Button className='mt-4' block>Button Block</Button>
                 </Card>
-                <Card className='mt-2' header='树控件 Card 自定义头' custom border='light'>
-                    <Tree data={this.state.tree} onSelect={(item)=>{
-                        console.log(item);
+                <Card className='mt-2' header='树组件 Card 自定义头' custom border='light'>
+                    <Tree data={this.state.tree} onSelect={(item,id)=>{
+                        this.modal.alert(item.text+id);
                     }}/>
+                </Card>
+                <Card className='mt-2' border='Tabs 组件'>
+                    <Tabs>
+                        <TabsContent id='label1' text='标题1' active>
+                            <div className='form-row'>
+                                <Input className='col-6' label='Name' plaintext data='Clake'/>
+                                <Input className='col-6' label='Last Name' data='Lee'/>
+                            </div>
+                            <div className='form-row'>
+                                <div className='col-2 form-group pt-2'><label>middle垂直居中</label></div>
+                                <Input className='col-10' data='Lee'/>
+                            </div>
+                        </TabsContent>
+                        <TabsContent id='label2' text='标题2'>
+                            <h5>这有一个树</h5>
+                            <Tree data={this.state.tree} onSelect={(item,id)=>{
+                                this.modal.alert(item.text+id);
+                            }}/>
+                        </TabsContent>
+                    </Tabs>
                 </Card>
                 <Modal ref={c=>this.modal=c}/>
             </Container>

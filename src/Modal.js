@@ -78,7 +78,7 @@ class Modal extends React.PureComponent {
         this.modalType = ModalAlert;
         this.setState({
             title:opt.title||'提示',
-            content:opt.content||'',
+            content:opt.content||opt||'',
             isCloseBtn:true,
             type:ModalAlert
         },()=>{

@@ -20,3 +20,4 @@ export ButtonGroup from './ButtonGroup';
 export Title from './Title';
 export Tabs from './Tabs';
 export TabsContent from './TabsContent';
+export Switch from './Switch';

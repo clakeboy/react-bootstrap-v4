@@ -29,11 +29,11 @@ class Coupon extends React.PureComponent {
         this.state = {
             tree:[
                 {
-                    icon:'',
+                    icon:'user',
                     key:'main',
                     text:'这是主树',
                     children:[
-                        {icon:'',key:'',text:'这是三儿子'},
+                        {icon:'user',key:'',text:'这是三儿子'},
                         {icon:'',key:'',text:'这是三儿子'},
                         {icon:'',key:'',text:'这是三儿子'},
                         {icon:'',key:'',text:'这是三儿子'},
@@ -133,6 +133,9 @@ class Coupon extends React.PureComponent {
                         this.modal.alert(item.text+id);
                     }}/>
                 </Card>
+                <Title>
+
+                </Title>
                 <Card className='mt-2' border='Tabs 组件'>
                     <Tabs>
                         <TabsContent id='label1' text='标题1' active>

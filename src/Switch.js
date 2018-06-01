@@ -93,7 +93,7 @@ class Switch extends React.PureComponent {
 Switch.propTypes = {
     theme: PropTypes.oneOf(['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark']),
     checked: PropTypes.bool,
-    size: PropTypes.oneOf(['df','sm','xs']),
+    size: PropTypes.oneOf(['sm','lg']),
     onChange: PropTypes.func,
 };
 

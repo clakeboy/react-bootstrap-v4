@@ -46,7 +46,7 @@ class Jump extends React.PureComponent {
                 <Card>
                     <Container className='p-0 mb-1' inline fluid>
                         <Input className='mr-1' disabled placeholder='用户名'/>
-                        <Switch className='mr-1' theme='success' checked={this.state.checked} onChange={(checked) => {
+                        <Switch className='mr-1' theme='success' size='lg' checked={this.state.checked} onChange={(checked) => {
                             this.setState({
                                 checked: checked
                             }, () => {
@@ -56,7 +56,7 @@ class Jump extends React.PureComponent {
                     </Container>
                     <Container className='p-0 mb-1' inline fluid>
                         <Input className='mr-1' disabled placeholder='用户名'/>
-                        <Switch size='sm' theme='dark' checked={this.state.checked} onChange={(checked) => {
+                        <Switch theme='dark' checked={this.state.checked} onChange={(checked) => {
                             this.setState({
                                 checked: checked
                             }, () => {
@@ -66,8 +66,8 @@ class Jump extends React.PureComponent {
                     </Container>
                     <Container className='p-0 mb-1' inline fluid>
                         <Input className='mr-1' size='sm' disabled placeholder='用户名'/>
-                        <Switch ref={c=>this.switch=c} size='xs' theme='warning' onChange={(checked) => {
-                            this.modal.alert(this.switch.getChecked().toString());
+                        <Switch ref={c=>this.switch=c} size='sm' theme='warning' onChange={(checked) => {
+                            this.modal.alert(this.switch.getChecked());
                         }}/>
                     </Container>
                     {this.state.checked ? <div>是</div> : <div>否</div>}

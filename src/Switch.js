@@ -22,7 +22,7 @@ class Switch extends React.PureComponent {
     componentWillReceiveProps(nextProps) {
         if (this.checked !== nextProps.checked) {
             this.checked = nextProps.checked;
-            this.changeStatus();
+            this.changeStatus(this.checked);
         }
     }
 
@@ -32,7 +32,7 @@ class Switch extends React.PureComponent {
 
     setChecked(check) {
         this.checked = check;
-        this.changeStatus();
+        this.changeStatus(check);
     }
 
     getClasses() {
@@ -44,6 +44,10 @@ class Switch extends React.PureComponent {
 
         if (this.props.size) {
             base = classNames(base, `ck-switch-${this.props.size}`);
+        }
+
+        if (this.props.disabled) {
+            base = classNames(base, 'ck-switch-disable');
         }
 
         return classNames(base, this.props.className);
@@ -64,20 +68,23 @@ class Switch extends React.PureComponent {
     }
 
     clickHandler = () => {
-        this.changeStatus();
+        if (this.props.disabled) {
+            return
+        }
         this.checked = !this.checked;
+        this.changeStatus(this.checked);
         if (typeof this.props.onChange === 'function') {
             this.props.onChange(this.checked);
         }
     };
 
-    changeStatus() {
-        if (this.checked) {
-            this.circle.classList.remove(this.move_class);
-            this.bg.classList.remove(this.bg_color);
-        } else {
+    changeStatus(flag) {
+        if (flag) {
             this.circle.classList.add(this.move_class);
             this.bg.classList.add(this.bg_color);
+        } else {
+            this.circle.classList.remove(this.move_class);
+            this.bg.classList.remove(this.bg_color);
         }
     }
 
@@ -94,6 +101,7 @@ Switch.propTypes = {
     theme: PropTypes.oneOf(['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark']),
     checked: PropTypes.bool,
     size: PropTypes.oneOf(['sm','lg']),
+    disabled: PropTypes.bool,
     onChange: PropTypes.func,
 };
 

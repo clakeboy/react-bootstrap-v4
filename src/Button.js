@@ -46,7 +46,7 @@ class Button extends React.PureComponent {
     render() {
         console.log('render Button');
         return (
-            <button onClick={this.clickHandler} className={this.getClasses()} >
+            <button disabled={this.props.disabled} onClick={this.clickHandler} className={this.getClasses()} >
                 {this.renderIcon()}{this.props.children}
             </button>
         );
@@ -70,6 +70,7 @@ Button.propTypes = {
     size: PropTypes.oneOf(['df','sm','lg']),
     onClick: PropTypes.func,
     icon: PropTypes.string,
+    disabled: PropTypes.bool,
     block: PropTypes.bool,
 };
 

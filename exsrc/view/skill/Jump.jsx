@@ -53,6 +53,13 @@ class Jump extends React.PureComponent {
                                 console.log(this.state.checked);
                             })
                         }}/>
+                        <Switch disabled className='mr-1' theme='success' size='lg' checked={this.state.checked} onChange={(checked) => {
+                            this.setState({
+                                checked: checked
+                            }, () => {
+                                console.log(this.state.checked);
+                            })
+                        }}/>
                     </Container>
                     <Container className='p-0 mb-1' inline fluid>
                         <Input className='mr-1' disabled placeholder='用户名'/>
@@ -63,14 +70,21 @@ class Jump extends React.PureComponent {
                                 console.log(this.state.checked);
                             })
                         }}/>
+                        <Switch disabled theme='dark' checked={this.state.checked} onChange={(checked) => {
+                            this.setState({
+                                checked: checked
+                            }, () => {
+                                console.log(this.state.checked);
+                            })
+                        }}/>
                     </Container>
                     <Container className='p-0 mb-1' inline fluid>
                         <Input className='mr-1' size='sm' disabled placeholder='用户名'/>
-                        <Switch ref={c=>this.switch=c} size='sm' theme='warning' onChange={(checked) => {
-                            this.modal.alert(this.switch.getChecked());
-                        }}/>
+                        <Switch ref={c=>this.switch=c} size='sm' theme='warning'/>
+                        <Switch disabled ref={c=>this.switch=c} size='sm' theme='warning'/>
                     </Container>
                     {this.state.checked ? <div>是</div> : <div>否</div>}
+                    <Button disabled>禁用</Button>
                     <Modal ref={c=>this.modal=c}/>
                 </Card>
             </Container>

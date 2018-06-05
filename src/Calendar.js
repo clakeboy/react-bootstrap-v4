@@ -188,7 +188,15 @@ class Calendar extends React.PureComponent {
         $(window).off('mousedown',this.hide);
     };
 
-    show() {
+    show(dom) {
+        $('.ck-calendar').hide();
+        if (dom) {
+            let position = common.GetDomXY(dom);
+            $(ReactDOM.findDOMNode(this)).css({
+                'left':position.left,
+                'top':position.top+position.height+10,
+            });
+        }
         $(ReactDOM.findDOMNode(this)).show();
         $(window).on('mousedown',this.hide);
     }
@@ -262,7 +270,7 @@ class Calendar extends React.PureComponent {
 
     render() {
         let lang = i18n[this.props.lang];
-        return (
+        let content = (
             <div className={this.getClasses()} onMouseDown={(e)=>{
                 e.stopPropagation();
             }}>
@@ -296,6 +304,13 @@ class Calendar extends React.PureComponent {
                 </table>
             </div>
         );
+
+        if (this.props.absolute) {
+            return ReactDOM.createPortal(
+                content,document.body
+            );
+        }
+        return content;
     }
 }
 

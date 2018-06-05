@@ -76,7 +76,7 @@ class Select extends React.PureComponent {
     }
 
     renderSummary() {
-        if (this.props.summary === '') {
+        if (!this.props.summary) {
             return null
         }
         return (

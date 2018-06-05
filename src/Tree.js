@@ -33,16 +33,18 @@ class Tree extends React.PureComponent {
             let parent = this.parents[id];
             if (parent) {
                 let jq = $(parent);
-                if (jq.data('show') === 0) {
+                if (parent.dataset.show === '0') {
                     // jq.removeClass('d-none');
                     jq.slideDown(300);
-                    jq.data('show',1);
-                    $(e.currentTarget).find('.ck-tree-icon').addClass('ck-tree-icon-down');
+                    parent.dataset.show = '1';
+                    e.currentTarget.querySelector('.ck-tree-icon').classList.add('ck-tree-icon-down');
+                    // $(e.currentTarget).find('.ck-tree-icon').addClass('ck-tree-icon-down');
                 } else {
                     // jq.addClass('d-none');
                     jq.slideUp(300);
-                    jq.data('show',0);
-                    $(e.currentTarget).find('.ck-tree-icon').removeClass('ck-tree-icon-down');
+                    parent.dataset.show = '0';
+                    e.currentTarget.querySelector('.ck-tree-icon').classList.remove('ck-tree-icon-down');
+                    // $(e.currentTarget).find('.ck-tree-icon').removeClass('ck-tree-icon-down');
                 }
                 return
             }
@@ -80,7 +82,9 @@ class Tree extends React.PureComponent {
             let id = `${parent_key}_${idx}`;
             return <div className='ck-tree-item' style={style}>
                 <div className='ck-tree-content' onClick={this.selectHandler(val,id)}>
-                    <Icon className='ck-tree-icon' icon={val.children?'caret-right':val.icon}/>{'\u0020'}{val.text}{id}
+                    <Icon className='ck-tree-icon' icon={val.children?'caret-right':val.icon}/>
+                    {'\u0020'}
+                    <span className='ck-tree-item-text'>{val.text}{id}</span>
                 </div>
                 {val.children?<div id={id} className='ck-tree-children' data-show="0" ref={c=>this.parents[id]=c}>
                     {this.renderItem(val.children,val,level+1,id)}

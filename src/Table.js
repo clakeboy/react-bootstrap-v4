@@ -7,6 +7,8 @@ import Button from './Button';
 import common from "./Common";
 import Icon from './Icon';
 
+import './css/Table.less';
+
 class Table extends React.Component {
     constructor(props) {
         super(props);
@@ -79,7 +81,7 @@ class Table extends React.Component {
     }
 
     getClasses() {
-        let base = 'table';
+        let base = 'table ck-table';
         //striped
         if (this.props.striped) {
             base = classNames(base,'table-striped');
@@ -139,11 +141,12 @@ class Table extends React.Component {
             <tr>
                 {this.state.select ? <th><Checkbox onChange={this.selectAll}/></th> : null}
                 {React.Children.map(this.props.children, (item, key) => {
-                    if (!item) {
+                    if (!item || item.props.hide) {
                         return null;
                     }
+                    let align = item.props.align || this.props.align;
                     return (
-                        <th data-key={'head_' + key} align={item.props.align}>
+                        <th data-key={'head_' + key} style={{'text-align':align}}>
                             {item.props.onSort? <a href='javascript://'>{item.props.text}{'\u0020'}<Icon icon='sort'/></a>:item.props.text}
                         </th>
                     );
@@ -159,15 +162,16 @@ class Table extends React.Component {
             <tr>
                 {this.state.select ? <th><Checkbox ref={'row_'+i} onChange={this.changeHandler(row,i)}/></th> : null}
                 {React.Children.map(this.props.children,(item,key)=>{
-                    if (!item) {
+                    if (!item || item.props.hide) {
                         return null;
                     }
+                    let align = item.props.align || this.props.align;
                     if (item.props.children) {
                         return (
-                            <td className={item.props.className} key={'col_'+key}>{React.cloneElement(item,{text:item.props.text,row:row,value:row[item.props.field]})}</td>
+                            <td className={item.props.className} style={{'text-align':align}} key={'col_'+key}>{React.cloneElement(item,{text:item.props.text,row:row,value:row[item.props.field]})}</td>
                         );
                     } else {
-                        return <td style={{...item.props.setCssStyle, backgroundColor: backgroundColor}} key={'col_'+key}>{item.props.onFormat?item.props.onFormat(row[item.props.field],row):row[item.props.field]}</td>;
+                        return <td style={{...item.props.setCssStyle, backgroundColor: backgroundColor,'text-align':align}} key={'col_'+key}>{item.props.onFormat?item.props.onFormat(row[item.props.field],row):row[item.props.field]}</td>;
                     }
                 })}
             </tr>
@@ -190,6 +194,7 @@ Table.propTypes = {
     hover: PropTypes.bool,
     sm: PropTypes.bool,
     responsive: PropTypes.bool,
+    align: PropTypes.string,
 };
 
 Table.defaultProps = {
@@ -200,6 +205,7 @@ Table.defaultProps = {
     currentPage:1,
     hover:true,
     striped:true,
+    align:'left',
 };
 
 Table.Header = TableHeader;

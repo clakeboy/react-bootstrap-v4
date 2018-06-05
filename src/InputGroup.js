@@ -56,7 +56,6 @@ class InputGroup extends React.PureComponent {
     }
 
     render() {
-        console.log('render Input Group');
         //default style
         let def_style = {
             "width": this.props.width + "px"

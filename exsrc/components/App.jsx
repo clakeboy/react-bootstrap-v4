@@ -2,7 +2,8 @@
  * Created by clakeboy on 2017/12/3.
  */
 import React from 'react';
-import LoaderComponent from './LoaderComponent';
+import {GetComponent} from "../common/Funcs";
+import Loader from './Loader';
 
 export default class App extends React.Component {
     constructor(props) {
@@ -10,7 +11,7 @@ export default class App extends React.Component {
     }
 
     componentDidMount() {
-        console.log("sssss")
+
     }
 
     ucFirst(str) {
@@ -40,7 +41,8 @@ export default class App extends React.Component {
     }
 
     render() {
+        console.log("render app");
         let load_path = this.explainUrl(this.props.location.pathname);
-        return <LoaderComponent loadPath={load_path} {...this.props}/>
+        return <Loader loadPath={load_path} import={GetComponent} {...this.props}/>
     }
 }

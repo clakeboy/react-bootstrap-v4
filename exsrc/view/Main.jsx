@@ -52,7 +52,7 @@ class Main extends React.Component {
     }
 
     componentDidMount() {
-        console.log(this.props.history)
+
     }
 
     changeHandler(name){
@@ -78,6 +78,7 @@ class Main extends React.Component {
                 <Container className='p-0 mb-1' inline fluid>
                     <Input className='mr-1' disabled placeholder='用户名' onChange={this.changeHandler('user_name')} data={this.state.pageData.user_name}/>
                     <Input className='mr-1' placeholder='密码' type='password'/>
+                    <Input className='mr-1' placeholder='日期' calendar/>
                     <InputGroup className='mr-1' ref={c=>this.ing=c} width={200} label="测试" data="11111"/>
                     <Dropdown className='mr-1' text='JSON数组' data={this.dataList}/>
                     <Dropdown className='mr-1' text='普通数组' data={this.dataArrList}/>
@@ -130,19 +131,19 @@ class Main extends React.Component {
                 <Card className='mb-2' header='Table'>
                     <Table hover={true} select={true} headerTheme='light' data={this.dataTable}>
                         <Table.Header text='Name' field='name' onSort={(sort)=>{alert(sort)}}/>
-                        <Table.Header text='Age' field='age'/>
+                        <Table.Header text='Age' field='age' align='center'/>
                         <Table.Header text='Birthday' field='birthday'/>
-                        <Table.Header text='Address' field='address'/>
+                        <Table.Header text='Address' field='address' hide/>
                         <Table.Header text='Both' field='both'/>
                         <Table.Header text='Test' field='test'/>
-                        <Table.Header text='Action' onFormat={row=>{
+                        <Table.Header text='Action' align='center' onFormat={row=>{
                             return <Button className='color-blue' size='sm' icon='plus'>Add</Button>
                         }} />
                     </Table>
                     <Pagination count={1000} current={1} number={30} showPage={10}/>
                     <Table hover={true} select={true} sm data={this.dataTable}>
                         <Table.Header text='Name' field='name' onSort={(sort)=>{alert(sort)}}/>
-                        <Table.Header text='Age' field='age'/>
+                        <Table.Header text='Age' field='age' hide/>
                         <Table.Header text='Birthday' field='birthday'/>
                         <Table.Header text='Address' field='address'/>
                         <Table.Header text='Both' field='both'/>

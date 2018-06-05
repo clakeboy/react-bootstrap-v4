@@ -6,8 +6,8 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import common from "./Common";
 import $ from 'jquery';
-import Icon from './Icon';
 import Button from './Button';
+import Load from "./Load";
 
 const ModalAlert = 0;
 const ModalConfirm = 1;
@@ -238,7 +238,7 @@ class Modal extends React.PureComponent {
                         </div>
                         <div className="modal-body">
                             {this.state.type === ModalLoading?<React.Fragment>
-                                <Icon icon='spinner' spin/>&nbsp;&nbsp;&nbsp;{this.state.content}
+                                <Load/>&nbsp;&nbsp;&nbsp;{this.state.content}
                             </React.Fragment>:this.state.content}
                         </div>
                         {this.renderFooter()}

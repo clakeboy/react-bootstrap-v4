@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import PropTypes from "prop-types";
-import Load from '../Load';
+import {Load} from '../../src/index';
 
 export default class Loader extends React.Component {
     constructor(prop) {
@@ -46,12 +46,10 @@ export default class Loader extends React.Component {
 
     render() {
         if (this.state.instance) {
-            console.log("render dynamic components done");
             return this.renderComponent()
         } else {
-            console.log("render dynamic components loading");
             return (
-                <div className='text-center mt-5'>
+                <div className='text-center text-primary mt-5'>
                     {this.state.noFound?'没有找到模块':<Load>模块加载中</Load>}
                 </div>
             );

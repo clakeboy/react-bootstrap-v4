@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
+import {GetModal} from "../common/Funcs";
 import {
     Container,
     Input,
@@ -19,9 +20,10 @@ import {
     Tree,
     Title,
     Tabs,
-    TabsContent
+    TabsContent,
+    Load
 } from '../../src/index';
-import Loader from '../components/LoaderComponent';
+import Loader from '../components/Loader';
 
 class Coupon extends React.PureComponent {
     constructor(props) {
@@ -83,6 +85,11 @@ class Coupon extends React.PureComponent {
                 <Button onClick={()=>{
                     this.props.history.goBack();
                 }}>返回主页</Button>
+                <Card className='mt-2' custom header="Load 动画组件">
+                    <div>
+                        <Load>内容加载中</Load>
+                    </div>
+                </Card>
                 <Card className='mt-2' header="优惠券添加">
                     <div className='form-row'>
                         <Input className='col-6' label='Name' plaintext data='Clake'/>
@@ -120,10 +127,7 @@ class Coupon extends React.PureComponent {
                     }}>测试 loading 加载 Modal</Button>
                     <Button theme='info' onClick={e=>this.modal.view({
                         title:'添加优惠券',
-                        content:<Loader loadPath='/AddCoupon' modal/>,
-                        callback:(args)=>{
-
-                        },
+                        content:<Loader loadPath='/AddCoupon' import={GetModal}/>
                     })}>测试 view 自定义内容 Modal</Button>
                     </ButtonGroup>
                     <Button className='mt-4' block>Button Block</Button>
@@ -133,29 +137,27 @@ class Coupon extends React.PureComponent {
                         this.modal.alert(item.text+id);
                     }}/>
                 </Card>
-                <Title>
-
+                <Title className='mb-2'>
+                    Tabs 组件 (直接使用 Title 组件)
                 </Title>
-                <Card className='mt-2' border='Tabs 组件'>
-                    <Tabs>
-                        <TabsContent id='label1' text='标题1' active>
-                            <div className='form-row'>
-                                <Input className='col-6' label='Name' plaintext data='Clake'/>
-                                <Input className='col-6' label='Last Name' data='Lee'/>
-                            </div>
-                            <div className='form-row'>
-                                <div className='col-2 form-group pt-2'><label>middle垂直居中</label></div>
-                                <Input className='col-10' data='Lee'/>
-                            </div>
-                        </TabsContent>
-                        <TabsContent id='label2' text='标题2'>
-                            <h5>这有一个树</h5>
-                            <Tree data={this.state.tree} onSelect={(item,id)=>{
-                                this.modal.alert(item.text+id);
-                            }}/>
-                        </TabsContent>
-                    </Tabs>
-                </Card>
+                <Tabs>
+                    <TabsContent id='label1' text='标题1' active>
+                        <div className='form-row'>
+                            <Input className='col-6' label='Name' plaintext data='Clake'/>
+                            <Input className='col-6' label='Last Name' data='Lee'/>
+                        </div>
+                        <div className='form-row'>
+                            <div className='col-2 form-group pt-2'><label>middle垂直居中</label></div>
+                            <Input className='col-10' data='Lee'/>
+                        </div>
+                    </TabsContent>
+                    <TabsContent id='label2' text='标题2'>
+                        <h5>这有一个树</h5>
+                        <Tree data={this.state.tree} onSelect={(item,id)=>{
+                            this.modal.alert(item.text+id);
+                        }}/>
+                    </TabsContent>
+                </Tabs>
                 <Modal ref={c=>this.modal=c}/>
             </Container>
         );

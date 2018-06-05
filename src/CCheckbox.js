@@ -24,7 +24,6 @@ class CCheckbox extends React.PureComponent {
     }
 
     render() {
-        console.log('render CCheckbox');
         return (
             <div className={this.getClasses()}>
                 <input type="checkbox" className="custom-control-input" id={this.domId}/>

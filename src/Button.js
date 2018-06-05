@@ -44,7 +44,6 @@ class Button extends React.PureComponent {
     };
 
     render() {
-        console.log('render Button');
         return (
             <button disabled={this.props.disabled} onClick={this.clickHandler} className={this.getClasses()} >
                 {this.renderIcon()}{this.props.children}

@@ -21,3 +21,5 @@ export Title from './Title';
 export Tabs from './Tabs';
 export TabsContent from './TabsContent';
 export Switch from './Switch';
+export Load from './Load';
+export LoaderComponent from "./components/LoaderComponent";

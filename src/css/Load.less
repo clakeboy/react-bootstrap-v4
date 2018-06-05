@@ -1,0 +1,36 @@
+.ck-load {
+  display: inline-block;
+}
+
+.ck-load-circle {
+  display: inline-block;
+  width: .5rem;
+  height: .5rem;
+  border-radius: 50%;
+  background-color: #dedede;
+  margin: 0 .3rem;
+}
+
+@keyframes load-am {
+  from {
+    transform: scale(1.0,1.0);
+    background-color: #dedede;
+  }
+  to {
+    transform: scale(1.5,1.5);
+    background-color: #666666;
+  }
+}
+
+.ck-load-big {
+  animation-name: load-am;
+  animation-duration: .5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+.ck-load-small {
+  .ck-load-big;
+  animation-delay: .5s;
+}

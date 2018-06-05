@@ -5,6 +5,9 @@ import common from './Common';
 import Calendar from './Calendar';
 import $ from "jquery";
 import ReactDOM from "react-dom";
+import Icon from "./Icon";
+
+import './css/Input.less';
 
 class Input extends React.PureComponent {
     constructor(props) {
@@ -22,7 +25,7 @@ class Input extends React.PureComponent {
     componentDidMount() {
         if (this.props.calendar) {
             $(ReactDOM.findDOMNode(this.input)).on('focus',(e)=>{
-                this.calendar.show();
+                this.calendar.show(e.currentTarget);
             });
             $(ReactDOM.findDOMNode(this.input)).on('mousedown',(e)=>{
                 e.stopPropagation();
@@ -109,7 +112,7 @@ class Input extends React.PureComponent {
     }
 
     renderSummary() {
-        if (this.props.summary === '') {
+        if (!this.props.summary) {
             return null
         }
         return (
@@ -124,14 +127,17 @@ class Input extends React.PureComponent {
             return null;
         }
         return (
-            <Calendar ref={c=>this.calendar=c} onSelect={(val)=>{
-                this.setState({
-                    value:val,
-                });
-                if (this.props.onChange && typeof this.props.onChange === 'function') {
-                    this.props.onChange(val,this);
-                }
-            }} value={this.state.value} format={this.props.calendarFormat} none shadow absolute triangular='up'/>
+            <React.Fragment>
+                <Calendar ref={c=>this.calendar=c} onSelect={(val)=>{
+                    this.setState({
+                        value:val,
+                    });
+                    if (this.props.onChange && typeof this.props.onChange === 'function') {
+                        this.props.onChange(val,this);
+                    }
+                }} value={this.state.value} format={this.props.calendarFormat} none shadow absolute triangular='up'/>
+                {/*<div className='ck-input-calendar-icon'><Icon icon='calendar-alt'/></div>*/}
+            </React.Fragment>
         )
     }
 

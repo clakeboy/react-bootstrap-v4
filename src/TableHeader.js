@@ -21,6 +21,7 @@ TableHeader.propTypes = {
     row: PropTypes.any,
     onSort: PropTypes.func,
     align: PropTypes.string,
+    hide: PropTypes.bool,
 };
 
 TableHeader.defaultProps = {

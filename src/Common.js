@@ -95,9 +95,13 @@ export var LoadScript = {
  */
 export var GetDomXY = (e) => {
     let parent = arguments[1]?arguments[1]:undefined;
-    let t = {};
-    t['top'] = e.offsetTop;
-    t['left'] = e.offsetLeft;
+    let t = {
+        top:e.offsetTop,
+        left:e.offsetLeft,
+        height:e.clientHeight,
+        width:e.clientWidth
+    };
+
     let scrollTop = 0;
     let scrollLeft = 0;
     let topScroll = 0;

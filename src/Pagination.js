@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import classNames from 'classnames/bind';
+import Icon from './Icon';
 class Pagination extends React.PureComponent {
     constructor(props) {
         super(props);
@@ -75,17 +76,32 @@ class Pagination extends React.PureComponent {
         return arr
     }
 
+    getClasses() {
+        let base = 'pagination';
+
+        switch (this.props.align) {
+            case 'right':
+                base = classNames(base,'justify-content-end');
+                break;
+            case 'center':
+                base = classNames(base,'justify-content-center');
+                break;
+        }
+
+        return base;
+    }
+
     render() {
         return (
             <nav>
-                <ul className="pagination">
+                <ul className={this.getClasses()}>
                     <li className="page-item disabled"><span className="page-link">共有{this.props.count}条记录</span></li>
                     <li className="page-item"><a className="page-link" href="javascript://" onClick={this.clickHandler('first')}>首页</a></li>
-                    <li className="page-item"><a className="page-link" href="javascript://" onClick={this.clickHandler('prev')}>上一页</a></li>
+                    <li className="page-item"><a className="page-link" href="javascript://" onClick={this.clickHandler('prev')}><Icon icon='angle-double-left'/></a></li>
                     {this.is_after?this.renderMore(this.is_after):null}
                     {this.renderPages()}
                     {this.is_more?this.renderMore(this.is_more):null}
-                    <li className="page-item"><a className="page-link" href="javascript://" onClick={this.clickHandler('next')}>下一页</a></li>
+                    <li className="page-item"><a className="page-link" href="javascript://" onClick={this.clickHandler('next')}><Icon icon='angle-double-right'/></a></li>
                     <li className="page-item"><a className="page-link" href="javascript://" onClick={this.clickHandler('last')}>末页</a></li>
                 </ul>
             </nav>
@@ -125,6 +141,7 @@ Pagination.propTypes = {
     number: PropTypes.number,
     showPage: PropTypes.number,
     onSelect: PropTypes.func,
+    align: PropTypes.oneOf(['left','center','right'])
 };
 
 Pagination.defaultProps = {
@@ -132,6 +149,7 @@ Pagination.defaultProps = {
     count   : 1,
     number  : 30,
     showPages : 10,
+    align: 'right',
 };
 
 export default Pagination;

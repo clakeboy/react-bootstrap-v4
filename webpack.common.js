@@ -19,7 +19,7 @@ export default {
     //页面入口文件配置
     entry: {
         //主文件
-        index : './src/index.js'
+        'react-bootstrap-v4' : './src/index.js'
     },
     //插件项
     plugins: [

@@ -39,6 +39,11 @@ class AddCoupon extends React.PureComponent {
     render() {
         return (
             <div className={this.getClasses()}>
+                <Container className='p-0 mb-1' inline fluid>
+                    <Input className='mr-1' disabled width='100' placeholder='用户名'/>
+                    <Input className='mr-1' placeholder='密码' type='password'/>
+                    <Input className='mr-1' placeholder='日期' calendar/>
+                </Container>
                 <div className='form-row'>
                     <Input className='col-6' label='Name' plaintext data='Clake'/>
                     <Input className='col-6' label='Last Name' data='Lee'/>

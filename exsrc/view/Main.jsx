@@ -14,6 +14,7 @@ import {
     Select,
     Calendar,
     TextArea,
+    Switch
 } from '../../src/index';
 
 class Main extends React.Component {
@@ -46,6 +47,7 @@ class Main extends React.Component {
                 'birthday':'birthday-'+(i+1),
                 'address':'address-'+(i+1),
                 'both':'both-'+(i+1),
+                'is_paid':1,
                 'test':'test-'+(i+1),
             })
         }
@@ -69,14 +71,16 @@ class Main extends React.Component {
         return (
             <Container>
                 <h1>React Bootstrap v4 Demo</h1>
-                <Button onClick={e=>{
-                    this.props.history.push('/skill/jump',this.state);
-                }}>转到内联</Button>
-                <Button onClick={e=>{
-                    this.props.history.push('/coupon',this.state);
-                }}>转到输入</Button>
+                <Container fluid className='mb-1 p-0'>
+                    <Button className='mr-1' onClick={e=>{
+                        this.props.history.push('/skill/jump',this.state);
+                    }}>转到内联</Button>
+                    <Button onClick={e=>{
+                        this.props.history.push('/coupon',this.state);
+                    }}>转到 Demo2</Button>
+                </Container>
                 <Container className='p-0 mb-1' inline fluid>
-                    <Input className='mr-1' disabled placeholder='用户名' onChange={this.changeHandler('user_name')} data={this.state.pageData.user_name}/>
+                    <Input className='mr-1' disabled width='100' placeholder='用户名' onChange={this.changeHandler('user_name')} data={this.state.pageData.user_name}/>
                     <Input className='mr-1' placeholder='密码' type='password'/>
                     <Input className='mr-1' placeholder='日期' calendar/>
                     <InputGroup className='mr-1' ref={c=>this.ing=c} width={200} label="测试" data="11111"/>
@@ -95,7 +99,10 @@ class Main extends React.Component {
                     </div>
                     <div className='form-row'>
                         <Input className='col-6' label='Calendar Unix Timestamp' data='1518427253' calendarFormat='unix' calendar readOnly/>
-                        <Input className='col-6' label='Calendar' data={this.state.pageData.chose_date} onChange={this.changeHandler('chose_date')} calendar readOnly/>
+                        <Input className='col-6' size='sm' label='Calendar' data={this.state.pageData.chose_date} onChange={this.changeHandler('chose_date')} calendar readOnly/>
+                    </div>
+                    <div className='form-row'>
+                        <Input className='col-6' size='lg' label='Calendar' data={this.state.pageData.chose_date} onChange={this.changeHandler('chose_date')} calendar readOnly/>
                     </div>
                     <TextArea label='Summary' summary='input something' data={this.state.pageData.text_area} rows={10}/>
                 </Card>
@@ -136,6 +143,9 @@ class Main extends React.Component {
                         <Table.Header text='Address' field='address' hide/>
                         <Table.Header text='Both' field='both'/>
                         <Table.Header text='Test' field='test'/>
+                        <Table.Header text='Paid' field='is_paid' onFormat={row=>{
+                            return <Switch size='sm'/>
+                        }}/>
                         <Table.Header text='Action' align='center' onFormat={row=>{
                             return <Button className='color-blue' size='sm' icon='plus'>Add</Button>
                         }} />
@@ -152,6 +162,7 @@ class Main extends React.Component {
                             return <Button className='color-blue' size='sm' icon='plus'>Add</Button>
                         }} />
                     </Table>
+                    <Pagination size='sm' count={1000} current={1} number={30} showPage={10}/>
                 </Card>
                 <Card header='Calendar'>
                     <Calendar value={this.state.chose_date} lang='en' shadow/>

@@ -88,6 +88,10 @@ class Pagination extends React.PureComponent {
                 break;
         }
 
+        if (this.props.size) {
+            base = classNames(base,`pagination-${this.props.size}`);
+        }
+
         return base;
     }
 
@@ -141,7 +145,8 @@ Pagination.propTypes = {
     number: PropTypes.number,
     showPage: PropTypes.number,
     onSelect: PropTypes.func,
-    align: PropTypes.oneOf(['left','center','right'])
+    align: PropTypes.oneOf(['left','center','right']),
+    size: PropTypes.oneOf(['sm','lg'])
 };
 
 Pagination.defaultProps = {

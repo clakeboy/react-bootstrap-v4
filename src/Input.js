@@ -57,14 +57,15 @@ class Input extends React.PureComponent {
     getMainStyles() {
         //default style
         let def_style = {
-            "width": this.props.width + "px"
+            "width": this.props.width + "px",
+            "position":"relative"
         };
 
         return common.extend(def_style, this.props.style)
     }
 
     getInputClasses() {
-        let base = 'form-control';
+        let base = 'form-control ck-input';
         //readonly
         if (this.props.plaintext) {
             base = 'form-control-plaintext';
@@ -126,8 +127,12 @@ class Input extends React.PureComponent {
         if (!this.props.calendar) {
             return null;
         }
+        let input_icon = 'ck-input-calendar-icon';
+        if (this.props.size) {
+            input_icon = classNames(input_icon,'ck-input-calendar-icon-'+this.props.size);
+        }
         return (
-            <React.Fragment>
+            <div className='ck-input-calendar'>
                 <Calendar ref={c=>this.calendar=c} onSelect={(val)=>{
                     this.setState({
                         value:val,
@@ -136,8 +141,8 @@ class Input extends React.PureComponent {
                         this.props.onChange(val,this);
                     }
                 }} value={this.state.value} format={this.props.calendarFormat} none shadow absolute triangular='up'/>
-                {/*<div className='ck-input-calendar-icon'><Icon icon='calendar-alt'/></div>*/}
-            </React.Fragment>
+                <div className={input_icon}><Icon iconType='regular' icon='calendar-alt'/></div>
+            </div>
         )
     }
 

@@ -189,14 +189,15 @@ class Calendar extends React.PureComponent {
     };
 
     show(dom) {
-        $('.ck-calendar').hide();
-        if (dom) {
-            let position = common.GetDomXY(dom);
-            $(ReactDOM.findDOMNode(this)).css({
-                'left':position.left,
-                'top':position.top+position.height+10,
-            });
-        }
+        $('.ck-calendar-absolute').hide();
+        // if (dom) {
+        //     let position = common.GetDomXY(dom);
+        //     console.log(position);
+        //     $(ReactDOM.findDOMNode(this)).css({
+        //         'left':position.left,
+        //         'top':position.top+position.height+10,
+        //     });
+        // }
         $(ReactDOM.findDOMNode(this)).show();
         $(window).on('mousedown',this.hide);
     }
@@ -305,11 +306,11 @@ class Calendar extends React.PureComponent {
             </div>
         );
 
-        if (this.props.absolute) {
-            return ReactDOM.createPortal(
-                content,document.body
-            );
-        }
+        // if (this.props.absolute) {
+        //     return ReactDOM.createPortal(
+        //         content,document.body
+        //     );
+        // }
         return content;
     }
 }

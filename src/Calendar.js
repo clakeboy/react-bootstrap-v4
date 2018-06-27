@@ -72,7 +72,12 @@ class Calendar extends React.PureComponent {
     }
 
     componentDidMount() {
+        window.addEventListener('mousedown',this.hide,false);
+    }
 
+    componentWillUnmount() {
+        // $(window).off('mousedown',this.hide);
+        window.removeEventListener('mousedown',this.hide,false);
     }
 
     componentWillReceiveProps(nextProp) {
@@ -184,12 +189,16 @@ class Calendar extends React.PureComponent {
     }
 
     hide = (e) => {
-        $(ReactDOM.findDOMNode(this)).hide();
-        $(window).off('mousedown',this.hide);
+        // $(ReactDOM.findDOMNode(this)).hide();
+        this.mainDom.classList.add('ck-calendar-none')
     };
 
     show(dom) {
-        $('.ck-calendar-absolute').hide();
+        document.querySelectorAll('.ck-calendar-absolute').forEach((item)=>{
+            item.classList.add('ck-calendar-none');
+        });
+
+        // $('.ck-calendar-absolute').hide();
         // if (dom) {
         //     let position = common.GetDomXY(dom);
         //     console.log(position);
@@ -198,8 +207,8 @@ class Calendar extends React.PureComponent {
         //         'top':position.top+position.height+10,
         //     });
         // }
-        $(ReactDOM.findDOMNode(this)).show();
-        $(window).on('mousedown',this.hide);
+        // $(ReactDOM.findDOMNode(this)).show();
+        this.mainDom.classList.remove('ck-calendar-none')
     }
 
     getClasses() {
@@ -272,7 +281,7 @@ class Calendar extends React.PureComponent {
     render() {
         let lang = i18n[this.props.lang];
         let content = (
-            <div className={this.getClasses()} onMouseDown={(e)=>{
+            <div ref={c=>this.mainDom=c} className={this.getClasses()} onMouseDown={(e)=>{
                 e.stopPropagation();
             }}>
                 <table>

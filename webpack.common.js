@@ -39,7 +39,9 @@ export default {
     output: {
         path: `${__dirname}/dist`,
         filename: '[name].js',
-        chunkFilename:`./view/[name].[chunkhash:8].js`
+        chunkFilename:`./view/[name].[chunkhash:8].js`,
+        libraryTarget: "umd",
+        library:'ReactBootstrapV4'
     },
     module: {
         rules: [
@@ -89,8 +91,8 @@ export default {
             "react": "React",
             "react-dom": "ReactDOM",
             "zepto": "Zepto",
-            "marked":"marked",
-            "moment":"moment"
+            "marked":"Marked",
+            "moment":"Moment"
         },
         require('webpack-require-http')
     ]

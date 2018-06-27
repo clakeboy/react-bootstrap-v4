@@ -13,6 +13,8 @@ import babel from 'gulp-babel';
 import sourcemaps from 'gulp-sourcemaps';
 import historyApiFallback from 'connect-history-api-fallback';
 import header from 'gulp-header';
+import gulpLoadPlugins from 'gulp-load-plugins';
+let $ = gulpLoadPlugins();
 
 const banner = `/* ${pkg.name} v${pkg.version} | by Clake
  * Copyright (c) ${$.util.date(Date.now(), 'UTC:yyyy')} Clake,

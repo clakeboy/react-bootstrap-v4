@@ -8,14 +8,20 @@ class InputGroup extends React.PureComponent {
         this.state = {
             label: this.props.label,
             value: this.props.data,
+            disabled: this.props.disabled
         };
     }
 
     componentWillReceiveProps(nextProp) {
-        this.setState({value:nextProp.data});
+        this.setState({
+            value:nextProp.data
+        });
     }
 
     shouldComponentUpdate(nextProps, nextState) {
+        if (nextProps.disabled !== this.props.disabled) {
+            return true
+        }
         return nextState.value !== this.state.value;
     }
 
@@ -36,7 +42,7 @@ class InputGroup extends React.PureComponent {
         });
 
         if (this.props.onChange && typeof this.props.onChange === 'function') {
-            this.props.onChange(e,this);
+            this.props.onChange(e.target.value,this);
         }
     };
 
@@ -107,6 +113,7 @@ InputGroup.propTypes = {
     summary    : PropTypes.string,
     placeholder: PropTypes.string,
     width: PropTypes.number,
+    disabled: PropTypes.bool,
 };
 
 InputGroup.defaultProps = {
@@ -114,6 +121,7 @@ InputGroup.defaultProps = {
     data       : null,
     size       : "",
     summary    : '',
+    disabled:false
 };
 
 export default InputGroup;

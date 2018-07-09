@@ -139,7 +139,7 @@ class Table extends React.Component {
         return (
             <thead className={this.getHeaderClasses()}>
             <tr>
-                {this.state.select ? <th><Checkbox onChange={this.selectAll}/></th> : null}
+                {this.state.select ? <th width={10}><Checkbox onChange={this.selectAll}/></th> : null}
                 {React.Children.map(this.props.children, (item, key) => {
                     if (!item || item.props.hide) {
                         return null;

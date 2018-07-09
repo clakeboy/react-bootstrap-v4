@@ -2,6 +2,7 @@
  * Created by clakeboy on 2018/5/25.
  */
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import common from "./Common";
@@ -21,7 +22,9 @@ class Modal extends React.PureComponent {
             content:'',
             title:'',
             isCloseBtn:true,
-            type:ModalAlert
+            type:ModalAlert,
+            center:this.props.center,
+            fade:this.props.fade
         };
         //modal type
         this.modalType = ModalAlert;
@@ -32,6 +35,10 @@ class Modal extends React.PureComponent {
         if (this.props.id) {
             this.domId = this.props.id;
         }
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        return this.state.content !== nextState.content
     }
 
     componentDidMount() {
@@ -60,7 +67,7 @@ class Modal extends React.PureComponent {
     }
 
     close() {
-        $(`#${this.domId}`).modal('hide');
+        $('#'+this.domId).modal('hide');
     }
 
     /**
@@ -80,7 +87,9 @@ class Modal extends React.PureComponent {
             title:opt.title||'提示',
             content:opt.content||opt||'',
             isCloseBtn:true,
-            type:ModalAlert
+            type:ModalAlert,
+            center:opt.center||this.props.center,
+            fade:opt.fade||this.props.fade
         },()=>{
             this.open({
                 backdrop:'static',
@@ -106,7 +115,9 @@ class Modal extends React.PureComponent {
             title:opt.title||'提示',
             content:opt.content||'',
             isCloseBtn:true,
-            type:ModalConfirm
+            type:ModalConfirm,
+            center:opt.center||this.props.center,
+            fade:opt.fade||this.props.fade
         },()=>{
             this.open({
                 backdrop:'static',
@@ -119,18 +130,20 @@ class Modal extends React.PureComponent {
      * modal loading method
      * @param content
      */
-    loading(content) {
+    loading(opt) {
         this.modalType = ModalLoading;
         this.setState({
-            title:'提示',
+            title:opt.title||'提示',
             // content:(
             //     <React.Fragment>
             //         <Icon icon='spinner'/>&nbsp;&nbsp;&nbsp;{content}
             //     </React.Fragment>
             // ),
-            content:content,
+            content:opt.content||opt||'',
             isCloseBtn:false,
-            type:ModalLoading
+            type:ModalLoading,
+            center:opt.center||this.props.center,
+            fade:false
         },()=>{
             this.open({
                 backdrop:'static',
@@ -156,7 +169,9 @@ class Modal extends React.PureComponent {
             title:opt.title||'提示',
             content:opt.content||'',
             isCloseBtn:true,
-            type:ModalView
+            type:ModalView,
+            center:opt.center||this.props.center,
+            fade:opt.fade||this.props.fade
         },()=>{
             this.open({
                 backdrop:'static',
@@ -166,9 +181,12 @@ class Modal extends React.PureComponent {
     }
 
     getClasses() {
-        let base = 'modal fade';
+        let base = 'modal';
         if (this.modalType === ModalView) {
             base = classNames(base,"bd-example-modal-lg");
+        }
+        if (this.state.fade) {
+            base = classNames(base,'fade');
         }
 
         return classNames(base,this.props.className);
@@ -179,7 +197,7 @@ class Modal extends React.PureComponent {
         if (this.modalType === ModalView) {
             base = classNames(base,"modal-lg");
         }
-        if (this.props.center) {
+        if (this.state.center) {
             base = classNames(base,"modal-dialog-centered");
         }
 
@@ -193,6 +211,9 @@ class Modal extends React.PureComponent {
                 content = (
                     <Button data-dismiss="modal" onClick={e=>{
                         this.close();
+                        if (typeof this.callback === 'function') {
+                            this.callback(1);
+                        }
                     }}>确定</Button>
                 );
                 break;
@@ -200,16 +221,16 @@ class Modal extends React.PureComponent {
                 content = (
                     <React.Fragment>
                         <Button onClick={()=>{
+                            this.close();
                             if (typeof this.callback === 'function') {
                                 this.callback(1);
                             }
-                            this.close();
                         }}>确定</Button>
                         <Button onClick={()=>{
+                            this.close();
                             if (typeof this.callback === 'function') {
                                 this.callback(0);
                             }
-                            this.close();
                         }} theme='secondary'>取消</Button>
                     </React.Fragment>
                 );
@@ -226,7 +247,7 @@ class Modal extends React.PureComponent {
     }
 
     render() {
-        return (
+        let content =  (
             <div className={this.getClasses()} tabIndex="-1" id={this.domId} role="dialog">
                 <div className={this.getDialogClasses()} role="document">
                     <div className="modal-content">
@@ -246,6 +267,10 @@ class Modal extends React.PureComponent {
                 </div>
             </div>
         );
+
+        return ReactDOM.createPortal(
+            content,document.body
+        );
     }
 }
 
@@ -253,10 +278,12 @@ Modal.propTypes = {
     onOpen: PropTypes.func,
     onClose: PropTypes.func,
     center: PropTypes.bool,
+    fade: PropTypes.bool
 };
 
 Modal.defaultProps = {
-
+    center:false,
+    fade:false
 };
 
 export default Modal;

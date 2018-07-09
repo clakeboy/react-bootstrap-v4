@@ -62,7 +62,7 @@ class Main extends React.Component {
             let data = this.state.pageData;
             data[name] = val;
             this.setState({
-                data:data
+                pageData:data
             })
         };
     }
@@ -75,9 +75,12 @@ class Main extends React.Component {
                     <Button className='mr-1' onClick={e=>{
                         this.props.history.push('/skill/jump',this.state);
                     }}>转到内联</Button>
-                    <Button onClick={e=>{
+                    <Button className='mr-1' onClick={e=>{
                         this.props.history.push('/coupon',this.state);
                     }}>转到 Demo2</Button>
+                    <Button onClick={e=>{
+                        this.props.history.push('/test_modal',this.state);
+                    }}>转到 Table Modal</Button>
                 </Container>
                 <Container className='p-0 mb-1' inline fluid>
                     <Input className='mr-1' disabled width='100' placeholder='用户名' onChange={this.changeHandler('user_name')} data={this.state.pageData.user_name}/>
@@ -91,11 +94,18 @@ class Main extends React.Component {
                 <Card className='mb-2' header='User Info'>
                     <div className='form-row'>
                         <Input className='col-6' label='Name' plaintext data='Clake'/>
-                        <Input className='col-6' label='Last Name' data='Lee'/>
+                        <Input className='col-6' label='Last Name' data={this.state.pageData.last_name} onChange={this.changeHandler('last_name')} validate={{rule:/.+/,text:'请填写用户名'}}/>
                     </div>
                     <div className='form-row'>
                         <Select className='col-6' label='City Object' data={this.dataList} defaultValue='3'/>
-                        <Select className='col-6' label='City Text' data={this.dataArrList} defaultValue='Dropdown Text2' summary='下载文本'/>
+                        <Select className='col-6' label='City Text' onSelect={(e)=>{
+                            console.log(e.target.value);
+                            let data = this.state.pageData;
+                            data['city'] = e.target.value;
+                            this.setState({
+                                pageData:data
+                            })
+                        }} data={this.dataArrList} value={this.state.pageData.city} defaultValue='Dropdown Text2' summary='下载文本'/>
                     </div>
                     <div className='form-row'>
                         <Input className='col-6' label='Calendar Unix Timestamp' data='1518427253' calendarFormat='unix' calendar readOnly/>
@@ -108,7 +118,7 @@ class Main extends React.Component {
                 </Card>
                 <Card className='bg-light mb-3' header='Small size'>
                     <Container className='p-0 mb-1' inline>
-                        <InputGroup className='mr-1' ref={c=>this.ing=c} width={200} label="测试" size='sm' placeholder='测试数据填写' df="11111"/>
+                        <InputGroup className='mr-1' ref={c=>this.ing=c} disabled={this.state.testChecked} width={200} label="测试" size='sm' placeholder='测试数据填写' df="11111"/>
                         <Button className='mr-1' theme='dark' size='sm' icon='user' onClick={e=>console.log(this.ing.getValue())}>
                             点击
                         </Button>
@@ -119,11 +129,13 @@ class Main extends React.Component {
                     <Container inline>
                         <Checkbox ref={c=>this.chk = c} className='mr-1' onChange={e=>{
                             this.setState({
-                                testChecked:e.target.checked
+                                testChecked:!e.target.checked
                             })
-                        }} checked={this.state.testChecked} label=''/>
+                        }} checked={this.state.pageData.testChecked} label=''/>
                         <Button className='mr-1' size='sm' onClick={e=>{
-                            this.setState({testChecked:!this.state.testChecked})
+                            let data = this.state.pageData;
+                            data['testChecked'] = !data['testChecked'];
+                            this.setState({pageData:data})
                         }}>
                             State 方式测试
                         </Button>
@@ -133,7 +145,7 @@ class Main extends React.Component {
                             setValue 方式测试
                         </Button>
                     </Container>
-                    <Input label='Email' placeholder='Please enter your email address' size='sm'/>
+                    <Input label='Email' disabled={this.state.testChecked} placeholder='Please enter your email address' size='sm'/>
                 </Card>
                 <Card className='mb-2' header='Table'>
                     <Table hover={true} select={true} headerTheme='light' data={this.dataTable}>

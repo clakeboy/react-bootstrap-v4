@@ -53,6 +53,7 @@ class Select extends React.PureComponent {
      * Event
      *********************/
     selectHandler = (e) => {
+        console.log(e);
         this.setState({
             value:e.target.value
         });

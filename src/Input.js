@@ -13,7 +13,9 @@ class Input extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {
-            value: this.props.data
+            value: this.props.data,
+            validate:true,
+            disabled:this.props.disabled
         };
 
         this.domId = common.RandomString(16);
@@ -38,6 +40,9 @@ class Input extends React.PureComponent {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
+        if (nextProps.disabled !== this.props.disabled) {
+            return true
+        }
         return nextState.value !== this.state.value;
     }
 
@@ -84,20 +89,34 @@ class Input extends React.PureComponent {
                 size = ''
         }
 
+        if (!this.state.validate) {
+            base = classNames(base,'is-invalid');
+        }
+
         return classNames(base, size);
+    }
+
+    validate(val) {
+        if (this.props.validate) {
+            return this.props.validate.rule.test(val);
+        }
+        return true;
     }
 
     /*********************
      * Event
      *********************/
     changeHandler = (e) => {
-        this.setState({
-            value:e.target.value
-        });
+        let state = {
+            value:e.target.value,
+            validate:this.validate(e.target.value)
+        };
 
-        if (this.props.onChange && typeof this.props.onChange === 'function') {
-            this.props.onChange(e.target.value,this);
-        }
+        this.setState(state,()=>{
+            if (typeof this.props.onChange === 'function') {
+                this.props.onChange(state.value,state.validate,this);
+            }
+        });
     };
 
     /*********************
@@ -113,6 +132,13 @@ class Input extends React.PureComponent {
     }
 
     renderSummary() {
+        if (!this.state.validate) {
+            return (
+                <div className='invalid-feedback'>
+                    {this.props.validate.text}
+                </div>
+            )
+        }
         if (!this.props.summary) {
             return null
         }
@@ -171,6 +197,8 @@ Input.propTypes = {
     onChange   : PropTypes.func,
     plaintext: PropTypes.bool,
     calendarFormat: PropTypes.string,
+    validate: PropTypes.object,
+    disabled: PropTypes.bool
 };
 
 Input.defaultProps = {
@@ -180,6 +208,7 @@ Input.defaultProps = {
     data    : null,
     summary : '',
     readOnly: false,
+    disabled:false
 };
 
 export default Input;

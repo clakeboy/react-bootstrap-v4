@@ -63,7 +63,8 @@
     "webpack-dev-middleware": "^1.12.2",
     "webpack-hot-middleware": "^2.21.0",
     "webpack-merge": "^4.1.1",
-    "webpack-require-http": "^0.4.3"
+    "webpack-require-http": "^0.4.3",
+    "es6-promise": "^4.2.4"
   },
   "dependencies": {
     "jquery": "^3.3.1",

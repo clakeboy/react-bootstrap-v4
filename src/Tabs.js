@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import common from "./Common";
-
+import $ from 'jquery';
 import './css/Tabs.less';
 
 class Tabs extends React.PureComponent {
@@ -16,8 +16,14 @@ class Tabs extends React.PureComponent {
     }
 
     componentDidMount() {
-
+        $('#'+this.domId).on('show.bs.tab',this.selectHandler);
     }
+
+    selectHandler = (e)=>{
+        if (typeof this.props.onSelect === 'function') {
+            this.props.onSelect(e.target.dataset.tabid,e.relatedTarget.dataset.tabid);
+        }
+    };
 
     getClasses() {
         let base = 'nav';
@@ -40,7 +46,7 @@ class Tabs extends React.PureComponent {
                     return (
                         <li className="nav-item">
                             <a className={class_name} id={`${item.props.id}-tab`} href={`#${item.props.id}`}
-                               data-toggle="tab" role="tab" aria-controls={item.props.id} aria-selected={this.props.active?'true':'false'}>
+                               data-tabid={item.props.id} data-toggle="tab" role="tab" aria-controls={item.props.id} aria-selected={this.props.active?'true':'false'}>
                                 {item.props.text}
                             </a>
                         </li>
@@ -51,6 +57,9 @@ class Tabs extends React.PureComponent {
     }
 
     renderContents() {
+        if (!this.props.content) {
+            return null;
+        }
         let base = 'tab-content ck-tabs-content';
         if (this.props.border) {
             base = classNames(base,'ck-tabs-border');
@@ -88,10 +97,13 @@ class Tabs extends React.PureComponent {
 Tabs.propTypes = {
     pills: PropTypes.bool,
     border: PropTypes.bool,
+    content: PropTypes.bool,
+    onSelect: PropTypes.func
 };
 
 Tabs.defaultProps = {
-    border: true
+    border: true,
+    content: true
 };
 
 export default Tabs;

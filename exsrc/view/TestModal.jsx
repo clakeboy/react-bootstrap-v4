@@ -24,14 +24,14 @@ import {
     TabsContent,
     Load
 } from '../../src/index';
-import Fetch from "../common/Fetch";
+
 class TestModal extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {
-            data:[],
-            count:0,
-            currentPage:1
+            data       : [],
+            count      : 0,
+            currentPage: 1
         };
 
         this.pageNumber = 30;
@@ -44,29 +44,70 @@ class TestModal extends React.PureComponent {
     getClasses() {
         let base = '';
 
-        return classNames(base,this.props.className);
+        return classNames(base, this.props.className);
     }
 
+
     loadTask(page) {
-        this.modal.loading("加载中...");
-        Fetch("/serv/task/query",{page:page,number:this.pageNumber},(res)=>{
-            this.modal.close();
-            if (res.status) {
-                this.setState({
-                    data:res.data.list,
-                    currentPage:page,
-                    count:res.data.count
-                });
-            } else {
-                this.modal.alert(res.msg);
-            }
+        let res = {
+            "data"  : {
+                "list"     : [{
+                    "id"             : 3,
+                    "task_name"      : "测试通知",
+                    "time_rule"      : "0 * * * * *",
+                    "once"           : true,
+                    "is_execute"     : true,
+                    "disable"        : false,
+                    "notify_url"     : "http://localhost:9803/notify",
+                    "notify_method"  : "GET",
+                    "notify_data"    : "",
+                    "notify_number"  : 6,
+                    "notified_number": 6,
+                    "source"         : "System",
+                    "created_date"   : 1530864160
+                }, {
+                    "id"             : 2,
+                    "task_name"      : "测试一次通知",
+                    "time_rule"      : "* */1 * * * *",
+                    "once"           : true,
+                    "is_execute"     : true,
+                    "disable"        : false,
+                    "notify_url"     : "http://localhost:9803/serv/server/status",
+                    "notify_method"  : "GET",
+                    "notify_data"    : "",
+                    "notify_number"  : 3,
+                    "notified_number": 7,
+                    "source"         : "System",
+                    "created_date"   : 1530783655
+                }, {
+                    "id"             : 1,
+                    "task_name"      : "测试任务",
+                    "time_rule"      : "0 * * * * *",
+                    "once"           : true,
+                    "is_execute"     : true,
+                    "disable"        : false,
+                    "notify_url"     : "http://localhost:9803",
+                    "notify_method"  : "GET",
+                    "notify_data"    : "asdfasdf",
+                    "notify_number"  : 7,
+                    "notified_number": 12,
+                    "source"         : "",
+                    "created_date"   : 1530767866
+                }], "count": 3
+            }, "msg": "ok", "status": true
+        };
+
+        this.setState({
+            data       : res.data.list,
+            currentPage: page,
+            count      : res.data.count
         });
     }
 
     render() {
         return (
             <Container>
-                <Button onClick={()=>{
+                <Button onClick={() => {
                     this.props.history.goBack();
                 }}>返回主页</Button>
                 <Card header='测试加载'>
@@ -74,38 +115,45 @@ class TestModal extends React.PureComponent {
                         <Table.Header text='任务ID' field='id'/>
                         <Table.Header text='任务名称' field='task_name'/>
                         <Table.Header text='时间规则' field='time_rule'/>
-                        <Table.Header text='执行一次' field='once' onFormat={val=>{
-                            return val? <span className="badge badge-success">是</span>:'否';
+                        <Table.Header text='执行一次' field='once' onFormat={val => {
+                            return val ? <span className="badge badge-success">是</span> : '否';
                         }}/>
                         <Table.Header text='通知次数' field='notify_number'/>
                         <Table.Header text='已通知次数' field='notified_number'/>
-                        <Table.Header text='创建时间' field='created_date' onFormat={value=>{
+                        <Table.Header text='创建时间' field='created_date' onFormat={value => {
                             return moment.unix(value).format("YYYY-MM-DD hh:mm:ss");
                         }}/>
-                        <Table.Header text='操作' align='center' onFormat={()=>{
+                        <Table.Header text='操作' align='center' onFormat={() => {
                             return <ButtonGroup>
                                 <Button size='sm' icon='edit' theme='success'>修改</Button>
                                 <Button size='sm' icon='trash-alt' theme='danger'>册除</Button>
                             </ButtonGroup>
-                        }} />
+                        }}/>
                     </Table>
                     <Pagination count={this.state.count} current={this.state.currentPage}
                                 number={this.pageNumber} showPage={10}
-                                onSelect={page=>this.loadTask(page)}/>
+                                onSelect={page => this.loadTask(page)}/>
                 </Card>
+                <Title className='mb-2'>
+                    Tabs 组件 不使用内容
+                </Title>
+                <Tabs border={false} content={false}>
+                    <TabsContent id='label1' text='标题1' active>
 
-                <Modal ref={c=>this.modal=c}/>
+                    </TabsContent>
+                    <TabsContent id='label2' text='标题2'>
+
+                    </TabsContent>
+                </Tabs>
+                <hr/>
+                <Modal ref={c => this.modal = c}/>
             </Container>
         );
     }
 }
 
-TestModal.propTypes = {
+TestModal.propTypes = {};
 
-};
-
-TestModal.defaultProps = {
-
-};
+TestModal.defaultProps = {};
 
 export default TestModal;

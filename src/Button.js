@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import Icon from './Icon';
+import './css/Button.less';
 
 class Button extends React.PureComponent {
     constructor(props) {
@@ -26,7 +27,11 @@ class Button extends React.PureComponent {
 
         //size
         if (this.props.size !== 'df') {
-            base = classNames(base,"btn-"+this.props.size);
+            if (this.props.size ==='xs') {
+                base = classNames(base,"ck-btn-xs");
+            } else {
+                base = classNames(base,"btn-"+this.props.size);
+            }
         }
 
         //block
@@ -66,7 +71,7 @@ class Button extends React.PureComponent {
 Button.propTypes = {
     theme: PropTypes.oneOf(['primary','secondary','success','danger','warning','info','light','dark','link']),
     outline: PropTypes.bool,
-    size: PropTypes.oneOf(['df','sm','lg']),
+    size: PropTypes.oneOf(['df','sm','lg','xs']),
     onClick: PropTypes.func,
     icon: PropTypes.string,
     disabled: PropTypes.bool,

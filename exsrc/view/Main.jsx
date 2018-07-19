@@ -171,7 +171,7 @@ class Main extends React.Component {
                         <Table.Header text='Both' field='both'/>
                         <Table.Header text='Test' field='test'/>
                         <Table.Header text='Action' onFormat={row=>{
-                            return <Button className='color-blue' size='sm' icon='plus'>Add</Button>
+                            return <Button className='color-blue' size='xs' icon='plus'>Add</Button>
                         }} />
                     </Table>
                     <Pagination size='sm' count={1000} current={1} number={30} showPage={10}/>

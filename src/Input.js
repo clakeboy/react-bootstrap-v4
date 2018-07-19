@@ -43,6 +43,9 @@ class Input extends React.PureComponent {
         if (nextProps.disabled !== this.props.disabled) {
             return true
         }
+        if (nextState.validate !== this.state.validate) {
+            return true
+        }
         return nextState.value !== this.state.value;
     }
 
@@ -96,6 +99,14 @@ class Input extends React.PureComponent {
         return classNames(base, size);
     }
 
+    check() {
+        let validate = this.validate(this.state.value);
+        this.setState({
+            validate:validate
+        });
+        return validate
+    }
+
     validate(val) {
         if (this.props.validate) {
             return this.props.validate.rule.test(val);
@@ -108,8 +119,7 @@ class Input extends React.PureComponent {
      *********************/
     changeHandler = (e) => {
         let state = {
-            value:e.target.value,
-            validate:this.validate(e.target.value)
+            value:e.target.value
         };
 
         this.setState(state,()=>{
@@ -117,6 +127,12 @@ class Input extends React.PureComponent {
                 this.props.onChange(state.value,state.validate,this);
             }
         });
+    };
+
+    blurHandler = (e)=>{
+        this.setState({
+            validate:this.validate(e.target.value)
+        })
     };
 
     /*********************
@@ -176,7 +192,7 @@ class Input extends React.PureComponent {
         return (
             <div className={this.getMainClasses()} style={this.getMainStyles()}>
                 {this.renderLabel()}
-                <input ref={c=>this.input=c} type="text" {...this.props} onChange={this.changeHandler} value={this.state.value} className={this.getInputClasses()} id={this.domId}/>
+                <input ref={c=>this.input=c} type="text" {...this.props} onBlur={this.blurHandler} onChange={this.changeHandler} value={this.state.value} className={this.getInputClasses()} id={this.domId}/>
                 {this.renderSummary()}
                 {this.renderCalendar()}
             </div>

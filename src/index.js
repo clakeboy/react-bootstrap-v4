@@ -23,3 +23,4 @@ export TabsContent from './TabsContent';
 export Switch from './Switch';
 export Load from './Load';
 export LoaderComponent from "./components/LoaderComponent";
+export CKModal from './CKModal';

@@ -21,7 +21,8 @@ import {
     Title,
     Tabs,
     TabsContent,
-    Load
+    Load,
+    CKModal
 } from '../../src/index';
 import Loader from '../components/Loader';
 
@@ -111,8 +112,7 @@ class Coupon extends React.PureComponent {
                         callback:(flag)=>{
                             console.log(flag);
                         },
-                        center:true,
-                        fade:true
+                        center:true
                     })}>测试 confirm 警告 Modal</Button>
                     <Button theme='secondary' onClick={e=>{
                         let idx = 3;
@@ -129,8 +129,7 @@ class Coupon extends React.PureComponent {
                     }}>测试 loading 加载 Modal</Button>
                     <Button theme='info' onClick={e=>this.modal.view({
                         title:'添加优惠券',
-                        content:<Loader loadPath='/AddCoupon' import={GetModal}/>,
-                        fade:true
+                        content:<Loader loadPath='/AddCoupon' import={GetModal}/>
                     })}>测试 view 自定义内容 Modal</Button>
                     </ButtonGroup>
                     <Button className='mt-4' block>Button Block</Button>
@@ -161,7 +160,7 @@ class Coupon extends React.PureComponent {
                         }}/>
                     </TabsContent>
                 </Tabs>
-                <Modal ref={c=>this.modal=c}/>
+                <CKModal ref={c=>this.modal=c}/>
             </Container>
         );
     }

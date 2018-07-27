@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import Title from './Title';
+import './css/Card.less'
 
 class Card extends React.PureComponent {
     constructor(props) {
@@ -20,6 +21,22 @@ class Card extends React.PureComponent {
         return classNames(base,this.props.className);
     }
 
+    getStyle() {
+        let def = {};
+        if (this.props.absolute) {
+            def.left = this.props.x;
+            def.top = this.props.y;
+            def.position = 'absolute';
+        }
+        if (this.props.width) {
+            def.width = this.props.width;
+        }
+        if (this.props.height) {
+            def.height = this.props.height;
+        }
+        return def;
+    }
+
     renderHeader() {
         if (!this.props.header) {
             return null;
@@ -27,14 +44,19 @@ class Card extends React.PureComponent {
         if (this.props.custom) {
             return <Title text={this.props.header}/>
         }
+
+        let base = 'card-header';
+        if (this.props.sm) {
+            base = classNames(base,'ck-card-sm');
+        }
         return (
-            <div className='card-header'>{this.props.header}</div>
+            <div className={base}>{this.props.header}</div>
         )
     }
 
     render() {
         return (
-            <div className={this.getClasses()}>
+            <div className={this.getClasses()} style={this.getStyle()}>
                 {this.renderHeader()}
                 <div className="card-body">
                     {this.props.children}
@@ -48,6 +70,12 @@ Card.propTypes = {
     header: PropTypes.string,
     border: PropTypes.oneOf(['primary','secondary','success','danger','warning','info','light','dark','transparent']),
     custom: PropTypes.bool,
+    absolute: PropTypes.bool,
+    x: PropTypes.string,
+    y: PropTypes.string,
+    width: PropTypes.string,
+    height: PropTypes.string,
+    sm: PropTypes.bool,
 };
 
 Card.defaultProps = {

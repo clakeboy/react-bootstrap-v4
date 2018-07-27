@@ -116,7 +116,7 @@ class Main extends React.Component {
                     </div>
                     <TextArea label='Summary' summary='input something' data={this.state.pageData.text_area} rows={10}/>
                 </Card>
-                <Card className='bg-light mb-3' header='Small size'>
+                <Card className='bg-light mb-3' header='Small size' absolute sm x='100px' y='100px' width='500px' height='400px'>
                     <Container className='p-0 mb-1' inline>
                         <InputGroup className='mr-1' ref={c=>this.ing=c} disabled={this.state.testChecked} width={200} label="测试" size='sm' placeholder='测试数据填写' df="11111"/>
                         <Button className='mr-1' theme='dark' size='sm' icon='user' onClick={e=>console.log(this.ing.getValue())}>

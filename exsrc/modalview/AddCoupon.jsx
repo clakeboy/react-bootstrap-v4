@@ -18,7 +18,7 @@ import {
     Select,
     Calendar,
     TextArea,
-    Modal
+    CKModal
 } from '../../src/index';
 
 class AddCoupon extends React.PureComponent {
@@ -63,7 +63,7 @@ class AddCoupon extends React.PureComponent {
                         content:'试试 Modal 内再调用 Modal',
                     })
                 }}>添加</Button>
-                <Modal ref={c=>this.modal=c} center/>
+                <CKModal ref={c=>this.modal=c} center/>
             </div>
         );
     }

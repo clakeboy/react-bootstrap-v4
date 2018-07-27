@@ -13,9 +13,9 @@ class Input extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {
-            value: this.props.data,
-            validate:true,
-            disabled:this.props.disabled
+            value   : this.props.data,
+            validate: true,
+            disabled: this.props.disabled
         };
 
         this.domId = common.RandomString(16);
@@ -26,17 +26,23 @@ class Input extends React.PureComponent {
 
     componentDidMount() {
         if (this.props.calendar) {
-            $(ReactDOM.findDOMNode(this.input)).on('focus',(e)=>{
+            this.input.addEventListener('focus',(e) => {
                 this.calendar.show(e.currentTarget);
-            });
-            $(ReactDOM.findDOMNode(this.input)).on('mousedown',(e)=>{
+            },false);
+            this.input.addEventListener('mousedown',(e) => {
                 e.stopPropagation();
-            });
+            },false);
+            // $(ReactDOM.findDOMNode(this.input)).on('focus', (e) => {
+            //     this.calendar.show(e.currentTarget);
+            // });
+            // $(ReactDOM.findDOMNode(this.input)).on('mousedown', (e) => {
+            //     e.stopPropagation();
+            // });
         }
     }
 
     componentWillReceiveProps(nextProp) {
-        this.setState({value:nextProp.data});
+        this.setState({value: nextProp.data});
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -54,7 +60,7 @@ class Input extends React.PureComponent {
     }
 
     setValue(val) {
-        this.setState({value:val});
+        this.setState({value: val});
     }
 
     getMainClasses() {
@@ -65,8 +71,8 @@ class Input extends React.PureComponent {
     getMainStyles() {
         //default style
         let def_style = {
-            "width": this.props.width + "px",
-            "position":"relative"
+            "width"   : this.props.width + "px",
+            "position": "relative"
         };
 
         return common.extend(def_style, this.props.style)
@@ -76,7 +82,7 @@ class Input extends React.PureComponent {
         let base = 'form-control ck-input';
         //readonly
         if (this.props.plaintext) {
-            base = 'form-control-plaintext';
+            base                = 'form-control-plaintext';
             this.props.readOnly = true;
         }
         //size
@@ -93,7 +99,11 @@ class Input extends React.PureComponent {
         }
 
         if (!this.state.validate) {
-            base = classNames(base,'is-invalid');
+            base = classNames(base, 'is-invalid');
+        }
+
+        if (this.props.calendar) {
+            base = classNames(base,'ck-input-icon');
         }
 
         return classNames(base, size);
@@ -102,7 +112,7 @@ class Input extends React.PureComponent {
     check() {
         let validate = this.validate(this.state.value);
         this.setState({
-            validate:validate
+            validate: validate
         });
         return validate
     }
@@ -119,19 +129,19 @@ class Input extends React.PureComponent {
      *********************/
     changeHandler = (e) => {
         let state = {
-            value:e.target.value
+            value: e.target.value
         };
 
-        this.setState(state,()=>{
+        this.setState(state, () => {
             if (typeof this.props.onChange === 'function') {
-                this.props.onChange(state.value,state.validate,this);
+                this.props.onChange(state.value, state.validate, this);
             }
         });
     };
 
-    blurHandler = (e)=>{
+    blurHandler = (e) => {
         this.setState({
-            validate:this.validate(e.target.value)
+            validate: this.validate(e.target.value)
         })
     };
 
@@ -171,16 +181,16 @@ class Input extends React.PureComponent {
         }
         let input_icon = 'ck-input-calendar-icon';
         if (this.props.size) {
-            input_icon = classNames(input_icon,'ck-input-calendar-icon-'+this.props.size);
+            input_icon = classNames(input_icon, 'ck-input-calendar-icon-' + this.props.size);
         }
         return (
             <div className='ck-input-calendar'>
-                <Calendar ref={c=>this.calendar=c} onSelect={(val)=>{
+                <Calendar ref={c => this.calendar = c} onSelect={(val) => {
                     this.setState({
-                        value:val,
+                        value: val,
                     });
                     if (this.props.onChange && typeof this.props.onChange === 'function') {
-                        this.props.onChange(val,this);
+                        this.props.onChange(val, this);
                     }
                 }} value={this.state.value} format={this.props.calendarFormat} none shadow absolute triangular='up'/>
                 <div className={input_icon}><Icon iconType='regular' icon='calendar-alt'/></div>
@@ -192,7 +202,7 @@ class Input extends React.PureComponent {
         return (
             <div className={this.getMainClasses()} style={this.getMainStyles()}>
                 {this.renderLabel()}
-                <input ref={c=>this.input=c} type="text" {...this.props} onBlur={this.blurHandler} onChange={this.changeHandler} value={this.state.value} className={this.getInputClasses()} id={this.domId}/>
+                <input ref={c => this.input = c} type="text" {...this.props} onBlur={this.blurHandler} onChange={this.changeHandler} value={this.state.value} className={this.getInputClasses()} id={this.domId}/>
                 {this.renderSummary()}
                 {this.renderCalendar()}
             </div>
@@ -201,20 +211,21 @@ class Input extends React.PureComponent {
 }
 
 Input.propTypes = {
-    id         : PropTypes.string,
-    size       : PropTypes.oneOf(['df', 'sm', 'lg']),
-    label      : PropTypes.string,
-    data       : PropTypes.any,
-    summary    : PropTypes.string,
-    readOnly   : PropTypes.bool,
-    width      : PropTypes.number,
-    placeholder: PropTypes.string,
-    calendar: PropTypes.bool,
-    onChange   : PropTypes.func,
-    plaintext: PropTypes.bool,
+    id            : PropTypes.string,
+    size          : PropTypes.oneOf(['df', 'sm', 'lg']),
+    label         : PropTypes.string,
+    data          : PropTypes.any,
+    summary       : PropTypes.string,
+    readOnly      : PropTypes.bool,
+    width         : PropTypes.number,
+    placeholder   : PropTypes.string,
+    calendar      : PropTypes.bool,
+    onChange      : PropTypes.func,
+    plaintext     : PropTypes.bool,
     calendarFormat: PropTypes.string,
-    validate: PropTypes.object,
-    disabled: PropTypes.bool
+    validate      : PropTypes.object,
+    disabled      : PropTypes.bool,
+    combo         : PropTypes.object
 };
 
 Input.defaultProps = {
@@ -224,7 +235,7 @@ Input.defaultProps = {
     data    : null,
     summary : '',
     readOnly: false,
-    disabled:false
+    disabled: false
 };
 
 export default Input;

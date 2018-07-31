@@ -12,7 +12,7 @@ class Combo extends React.PureComponent {
     }
 
     getClasses() {
-        let base = '';
+        let base = 'ck-combo';
 
         return classNames(base,this.props.className);
     }

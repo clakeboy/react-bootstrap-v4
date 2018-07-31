@@ -23,6 +23,9 @@ class Checkbox extends React.PureComponent {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
+        if (nextProps.disabled !== this.props.disabled) {
+            return true
+        }
         return nextState.checked !== this.state.checked;
     }
 

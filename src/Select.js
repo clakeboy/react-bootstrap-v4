@@ -19,6 +19,9 @@ class Select extends React.PureComponent {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
+        if (nextProps.disabled !== this.props.disabled) {
+            return true
+        }
         return nextState.data !== this.state.data || nextState.value !== this.state.value;
     }
 

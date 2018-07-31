@@ -71,9 +71,10 @@ gulp.task('publish:pack',['clean:publish'],(callback)=>{
         .pipe(gulp.dest('lib'));
 });
 
-gulp.task('publish:css',()=>{
-    return gulp.src('src/css/*.less')
+gulp.task('publish:css',(callback)=>{
+    gulp.src('src/css/*.less')
         .pipe(gulp.dest('lib/css'));
+    callback();
 });
 
 // gulp.task('publish:header',()=>{

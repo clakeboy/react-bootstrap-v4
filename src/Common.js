@@ -176,9 +176,10 @@ export var map = (obj,func) => {
     let list = [];
     let idx = 0;
     for (let k in obj) {
-        list.push(func(obj[k],idx));
+        list.push(func(obj[k],k,idx));
         idx++
     }
+    return list;
 };
 
 export var str_pad = (text, length, padstring) => {

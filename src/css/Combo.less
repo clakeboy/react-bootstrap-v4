@@ -4,5 +4,93 @@
   display: inline-block;
   z-index: 1160;
   background-color: white;
+  border-radius: 3px;
+  padding: 5px;
+  &:before,&:after {
+    position:absolute;
+    display:block;
+    content:'';
+    border: solid transparent;
+  }
+}
 
+.ck-combo-content {
+  width:100%;
+  height:100%;
+}
+
+.ck-combo-nofound {
+  padding: 5px 8px;
+}
+
+.ck-combo-up:before{
+  border-width: 10px;
+  border-bottom-color: #dee2e6;
+  /* 定位 */
+
+  left:8px;
+  top:-20px;
+}
+
+.ck-combo-up:after{
+  border-width: 8px;
+  border-bottom-color: #ffffff;
+
+  /* 定位 */
+  left:10px;
+  top:-16px;
+}
+
+.ck-combo-left:before{
+  border-width: 10px;
+  border-right-color: #dee2e6;
+  /* 定位 */
+
+  left:-20px;
+  top:8px;
+}
+
+.ck-combo-left:after{
+  border-width: 8px;
+  border-right-color: #ffffff;
+
+  /* 定位 */
+  left:-16px;
+  top:10px;
+}
+
+.ck-combo-right:before{
+  border-width: 10px;
+  border-left-color: #dee2e6;
+  /* 定位 */
+
+  right:-20px;
+  top:8px;
+}
+
+.ck-combo-right:after{
+  border-width: 8px;
+  border-left-color: #ffffff;
+
+  /* 定位 */
+  right:-16px;
+  top:10px;
+}
+
+.ck-combo-bottom:before{
+  border-width: 10px;
+  border-top-color: #dee2e6;
+  /* 定位 */
+
+  bottom:-20px;
+  left:8px;
+}
+
+.ck-combo-bottom:after{
+  border-width: 8px;
+  border-top-color: #ffffff;
+
+  /* 定位 */
+  bottom:-16px;
+  left:10px;
 }

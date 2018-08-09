@@ -22,6 +22,9 @@ TableHeader.propTypes = {
     onSort: PropTypes.func,
     align: PropTypes.string,
     hide: PropTypes.bool,
+    tree: PropTypes.bool,
+    width: PropTypes.string,
+    onClickTree: PropTypes.func
 };
 
 TableHeader.defaultProps = {

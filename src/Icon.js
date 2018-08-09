@@ -36,7 +36,7 @@ class Icon extends React.Component {
 
     render() {
         return (
-            <span className={this.getClasses()}/>
+            <i {...this.props} className={this.getClasses()}/>
         );
     }
 }

@@ -97,7 +97,7 @@ class Pagination extends React.PureComponent {
 
     render() {
         return (
-            <nav>
+            <nav {...this.props}>
                 <ul className={this.getClasses()}>
                     <li className="page-item disabled"><span className="page-link">共有{this.props.count}条记录</span></li>
                     <li className="page-item"><a className="page-link" href="javascript://" onClick={this.clickHandler('first')}>首页</a></li>

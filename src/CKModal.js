@@ -5,6 +5,7 @@ import common from "./Common";
 import ReactDOM from "react-dom";
 import Button from './Button';
 import Load from "./Load";
+import './css/Modal.less';
 
 const ModalAlert = 0;
 const ModalConfirm = 1;
@@ -63,6 +64,12 @@ class CKModal extends React.PureComponent {
         document.body.classList.add("modal-open");
         document.body.style.paddingRight = '15px';
         this.is_open = true;
+        if (this.props.blurSelector) {
+            let selector = document.querySelector(this.props.blurSelector);
+            if (selector) {
+                selector.classList.add("ck-modal-shadow");
+            }
+        }
     }
 
     close() {
@@ -74,6 +81,12 @@ class CKModal extends React.PureComponent {
         if (modals === 0) {
             document.body.classList.remove("modal-open");
             document.body.style.paddingRight = '0';
+            if (this.props.blurSelector) {
+                let selector = document.querySelector(this.props.blurSelector);
+                if (selector) {
+                    selector.classList.remove("ck-modal-shadow");
+                }
+            }
         }
         this.is_open = false;
     }
@@ -231,7 +244,7 @@ class CKModal extends React.PureComponent {
     }
 
     getShadowClasses() {
-        let base = 'modal-backdrop show';
+        let base = 'modal-backdrop show ck-modal-shadow';
 
         if (this.state.show) {
             base = classNames(base,'show');
@@ -323,7 +336,8 @@ CKModal.propTypes = {
     onOpen: PropTypes.func,
     onClose: PropTypes.func,
     center: PropTypes.bool,
-    fade: PropTypes.bool
+    fade: PropTypes.bool,
+    blurSelector: PropTypes.string
 };
 
 CKModal.defaultProps = {

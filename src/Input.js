@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import common from './Common';
 import Calendar from './Calendar';
-import $ from "jquery";
-import ReactDOM from "react-dom";
+import Combo from './Combo';
 import Icon from "./Icon";
 
 import './css/Input.less';
@@ -26,18 +25,26 @@ class Input extends React.PureComponent {
 
     componentDidMount() {
         if (this.props.calendar) {
-            this.input.addEventListener('focus',(e) => {
+            this.input.addEventListener('focus', (e) => {
                 this.calendar.show(e.currentTarget);
-            },false);
-            this.input.addEventListener('mousedown',(e) => {
+            }, false);
+            this.input.addEventListener('mousedown', (e) => {
                 e.stopPropagation();
-            },false);
+            }, false);
             // $(ReactDOM.findDOMNode(this.input)).on('focus', (e) => {
             //     this.calendar.show(e.currentTarget);
             // });
             // $(ReactDOM.findDOMNode(this.input)).on('mousedown', (e) => {
             //     e.stopPropagation();
             // });
+        }
+        if (this.props.combo) {
+            this.input.addEventListener('focus', (e) => {
+                this.combo.show(this.state.value);
+            }, false);
+            this.input.addEventListener('mousedown', (e) => {
+                e.stopPropagation();
+            }, false);
         }
     }
 
@@ -102,8 +109,8 @@ class Input extends React.PureComponent {
             base = classNames(base, 'is-invalid');
         }
 
-        if (this.props.calendar) {
-            base = classNames(base,'ck-input-icon');
+        if (this.props.calendar || this.props.combo) {
+            base = classNames(base, 'ck-input-icon');
         }
 
         return classNames(base, size);
@@ -134,7 +141,10 @@ class Input extends React.PureComponent {
 
         this.setState(state, () => {
             if (typeof this.props.onChange === 'function') {
-                this.props.onChange(state.value, state.validate, this);
+                this.props.onChange(state.value, null, this);
+            }
+            if (this.combo) {
+                this.combo.filter(state.value);
             }
         });
     };
@@ -143,6 +153,19 @@ class Input extends React.PureComponent {
         this.setState({
             validate: this.validate(e.target.value)
         })
+    };
+
+    /**
+     * Combo select event
+     * @param text string
+     * @param row object
+     */
+    selectHandler = (text,row)=>{
+        this.setState({value:text},()=>{
+            if (typeof this.props.onChange === 'function') {
+                this.props.onChange(text, row, this);
+            }
+        });
     };
 
     /*********************
@@ -198,6 +221,24 @@ class Input extends React.PureComponent {
         )
     }
 
+    renderCombo() {
+        if (!this.props.combo) {
+            return null;
+        }
+        let input_icon = 'ck-input-calendar-icon';
+        if (this.props.size) {
+            input_icon = classNames(input_icon, 'ck-input-calendar-icon-' + this.props.size);
+        }
+        return (
+            <div className='ck-input-calendar'>
+                <Combo ref={c => this.combo = c} {...this.props.combo} sm={this.props.size==='sm'}
+                       data={this.props.comboData}
+                       onSelect={this.selectHandler}/>
+                <div className={input_icon}><Icon icon='angle-down'/></div>
+            </div>
+        )
+    }
+
     render() {
         return (
             <div className={this.getMainClasses()} style={this.getMainStyles()}>
@@ -205,6 +246,7 @@ class Input extends React.PureComponent {
                 <input ref={c => this.input = c} type="text" {...this.props} onBlur={this.blurHandler} onChange={this.changeHandler} value={this.state.value} className={this.getInputClasses()} id={this.domId}/>
                 {this.renderSummary()}
                 {this.renderCalendar()}
+                {this.renderCombo()}
             </div>
         );
     }
@@ -225,7 +267,8 @@ Input.propTypes = {
     calendarFormat: PropTypes.string,
     validate      : PropTypes.object,
     disabled      : PropTypes.bool,
-    combo         : PropTypes.object
+    combo         : PropTypes.object,
+    comboData     : PropTypes.object
 };
 
 Input.defaultProps = {

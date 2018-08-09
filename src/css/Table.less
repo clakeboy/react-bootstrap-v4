@@ -1,6 +1,35 @@
 .ck-table {
+  margin-bottom: 0 !important;
+
   th,td {
     vertical-align: middle!important;
     font-size: .9rem;
+  }
+
+  .table-tree-row {
+    td {
+      padding:0
+    }
+  }
+
+  .column-split {
+    float: right;
+    display: inline-block;
+    width: 5px;
+    height: 20px;
+    cursor: pointer;
+    background-color: red;
+  }
+
+  .click-row {
+    cursor: pointer;
+    user-select: none;
+    &:first-child td {
+      border-top: none;
+    }
+  }
+
+  .header {
+
   }
 }

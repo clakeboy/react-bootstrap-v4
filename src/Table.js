@@ -74,6 +74,9 @@ class Table extends React.Component {
             callback(field,sort_type);
             dom.dataset.sort = sort_type === 'asc'?'desc':'asc';
             this.sortList[field] = sort_type;
+            let child = dom.querySelector('i');
+            child.classList.remove('fa-sort','fa-sort-alpha-up','fa-sort-alpha-down');
+            child.classList.add('fa-sort-alpha-'+(sort_type === 'asc'?'down':'up'));
         }
     };
 
@@ -178,12 +181,16 @@ class Table extends React.Component {
                     if (item.props.width) {
                         style.width = this.props.width;
                     }
+                    let sort_icon = 'sort';
+                    if (this.sortList[item.props.field]) {
+                        sort_icon = 'sort-alpha-'+(this.sortList[item.props.field]==='asc'?'down':'up');
+                    }
                     return (
                         <th data-key={'head_' + key} style={style}>
                             {item.props.onSort? <a href='javascript://'
                                                    onClick={this.sortHandler(item.props.field,item.props.onSort)}>
                                 {item.props.text}{'\u0020'}
-                                <Icon icon={this.sortList[item.props.field]?`sort-${this.sortList[item.props.field]}`:'sort'}/></a>:item.props.text}
+                                <Icon icon={sort_icon}/></a>:item.props.text}
                             {this.props.move?<span className='column-split'/>:null}
                         </th>
                     );

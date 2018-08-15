@@ -9,10 +9,6 @@ class Button extends React.PureComponent {
         super(props);
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
-
-    }
-
     getClasses() {
         let base = 'btn';
         let base_style = ['btn'];

@@ -62,42 +62,26 @@ gulp.task('clean:build', (callback) => {
     callback();
 });
 
-gulp.task('publish:pack',['clean:publish'],(callback)=>{
-    return gulp.src('src/**/*.js')
+gulp.task('clean',['clean:build','clean:publish']);
+
+gulp.task('publish:pack',['clean:publish','publish:css'],(callback)=>{
+    gulp.src('src/**/*.js')
         .pipe(sourcemaps.init())
         .pipe(babel({presets: ['env','es2015', 'stage-0', 'react']}))
         .pipe(sourcemaps.write('.'))
         .pipe(header(banner))
         .pipe(gulp.dest('lib'));
+    callback();
 });
 
-gulp.task('publish:css',(callback)=>{
+gulp.task('publish:css',['clean:publish'],(callback)=>{
     gulp.src('src/css/*.less')
         .pipe(gulp.dest('lib/css'));
     callback();
 });
 
-// gulp.task('publish:header',()=>{
-//     return gulp.src('lib/**/*.js').pipe(header(banner));
-// });
-
 gulp.task('build:pack', (callback)=>{
-    let webpackConfig = require('./webpack.common').default;
-// return gulp.src('dist/*.js')
-//     .pipe(replaceVersion())
-//     .pipe(addBanner())
-//     // .pipe($.rename('ticket_manage.min.js'))
-//     // .pipe(gulp.dest(paths.dist))
-//     .pipe($.rename({suffix: '.min'}))
-//     .pipe(gulp.dest(paths.dist));
-// gulp.start('webpack');
-// webpackStream(webpackConfig,null, function(err, stats) {
-//     if(err) throw new gutil.PluginError("webpack", err);
-//     gutil.log("[webpack]", stats.toString({
-//         color:true
-//     }));
-//     callback();
-// });
+    let webpackConfig = require('./webpack.prod').default;
     webpack(webpackConfig,function(err,stats){
         gutil.log("[webpack]", stats.toString({
             colors:true
@@ -106,10 +90,11 @@ gulp.task('build:pack', (callback)=>{
     });
 });
 
-gulp.task('build:over',['build:pack'],()=>{
-    return gulp.src('dist/*.js')
+gulp.task('build:over',['build:pack'],(callback)=>{
+    gulp.src('dist/*.js')
         .pipe(header(banner))
         .pipe(gulp.dest('dist/'));
+    callback();
 });
 
 gulp.task('default', ['server']);

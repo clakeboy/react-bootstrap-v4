@@ -105,17 +105,14 @@ class Coupon extends React.PureComponent {
 
                     <Button onClick={e=>this.modal.alert({
                         title:'测试',
-                        content:'测试一下效果',
-                        fade:true,
-                        shadow:true
+                        content:'测试一下效果'
                     })}>测试 alert 警告 Modal</Button>
                     <Button theme='success' onClick={e=>this.modal.confirm({
                         content:'确定要按下这个按钮?',
                         callback:(flag)=>{
                             console.log(flag);
                         },
-                        center:true,
-                        fade:true
+                        center:true
                     })}>测试 confirm 警告 Modal</Button>
                     <Button theme='secondary' onClick={e=>{
                         let idx = 3;
@@ -132,8 +129,7 @@ class Coupon extends React.PureComponent {
                     }}>测试 loading 加载 Modal</Button>
                     <Button theme='info' onClick={e=>this.modal.view({
                         title:'添加优惠券',
-                        content:<Loader loadPath='/AddCoupon' import={GetModal}/>,
-                        fade:true
+                        content:<Loader loadPath='/AddCoupon' import={GetModal}/>
                     })}>测试 view 自定义内容 Modal</Button>
 
                     <Button className='mt-4' block>Button Block</Button>
@@ -164,7 +160,7 @@ class Coupon extends React.PureComponent {
                         }}/>
                     </TabsContent>
                 </Tabs>
-                <Modal ref={c=>this.modal=c} blurSelector='#react-main'/>
+                <CKModal ref={c=>this.modal=c} blurSelector='#react-main'/>
             </Container>
         );
     }

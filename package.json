@@ -1,6 +1,6 @@
 {
   "name": "@clake/react-bootstrap4",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "react bootstrap v4",
   "main": "lib/index.js",
   "scripts": {
@@ -59,11 +59,10 @@
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "style-loader": "^0.19.0",
-    "webpack": "^3.9.1",
-    "webpack-dev-middleware": "^1.12.2",
+    "webpack": "^4.11.1",
+    "webpack-dev-middleware": "^3.1.0",
     "webpack-hot-middleware": "^2.21.0",
     "webpack-merge": "^4.1.1",
-    "webpack-require-http": "^0.4.3",
     "es6-promise": "^4.2.4"
   },
   "dependencies": {

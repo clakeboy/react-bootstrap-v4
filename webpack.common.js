@@ -2,34 +2,12 @@
  * Created by CLAKE on 2016/8/9.
  */
 import webpack from 'webpack';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
-import path from 'path';
-import process from 'process';
-
-
-let ENV = process.env.NODE_ENV;
-// var ip = require('ip');
-
-let node_modules = path.resolve(__dirname, 'node_modules');
-let react = path.resolve(node_modules, 'react/dict/react.js');
-
-// const ip_address = ip.address();
 
 export default {
-    //页面入口文件配置
-    entry: {
-        //主文件
-        'react-bootstrap-v4' : './src/index.js'
-    },
     //插件项
     plugins: [
         // new webpack.optimize.CommonsChunkPlugin('common'),
         // new ExtractTextPlugin("[name].css"),
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false
-            }
-        }),
         new webpack.DefinePlugin({
             "process.env": {
                 NODE_ENV: JSON.stringify("production")
@@ -76,24 +54,16 @@ export default {
     //其它解决方案配置
     resolve: {
         extensions: [ '.js', '.json', '.less', '.jsx']
-        // ,alias: {
-        //     AppStore : 'js/stores/AppStores.js',
-        //     ActionType : 'js/actions/ActionType.js',
-        //     AppAction : 'js/actions/AppAction.js'
-        // }
     },
     node: {
         fs: 'empty'
     },
-    externals: [
-        {
-            "jquery": "jQuery",
-            "react": "React",
-            "react-dom": "ReactDOM",
-            "zepto": "Zepto",
-            "marked":"Marked",
-            "moment":"Moment"
-        },
-        require('webpack-require-http')
-    ]
+    externals: {
+        "jquery": "jQuery",
+        "react": "React",
+        "react-dom": "ReactDOM",
+        "zepto": "Zepto",
+        "marked":"Marked",
+        "moment":"Moment"
+    }
 };

@@ -1,5 +1,4 @@
 import webpack from 'webpack';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import merge from 'webpack-merge';
 let cfg = require('./webpack.common').default;
 
@@ -20,7 +19,7 @@ export default merge(cfg,{
     //插件项
     plugins: [
         // new ExtractTextPlugin('[name].css'),
-        new webpack.optimize.CommonsChunkPlugin('common'),
+        // new webpack.optimize.CommonsChunkPlugin('common'),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.DefinePlugin({
             "process.env": {
@@ -28,5 +27,6 @@ export default merge(cfg,{
             }
         })
     ],
+    mode: 'development',
     devtool: 'eval-source-map',
 });

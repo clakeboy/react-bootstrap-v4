@@ -25,3 +25,4 @@ export Load from './Load';
 export LoaderComponent from "./components/LoaderComponent";
 export CKModal from './CKModal';
 export Combo from './Combo';
+export Label from './Label';

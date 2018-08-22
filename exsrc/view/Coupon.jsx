@@ -142,6 +142,9 @@ class Coupon extends React.PureComponent {
                 <Title className='mb-2'>
                     Tabs 组件 (直接使用 Title 组件)
                 </Title>
+                <Title sm className='mb-2 bg-light'>
+                    Title 小组件
+                </Title>
                 <Tabs>
                     <TabsContent id='label1' text='标题1' active>
                         <div className='form-row'>

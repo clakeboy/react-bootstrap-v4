@@ -15,6 +15,10 @@ class Title extends React.PureComponent {
     getClasses() {
         let base = 'ck-title';
 
+        if (this.props.sm) {
+            base = classNames(base,'ck-title-sm');
+        }
+
         return classNames(base,this.props.className);
     }
 
@@ -29,6 +33,7 @@ class Title extends React.PureComponent {
 
 Title.propTypes = {
     text: PropTypes.string,
+    sm: PropTypes.bool
 };
 
 Title.defaultProps = {

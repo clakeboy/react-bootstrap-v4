@@ -12,11 +12,11 @@ class Label extends React.PureComponent {
     }
 
     componentDidMount() {
-        console.log(Label.propTypes);
+
     }
 
-    getDerivedStateFromProps(nextProps, prevState) {
-        if (this.props.text !== nextProps.text) {
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (prevState.text !== nextProps.text) {
             return {
                 text:nextProps.text
             };

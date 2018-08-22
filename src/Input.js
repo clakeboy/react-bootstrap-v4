@@ -77,12 +77,24 @@ class Input extends React.PureComponent {
 
     getMainStyles() {
         //default style
-        let def_style = {
-            "width"   : this.props.width + "px",
-            "position": "relative"
-        };
+        let base = {"position": "relative"};
+        if (this.props.width) {
+            base.width = this.props.width;
+        }
+        if (this.props.height) {
+            base.height = this.props.height;
+        }
+        if (this.props.absolute) {
+            base.position = 'absolute';
+        }
+        if (this.props.x) {
+            base.left = this.props.x;
+        }
+        if (this.props.y) {
+            base.top = this.props.y;
+        }
 
-        return common.extend(def_style, this.props.style)
+        return common.extend(base, this.props.style)
     }
 
     getInputClasses() {
@@ -114,6 +126,17 @@ class Input extends React.PureComponent {
         }
 
         return classNames(base, size);
+    }
+
+    getInputStyle() {
+        let base = {};
+        if (this.props.width) {
+            base.width = this.props.width;
+        }
+        if (this.props.height) {
+            base.height = this.props.height;
+        }
+        return base;
     }
 
     check() {
@@ -160,8 +183,8 @@ class Input extends React.PureComponent {
      * @param text string
      * @param row object
      */
-    selectHandler = (text,row)=>{
-        this.setState({value:text},()=>{
+    selectHandler = (text, row) => {
+        this.setState({value: text}, () => {
             if (typeof this.props.onChange === 'function') {
                 this.props.onChange(text, row, this);
             }
@@ -231,7 +254,7 @@ class Input extends React.PureComponent {
         }
         return (
             <div className='ck-input-calendar'>
-                <Combo ref={c => this.combo = c} {...this.props.combo} sm={this.props.size==='sm'}
+                <Combo ref={c => this.combo = c} {...this.props.combo} sm={this.props.size === 'sm'}
                        data={this.props.comboData}
                        onSelect={this.selectHandler}/>
                 <div className={input_icon}><Icon icon='angle-down'/></div>
@@ -243,7 +266,12 @@ class Input extends React.PureComponent {
         return (
             <div className={this.getMainClasses()} style={this.getMainStyles()}>
                 {this.renderLabel()}
-                <input ref={c => this.input = c} type="text" {...this.props} onBlur={this.blurHandler} onChange={this.changeHandler} value={this.state.value} className={this.getInputClasses()} id={this.domId}/>
+                <input ref={c => this.input = c} type="text" {...this.props} onBlur={this.blurHandler}
+                       onChange={this.changeHandler}
+                       value={this.state.value}
+                       className={this.getInputClasses()}
+                       style={this.getInputStyle()}
+                       id={this.domId}/>
                 {this.renderSummary()}
                 {this.renderCalendar()}
                 {this.renderCombo()}
@@ -259,7 +287,8 @@ Input.propTypes = {
     data          : PropTypes.any,
     summary       : PropTypes.string,
     readOnly      : PropTypes.bool,
-    width         : PropTypes.number,
+    width         : PropTypes.string,
+    height        : PropTypes.string,
     placeholder   : PropTypes.string,
     calendar      : PropTypes.bool,
     onChange      : PropTypes.func,
@@ -268,7 +297,10 @@ Input.propTypes = {
     validate      : PropTypes.object,
     disabled      : PropTypes.bool,
     combo         : PropTypes.object,
-    comboData     : PropTypes.object
+    comboData     : PropTypes.object,
+    absolute      : PropTypes.bool,
+    x             : PropTypes.string,
+    y             : PropTypes.string
 };
 
 Input.defaultProps = {

@@ -154,7 +154,7 @@ class Main extends React.Component {
                     <Input label='Email' disabled={this.state.testChecked} placeholder='Please enter your email address' size='sm'/>
                 </Card>
                 <Card className='mb-2' header='Table'>
-                    <Table hover={true} select={true} headerTheme='light' data={this.dataTable}>
+                    <Table onRefresh={()=>{}} refreshText='刷新列表' hover={true} select={true} headerTheme='light' data={this.dataTable}>
                         <Table.Header text='Name' field='name' onSort={(field,sort)=>{
                             alert(field+'-'+sort);
 

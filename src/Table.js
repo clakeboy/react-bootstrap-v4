@@ -16,7 +16,8 @@ class Table extends React.Component {
         this.state = {
             data:this.props.data,
             select:this.props.select,
-            tree:{}
+            tree:{},
+            refresh:typeof this.props.onRefresh === 'function'
         };
 
         this.select_all = false;
@@ -150,8 +151,8 @@ class Table extends React.Component {
     render() {
         return (
             <div ref={c=>this.mainDom=c} className={this.props.className}>
-                {this.state.refresh ? (<Button onClick={this.props.onRefresh} amSize="sm">
-                    <Icon icon="refresh" /> 刷新列表
+                {this.state.refresh ? (<Button className='ck-table-refresh-btn' icon='sync-alt' onClick={this.props.onRefresh} size="sm" theme='dark'>
+                    {this.props.refreshText}
                 </Button>) : null}
                 <table className={this.getClasses()}>
                     {this.props.header?this.renderHeader():null}
@@ -288,7 +289,9 @@ Table.propTypes = {
     onClickTree: PropTypes.func,
     onClick: PropTypes.func,
     onCheck: PropTypes.func,
-    move: PropTypes.bool
+    move: PropTypes.bool,
+    onRefresh: PropTypes.func,
+    refreshText: PropTypes.string
 };
 
 Table.defaultProps = {

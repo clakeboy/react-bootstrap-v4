@@ -51,7 +51,20 @@ class Checkbox extends React.PureComponent {
             base = classNames(base, 'form-check-inline');
         }
 
+        if (this.props.absolute) {
+            base = classNames(base, 'position-absolute');
+        }
+
         return classNames(base, this.props.className);
+    }
+
+    getStyles() {
+        let base = {};
+        if (this.props.absolute) {
+            base.top  = this.props.y;
+            base.left = this.props.x;
+        }
+        return base;
     }
 
     /*********************
@@ -73,7 +86,7 @@ class Checkbox extends React.PureComponent {
     render() {
         // console.log('render Checkbox');
         return (
-            <div className={this.getClasses()}>
+            <div className={this.getClasses()} style={this.getStyles()}>
                 <input {...this.props} onChange={this.changeHandler} checked={this.state.checked} className="form-check-input" type="checkbox" id={this.domId}/>
                 <label className="form-check-label" htmlFor={this.domId}>
                     {this.props.label}
@@ -90,11 +103,14 @@ Checkbox.propTypes = {
     data    : PropTypes.any,
     checked : PropTypes.bool,
     onChange: PropTypes.func,
+    absolute: PropTypes.bool,
+    x       : PropTypes.string,
+    y       : PropTypes.string
 };
 
 Checkbox.defaultProps = {
     inline: false,
-    label: '',
+    label : '',
 };
 
 export default Checkbox;

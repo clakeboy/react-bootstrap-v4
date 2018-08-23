@@ -34,22 +34,30 @@ class TextArea extends React.PureComponent {
 
     getMainClasses() {
         let base = 'form-group';
+        if (this.props.absolute) {
+            base = classNames(base, 'position-absolute');
+        }
         return classNames(base, this.props.className);
     }
 
     getMainStyles() {
         //default style
-        let def_style = {};
+        let base = {};
         //width
         if (this.props.width) {
-            def_style['width'] = this.props.width + 'px';
+            base.width = this.props.width;
         }
         //height
         if (this.props.height) {
-            def_style['height'] = this.props.height + 'px';
+            base.height = this.props.height;
         }
 
-        return common.extend(def_style, this.props.style)
+        if (this.props.absolute) {
+            base.top  = this.props.y;
+            base.left = this.props.x;
+        }
+
+        return common.extend(base, this.props.style)
     }
 
     getInputClasses() {
@@ -127,13 +135,16 @@ TextArea.propTypes = {
     data       : PropTypes.any,
     summary    : PropTypes.string,
     readOnly   : PropTypes.bool,
-    width      : PropTypes.number,
-    height     : PropTypes.number,
+    width      : PropTypes.string,
+    height     : PropTypes.string,
     placeholder: PropTypes.string,
     calendar   : PropTypes.bool,
     onChange   : PropTypes.func,
     plaintext  : PropTypes.bool,
     row        : PropTypes.number,
+    absolute: PropTypes.bool,
+    x       : PropTypes.string,
+    y       : PropTypes.string
 };
 
 TextArea.defaultProps = {

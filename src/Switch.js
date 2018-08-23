@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 
 import './css/Switch.less'
+import common from "./Common";
 
 class Switch extends React.PureComponent {
     constructor(props) {
@@ -50,7 +51,31 @@ class Switch extends React.PureComponent {
             base = classNames(base, 'ck-switch-disable');
         }
 
+        if (this.props.absolute) {
+            base = classNames(base, 'position-absolute');
+        }
+
         return classNames(base, this.props.className);
+    }
+
+    getStyles() {
+        //default style
+        let base = {};
+        //width
+        if (this.props.width) {
+            base.width = this.props.width;
+        }
+        //height
+        if (this.props.height) {
+            base.height = this.props.height;
+        }
+
+        if (this.props.absolute) {
+            base.top  = this.props.y;
+            base.left = this.props.x;
+        }
+
+        return common.extend(base, this.props.style)
     }
 
     getCircleClasses() {
@@ -90,7 +115,7 @@ class Switch extends React.PureComponent {
 
     render() {
         return (
-            <div ref={c => this.bg = c} className={this.getClasses()} onClick={this.clickHandler}>
+            <div ref={c => this.bg = c} className={this.getClasses()} onClick={this.clickHandler} style={this.getStyles()}>
                 <div className={this.getCircleClasses()} ref={c => this.circle = c}/>
             </div>
         );
@@ -103,6 +128,9 @@ Switch.propTypes = {
     size: PropTypes.oneOf(['sm','lg']),
     disabled: PropTypes.bool,
     onChange: PropTypes.func,
+    absolute   : PropTypes.bool,
+    x          : PropTypes.string,
+    y          : PropTypes.string
 };
 
 Switch.defaultProps = {

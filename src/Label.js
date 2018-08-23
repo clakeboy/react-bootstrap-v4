@@ -39,6 +39,7 @@ class Label extends React.PureComponent {
             base.top = this.props.y;
             base.left = this.props.x;
         }
+        return base;
     }
 
     render() {

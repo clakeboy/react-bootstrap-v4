@@ -14,10 +14,10 @@ class Table extends React.Component {
         super(props);
 
         this.state = {
-            data:this.props.data,
-            select:this.props.select,
-            tree:{},
-            refresh:typeof this.props.onRefresh === 'function'
+            data   : this.props.data,
+            select : this.props.select,
+            tree   : {},
+            refresh: typeof this.props.onRefresh === 'function'
         };
 
         this.select_all = false;
@@ -38,7 +38,7 @@ class Table extends React.Component {
             this.select_all = false;
             this.selectRows = {};
             this.setState({
-                data:nextProps.data
+                data: nextProps.data
             });
         }
     }
@@ -47,43 +47,43 @@ class Table extends React.Component {
         return nextState.data !== this.state.data || nextState.tree !== this.state.tree;
     }
 
-    changeHandler(row,i) {
-        return (checked)=>{
+    changeHandler(row, i) {
+        return (checked) => {
             if (checked) {
                 this.selectRows[i] = row;
             } else {
                 this.selectRows[i] = undefined;
             }
             if (typeof this.props.onCheck === "function") {
-                this.props.onCheck(checked,row);
+                this.props.onCheck(checked, row);
             }
         };
     }
 
-    clickHandler(row,i) {
-        return ()=>{
+    clickHandler(row, i) {
+        return () => {
             if (typeof this.props.onClick === 'function') {
-                this.props.onClick(row,i);
+                this.props.onClick(row, i);
             }
         }
     }
 
-    sortHandler(field,callback) {
-        return (e)=>{
-            let dom = e.currentTarget;
+    sortHandler(field, callback) {
+        return (e) => {
+            let dom       = e.currentTarget;
             let sort_type = dom.dataset.sort || 'asc';
-            callback(field,sort_type);
-            dom.dataset.sort = sort_type === 'asc'?'desc':'asc';
+            callback(field, sort_type);
+            dom.dataset.sort     = sort_type === 'asc' ? 'desc' : 'asc';
             this.sortList[field] = sort_type;
-            let child = dom.querySelector('i');
-            child.classList.remove('fa-sort','fa-sort-alpha-up','fa-sort-alpha-down');
-            child.classList.add('fa-sort-alpha-'+(sort_type === 'asc'?'down':'up'));
+            let child            = dom.querySelector('i');
+            child.classList.remove('fa-sort', 'fa-sort-alpha-up', 'fa-sort-alpha-down');
+            child.classList.add('fa-sort-alpha-' + (sort_type === 'asc' ? 'down' : 'up'));
         }
     };
 
-    selectAll = (e)=>{
+    selectAll = (e) => {
         this.select_all = e.target.checked;
-        common.map(this.refs,(item)=>{
+        common.map(this.refs, (item) => {
             item.setChecked(this.select_all);
         });
     };
@@ -93,7 +93,7 @@ class Table extends React.Component {
      * @returns {*}
      */
     getSelectRows() {
-        return common.map(this.selectRows,(item)=>{
+        return common.map(this.selectRows, (item) => {
             return item;
         });
     }
@@ -103,10 +103,10 @@ class Table extends React.Component {
      * @param key 对应行数据的KEY值
      * @param list 要选中的数据值
      */
-    setSelectRows(key,list) {
-        this.state.data.map((row,i)=>{
+    setSelectRows(key, list) {
+        this.state.data.map((row, i) => {
             if (list.indexOf(row[key]) !== -1) {
-                this.refs['row_'+i].setChecked(true);
+                this.refs['row_' + i].setChecked(true);
             }
         });
     }
@@ -115,50 +115,75 @@ class Table extends React.Component {
         let base = 'table ck-table';
         //striped
         if (this.props.striped) {
-            base = classNames(base,'table-striped');
+            base = classNames(base, 'table-striped');
         }
         //theme
         if (this.props.theme) {
-            base = classNames(base,'table-'+this.props.theme);
+            base = classNames(base, 'table-' + this.props.theme);
         }
         //bordered
         if (this.props.bordered) {
-            base = classNames(base,'table-bordered');
+            base = classNames(base, 'table-bordered');
         }
         //hover
         if (this.props.hover) {
-            base = classNames(base,'table-hover');
+            base = classNames(base, 'table-hover');
         }
         //sm
         if (this.props.sm) {
-            base = classNames(base,'table-sm');
+            base = classNames(base, 'table-sm');
         }
         //responsive
         if (this.props.responsive) {
-            base = classNames(base,'table-responsive');
+            base = classNames(base, 'table-responsive');
+        }
+
+        if (this.props.absolute) {
+            base = classNames(base, 'position-absolute');
         }
         return base;
+    }
+
+    getStyles() {
+        //default style
+        let base = {};
+        //width
+        if (this.props.width) {
+            base.width = this.props.width;
+        }
+        //height
+        if (this.props.height) {
+            base.height = this.props.height;
+        }
+
+        if (this.props.absolute) {
+            base.top  = this.props.y;
+            base.left = this.props.x;
+        }
+
+        return common.extend(base, this.props.style)
     }
 
     getHeaderClasses() {
         let base = '';
         if (this.props.headerTheme) {
-            base = 'thead-'+this.props.headerTheme;
+            base = 'thead-' + this.props.headerTheme;
         }
-        return classNames(base,this.props.headClass);
+        return classNames(base, this.props.headClass);
     }
 
     render() {
         return (
-            <div ref={c=>this.mainDom=c} className={this.props.className}>
-                {this.state.refresh ? (<Button className='ck-table-refresh-btn' icon='sync-alt' onClick={this.props.onRefresh} size="sm" theme='dark'>
-                    {this.props.refreshText}
-                </Button>) : null}
+            <div ref={c => this.mainDom = c} className={this.props.className} style={this.getStyles()}>
+                {this.state.refresh ? (
+                    <Button className='ck-table-refresh-btn' icon='sync-alt' onClick={this.props.onRefresh} size="sm" theme='dark'>
+                        {this.props.refreshText}
+                    </Button>) : null}
                 <table className={this.getClasses()}>
-                    {this.props.header?this.renderHeader():null}
+                    {this.props.header ? this.renderHeader() : null}
                     <tbody>
-                    {this.state.data.map((row,i)=>{
-                        return this.renderRow(row,i);
+                    {this.state.data.map((row, i) => {
+                        return this.renderRow(row, i);
                     })}
                     </tbody>
                 </table>
@@ -177,22 +202,22 @@ class Table extends React.Component {
                     }
                     let align = item.props.align || this.props.align;
                     let style = {
-                        'textAlign':align
+                        'textAlign': align
                     };
                     if (item.props.width) {
                         style.width = this.props.width;
                     }
                     let sort_icon = 'sort';
                     if (this.sortList[item.props.field]) {
-                        sort_icon = 'sort-alpha-'+(this.sortList[item.props.field]==='asc'?'down':'up');
+                        sort_icon = 'sort-alpha-' + (this.sortList[item.props.field] === 'asc' ? 'down' : 'up');
                     }
                     return (
                         <th data-key={'head_' + key} style={style}>
-                            {item.props.onSort? <a href='javascript://'
-                                                   onClick={this.sortHandler(item.props.field,item.props.onSort)}>
+                            {item.props.onSort ? <a href='javascript://'
+                                                    onClick={this.sortHandler(item.props.field, item.props.onSort)}>
                                 {item.props.text}{'\u0020'}
-                                <Icon icon={sort_icon}/></a>:item.props.text}
-                            {this.props.move?<span className='column-split'/>:null}
+                                <Icon icon={sort_icon}/></a> : item.props.text}
+                            {this.props.move ? <span className='column-split'/> : null}
                         </th>
                     );
                 })}
@@ -201,62 +226,71 @@ class Table extends React.Component {
         );
     }
 
-    renderRow(row,i,parentRow) {
+    renderRow(row, i, parentRow) {
         let backgroundColor = row['ck_row_color'] ? row['ck_row_color'] : '';
         return (
             <React.Fragment>
-            <tr className={this.props.onClick?'click-row':null} onClick={this.clickHandler(row,i)}>
-                {this.state.select ? <th><Checkbox ref={'row_'+i} onChange={this.changeHandler(row,i)}/></th> : null}
-                {React.Children.map(this.props.children,(item,key)=>{
-                    if (!item || item.props.hide) {
-                        return null;
-                    }
-                    let align = item.props.align || this.props.align;
-
-                    let tree,parent;
-                    if (item.props.tree) {
-                        if (parentRow) {
-                            parent = <span className='mr-4'/>
+                <tr className={this.props.onClick ? 'click-row' : null} onClick={this.clickHandler(row, i)}>
+                    {this.state.select ?
+                        <th><Checkbox ref={'row_' + i} onChange={this.changeHandler(row, i)}/></th> : null}
+                    {React.Children.map(this.props.children, (item, key) => {
+                        if (!item || item.props.hide) {
+                            return null;
                         }
-                        tree = <Icon data-open='close' onClick={()=>{
+                        let align = item.props.align || this.props.align;
+
+                        let tree, parent;
+                        if (item.props.tree) {
+                            if (parentRow) {
+                                parent = <span className='mr-4'/>
+                            }
+                            tree = <Icon data-open='close' onClick={() => {
                                 if (typeof this.props.onClickTree === 'function') {
-                                    this.props.onClickTree(row,(data)=>{
+                                    this.props.onClickTree(row, (data) => {
                                         if (!data) {
                                             return
                                         }
-                                        let tree = this.state.tree;
-                                        tree[i] = data;
+                                        let tree        = this.state.tree;
+                                        tree[i]         = data;
                                         this.state.tree = null;
                                         this.setState({
-                                            tree:tree
+                                            tree: tree
                                         })
                                     });
                                 }
 
-                        }} className='mr-1 text-primary' icon='plus-square' iconType='regular'/>
-                    }
+                            }} className='mr-1 text-primary' icon='plus-square' iconType='regular'/>
+                        }
 
-                    if (item.props.children) {
-                        return (
-                            <td className={item.props.className} style={{'text-align':align}} key={'col_'+key}>{parent}{tree}{React.cloneElement(item,{text:item.props.text,row:row,value:row[item.props.field]})}</td>
-                        );
-                    } else {
-                        return <td style={{...item.props.setCssStyle, backgroundColor: backgroundColor,'text-align':align}} key={'col_'+key}>{parent}{tree}{item.props.onFormat?item.props.onFormat(row[item.props.field],row):row[item.props.field]}</td>;
-                    }
-                })}
-            </tr>
-                {this.props.tree?this.renderTreeRow(row,i):null}
+                        if (item.props.children) {
+                            return (
+                                <td className={item.props.className} style={{'text-align': align}} key={'col_' + key}>{parent}{tree}{React.cloneElement(item, {
+                                    text : item.props.text,
+                                    row  : row,
+                                    value: row[item.props.field]
+                                })}</td>
+                            );
+                        } else {
+                            return <td style={{
+                                ...item.props.setCssStyle,
+                                backgroundColor: backgroundColor,
+                                'text-align'   : align
+                            }} key={'col_' + key}>{parent}{tree}{item.props.onFormat ? item.props.onFormat(row[item.props.field], row) : row[item.props.field]}</td>;
+                        }
+                    })}
+                </tr>
+                {this.props.tree ? this.renderTreeRow(row, i) : null}
             </React.Fragment>
         );
     }
 
-    renderTreeRow(row,i) {
+    renderTreeRow(row, i) {
         let data = this.state.tree[i];
         if (!data) {
             return null;
         }
-        return data.map((item,idx)=>{
-            return this.renderRow(item,`${i}-${idx}`,row);
+        return data.map((item, idx) => {
+            return this.renderRow(item, `${i}-${idx}`, row);
         });
         // return (
         //     <tr className='table-tree-row d-none' id={`tree-${i}`}>
@@ -270,39 +304,44 @@ class Table extends React.Component {
 }
 
 Table.propTypes = {
-    theme: PropTypes.oneOf(['primary','secondary','success','danger','warning','info','light','dark']),
-    headerTheme: PropTypes.oneOf(['primary','secondary','success','danger','warning','info','light','dark']),
-    headClass: PropTypes.string,
-    data: PropTypes.array,
-    dataCount: PropTypes.number,
-    select:PropTypes.bool,
-    header:PropTypes.bool,
-    center:PropTypes.bool,
+    theme      : PropTypes.oneOf(['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark']),
+    headerTheme: PropTypes.oneOf(['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark']),
+    headClass  : PropTypes.string,
+    data       : PropTypes.array,
+    dataCount  : PropTypes.number,
+    select     : PropTypes.bool,
+    header     : PropTypes.bool,
+    center     : PropTypes.bool,
     currentPage: PropTypes.number,
-    striped: PropTypes.bool,
-    bordered: PropTypes.bool,
-    hover: PropTypes.bool,
-    sm: PropTypes.bool,
-    responsive: PropTypes.bool,
-    align: PropTypes.string,
-    tree: PropTypes.string,
+    striped    : PropTypes.bool,
+    bordered   : PropTypes.bool,
+    hover      : PropTypes.bool,
+    sm         : PropTypes.bool,
+    responsive : PropTypes.bool,
+    align      : PropTypes.string,
+    tree       : PropTypes.string,
     onClickTree: PropTypes.func,
-    onClick: PropTypes.func,
-    onCheck: PropTypes.func,
-    move: PropTypes.bool,
-    onRefresh: PropTypes.func,
-    refreshText: PropTypes.string
+    onClick    : PropTypes.func,
+    onCheck    : PropTypes.func,
+    move       : PropTypes.bool,
+    onRefresh  : PropTypes.func,
+    refreshText: PropTypes.string,
+    absolute   : PropTypes.bool,
+    x          : PropTypes.string,
+    y          : PropTypes.string,
+    width: PropTypes.string,
+    height: PropTypes.string
 };
 
 Table.defaultProps = {
-    data:[],
-    dataCount:1,
-    select:true,
-    header:true,
-    currentPage:1,
-    hover:true,
-    striped:true,
-    align:'left',
+    data       : [],
+    dataCount  : 1,
+    select     : true,
+    header     : true,
+    currentPage: 1,
+    hover      : true,
+    striped    : true,
+    align      : 'left',
 };
 
 Table.Header = TableHeader;

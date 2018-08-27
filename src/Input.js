@@ -239,7 +239,9 @@ class Input extends React.PureComponent {
                         this.props.onChange(val, this);
                     }
                 }} value={this.state.value} format={this.props.calendarFormat} none shadow absolute triangular='up'/>
-                <div className={input_icon}><Icon iconType='regular' icon='calendar-alt'/></div>
+                <div className={input_icon} onClick={()=>{
+                    this.input.focus();
+                }}><Icon iconType='regular' icon='calendar-alt'/></div>
             </div>
         )
     }
@@ -257,7 +259,9 @@ class Input extends React.PureComponent {
                 <Combo ref={c => this.combo = c} {...this.props.combo} sm={this.props.size === 'sm'}
                        data={this.props.comboData}
                        onSelect={this.selectHandler}/>
-                <div className={input_icon}><Icon icon='angle-down'/></div>
+                <div className={input_icon} onClick={()=>{
+                    this.input.focus();
+                }}><Icon icon='angle-down'/></div>
             </div>
         )
     }

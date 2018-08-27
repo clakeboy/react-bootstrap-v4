@@ -197,7 +197,7 @@ Combo.propTypes = {
     onSearch: PropTypes.func,
     onSelect: PropTypes.func,
     sm: PropTypes.bool,
-    //filter column exp: ['name','age']
+    //filter column exp: ['name','age'] or [{field:'name',width:'100px'},{field:'age',width:'100px'}]
     filterColumns: PropTypes.array
 };
 

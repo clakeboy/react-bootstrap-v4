@@ -27,6 +27,8 @@ class Table extends React.Component {
         this.treeHeader = {};
 
         this.sortList = {};
+
+        this.initTableWidth();
     }
 
     componentDidMount() {
@@ -45,6 +47,22 @@ class Table extends React.Component {
 
     shouldComponentUpdate(nextProps, nextState) {
         return nextState.data !== this.state.data || nextState.tree !== this.state.tree;
+    }
+
+    initTableWidth() {
+        if (this.props.width) {
+            this.width = 0;
+            let reg = /(\d+)(px|rem|cm|mm|pt)$/;
+            let unit = '';
+            React.Children.map(this.props.children, (item, key) => {
+                if (item.props.width) {
+                    let matchs = item.props.width.match(reg);
+                    this.width += parseInt(matchs[1]);
+                    unit = matchs[2];
+                }
+            });
+            this.width += unit;
+        }
     }
 
     changeHandler(row, i) {
@@ -169,6 +187,16 @@ class Table extends React.Component {
         return common.extend(base, this.props.style)
     }
 
+    getTableStyles() {
+        let base = {};
+
+        if (this.width) {
+            base.width = this.width;
+        }
+
+        return base;
+    }
+
     getHeaderClasses() {
         let base = '';
         if (this.props.headerTheme) {
@@ -188,7 +216,7 @@ class Table extends React.Component {
                     <Button className='ck-table-refresh-btn' icon='sync-alt' onClick={this.props.onRefresh} size="sm" theme='dark'>
                         {this.props.refreshText}
                     </Button>) : null}
-                <table className={this.getClasses()}>
+                <table className={this.getClasses()} style={this.getTableStyles()}>
                     {this.props.header ? this.renderHeader() : null}
                     <tbody>
                     {this.state.data.map((row, i) => {
@@ -214,7 +242,7 @@ class Table extends React.Component {
                         'textAlign': align
                     };
                     if (item.props.width) {
-                        style.width = this.props.width;
+                        style.width = item.props.width;
                     }
                     let sort_icon = 'sort';
                     if (this.sortList[item.props.field]) {
@@ -236,7 +264,6 @@ class Table extends React.Component {
     }
 
     renderRow(row, i, parentRow) {
-        let backgroundColor = row['ck_row_color'] ? row['ck_row_color'] : '';
         return (
             <React.Fragment>
                 <tr className={this.props.onClick ? 'click-row' : null} onClick={this.clickHandler(row, i)}>
@@ -246,8 +273,14 @@ class Table extends React.Component {
                         if (!item || item.props.hide) {
                             return null;
                         }
-                        let align = item.props.align || this.props.align;
+                        //set style
+                        let style={...this.props.columnStyle};
 
+                        style.textAlign = item.props.align || this.props.align;
+                        if (item.props.width) {
+                            style.width = item.props.width;
+                        }
+                        //set tree
                         let tree, parent;
                         if (item.props.tree) {
                             if (parentRow) {
@@ -280,11 +313,7 @@ class Table extends React.Component {
                                 })}</td>
                             );
                         } else {
-                            return <td style={{
-                                ...item.props.setCssStyle,
-                                backgroundColor: backgroundColor,
-                                'text-align'   : align
-                            }} key={'col_' + key}>{parent}{tree}{item.props.onFormat ? item.props.onFormat(row[item.props.field], row) : row[item.props.field]}</td>;
+                            return <td style={style} key={'col_' + key}>{parent}{tree}{item.props.onFormat ? item.props.onFormat(row[item.props.field], row) : row[item.props.field]}</td>;
                         }
                     })}
                 </tr>

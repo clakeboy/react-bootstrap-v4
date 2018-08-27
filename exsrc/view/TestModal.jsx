@@ -238,7 +238,7 @@ class TestModal extends React.PureComponent {
                     <TabsContent id='label1' text='标题1' active>
                         <Input label="测试远程数据 Combo" combo={{
                             searchColumn:'name',
-                            filterColumns:['name','gender','age','company'],
+                            filterColumns:[{field:'name',width:'100px'},'gender','age',{field:'company',width:'200px'}],
                             onSearch: (search,callback)=>{
                                 Fetch('/serv/test/query',{name:search},(res)=>{
                                      if (res.status) {

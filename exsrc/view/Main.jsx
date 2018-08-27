@@ -172,7 +172,7 @@ class Main extends React.Component {
                         }} />
                     </Table>
                     <Pagination count={1000} current={1} number={30} showPage={10}/>
-                    <Table absolute x='100px' y='100px' hover={true} select={true} sm data={this.dataTable}>
+                    <Table hover={true} select={true} sm data={this.dataTable}>
                         <Table.Header text='Name' field='name' onSort={(sort)=>{alert(sort)}}/>
                         <Table.Header text='Age' field='age' hide/>
                         <Table.Header text='Birthday' field='birthday'/>

@@ -29,8 +29,8 @@ class Table extends React.Component {
         this.sortList = {};
     }
 
-    componentWillMount() {
-
+    componentDidMount() {
+        this.mainDom.addEventListener('scroll',this.scrollHandler,false);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -48,14 +48,14 @@ class Table extends React.Component {
     }
 
     changeHandler(row, i) {
-        return (checked) => {
-            if (checked) {
+        return (e) => {
+            if (e.target.checked) {
                 this.selectRows[i] = row;
             } else {
                 this.selectRows[i] = undefined;
             }
             if (typeof this.props.onCheck === "function") {
-                this.props.onCheck(checked, row);
+                this.props.onCheck(e.target.checked, row);
             }
         };
     }
@@ -84,7 +84,7 @@ class Table extends React.Component {
     selectAll = (e) => {
         this.select_all = e.target.checked;
         common.map(this.refs, (item) => {
-            item.setChecked(this.select_all);
+            item.checked = this.select_all;
         });
     };
 
@@ -137,11 +137,15 @@ class Table extends React.Component {
         if (this.props.responsive) {
             base = classNames(base, 'table-responsive');
         }
-
-        if (this.props.absolute) {
-            base = classNames(base, 'position-absolute');
-        }
         return base;
+    }
+
+    getMainClass() {
+        let base = 'ck-table-main';
+        if (this.props.scroll) {
+            base = classNames(base,'ck-table-scroll');
+        }
+        return classNames(base, this.props.className);
     }
 
     getStyles() {
@@ -157,6 +161,7 @@ class Table extends React.Component {
         }
 
         if (this.props.absolute) {
+            base.position = 'absolute';
             base.top  = this.props.y;
             base.left = this.props.x;
         }
@@ -172,9 +177,13 @@ class Table extends React.Component {
         return classNames(base, this.props.headClass);
     }
 
+    scrollHandler = (e)=>{
+        this.tableHeader.style.transform = `translateY(${e.currentTarget.scrollTop}px)`;
+    };
+
     render() {
         return (
-            <div ref={c => this.mainDom = c} className={this.props.className} style={this.getStyles()}>
+            <div ref={c => this.mainDom = c} className={this.getMainClass()} style={this.getStyles()}>
                 {this.state.refresh ? (
                     <Button className='ck-table-refresh-btn' icon='sync-alt' onClick={this.props.onRefresh} size="sm" theme='dark'>
                         {this.props.refreshText}
@@ -193,9 +202,9 @@ class Table extends React.Component {
 
     renderHeader() {
         return (
-            <thead className={this.getHeaderClasses()}>
+            <thead ref={c=>this.tableHeader=c} className={this.getHeaderClasses()}>
             <tr>
-                {this.state.select ? <th width={10}><Checkbox onChange={this.selectAll}/></th> : null}
+                {this.state.select ? <th width={10}><input type='checkbox' onChange={this.selectAll}/></th> : null}
                 {React.Children.map(this.props.children, (item, key) => {
                     if (!item || item.props.hide) {
                         return null;
@@ -232,7 +241,7 @@ class Table extends React.Component {
             <React.Fragment>
                 <tr className={this.props.onClick ? 'click-row' : null} onClick={this.clickHandler(row, i)}>
                     {this.state.select ?
-                        <th><Checkbox ref={'row_' + i} onChange={this.changeHandler(row, i)}/></th> : null}
+                        <th><input type='checkbox' ref={'row_' + i} onChange={this.changeHandler(row, i)}/></th> : null}
                     {React.Children.map(this.props.children, (item, key) => {
                         if (!item || item.props.hide) {
                             return null;
@@ -330,7 +339,8 @@ Table.propTypes = {
     x          : PropTypes.string,
     y          : PropTypes.string,
     width: PropTypes.string,
-    height: PropTypes.string
+    height: PropTypes.string,
+    scroll: PropTypes.bool
 };
 
 Table.defaultProps = {

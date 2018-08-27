@@ -88,7 +88,7 @@ class Combo extends React.PureComponent {
                     this.props.onSearch(search,(data)=>{
                         this.setState({
                             loading:false,
-                            data:this.filterColumns(data)
+                            data:data
                         });
                     });
                 });
@@ -105,30 +105,29 @@ class Combo extends React.PureComponent {
         if (data.length === 0) {
             this.setState({data:null});
         } else {
-            this.setState({data:this.filterColumns(data)});
+            this.setState({data:data});
         }
     }
 
-    filterColumns(data) {
-        if (!data) {
-            return null;
-        }
-        if (!this.props.filterColumns) {
-            return data;
-        }
-        let list = [];
-        data.forEach((row)=>{
-            let tmp = {};
-            this.props.filterColumns.forEach((item)=>{
-                // console.log(item,this.props.searchColumn,this.search);
-                // if (item === this.props.searchColumn) {
-                //     row[item] = row[item].replace(new RegExp(this.search),`<b class="text-danger">${this.search}</b>`);
-                // }
-                tmp[item] = row[item]
+    filterColumns() {
+        if (this.props.filterColumns) {
+            return this.props.filterColumns.map((item)=>{
+                let is_obj = typeof item === 'object';
+
+                return {
+                    field: is_obj?item.field:item,
+                    width:  is_obj?item.width:null
+                };
             });
-            list.push(tmp);
-        });
-        return list;
+        } else {
+            let row = this.state.data[0];
+            return map(row,(item,key)=>{
+                return {
+                    field: key,
+                    width: null
+                };
+            });
+        }
     }
 
     getClasses() {
@@ -176,12 +175,12 @@ class Combo extends React.PureComponent {
         )
     }
     renderList() {
-        let columns = this.state.data[0];
+        let columns = this.filterColumns();
         return (
             <div ref={c=>this.conDom=c} className='ck-combo-content'>
                 <Table ref={c=>this.table=c} select={false} header={false} striped={false} sm={this.props.sm} data={this.state.data} onClick={this.selectHandler}>
-                    {map(columns,(item,key)=>{
-                        return <TableHeader field={key}/>
+                    {map(columns,(item)=>{
+                        return <TableHeader field={item.field} width={item.width}/>
                     })}
                 </Table>
             </div>

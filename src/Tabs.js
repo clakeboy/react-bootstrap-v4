@@ -25,6 +25,16 @@ class Tabs extends React.PureComponent {
         }
     };
 
+    getMainClasses() {
+        let base = 'ck-tabs';
+
+        if (this.props.sm) {
+            base = classNames(base,'ck-tabs-sm');
+        }
+
+        return classNames(base,this.props.className);
+    }
+
     getClasses() {
         let base = 'nav';
         if (this.props.pills) {
@@ -33,6 +43,27 @@ class Tabs extends React.PureComponent {
             base = classNames(base,'nav-tabs');
         }
         return classNames(base);
+    }
+
+    getStyle() {
+        //default style
+        let base = {};
+        //width
+        if (this.props.width) {
+            base.width = this.props.width;
+        }
+        //height
+        if (this.props.height) {
+            base.height = this.props.height;
+        }
+
+        if (this.props.absolute) {
+            base.position = 'absolute';
+            base.top  = this.props.y;
+            base.left = this.props.x;
+        }
+
+        return common.extend(base, this.props.style)
     }
 
     renderTabs() {
@@ -86,7 +117,7 @@ class Tabs extends React.PureComponent {
 
     render() {
         return (
-            <div {...this.props}>
+            <div {...this.props} className={this.getMainClasses()} style={this.getStyle()}>
                 {this.renderTabs()}
                 {this.renderContents()}
             </div>
@@ -98,7 +129,13 @@ Tabs.propTypes = {
     pills: PropTypes.bool,
     border: PropTypes.bool,
     content: PropTypes.bool,
-    onSelect: PropTypes.func
+    onSelect: PropTypes.func,
+    absolute   : PropTypes.bool,
+    x          : PropTypes.string,
+    y          : PropTypes.string,
+    width: PropTypes.string,
+    height: PropTypes.string,
+    sm : PropTypes.bool
 };
 
 Tabs.defaultProps = {

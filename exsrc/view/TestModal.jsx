@@ -201,7 +201,7 @@ class TestModal extends React.PureComponent {
             "created_date"   : 1530767866
         }];
         return (
-            <Container>
+            <Container className={'mb-5'}>
                 <Button onClick={() => {
                     this.props.history.goBack();
                 }}>返回主页</Button>
@@ -262,6 +262,11 @@ class TestModal extends React.PureComponent {
                     </TabsContent>
                 </Tabs>
                 <hr/>
+                <Tabs border={false} sm>
+                    <TabsContent id='smlabel1' text='Small-1' active/>
+                    <TabsContent id='smlabel2' text='Small-2'/>
+                </Tabs>
+
                 <Modal ref={c => this.modal = c}/>
             </Container>
         );

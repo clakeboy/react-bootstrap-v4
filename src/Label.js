@@ -35,6 +35,12 @@ class Label extends React.PureComponent {
 
     getStyles() {
         let base = {};
+        if (this.props.width) {
+            base.width = this.props.width;
+        }
+        if (this.props.height) {
+            base.height = this.props.height;
+        }
         if (this.props.absolute) {
             base.top = this.props.y;
             base.left = this.props.x;
@@ -44,9 +50,9 @@ class Label extends React.PureComponent {
 
     render() {
         return (
-            <span className={this.getClasses()} style={this.getStyles()}>
+            <div className={this.getClasses()} style={this.getStyles()}>
                 {this.state.text}
-            </span>
+            </div>
         );
     }
 }
@@ -55,7 +61,11 @@ Label.propTypes = {
     text: PropTypes.string,
     absolute: PropTypes.bool,
     x: PropTypes.string,
-    y: PropTypes.string
+    y: PropTypes.string,
+    width: PropTypes.string,
+    height: PropTypes.string,
+    color: PropTypes.string,
+    backColor: PropTypes.string
 };
 
 Label.defaultProps = {

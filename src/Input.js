@@ -113,6 +113,9 @@ class Input extends React.PureComponent {
             case 'sm':
                 size = 'form-control-sm';
                 break;
+            case 'xs':
+                size = 'form-control-xs';
+                break;
             default:
                 size = ''
         }
@@ -256,7 +259,7 @@ class Input extends React.PureComponent {
         }
         return (
             <div className='ck-input-calendar'>
-                <Combo ref={c => this.combo = c} {...this.props.combo} sm={this.props.size === 'sm'}
+                <Combo ref={c => this.combo = c} {...this.props.combo} sm={this.props.size === 'sm' || this.props.size==='xs'}
                        data={this.props.comboData}
                        onSelect={this.selectHandler}/>
                 <div className={input_icon} onClick={()=>{
@@ -286,7 +289,7 @@ class Input extends React.PureComponent {
 
 Input.propTypes = {
     id            : PropTypes.string,
-    size          : PropTypes.oneOf(['df', 'sm', 'lg']),
+    size          : PropTypes.oneOf(['df', 'sm', 'lg','xs']),
     label         : PropTypes.string,
     data          : PropTypes.any,
     summary       : PropTypes.string,

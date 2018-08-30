@@ -16,12 +16,12 @@ class Tabs extends React.PureComponent {
     }
 
     componentDidMount() {
-        $('#'+this.domId).on('show.bs.tab',this.selectHandler);
+        $('#' + this.domId).on('show.bs.tab', this.selectHandler);
     }
 
-    selectHandler = (e)=>{
+    selectHandler = (e) => {
         if (typeof this.props.onSelect === 'function') {
-            this.props.onSelect(e.target.dataset.tabid,e.relatedTarget.dataset.tabid);
+            this.props.onSelect(e.target.dataset.tabid, e.relatedTarget.dataset.tabid);
         }
     };
 
@@ -29,18 +29,18 @@ class Tabs extends React.PureComponent {
         let base = 'ck-tabs';
 
         if (this.props.sm) {
-            base = classNames(base,'ck-tabs-sm');
+            base = classNames(base, 'ck-tabs-sm');
         }
 
-        return classNames(base,this.props.className);
+        return classNames(base, this.props.className);
     }
 
     getClasses() {
         let base = 'nav';
         if (this.props.pills) {
-            base = classNames(base,'nav-pills');
+            base = classNames(base, 'nav-pills');
         } else {
-            base = classNames(base,'nav-tabs');
+            base = classNames(base, 'nav-tabs');
         }
         return classNames(base);
     }
@@ -59,11 +59,8 @@ class Tabs extends React.PureComponent {
 
         if (this.props.absolute) {
             base.position = 'absolute';
-            base.top  = this.props.y;
-            base.left = this.props.x;
-            if (this.props.height) {
-                base.marginTop = this.props.sm ? '-28px':'-42px';
-            }
+            base.top      = this.props.y;
+            base.left     = this.props.x;
         }
 
         return common.extend(base, this.props.style)
@@ -72,15 +69,15 @@ class Tabs extends React.PureComponent {
     renderTabs() {
         return (
             <ul className={this.getClasses()} id={`${this.domId}`} role="tablist">
-                {React.Children.map(this.props.children,(item)=>{
+                {React.Children.map(this.props.children, (item) => {
                     let class_name = 'nav-link';
                     if (item.props.active) {
-                        class_name = classNames(class_name,'active');
+                        class_name = classNames(class_name, 'active');
                     }
                     return (
                         <li className="nav-item">
                             <a className={class_name} id={`${item.props.id}-tab`} href={`#${item.props.id}`}
-                               data-tabid={item.props.id} data-toggle="tab" role="tab" aria-controls={item.props.id} aria-selected={this.props.active?'true':'false'}>
+                               data-tabid={item.props.id} data-toggle="tab" role="tab" aria-controls={item.props.id} aria-selected={this.props.active ? 'true' : 'false'}>
                                 {item.props.text}
                             </a>
                         </li>
@@ -96,17 +93,22 @@ class Tabs extends React.PureComponent {
         }
         let base = 'tab-content ck-tabs-content';
         if (this.props.border) {
-            base = classNames(base,'ck-tabs-border');
+            base = classNames(base, 'ck-tabs-border');
+        }
+
+        let style = {};
+        if (this.props.absolute && this.props.height) {
+            style.marginTop = this.props.sm ? '-28px' : '-42px';
         }
         return (
             <div className={base} id={`${this.domId}Content`}>
-                {React.Children.map(this.props.children,(item)=>{
+                {React.Children.map(this.props.children, (item) => {
                     let class_name = 'tab-pane';
                     if (item.props.fade) {
-                        class_name = classNames(class_name,'fade');
+                        class_name = classNames(class_name, 'fade');
                     }
                     if (item.props.active) {
-                        class_name = classNames(class_name,'show','active');
+                        class_name = classNames(class_name, 'show', 'active');
                     }
                     return (
                         <div className={class_name} id={item.props.id} role="tabpanel" aria-labelledby={`${item.props.id}-tab`}>
@@ -129,20 +131,20 @@ class Tabs extends React.PureComponent {
 }
 
 Tabs.propTypes = {
-    pills: PropTypes.bool,
-    border: PropTypes.bool,
-    content: PropTypes.bool,
+    pills   : PropTypes.bool,
+    border  : PropTypes.bool,
+    content : PropTypes.bool,
     onSelect: PropTypes.func,
-    absolute   : PropTypes.bool,
-    x          : PropTypes.string,
-    y          : PropTypes.string,
-    width: PropTypes.string,
-    height: PropTypes.string,
-    sm : PropTypes.bool
+    absolute: PropTypes.bool,
+    x       : PropTypes.string,
+    y       : PropTypes.string,
+    width   : PropTypes.string,
+    height  : PropTypes.string,
+    sm      : PropTypes.bool
 };
 
 Tabs.defaultProps = {
-    border: true,
+    border : true,
     content: true
 };
 

@@ -12,7 +12,7 @@ class Box extends React.PureComponent {
     }
 
     getClasses() {
-        let base = '';
+        let base = 'ck-box';
 
         return classNames(base, this.props.className);
     }

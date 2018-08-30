@@ -101,7 +101,7 @@ class Tabs extends React.PureComponent {
             style.marginTop = this.props.sm ? '-28px' : '-42px';
         }
         return (
-            <div className={base} id={`${this.domId}Content`}>
+            <div className={base} id={`${this.domId}Content`} style={style}>
                 {React.Children.map(this.props.children, (item) => {
                     let class_name = 'tab-pane';
                     if (item.props.fade) {

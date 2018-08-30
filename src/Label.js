@@ -7,7 +7,7 @@ class Label extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {
-            text:this.props.text
+            text: this.props.text
         };
     }
 
@@ -18,7 +18,7 @@ class Label extends React.PureComponent {
     static getDerivedStateFromProps(nextProps, prevState) {
         if (prevState.text !== nextProps.text) {
             return {
-                text:nextProps.text
+                text: nextProps.text
             };
         }
 
@@ -28,9 +28,12 @@ class Label extends React.PureComponent {
     getClasses() {
         let base = 'ck-label';
         if (this.props.absolute) {
-            base = classNames(base,'position-absolute');
+            base = classNames(base, 'position-absolute');
         }
-        return classNames(base,this.props.className);
+        if (this.props.sm) {
+            base = classNames(base, 'ck-label-sm');
+        }
+        return classNames(base, this.props.className);
     }
 
     getStyles() {
@@ -42,7 +45,7 @@ class Label extends React.PureComponent {
             base.height = this.props.height;
         }
         if (this.props.absolute) {
-            base.top = this.props.y;
+            base.top  = this.props.y;
             base.left = this.props.x;
         }
         return base;
@@ -58,18 +61,17 @@ class Label extends React.PureComponent {
 }
 
 Label.propTypes = {
-    text: PropTypes.string,
-    absolute: PropTypes.bool,
-    x: PropTypes.string,
-    y: PropTypes.string,
-    width: PropTypes.string,
-    height: PropTypes.string,
-    color: PropTypes.string,
-    backColor: PropTypes.string
+    text     : PropTypes.string,
+    absolute : PropTypes.bool,
+    x        : PropTypes.string,
+    y        : PropTypes.string,
+    width    : PropTypes.string,
+    height   : PropTypes.string,
+    color    : PropTypes.string,
+    backColor: PropTypes.string,
+    sm       : PropTypes.bool
 };
 
-Label.defaultProps = {
-
-};
+Label.defaultProps = {};
 
 export default Label;

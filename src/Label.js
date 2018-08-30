@@ -48,6 +48,12 @@ class Label extends React.PureComponent {
             base.top  = this.props.y;
             base.left = this.props.x;
         }
+        if (this.props.color) {
+            base.color = this.props.color;
+        }
+        if (this.props.backColor) {
+            base.backgroundColor = this.props.backColor;
+        }
         return base;
     }
 

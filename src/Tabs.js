@@ -61,6 +61,9 @@ class Tabs extends React.PureComponent {
             base.position = 'absolute';
             base.top  = this.props.y;
             base.left = this.props.x;
+            if (this.props.height) {
+                base.marginTop = this.props.sm ? '-28px':'-42px';
+            }
         }
 
         return common.extend(base, this.props.style)

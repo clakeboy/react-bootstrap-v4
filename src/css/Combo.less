@@ -5,7 +5,7 @@
   z-index: 1160;
   background-color: white;
   border-radius: 3px;
-  padding: 5px;
+  padding: .25rem;
   &:before,&:after {
     position:absolute;
     display:block;
@@ -19,8 +19,30 @@
   height:100%;
 }
 
+.ck-combo-sm {
+  .ck-combo-nofound {
+    padding: .1rem .2rem;
+    font-size: .5rem;
+  }
+}
+
 .ck-combo-nofound {
-  padding: 5px 8px;
+  padding: .25rem .5rem;
+}
+
+.ck-combo-up-sm {
+  &:before {
+    border-width: 6px;
+    border-bottom-color: #dee2e6;
+    left:4px;
+    top:-12px;
+  }
+  &:after {
+    border-width: 4px;
+    border-bottom-color: #ffffff;
+    left:6px;
+    top:-8px;
+  }
 }
 
 .ck-combo-up:before{

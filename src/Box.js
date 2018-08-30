@@ -30,8 +30,8 @@ class Box extends React.PureComponent {
 
         if (this.props.absolute) {
             base.position = 'absolute';
-            base.x        = this.props.x;
-            base.y        = this.props.y;
+            base.left     = this.props.x;
+            base.top      = this.props.y;
         }
 
         if (this.props.borderWidth) {

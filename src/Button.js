@@ -38,6 +38,25 @@ class Button extends React.PureComponent {
         return classNames(base,this.props.className);
     }
 
+    getStyles() {
+        let base = {};
+        if (this.props.width) {
+            base.width = this.props.width;
+        }
+
+        if (this.props.height) {
+            base.height = this.props.height;
+        }
+
+        if (this.props.absolute) {
+            base.position = 'absolute';
+            base.left     = this.props.x;
+            base.top      = this.props.y;
+        }
+
+        return base;
+    }
+
     clickHandler = (e) => {
         if (this.props.onClick) {
             this.props.onClick(e)
@@ -46,7 +65,7 @@ class Button extends React.PureComponent {
 
     render() {
         return (
-            <button {...this.props} disabled={this.props.disabled} onClick={this.clickHandler} className={this.getClasses()} >
+            <button {...this.props} disabled={this.props.disabled} onClick={this.clickHandler} className={this.getClasses()} style={this.getStyles()}>
                 {this.renderIcon()}{this.props.children}
             </button>
         );
@@ -72,6 +91,11 @@ Button.propTypes = {
     icon: PropTypes.string,
     disabled: PropTypes.bool,
     block: PropTypes.bool,
+    absolute   : PropTypes.bool,
+    x          : PropTypes.string,
+    y          : PropTypes.string,
+    width      : PropTypes.string,
+    height     : PropTypes.string
 };
 
 Button.defaultProps = {

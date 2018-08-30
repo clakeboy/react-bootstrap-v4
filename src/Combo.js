@@ -131,10 +131,15 @@ class Combo extends React.PureComponent {
     }
 
     getClasses() {
-        let base = 'ck-combo border d-none ck-combo-up shadow';
+        let base = 'ck-combo border d-none shadow';
 
         if (this.props.triangular) {
             base = classNames(base,'ck-calendar-'+this.props.triangular)
+        }
+        if (this.props.sm) {
+            base = classNames(base,'ck-combo-sm','ck-combo-up-sm');
+        } else {
+            base = classNames(base,'ck-combo-up');
         }
 
         return classNames(base,this.props.className);
@@ -165,13 +170,13 @@ class Combo extends React.PureComponent {
 
     renderLoading() {
         return (
-            <div className='ck-combo-nofound'><Load/></div>
+            <div className='ck-combo-nofound' style={{height:'100%'}}><Load/></div>
         )
     }
 
     renderNotResult() {
         return (
-            <div className='ck-combo-nofound'>no data</div>
+            <div className='ck-combo-nofound' style={{height:'100%'}}>no data</div>
         )
     }
     renderList() {

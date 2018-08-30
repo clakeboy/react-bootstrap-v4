@@ -251,7 +251,7 @@ class TestModal extends React.PureComponent {
                         }} onChange={(val,row)=>{
                             console.log(val,row);
                         }}/>
-                        <Input label="测试本地数据 Combo" combo={{
+                        <Input label="测试本地数据 Combo" size={'xs'} combo={{
                             searchColumn:'task_name'
                         }} comboData={child} onChange={(val,row)=>{
                             console.log(val,row);

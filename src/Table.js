@@ -151,6 +151,9 @@ class Table extends React.Component {
         if (this.props.sm) {
             base = classNames(base, 'table-sm');
         }
+        if (this.props.fontSm) {
+            base = classNames(base, 'table-font-sm');
+        }
         //responsive
         if (this.props.responsive) {
             base = classNames(base, 'table-responsive');
@@ -232,7 +235,7 @@ class Table extends React.Component {
         return (
             <thead ref={c=>this.tableHeader=c} className={this.getHeaderClasses()}>
             <tr>
-                {this.state.select ? <th width={10}><input type='checkbox' onChange={this.selectAll}/></th> : null}
+                {this.state.select ? <th width={10}><input type='checkbox' style={{width:'20px'}} onChange={this.selectAll}/></th> : null}
                 {React.Children.map(this.props.children, (item, key) => {
                     if (!item || item.props.hide) {
                         return null;
@@ -268,7 +271,7 @@ class Table extends React.Component {
             <React.Fragment>
                 <tr className={this.props.onClick ? 'click-row' : null} onClick={this.clickHandler(row, i)}>
                     {this.state.select ?
-                        <th><input type='checkbox' ref={'row_' + i} onChange={this.changeHandler(row, i)}/></th> : null}
+                        <th><input type='checkbox' style={{width:'20px'}} ref={'row_' + i} onChange={this.changeHandler(row, i)}/></th> : null}
                     {React.Children.map(this.props.children, (item, key) => {
                         if (!item || item.props.hide) {
                             return null;
@@ -355,6 +358,7 @@ Table.propTypes = {
     bordered   : PropTypes.bool,
     hover      : PropTypes.bool,
     sm         : PropTypes.bool,
+    fontSm     : PropTypes.bool,
     responsive : PropTypes.bool,
     align      : PropTypes.string,
     tree       : PropTypes.string,

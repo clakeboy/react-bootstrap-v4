@@ -56,7 +56,7 @@ class Card extends React.PureComponent {
 
     render() {
         return (
-            <div className={this.getClasses()} style={this.getStyle()}>
+            <div {...this.props} className={this.getClasses()} style={this.getStyle()}>
                 {this.renderHeader()}
                 <div className="card-body">
                     {this.props.children}

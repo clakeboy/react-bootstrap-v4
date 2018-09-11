@@ -93,6 +93,9 @@ class Input extends React.PureComponent {
         if (this.props.y) {
             base.top = this.props.y;
         }
+        if (!this.props.label) {
+            base.marginBottom = '0';
+        }
 
         return common.extend(base, this.props.style)
     }

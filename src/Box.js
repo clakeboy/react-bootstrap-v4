@@ -43,6 +43,10 @@ class Box extends React.PureComponent {
             base.borderColor = this.props.borderColor;
         }
 
+        if (this.props.backColor) {
+            base.backgroundColor = this.props.backColor;
+        }
+
         return base;
     }
 
@@ -60,7 +64,8 @@ Box.propTypes = {
     width      : PropTypes.string,
     height     : PropTypes.string,
     borderWidth: PropTypes.string,
-    borderColor: PropTypes.string
+    borderColor: PropTypes.string,
+    backColor: PropTypes.string
 };
 
 Box.defaultProps = {};

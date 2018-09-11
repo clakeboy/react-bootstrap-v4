@@ -17,7 +17,8 @@ import ReactBootstrap4,{
     Calendar,
     TextArea,
     Switch,
-    Label
+    Label,
+    Menu
 } from '../../src/index';
 
 class Window extends React.Component {
@@ -96,8 +97,14 @@ class Window extends React.Component {
                         this.props.history.replace('/',this.state);
                     }}>回到首页</Button>
                 </Container>
-                <Card className='mt-2' header='Window Test'>
+                <Card className='mt-2' header='Window Test' onContextMenu={(e)=>{
+                    e.preventDefault();
+                    this.mainMenu.show({evt:e,type:'mouse',data:''});
+                }}>
                     <Label text='Clake Lee'/>
+                    <Button onClick={(e)=>{
+                        this.mainMenu.show({evt:e,type:'dom-left',data:''});
+                    }}>点击打开菜单</Button>
                 </Card>
                 <Table absolute x='100px' y='300px' width='500px' height='300px' headerTheme='light' scroll hover={true} select={true} sm data={this.dataTable}>
                     <Table.Header width='100px' text='Name' field='name' onSort={(sort)=>{alert(sort)}}/>
@@ -110,6 +117,32 @@ class Window extends React.Component {
                         return <Button className='color-blue' size='xs' icon='plus'>Add</Button>
                     }} />
                 </Table>
+                <Menu ref={c=>this.mainMenu=c} onClick={(key)=>{
+                    console.log(key);
+                }}>
+                    <Menu.Item field="copy" onClick={()=>{
+                        console.log(document.execCommand("copy"))
+                    }}>Copy</Menu.Item>
+                    <Menu.Item step/>
+                    <Menu.Item field="asc">Asc</Menu.Item>
+                    <Menu.Item field="desc" onClick={(key)=>{
+                        console.log("custom key");
+                    }}>Desc</Menu.Item>
+                    <Menu.Item step/>
+                    <Menu.Item field='select_filter' onClick={()=>{
+                        let select = document.getSelection();
+                        console.log(select.toString());
+                    }}>Filter Selection</Menu.Item>
+                    <Menu.Item field="filter">
+                        <span className='mr-1'>Filter</span>
+                        <Input size='xs' onMouseDown={(e)=>{e.stopPropagation();}}/>
+                    </Menu.Item>
+                    <Menu.Item field="filter" text='More...' child>
+                        <Menu.Item>Child Menu 1</Menu.Item>
+                        <Menu.Item>Child Menu 2</Menu.Item>
+                        <Menu.Item>Child Menu 3</Menu.Item>
+                    </Menu.Item>
+                </Menu>
             </Container>
         );
     }

@@ -40,9 +40,13 @@ class Label extends React.PureComponent {
         let base = {};
         if (this.props.width) {
             base.width = this.props.width;
+            base.paddingLeft = '0';
+            base.paddingRight = '0';
         }
         if (this.props.height) {
             base.height = this.props.height;
+            base.paddingTop = '0';
+            base.paddingBottom = '0';
         }
         if (this.props.absolute) {
             base.top  = this.props.y;
@@ -53,6 +57,9 @@ class Label extends React.PureComponent {
         }
         if (this.props.backColor) {
             base.backgroundColor = this.props.backColor;
+        }
+        if (this.props.align) {
+            base.textAlign = this.props.align;
         }
         return base;
     }
@@ -75,9 +82,12 @@ Label.propTypes = {
     height   : PropTypes.string,
     color    : PropTypes.string,
     backColor: PropTypes.string,
-    sm       : PropTypes.bool
+    sm       : PropTypes.bool,
+    align: PropTypes.string
 };
 
-Label.defaultProps = {};
+Label.defaultProps = {
+
+};
 
 export default Label;

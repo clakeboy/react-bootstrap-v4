@@ -27,3 +27,4 @@ export CKModal from './CKModal';
 export Combo from './Combo';
 export Label from './Label';
 export Box from './Box';
+export Menu from './Menu';

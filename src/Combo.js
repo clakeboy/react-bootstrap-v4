@@ -207,7 +207,8 @@ Combo.propTypes = {
 };
 
 Combo.defaultProps = {
-    showRows:5
+    showRows:5,
+    data:[]
 };
 
 export default Combo;

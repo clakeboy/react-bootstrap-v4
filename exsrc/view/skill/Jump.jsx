@@ -14,7 +14,8 @@ import {
     Dropdown,
     Select,
     Calendar,
-    Switch
+    Switch,
+    RImage
 } from '../../../src/index';
 import Modal from "../../../src/Modal";
 
@@ -87,66 +88,11 @@ class Jump extends React.PureComponent {
                     <Button disabled>禁用</Button>
                     <Modal ref={c=>this.modal=c}/>
                 </Card>
-                <div className="card-columns">
-                    <div className="card">
-                        <img className="card-img-top" src="" alt="Card image cap"/>
-                            <div className="card-body">
-                                <h5 className="card-title">Card title</h5>
-                                <p className="card-text">This is a longer card with supporting text below as a natural
-                                    lead-in to additional content. This content is a little bit longer.</p>
-                                <p className="card-text">
-                                    <small className="text-muted">Last updated 3 mins ago</small>
-                                </p>
-                            </div>
-                    </div>
-                    <div className="card">
-                        <img className="card-img-top" src="" alt="Card image cap"/>
-                            <div className="card-body">
-                                <h5 className="card-title">Card title</h5>
-                                <p className="card-text">This card has supporting text below as a natural lead-in to
-                                    additional content.</p>
-                                <p className="card-text">
-                                    <small className="text-muted">Last updated 3 mins ago</small>
-                                </p>
-                            </div>
-                    </div>
-                    <div className="card">
-                        <img className="card-img-top" src="" alt="Card image cap"/>
-                            <div className="card-body">
-                                <h5 className="card-title">Card title</h5>
-                                <p className="card-text">This is a wider card with supporting text below as a natural
-                                    lead-in to additional content. This card has even longer content than the first to
-                                    show that equal height action.</p>
-                                <p className="card-text">
-                                    <small className="text-muted">Last updated 3 mins ago</small>
-                                </p>
-                            </div>
-                    </div>
-                    <div className="card">
-                        <img className="card-img-top" src="" alt="Card image cap"/>
-                        <div className="card-body">
-                            <h5 className="card-title">Card title</h5>
-                            <p className="card-text">This is a wider card with supporting text below as a natural
-                                lead-in to additional content. This card has even longer content than the first to
-                                show that equal height action.</p>
-                            <p className="card-text">
-                                <small className="text-muted">Last updated 3 mins ago</small>
-                            </p>
-                        </div>
-                    </div>
-                    <div className="card">
-                        <img className="card-img-top" src="" alt="Card image cap"/>
-                        <div className="card-body">
-                            <h5 className="card-title">Card title</h5>
-                            <p className="card-text">This is a wider card with supporting text below as a natural
-                                lead-in to additional content. This card has even longer content than the first to
-                                show that equal height action.</p>
-                            <p className="card-text">
-                                <small className="text-muted">Last updated 3 mins ago</small>
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                <Card header='Test Image Component'>
+                    <RImage height='50px' width='50px' border circle/>
+                    <RImage height='50px' width='50px' border circle src='http://img.tubaozhang.com/files/upload/20171008e2RmfXsxOTQ4Mzd9e2tTTHh9.jpg'/>
+                    <RImage height='100px' width='150px' src='http://dudubao.oss-cn-shenzhen.aliyuncs.com/tmp/poster/008f322df45c4dbcdf4e950173d0f23f.jpg'/>
+                </Card>
             </Container>
         );
     }

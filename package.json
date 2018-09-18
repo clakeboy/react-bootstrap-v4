@@ -1,6 +1,6 @@
 {
   "name": "@clake/react-bootstrap4",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "react bootstrap v4",
   "main": "lib/index.js",
   "scripts": {
@@ -63,7 +63,8 @@
     "webpack-dev-middleware": "^3.1.0",
     "webpack-hot-middleware": "^2.21.0",
     "webpack-merge": "^4.1.1",
-    "es6-promise": "^4.2.4"
+    "es6-promise": "^4.2.4",
+    "whatwg-fetch": "^3.0.0"
   },
   "dependencies": {
     "jquery": "^3.3.1",

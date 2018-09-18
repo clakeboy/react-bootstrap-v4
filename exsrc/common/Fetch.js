@@ -28,7 +28,6 @@ function Fetch(url,data,fn,err) {
             if (window.__DEBUG__) alert('远程调用失败，详细请查看控制台输出');
         }
     });
-
 }
 
 export default Fetch;

@@ -61,8 +61,10 @@ class Combo extends React.PureComponent {
     hide = () => {
         window.removeEventListener('mousedown',this.hide,false);
         this.mainDom.classList.add("d-none");
-        this.conDom.style.overflowY = 'none';
-        this.conDom.style.height = '100%';
+        if (this.conDom) {
+            this.conDom.style.overflowY = 'none';
+            this.conDom.style.height = '100%';
+        }
         if (this.isRemote) {
             this.setState({
                 loading:true

@@ -19,7 +19,7 @@ import {
     Calendar,
     TextArea,
     CKModal
-} from '../../src/index';
+} from '../../../src/index';
 
 class AddCoupon extends React.PureComponent {
     constructor(props) {
@@ -42,6 +42,7 @@ class AddCoupon extends React.PureComponent {
                 <Container className='p-0 mb-1' inline fluid>
                     <Input className='mr-1' disabled width='100' placeholder='用户名'/>
                     <Input className='mr-1' placeholder='密码' type='password'/>
+                    <div className='mr-2'>日期:</div>
                     <Input className='mr-1' placeholder='日期' calendar/>
                 </Container>
                 <div className='form-row'>

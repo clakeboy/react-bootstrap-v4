@@ -12,7 +12,7 @@ class Checkbox extends React.PureComponent {
             checked: this.props.checked,
         };
 
-        this.domId = common.RandomString(16);
+        this.domId = 'check-'+common.RandomString(16);
         if (this.props.id) {
             this.domId = this.props.id;
         }

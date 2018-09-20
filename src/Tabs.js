@@ -9,7 +9,7 @@ class Tabs extends React.PureComponent {
     constructor(props) {
         super(props);
 
-        this.domId = common.RandomString(16);
+        this.domId = 'tabs-'+common.RandomString(16);
         if (this.props.id) {
             this.domId = this.props.id;
         }

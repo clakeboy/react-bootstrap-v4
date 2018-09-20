@@ -13,7 +13,7 @@ class Dropdown extends React.PureComponent {
         };
 
         if (!this.props.id) {
-            this.props.id = common.RandomString(16);
+            this.props.id = 'drop-'+common.RandomString(16);
         }
     };
 

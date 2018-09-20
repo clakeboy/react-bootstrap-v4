@@ -68,8 +68,8 @@ gulp.task('publish:pack',['clean:publish','publish:css'],(callback)=>{
     gulp.src('src/**/*.js')
         .pipe(sourcemaps.init())
         .pipe(babel({presets: ['env','es2015', 'stage-0', 'react']}))
-        .pipe(sourcemaps.write('.'))
         .pipe(header(banner))
+        .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('lib'));
     callback();
 });

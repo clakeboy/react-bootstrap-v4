@@ -17,7 +17,7 @@ class Input extends React.PureComponent {
             disabled: this.props.disabled
         };
 
-        this.domId = common.RandomString(16);
+        this.domId = 'input-'+common.RandomString(16);
         if (this.props.id) {
             this.domId = this.props.id;
         }

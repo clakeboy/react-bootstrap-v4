@@ -1,8 +1,16 @@
 .ck-image {
   overflow: hidden;
   font-size:2rem;
+  transition: opacity .3s ease-in-out;
 }
 
 .ck-image-circle {
   border-radius: 50%;
+}
+
+.ck-image-click {
+  cursor: pointer;
+  &:hover {
+    opacity: .7;
+  }
 }

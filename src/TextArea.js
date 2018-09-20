@@ -10,7 +10,7 @@ class TextArea extends React.PureComponent {
             value: this.props.data
         };
 
-        this.domId = common.RandomString(16);
+        this.domId = 'text-area-'+common.RandomString(16);
         if (this.props.id) {
             this.domId = this.props.id;
         }
@@ -55,6 +55,10 @@ class TextArea extends React.PureComponent {
         if (this.props.absolute) {
             base.top  = this.props.y;
             base.left = this.props.x;
+        }
+
+        if (!this.props.label) {
+            base.marginBottom = '0';
         }
 
         return common.extend(base, this.props.style)

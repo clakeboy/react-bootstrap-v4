@@ -31,7 +31,7 @@ class Modal extends React.PureComponent {
         //alert confirm callback function
         this.callback = null;
 
-        this.domId = common.RandomString(16);
+        this.domId = 'modal-'+common.RandomString(16);
         if (this.props.id) {
             this.domId = this.props.id;
         }

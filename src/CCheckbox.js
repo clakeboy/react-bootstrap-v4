@@ -7,7 +7,7 @@ class CCheckbox extends React.PureComponent {
     constructor(props) {
         super(props);
 
-        this.domId = common.RandomString(16);
+        this.domId = 'ccheck-'+common.RandomString(16);
         if (this.props.id) {
             this.domId = this.props.id;
         }

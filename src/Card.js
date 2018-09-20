@@ -3,10 +3,17 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import Title from './Title';
 import './css/Card.less'
+import Scroll from "./Scroll";
+import common from "./Common";
 
 class Card extends React.PureComponent {
     constructor(props) {
         super(props);
+
+        this.domId = 'tab-'+common.RandomString(16);
+        if (this.props.id) {
+            this.domId = this.props.id;
+        }
     }
 
     componentDidMount() {
@@ -58,9 +65,10 @@ class Card extends React.PureComponent {
         return (
             <div {...this.props} className={this.getClasses()} style={this.getStyle()}>
                 {this.renderHeader()}
-                <div className="card-body">
+                <div id={this.domId} className="card-body">
                     {this.props.children}
                 </div>
+                {this.props.scroll?<Scroll selector={`#${this.domId}`}/>:null}
             </div>
         );
     }
@@ -76,6 +84,7 @@ Card.propTypes = {
     width: PropTypes.string,
     height: PropTypes.string,
     sm: PropTypes.bool,
+    scroll: PropTypes.bool
 };
 
 Card.defaultProps = {

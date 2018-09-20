@@ -1,0 +1,55 @@
+.ck-scroll {
+  position: absolute;
+  top:0;
+  right:0;
+  opacity: 0;
+  transition: background-color .2s ease-in-out,opacity .3s ease-in-out,width .2s ease-in-out;
+  width: 6px;
+  height: 200px;
+  padding: 2px 0;
+  user-select: none;
+  background-color: rgba(0,0,0,0);
+  &:hover {
+    opacity: 1;
+    width:13px;
+    background-color: rgba(0,0,0,.1);
+    .ck-scroll-bar {
+      width: 10px;
+      border-radius: 5px;
+      background-color: rgba(0,0,0,.5);
+    }
+  }
+}
+
+.ck-scroll-bar {
+  position: absolute;
+  top: 0;
+  right:1px;
+  background-color: rgba(0,0,0,.25);
+  width: 6px;
+  border-radius: 3px;
+  transition: background-color .2s ease-in-out,width .2s;
+  &:hover {
+    background-color: rgba(0,0,0,.5);
+  }
+}
+
+.ck-scroll-show {
+  opacity: 1;
+}
+
+.ck-scroll-scrolling {
+  opacity: 1;
+  width:13px;
+  background-color: rgba(0,0,0,.1);
+  .ck-scroll-bar {
+    width: 10px;
+    border-radius: 5px;
+    background-color: rgba(0,0,0,.5);
+  }
+}
+
+.ck-scroll-over {
+  position: relative;
+  overflow: hidden!important;
+}

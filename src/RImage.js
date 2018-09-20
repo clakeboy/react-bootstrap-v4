@@ -18,7 +18,7 @@ class RImage extends React.PureComponent {
         this.state = {
             isLoad:is_load,
             src:src,
-            display:'horizontal'
+            display:null
         };
     }
 
@@ -58,7 +58,7 @@ class RImage extends React.PureComponent {
     }
 
     getClasses() {
-        let base = 'ck-image d-flex justify-content-center align-items-center';
+        let base = 'ck-image d-flex';
 
         if (this.props.border || !this.state.isLoad) {
             base = classNames(base,'border');
@@ -66,6 +66,22 @@ class RImage extends React.PureComponent {
 
         if (this.props.circle) {
             base = classNames(base,'ck-image-circle');
+        }
+
+        if (this.props.onClick) {
+            base = classNames(base,'ck-image-click');
+        }
+
+        if (this.props.display === 'center') {
+            if (this.state.display === 'vertical') {
+                base = classNames(base,'align-items-center');
+            } else if (this.state.display === 'horizontal') {
+                base = classNames(base,'justify-content-center');
+            } else {
+                base = classNames(base,'justify-content-center','align-items-center');
+            }
+        } else {
+            base = classNames(base,'justify-content-center','align-items-center');
         }
 
         return classNames(base,this.props.className);
@@ -89,7 +105,7 @@ class RImage extends React.PureComponent {
     }
 
     clickHandler = (e)=>{
-        if (typeof this.props.onClick) {
+        if (typeof this.props.onClick === 'function') {
             this.props.onClick(e);
         }
     };

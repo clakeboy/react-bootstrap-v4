@@ -51,6 +51,10 @@ class Select extends React.PureComponent {
             base.left = this.props.x;
         }
 
+        if (!this.props.label) {
+            base.marginBottom = '0';
+        }
+
         return common.extend(base, this.props.style)
     }
 

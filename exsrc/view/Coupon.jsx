@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
-import {GetModal} from "../common/Funcs";
+import {GetComponent} from "../common/Funcs";
 import {
     Container,
     Input,
@@ -129,7 +129,7 @@ class Coupon extends React.PureComponent {
                     }}>测试 loading 加载 Modal</Button>
                     <Button theme='info' onClick={e=>this.modal.view({
                         title:'添加优惠券',
-                        content:<Loader loadPath='/AddCoupon' import={GetModal}/>
+                        content:<Loader loadPath='/skill/AddCoupon' import={GetComponent}/>
                     })}>测试 view 自定义内容 Modal</Button>
 
                     <Button className='mt-4' block>Button Block</Button>

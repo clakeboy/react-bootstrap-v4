@@ -120,7 +120,7 @@ class Select extends React.PureComponent {
 
     render() {
         return (
-            <div className={this.getClasses()}>
+            <div className={this.getClasses()} style={this.getMainStyles()}>
                 {this.renderLabel()}
                 <select {...this.props} onChange={this.selectHandler} value={this.state.value} className={this.getInputClasses()} id={this.domId}>
                     {this.state.data.map((item) => {

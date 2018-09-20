@@ -48,7 +48,7 @@ class RImage extends React.PureComponent {
     componentWillReceiveProps(nextProps) {
         if (nextProps.src !== this.props.src) {
             let is_load = true;
-            if (typeof this.props.src === 'string' || !this.props.src) {
+            if (typeof nextProps.src === 'string' || !nextProps.src) {
                 is_load = false;
             }
             this.setState({isLoad:is_load},()=>{

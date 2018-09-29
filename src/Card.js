@@ -10,7 +10,7 @@ class Card extends React.PureComponent {
     constructor(props) {
         super(props);
 
-        this.domId = 'tab-'+common.RandomString(16);
+        this.domId = 'card-'+common.RandomString(16);
         if (this.props.id) {
             this.domId = this.props.id;
         }
@@ -21,9 +21,12 @@ class Card extends React.PureComponent {
     }
 
     getClasses() {
-        let base = 'card';
+        let base = 'card ck-card';
         if (this.props.border) {
             base = classNames(base,`border-${this.props.border}`);
+        }
+        if (this.props.divider) {
+            base = classNames(base,'ck-card-divider');
         }
         return classNames(base,this.props.className);
     }
@@ -84,7 +87,8 @@ Card.propTypes = {
     width: PropTypes.string,
     height: PropTypes.string,
     sm: PropTypes.bool,
-    scroll: PropTypes.bool
+    scroll: PropTypes.bool,
+    divider: PropTypes.bool
 };
 
 Card.defaultProps = {

@@ -88,7 +88,7 @@ class Jump extends React.PureComponent {
                     <Button disabled>禁用</Button>
                     <Modal ref={c=>this.modal=c}/>
                 </Card>
-                <Card header='Test Image Component' height='200px' scroll>
+                <Card header='Test Image Component' height='500px' scroll>
                     <RImage height='50px' width='50px' border circle/>
                     <RImage height='50px' width='50px' border circle src='http://img.tubaozhang.com/files/upload/20171008e2RmfXsxOTQ4Mzd9e2tTTHh9.jpg'/>
                     <RImage onClick={()=>{}} height='100px' width='150px' src='http://dudubao.oss-cn-shenzhen.aliyuncs.com/tmp/poster/008f322df45c4dbcdf4e950173d0f23f.jpg'/>

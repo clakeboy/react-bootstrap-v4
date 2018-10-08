@@ -131,6 +131,10 @@ class Input extends React.PureComponent {
             base = classNames(base, 'ck-input-icon');
         }
 
+        if (this.props.readOnly && (this.props.calendar || this.props.combo)) {
+            base = classNames(base, 'ck-input-select');
+        }
+
         return classNames(base, size);
     }
 
@@ -263,7 +267,7 @@ class Input extends React.PureComponent {
         return (
             <div className='ck-input-calendar'>
                 <Combo ref={c => this.combo = c} {...this.props.combo} sm={this.props.size === 'sm' || this.props.size==='xs'}
-                       data={this.props.comboData}
+                       data={this.props.comboData} noSearch={this.props.readOnly}
                        onSelect={this.selectHandler}/>
                 <div className={input_icon} onClick={()=>{
                     this.input.focus();

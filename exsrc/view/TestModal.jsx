@@ -256,6 +256,18 @@ class TestModal extends React.PureComponent {
                         }} comboData={child} onChange={(val,row)=>{
                             console.log(val,row);
                         }}/>
+                        <Input label="测试本地数据 Combo 只读" readOnly combo={{
+                            searchColumn:'task_name',
+                            width:'100%',
+                        }} comboData={child} onChange={(val,row)=>{
+                            console.log(val,row);
+                        }}/>
+                        <Input label="测试本地数据 Combo 只读(小)" size='sm' readOnly combo={{
+                            searchColumn:'task_name',
+                            width:'100%',
+                        }} comboData={child} onChange={(val,row)=>{
+                            console.log(val,row);
+                        }}/>
                     </TabsContent>
                     <TabsContent id='label2' text='标题2'>
 

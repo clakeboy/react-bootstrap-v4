@@ -7,7 +7,7 @@ import {map} from './Common';
 import "./css/Combo.less";
 import Load from "./Load";
 
-class Combo extends React.PureComponent {
+class Combo extends React.Component {
     constructor(props) {
         super(props);
         this.isRemote = this.props.onSearch?true:false;
@@ -98,12 +98,16 @@ class Combo extends React.PureComponent {
             return;
         }
         let data = [];
-        let reg = new RegExp("^"+search);
-        this.props.data.forEach((item)=>{
-            if (reg.test(item[this.props.searchColumn])) {
-                data.push(item);
-            }
-        });
+        if (this.props.noSearch) {
+            data = this.props.data;
+        } else {
+            let reg = new RegExp("^"+search);
+            this.props.data.forEach((item)=>{
+                if (reg.test(item[this.props.searchColumn])) {
+                    data.push(item);
+                }
+            });
+        }
         if (data.length === 0) {
             this.setState({data:null});
         } else {
@@ -153,7 +157,7 @@ class Combo extends React.PureComponent {
             base.height = this.props.height;
         }
         if (this.props.width) {
-            base.width = this.props.width
+            base.width = this.props.width;
         }
         return base;
     }
@@ -187,11 +191,24 @@ class Combo extends React.PureComponent {
             <div ref={c=>this.conDom=c} className='ck-combo-content'>
                 <Table ref={c=>this.table=c} select={false} header={false} striped={false} sm={this.props.sm} data={this.state.data} onClick={this.selectHandler}>
                     {map(columns,(item)=>{
-                        return <TableHeader field={item.field} width={item.width}/>
+                        return <TableHeader field={item.field} width={item.width}
+                                            onFormat={item.field === this.props.searchColumn?this.filterFormat:null}/>
                     })}
                 </Table>
             </div>
         )
+    }
+    filterFormat = (val,row)=>{
+        let idx = val.indexOf(this.search);
+        if (idx === -1) {
+            return val;
+        }
+        let first = val.substring(0,idx);
+        let center = val.substr(idx,this.search.length);
+        let end = val.substr(idx+this.search.length);
+        return <React.Fragment>
+            {first}<span className='text-danger'>{center}</span>{end}
+        </React.Fragment>;
     }
 }
 
@@ -199,18 +216,21 @@ Combo.propTypes = {
     searchColumn: PropTypes.string,
     data: PropTypes.array,
     height: PropTypes.string,
+    width: PropTypes.string,
     showRows: PropTypes.number,
     search: PropTypes.string,
     onSearch: PropTypes.func,
     onSelect: PropTypes.func,
     sm: PropTypes.bool,
     //filter column exp: ['name','age'] or [{field:'name',width:'100px'},{field:'age',width:'100px'}]
-    filterColumns: PropTypes.array
+    filterColumns: PropTypes.array,
+    noSearch: PropTypes.bool
 };
 
 Combo.defaultProps = {
     showRows:5,
-    data:[]
+    data:[],
+    search:""
 };
 
 export default Combo;

@@ -26,6 +26,16 @@ class Select extends React.PureComponent {
         return nextState.data !== this.state.data || nextState.value !== this.state.value;
     }
 
+    getValue() {
+        return this.state.value;
+    }
+
+    setValue(val) {
+        this.setState({
+            value:val
+        });
+    }
+
     getClasses() {
         let base = 'form-group';
         if (this.props.absolute) {
@@ -84,7 +94,6 @@ class Select extends React.PureComponent {
      * Event
      *********************/
     selectHandler = (e) => {
-        console.log(e);
         this.setState({
             value: e.target.value
         });

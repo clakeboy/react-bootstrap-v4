@@ -8,7 +8,7 @@ import Icon from "./Icon";
 
 import './css/Input.less';
 
-class Input extends React.PureComponent {
+class Input extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -280,7 +280,7 @@ class Input extends React.PureComponent {
         return (
             <div className={this.getMainClasses()} style={this.getMainStyles()}>
                 {this.renderLabel()}
-                <input ref={c => this.input = c} type="text" {...this.props} onBlur={this.blurHandler}
+                <input {...this.props} ref={c => this.input = c} type="text" onBlur={this.blurHandler}
                        onChange={this.changeHandler}
                        value={this.state.value}
                        className={this.getInputClasses()}

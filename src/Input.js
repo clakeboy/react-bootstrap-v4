@@ -280,7 +280,7 @@ class Input extends React.Component {
         return (
             <div className={this.getMainClasses()} style={this.getMainStyles()}>
                 {this.renderLabel()}
-                <input {...this.props} ref={c => this.input = c} type={this.props.type||'text'} onBlur={this.blurHandler}
+                <input type='text' {...this.props} ref={c => this.input = c} onBlur={this.blurHandler}
                        onChange={this.changeHandler}
                        value={this.state.value}
                        className={this.getInputClasses()}

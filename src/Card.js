@@ -23,7 +23,7 @@ class Card extends React.PureComponent {
     getClasses() {
         let base = 'card ck-card';
         if (this.props.border) {
-            base = classNames(base,`border-${this.props.border}`);
+            base = classNames(base,`border border-${this.props.border}`);
         }
         if (this.props.divider) {
             base = classNames(base,'ck-card-divider');

@@ -45,7 +45,7 @@ class Form extends React.PureComponent {
         return (val)=>{
             this.vals[field] = val;
             if (typeof this.props.onChange === 'function') {
-                this.props.onChange(val);
+                this.props.onChange(field,val);
             }
         };
     };
@@ -54,7 +54,7 @@ class Form extends React.PureComponent {
         return (val,row)=>{
             this.vals[field] = {text:val,value:row};
             if (typeof this.props.onChange === 'function') {
-                this.props.onChange(val,row);
+                this.props.onChange(field,val,row);
             }
         };
     };
@@ -63,7 +63,7 @@ class Form extends React.PureComponent {
         return (e)=>{
             this.vals[field] = e.target.value;
             if (typeof this.props.onChange === 'function') {
-                this.props.onChange(e.target.value);
+                this.props.onChange(field,e.target.value);
             }
         };
     };
@@ -72,7 +72,7 @@ class Form extends React.PureComponent {
         return (e)=>{
             this.vals[field] = e.target.checked;
             if (typeof this.props.onChange === 'function') {
-                this.props.onChange(e.target.checked);
+                this.props.onChange(field,e.target.checked);
             }
         };
     };

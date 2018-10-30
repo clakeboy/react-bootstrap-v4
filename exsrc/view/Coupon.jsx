@@ -91,7 +91,7 @@ class Coupon extends React.PureComponent {
                         <Load>内容加载中</Load>
                     </div>
                 </Card>
-                <Card className='mt-2' header="优惠券添加">
+                <Card divider border={'info'} className='mt-2' header="优惠券添加">
                     <div className='form-row'>
                         <Input className='col-6' label='Name' plaintext data='Clake'/>
                         <Input className='col-6' label='Last Name' data='Lee'/>

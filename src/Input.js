@@ -17,7 +17,7 @@ class Input extends React.Component {
             disabled: this.props.disabled
         };
 
-        this.domId = 'input-'+common.RandomString(16);
+        this.domId = 'input-' + common.RandomString(16);
         if (this.props.id) {
             this.domId = this.props.id;
         }
@@ -201,6 +201,14 @@ class Input extends React.Component {
         });
     };
 
+    keyUpHandler = (e) => {
+        if (e.keyCode === 13) {
+            if (typeof this.props.onEnter === 'function') {
+                this.props.onEnter(e.target.value);
+            }
+        }
+    };
+
     /*********************
      * render method
      *********************/
@@ -249,7 +257,7 @@ class Input extends React.Component {
                         this.props.onChange(val, this);
                     }
                 }} value={this.state.value} format={this.props.calendarFormat} none shadow absolute triangular='up'/>
-                <div className={input_icon} onClick={()=>{
+                <div className={input_icon} onClick={() => {
                     this.input.focus();
                 }}><Icon iconType='regular' icon='calendar-alt'/></div>
             </div>
@@ -266,10 +274,10 @@ class Input extends React.Component {
         }
         return (
             <div className='ck-input-calendar'>
-                <Combo ref={c => this.combo = c} {...this.props.combo} sm={this.props.size === 'sm' || this.props.size==='xs'}
+                <Combo ref={c => this.combo = c} {...this.props.combo} sm={this.props.size === 'sm' || this.props.size === 'xs'}
                        data={this.props.comboData} noSearch={this.props.readOnly}
                        onSelect={this.selectHandler}/>
-                <div className={input_icon} onClick={()=>{
+                <div className={input_icon} onClick={() => {
                     this.input.focus();
                 }}><Icon icon='angle-down'/></div>
             </div>
@@ -282,6 +290,7 @@ class Input extends React.Component {
                 {this.renderLabel()}
                 <input type='text' {...this.props} ref={c => this.input = c} onBlur={this.blurHandler}
                        onChange={this.changeHandler}
+                       onKeyUp={this.keyUpHandler}
                        value={this.state.value}
                        className={this.getInputClasses()}
                        style={this.getInputStyle()}
@@ -296,7 +305,7 @@ class Input extends React.Component {
 
 Input.propTypes = {
     id            : PropTypes.string,
-    size          : PropTypes.oneOf(['df', 'sm', 'lg','xs']),
+    size          : PropTypes.oneOf(['df', 'sm', 'lg', 'xs']),
     label         : PropTypes.string,
     data          : PropTypes.any,
     summary       : PropTypes.string,
@@ -306,6 +315,7 @@ Input.propTypes = {
     placeholder   : PropTypes.string,
     calendar      : PropTypes.bool,
     onChange      : PropTypes.func,
+    onEnter       : PropTypes.func,
     plaintext     : PropTypes.bool,
     calendarFormat: PropTypes.string,
     validate      : PropTypes.object,

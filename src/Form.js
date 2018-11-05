@@ -73,7 +73,7 @@ class Form extends React.PureComponent {
         return (text,val)=>{
             this.vals[field] = text;
             if (typeof this.props.onChange === 'function') {
-                this.props.onChange(text,val);
+                this.props.onChange(field,text,val);
             }
         }
     }

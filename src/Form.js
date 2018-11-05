@@ -7,6 +7,7 @@ import Checkbox from './Checkbox';
 import Select from './Select';
 import TextArea from './TextArea';
 import {map} from './Common';
+import Dropdown from "./Dropdown";
 
 class Form extends React.PureComponent {
     constructor(props) {
@@ -68,6 +69,15 @@ class Form extends React.PureComponent {
         };
     };
 
+    dropdownChangeHandler(field) {
+        return (text,val)=>{
+            this.vals[field] = text;
+            if (typeof this.props.onChange === 'function') {
+                this.props.onChange(text,val);
+            }
+        }
+    }
+
     checkChangeHandler(field) {
         return (e)=>{
             this.vals[field] = e.target.checked;
@@ -116,6 +126,8 @@ class Form extends React.PureComponent {
             } else if (item.type === TextArea) {
                 item.props.onChange = this.inputChangeHandler(field);
                 // item.props.ref = this.refComponent(field);
+            } else if (item.type === Dropdown) {
+                item.props.onChange = this.dropdownChangeHandler(field);
             }
         }
     }

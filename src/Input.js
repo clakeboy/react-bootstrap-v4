@@ -49,11 +49,16 @@ class Input extends React.Component {
     }
 
     componentWillReceiveProps(nextProp) {
-        this.setState({value: nextProp.data});
+        this.setState({
+            value: nextProp.data
+        });
     }
 
     shouldComponentUpdate(nextProps, nextState) {
         if (nextProps.disabled !== this.props.disabled) {
+            return true
+        }
+        if (nextProps.label !== this.props.label) {
             return true
         }
         if (nextState.validate !== this.state.validate) {

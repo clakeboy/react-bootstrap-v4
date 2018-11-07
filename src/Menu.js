@@ -73,7 +73,9 @@ class Menu extends React.PureComponent {
 
     closeChild() {
         this.childMenus.forEach((item)=>{
-            item.hide();
+            if (typeof item.hide === 'function') {
+                item.hide();
+            }
         })
     }
 
@@ -135,10 +137,10 @@ class MenuItem extends React.PureComponent {
 
     clickHandler = (e)=>{
         if (typeof this.props.onClick === "function") {
-            this.props.onClick(this.props.field,this.parent.data);
+            this.props.onClick(e,this.props.field,this.parent.data);
             this.parent.hide();
         } else {
-            this.parent.clickHandler(this.props.field);
+            this.parent.clickHandler(e,this.props.field);
         }
     };
 

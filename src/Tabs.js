@@ -9,6 +9,10 @@ class Tabs extends React.PureComponent {
     constructor(props) {
         super(props);
 
+        this.state = {
+            currentShow:this.props.showTab
+        };
+
         this.domId = 'tabs-'+common.RandomString(16);
         if (this.props.id) {
             this.domId = this.props.id;
@@ -107,7 +111,7 @@ class Tabs extends React.PureComponent {
                     if (item.props.fade) {
                         class_name = classNames(class_name, 'fade');
                     }
-                    if (item.props.active) {
+                    if (item.props.active || this.state.currentShow === item.props.id) {
                         class_name = classNames(class_name, 'show', 'active');
                     }
                     return (
@@ -140,12 +144,14 @@ Tabs.propTypes = {
     y       : PropTypes.string,
     width   : PropTypes.string,
     height  : PropTypes.string,
-    sm      : PropTypes.bool
+    sm      : PropTypes.bool,
+    showTab : PropTypes.string
 };
 
 Tabs.defaultProps = {
     border : true,
-    content: true
+    content: true,
+    showTab:''
 };
 
 export default Tabs;

@@ -73,7 +73,7 @@ class Menu extends React.PureComponent {
 
     closeChild() {
         this.childMenus.forEach((item)=>{
-            if (typeof item.hide === 'function') {
+            if (item && typeof item.hide === 'function') {
                 item.hide();
             }
         })

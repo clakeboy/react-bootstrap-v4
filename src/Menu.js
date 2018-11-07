@@ -20,7 +20,7 @@ class Menu extends React.PureComponent {
 
     }
 
-    clickHandler = (key)=>{
+    clickHandler = (e,key)=>{
         if (typeof this.props.onClick === 'function') {
             this.props.onClick(key,this.data);
         }

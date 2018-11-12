@@ -5,6 +5,7 @@ import common from './Common';
 import Calendar from './Calendar';
 import Combo from './Combo';
 import Icon from "./Icon";
+import i18n from './components/i18n';
 
 import './css/Input.less';
 
@@ -252,6 +253,8 @@ class Input extends React.Component {
         if (this.props.size) {
             input_icon = classNames(input_icon, 'ck-input-calendar-icon-' + this.props.size);
         }
+        let lang = i18n.getLang();
+        console.log(lang.short);
         return (
             <div className='ck-input-calendar'>
                 <Calendar ref={c => this.calendar = c} onSelect={(val) => {
@@ -261,7 +264,7 @@ class Input extends React.Component {
                     if (this.props.onChange && typeof this.props.onChange === 'function') {
                         this.props.onChange(val, this);
                     }
-                }} value={this.state.value} format={this.props.calendarFormat} none shadow absolute triangular='up'/>
+                }} value={this.state.value} format={this.props.calendarFormat} lang={lang.short} none shadow absolute triangular='up'/>
                 <div className={input_icon} onClick={() => {
                     this.input.focus();
                 }}><Icon iconType='regular' icon='calendar-alt'/></div>

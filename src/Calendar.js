@@ -1,13 +1,11 @@
-import React,{ReactFragment}from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import './css/Calender.less';
 import Icon from './Icon';
-import $ from 'jquery';
 import common from './Common';
-let i18n = {
-    'cn': {
+const i18n = {
+    'zh': {
         'week' : [
             '日',
             '一',
@@ -68,7 +66,10 @@ class Calendar extends React.PureComponent {
         this.state = {
             days: this.fillDateList(),
             month: false,
+            year: false,
         };
+
+        this.year = {};
     }
 
     componentDidMount() {
@@ -133,11 +134,19 @@ class Calendar extends React.PureComponent {
     };
 
     privMonth() {
-        this.setMonth(this.show_date.getMonth() - 1)
+        if (this.state.year) {
+            this.setYear(this.year.end-10,true);
+        } else {
+            this.setMonth(this.show_date.getMonth() - 1)
+        }
     }
 
     nextMonth() {
-        this.setMonth(this.show_date.getMonth() + 1)
+        if (this.state.year) {
+            this.setYear(this.year.end+10,true);
+        } else {
+            this.setMonth(this.show_date.getMonth() + 1)
+        }
     }
 
     setMonth(month) {
@@ -145,6 +154,16 @@ class Calendar extends React.PureComponent {
         this.setState({
             days: this.fillDateList(),
             month: false,
+            year:false,
+        });
+    }
+
+    setYear(year,show) {
+        this.show_date.setYear(year);
+        this.setState({
+            days: this.fillDateList(),
+            month: false,
+            year:show,
         });
     }
 
@@ -252,6 +271,37 @@ class Calendar extends React.PureComponent {
         )
     }
 
+    renderYear() {
+        let cur_year = this.show_date.getFullYear();
+        while (cur_year % 10 !== 0) {
+            cur_year += 1;
+        }
+        let start_year = cur_year - 11;
+        this.year.start = start_year;
+        this.year.end = cur_year;
+        let year_list = [];
+        for (let i=start_year;i<start_year+12;i++) {
+            year_list.push(i);
+        }
+        return (
+            <tr>
+                <td colSpan={7}>
+                    <div className='ck-calendar-list'>
+                        {year_list.map((item)=>{
+                            let class_name = 'item';
+                            if (this.show_date.getFullYear() === item) {
+                                class_name = 'item active';
+                            }
+                            return  <span className={class_name} onClick={c=>{
+                                this.setYear(item,false);
+                            }}>{item}</span>
+                        })}
+                    </div>
+                </td>
+            </tr>
+        )
+    }
+
     renderDays() {
         return (
             <React.Fragment>
@@ -290,10 +340,16 @@ class Calendar extends React.PureComponent {
                         <th className='th-btn' onClick={e => this.privMonth()}><Icon icon='arrow-left'/></th>
                         <th colSpan={5}>
                             <div className='row no-gutters'>
-                                <div className='col-6 text-center th-btn th-div'>{this.show_date.getFullYear()}</div>
+                                <div className='col-6 text-center th-btn th-div' onClick={e=>{
+                                    this.setState({
+                                        month:false,
+                                        year:true,
+                                    });
+                                }}>{this.show_date.getFullYear()}</div>
                                 <div className='col-6 text-center th-btn th-div' onClick={e=>{
                                     this.setState({
                                         month:true,
+                                        year:false,
                                     });
                                 }}>
                                     {lang['month'][this.show_date.getMonth()]}
@@ -309,7 +365,7 @@ class Calendar extends React.PureComponent {
                     </tr>
                     </thead>
                     <tbody>
-                    {this.state.month?this.renderMonth():this.renderDays()}
+                    {this.renderContent()}
                     </tbody>
                 </table>
             </div>
@@ -321,6 +377,16 @@ class Calendar extends React.PureComponent {
         //     );
         // }
         return content;
+    }
+
+    renderContent() {
+        if (this.state.month) {
+            return this.renderMonth();
+        } else if (this.state.year) {
+            return this.renderYear();
+        } else {
+            return this.renderDays();
+        }
     }
 }
 
@@ -336,7 +402,7 @@ Calendar.propTypes = {
 };
 
 Calendar.defaultProps = {
-    lang: 'cn',
+    lang: 'zh',
     format: 'YYYY-MM-DD'//unix,
 };
 

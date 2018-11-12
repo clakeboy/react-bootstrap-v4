@@ -17,7 +17,7 @@ class Menu extends React.PureComponent {
     }
 
     componentWillUnmount() {
-
+        window.removeEventListener("mousedown",this.hide);
     }
 
     clickHandler = (e,key)=>{

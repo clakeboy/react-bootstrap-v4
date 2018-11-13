@@ -25,6 +25,10 @@ class Main extends React.Component {
             testChecked: false,
             pageData:{},
             chose_date:'2018-8-3',
+            dropdown:{
+                drop1:'JSON数据',
+                drop2:'普通数组',
+            }
         };
 
         this.dataList = [
@@ -90,9 +94,16 @@ class Main extends React.Component {
                     <Input className='mr-1' placeholder='密码' type='password'/>
                     <Input className='mr-1' placeholder='日期' calendar/>
                     <InputGroup className='mr-1' ref={c=>this.ing=c} width={200} label="测试" data="11111"/>
-                    <Dropdown className='mr-1' text='JSON数组' data={this.dataList}/>
-                    <Dropdown className='mr-1' text='普通数组' data={this.dataArrList}/>
-                    <Button>搜索</Button>
+                    <Dropdown className='mr-1' text={this.state.dropdown.drop1} data={this.dataList}/>
+                    <Dropdown className='mr-1' text={this.state.dropdown.drop2} data={this.dataArrList}/>
+                    <Button onClick={()=>{
+                        this.setState({
+                            dropdown:{
+                                drop1: 'JSON数据',
+                                drop2: '普通数据'
+                            }
+                        })
+                    }}>搜索</Button>
                 </Container>
                 <Card className='mb-2' header='User Info'>
                     <div className='form-row'>

@@ -18,7 +18,10 @@ class Dropdown extends React.PureComponent {
     };
 
     componentWillReceiveProps(nextProp) {
-        this.setState({list: nextProp.data})
+        this.setState({
+            text: nextProp.text,
+            list: nextProp.data
+        })
     }
 
     selectHandler = (e) => {

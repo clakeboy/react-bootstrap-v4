@@ -5,11 +5,15 @@ import classNames from 'classnames/bind';
 import {GetDomXY} from "./Common";
 import Icon from './Icon';
 import './css/Menu.less';
+import common from "./Common";
 
 class Menu extends React.PureComponent {
     constructor(props) {
         super(props);
         this.childMenus = [];
+        this.domId = 'menu-' + common.RandomString(16);
+
+        this.evt_close = this.props.onClose;
     }
 
     componentDidMount() {
@@ -30,6 +34,7 @@ class Menu extends React.PureComponent {
     show(option) {
         this.data = option.data || '';
         this.mainDom.classList.remove('d-none');
+        this.evt_close = option.close || null;
         this.position(option);
         window.addEventListener("mousedown",this.hide,false);
     }
@@ -38,8 +43,20 @@ class Menu extends React.PureComponent {
         this.height = this.mainDom.clientHeight;
         this.width = this.mainDom.clientWidth;
         if (option.type === 'mouse') {
-            this.mainDom.style.top = option.evt.pageY+'px';
-            this.mainDom.style.left = option.evt.pageX+'px';
+            let y = option.evt.pageY;
+            let x = option.evt.pageX;
+            if (option.evt.pageY + this.mainDom.clientHeight >
+                document.documentElement.scrollTop + document.documentElement.clientHeight) {
+                y -= this.mainDom.clientHeight;
+            }
+
+            if (option.evt.pageX + this.mainDom.clientWidth >
+                document.documentElement.scrollLeft + document.documentElement.clientWidth) {
+                x -= this.mainDom.clientWidth;
+            }
+
+            this.mainDom.style.top = y + 'px';
+            this.mainDom.style.left = x + 'px';
         } else {
             let pos = GetDomXY(option.evt.currentTarget);
             switch (option.type) {
@@ -69,6 +86,9 @@ class Menu extends React.PureComponent {
     hide = ()=>{
         this.mainDom.classList.add('d-none');
         window.removeEventListener("mousedown",this.hide);
+        if (typeof this.evt_close === 'function') {
+            this.evt_close();
+        }
     };
 
     closeChild() {
@@ -99,7 +119,7 @@ class Menu extends React.PureComponent {
 
     render() {
         let content = (
-            <div ref={c=>this.mainDom = c} onMouseDown={(e)=>{e.preventDefault();e.stopPropagation();}} className={this.getClasses()} style={this.getStyles()}>
+            <div id={this.domId} ref={c=>this.mainDom = c} onMouseDown={(e)=>{e.preventDefault();e.stopPropagation();}} className={this.getClasses()} style={this.getStyles()}>
                 {React.Children.map(this.props.children,(item)=>{
                     let props = item.props;
                     props.parent = this;
@@ -117,6 +137,8 @@ class Menu extends React.PureComponent {
 
 Menu.propTypes = {
     onClick: PropTypes.func,
+    onClose: PropTypes.func,
+    onShow: PropTypes.func,
     zIndex: PropTypes.number,
     width: PropTypes.string
 };

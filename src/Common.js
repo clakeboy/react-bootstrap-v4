@@ -93,15 +93,13 @@ export var LoadScript = {
  * @returns {{}}
  * @constructor
  */
-export var GetDomXY = (e) => {
-    let parent = arguments[1]?arguments[1]:undefined;
+export var GetDomXY = (e,parent) => {
     let t = {
         top:e.offsetTop,
         left:e.offsetLeft,
         height:e.clientHeight,
         width:e.clientWidth
     };
-
     let scrollTop = 0;
     let scrollLeft = 0;
     let topScroll = 0;

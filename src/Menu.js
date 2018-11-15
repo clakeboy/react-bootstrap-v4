@@ -119,7 +119,9 @@ class Menu extends React.PureComponent {
 
     render() {
         let content = (
-            <div id={this.domId} ref={c=>this.mainDom = c} onMouseDown={(e)=>{e.preventDefault();e.stopPropagation();}} className={this.getClasses()} style={this.getStyles()}>
+            <div onContextMenu={(e)=>{
+                e.stopPropagation()
+            }} id={this.domId} ref={c=>this.mainDom = c} onMouseDown={(e)=>{e.preventDefault();e.stopPropagation();}} className={this.getClasses()} style={this.getStyles()}>
                 {React.Children.map(this.props.children,(item)=>{
                     let props = item.props;
                     props.parent = this;

@@ -89,7 +89,7 @@ class Switch extends React.PureComponent {
             base = classNames(base, `ck-switch-circle-${this.props.size}`);
         }
 
-        return classNames(base, this.props.className);
+        return base;
     }
 
     clickHandler = () => {

@@ -99,11 +99,15 @@ class Window extends React.Component {
                 </Container>
                 <Card className='mt-2' header='Window Test' onContextMenu={(e)=>{
                     e.preventDefault();
-                    this.mainMenu.show({evt:e,type:'mouse',data:''});
+                    this.mainMenu.show({evt:e,type:'mouse',data:'',close:()=>{
+                        console.log("close");
+                    }});
                 }}>
                     <Label text='Clake Lee'/>
                     <Button onClick={(e)=>{
-                        this.mainMenu.show({evt:e,type:'dom-left',data:''});
+                        this.mainMenu.show({evt:e,type:'dom-left',data:'',close:()=>{
+                                console.log("close dom-left");
+                            }});
                     }}>点击打开菜单</Button>
                 </Card>
                 <Table absolute x='100px' y='300px' width='500px' height='300px' headerTheme='light' scroll hover={true} select={true} sm data={this.dataTable}>

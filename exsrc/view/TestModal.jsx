@@ -32,7 +32,50 @@ class TestModal extends React.PureComponent {
         this.state = {
             data       : [],
             count      : 0,
-            currentPage: 1
+            currentPage: 1,
+            child : [{
+                "id"             : 3,
+                "task_name"      : "测试通知",
+                "time_rule"      : "0 * * * * *",
+                "once"           : true,
+                "is_execute"     : true,
+                "disable"        : false,
+                "notify_url"     : "http://localhost:9803/notify",
+                "notify_method"  : "GET",
+                "notify_data"    : "",
+                "notify_number"  : 6,
+                "notified_number": 6,
+                "source"         : "System",
+                "created_date"   : 1530864160
+            }, {
+                "id"             : 2,
+                "task_name"      : "测试一次通知",
+                "time_rule"      : "* */1 * * * *",
+                "once"           : true,
+                "is_execute"     : true,
+                "disable"        : false,
+                "notify_url"     : "http://localhost:9803/serv/server/status",
+                "notify_method"  : "GET",
+                "notify_data"    : "",
+                "notify_number"  : 3,
+                "notified_number": 7,
+                "source"         : "System",
+                "created_date"   : 1530783655
+            }, {
+                "id"             : 1,
+                "task_name"      : "测试任务",
+                "time_rule"      : "0 * * * * *",
+                "once"           : true,
+                "is_execute"     : true,
+                "disable"        : false,
+                "notify_url"     : "http://localhost:9803",
+                "notify_method"  : "GET",
+                "notify_data"    : "asdfasdf",
+                "notify_number"  : 7,
+                "notified_number": 12,
+                "source"         : "",
+                "created_date"   : 1530767866
+            }],
         };
 
         this.pageNumber = 30;
@@ -157,49 +200,7 @@ class TestModal extends React.PureComponent {
     }
 
     render() {
-        let child = [{
-            "id"             : 3,
-            "task_name"      : "测试通知",
-            "time_rule"      : "0 * * * * *",
-            "once"           : true,
-            "is_execute"     : true,
-            "disable"        : false,
-            "notify_url"     : "http://localhost:9803/notify",
-            "notify_method"  : "GET",
-            "notify_data"    : "",
-            "notify_number"  : 6,
-            "notified_number": 6,
-            "source"         : "System",
-            "created_date"   : 1530864160
-        }, {
-            "id"             : 2,
-            "task_name"      : "测试一次通知",
-            "time_rule"      : "* */1 * * * *",
-            "once"           : true,
-            "is_execute"     : true,
-            "disable"        : false,
-            "notify_url"     : "http://localhost:9803/serv/server/status",
-            "notify_method"  : "GET",
-            "notify_data"    : "",
-            "notify_number"  : 3,
-            "notified_number": 7,
-            "source"         : "System",
-            "created_date"   : 1530783655
-        }, {
-            "id"             : 1,
-            "task_name"      : "测试任务",
-            "time_rule"      : "0 * * * * *",
-            "once"           : true,
-            "is_execute"     : true,
-            "disable"        : false,
-            "notify_url"     : "http://localhost:9803",
-            "notify_method"  : "GET",
-            "notify_data"    : "asdfasdf",
-            "notify_number"  : 7,
-            "notified_number": 12,
-            "source"         : "",
-            "created_date"   : 1530767866
-        }];
+
         return (
             <Container className={'mb-5'}>
                 <Button onClick={() => {
@@ -251,21 +252,57 @@ class TestModal extends React.PureComponent {
                         }} onChange={(val,row)=>{
                             console.log(val,row);
                         }}/>
-                        <Input label="测试本地数据 Combo" size={'xs'} combo={{
+                        <Button onClick={()=>{
+                            let data = [{
+                                "id"             : 3,
+                                "task_name"      : "改变值1",
+                                "time_rule"      : "0 * * * * *",
+                                "once"           : true,
+                                "is_execute"     : true,
+                                "disable"        : false,
+                                "notify_url"     : "http://localhost:9803/notify",
+                                "notify_method"  : "GET",
+                                "notify_data"    : "",
+                                "notify_number"  : 6,
+                                "notified_number": 6,
+                                "source"         : "System",
+                                "created_date"   : 1530864160
+                            }, {
+                                "id"             : 2,
+                                "task_name"      : "测试改变值",
+                                "time_rule"      : "* */1 * * * *",
+                                "once"           : true,
+                                "is_execute"     : true,
+                                "disable"        : false,
+                                "notify_url"     : "http://localhost:9803/serv/server/status",
+                                "notify_method"  : "GET",
+                                "notify_data"    : "",
+                                "notify_number"  : 3,
+                                "notified_number": 7,
+                                "source"         : "System",
+                                "created_date"   : 1530783655
+                            }];
+                            this.setState({
+                                child:data
+                            },()=>{
+                                console.log(data);
+                            });
+                        }}>改变值</Button>
+                        <Input label="测试本地数据 Combo (超小)" size={'xs'} combo={{
                             searchColumn:'task_name'
-                        }} comboData={child} onChange={(val,row)=>{
+                        }} comboData={this.state.child} onChange={(val,row)=>{
                             console.log(val,row);
                         }}/>
-                        <Input label="测试本地数据 Combo 只读" readOnly combo={{
+                        <Input label="测试本地数据 Combo 只读(正常)" readOnly combo={{
                             searchColumn:'task_name',
                             width:'100%',
-                        }} comboData={child} onChange={(val,row)=>{
+                        }} comboData={this.state.child} onChange={(val,row)=>{
                             console.log(val,row);
                         }}/>
                         <Input label="测试本地数据 Combo 只读(小)" size='sm' readOnly combo={{
                             searchColumn:'task_name',
                             width:'100%',
-                        }} comboData={child} onChange={(val,row)=>{
+                        }} comboData={this.state.child} onChange={(val,row)=>{
                             console.log(val,row);
                         }}/>
                     </TabsContent>

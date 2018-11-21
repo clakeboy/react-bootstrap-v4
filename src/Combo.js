@@ -28,11 +28,8 @@ class Combo extends React.Component {
 
     }
 
-    getDerivedStateFromProps(nextProps, prevState) {
-        if (nextProps.data !== this.props.data) {
-            return {data:nextProps.data}
-        }
-        return null
+    componentWillReceiveProps(nextProps) {
+        this.setState({data:nextProps.data});
     }
 
     componentDidUpdate() {

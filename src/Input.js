@@ -15,7 +15,8 @@ class Input extends React.Component {
         this.state = {
             value   : this.props.data,
             validate: true,
-            disabled: this.props.disabled
+            disabled: this.props.disabled,
+            comboData: this.props.comboData
         };
 
         this.domId = 'input-' + common.RandomString(16);
@@ -49,13 +50,17 @@ class Input extends React.Component {
         }
     }
 
-    componentWillReceiveProps(nextProp) {
+    componentWillReceiveProps(nextProps) {
         this.setState({
-            value: nextProp.data
+            value: nextProps.data,
+            comboData: nextProps.comboData
         });
     }
 
     shouldComponentUpdate(nextProps, nextState) {
+        if (nextProps.comboData !== this.props.comboData) {
+            return true;
+        }
         if (nextProps.disabled !== this.props.disabled) {
             return true
         }
@@ -283,7 +288,7 @@ class Input extends React.Component {
         return (
             <div className='ck-input-calendar'>
                 <Combo ref={c => this.combo = c} {...this.props.combo} sm={this.props.size === 'sm' || this.props.size === 'xs'}
-                       data={this.props.comboData} noSearch={this.props.readOnly}
+                       data={this.state.comboData} noSearch={this.props.readOnly}
                        onSelect={this.selectHandler}/>
                 <div className={input_icon} onClick={() => {
                     this.input.focus();

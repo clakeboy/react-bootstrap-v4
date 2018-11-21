@@ -28,7 +28,7 @@ class Menu extends React.PureComponent {
         if (typeof this.props.onClick === 'function') {
             this.props.onClick(key,this.data);
         }
-        this.hide();
+        this.hide(e);
     };
 
     show(option) {
@@ -83,18 +83,18 @@ class Menu extends React.PureComponent {
         }
     }
 
-    hide = ()=>{
+    hide = (e)=>{
         this.mainDom.classList.add('d-none');
         window.removeEventListener("mousedown",this.hide);
         if (typeof this.evt_close === 'function') {
-            this.evt_close();
+            this.evt_close(e);
         }
     };
 
-    closeChild() {
+    closeChild(e) {
         this.childMenus.forEach((item)=>{
             if (item && typeof item.hide === 'function') {
-                item.hide();
+                item.hide(e);
             }
         })
     }
@@ -123,9 +123,8 @@ class Menu extends React.PureComponent {
                 e.stopPropagation()
             }} id={this.domId} ref={c=>this.mainDom = c} onMouseDown={(e)=>{e.preventDefault();e.stopPropagation();}} className={this.getClasses()} style={this.getStyles()}>
                 {React.Children.map(this.props.children,(item)=>{
-                    let props = item.props;
-                    props.parent = this;
-                    return React.cloneElement(item,{...props},item.props.children)
+                    item.props.parent = this;
+                    return React.cloneElement(item,item.props)
                 })}
                 {/*{this.props.children}*/}
             </div>
@@ -162,7 +161,7 @@ class MenuItem extends React.PureComponent {
     clickHandler = (e)=>{
         if (typeof this.props.onClick === "function") {
             this.props.onClick(e,this.props.field,this.parent.data);
-            this.parent.hide();
+            this.parent.hide(e);
         } else {
             this.parent.clickHandler(e,this.props.field);
         }
@@ -173,7 +172,7 @@ class MenuItem extends React.PureComponent {
     };
 
     closeChildHandler = (e)=>{
-        this.parent.closeChild();
+        this.parent.closeChild(e);
     };
 
     getClasses() {

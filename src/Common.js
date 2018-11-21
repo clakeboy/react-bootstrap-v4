@@ -200,7 +200,29 @@ export var str_pad = (text, length, padstring) => {
     }
     padtext = null;
     return text;
-}
+};
+
+export var ucFirst = (str) => {
+    let first = str[0].toUpperCase();
+    return first+str.substr(1);
+};
+
+export var under2hump = (str) => {
+    let arr = str.split('_');
+    let hump = arr.map((item)=>{
+        return this.ucFirst(item);
+    });
+    return hump.join('');
+};
+
+export var explainUrl = (path) => {
+    let arr = path.split('/');
+    arr.shift();
+    let module = arr.pop();
+    module = this.under2hump(module);
+    let ext_path = arr.length > 0 ? '/' : '';
+    return ext_path + arr.join('/') + "/" + module;
+};
 
 export default {
     extend:extend,
@@ -211,4 +233,7 @@ export default {
     RandomString:RandomString,
     map:map,
     strpad:str_pad,
+    ucFirst:ucFirst,
+    under2hump:under2hump,
+    explainUrl:explainUrl,
 };

@@ -259,7 +259,6 @@ class Input extends React.Component {
             input_icon = classNames(input_icon, 'ck-input-calendar-icon-' + this.props.size);
         }
         let lang = i18n.getLang();
-        console.log(lang.short);
         return (
             <div className='ck-input-calendar'>
                 <Calendar ref={c => this.calendar = c} onSelect={(val) => {

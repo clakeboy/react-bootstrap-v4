@@ -1,4 +1,6 @@
 //Layout 布局
+import RadioGroup from "./RadioGroup";
+
 export Dropdown from "./Dropdown";
 export Pagination from "./Pagination";
 export Container from "./Container";
@@ -32,3 +34,5 @@ export RImage from './RImage';
 export Scroll from './Scroll';
 export Form from './Form';
 export Common from './Common';
+export Radio from './Radio';
+export RadioGroup from './RadioGroup';

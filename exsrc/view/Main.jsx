@@ -16,6 +16,8 @@ import ReactBootstrap4,{
     TextArea,
     Switch
 } from '../../src/index';
+import Radio from "../../src/Radio";
+import RadioGroup from "../../src/RadioGroup";
 
 class Main extends React.Component {
     constructor(props) {
@@ -28,7 +30,8 @@ class Main extends React.Component {
             dropdown:{
                 drop1:'JSON数据',
                 drop2:'普通数组',
-            }
+            },
+            radioDisabled:false,
         };
 
         this.dataList = [
@@ -142,14 +145,15 @@ class Main extends React.Component {
                         </Button>
                     </Container>
                     <Container inline>
-                        <CCheckbox label='clake'/>
+                        <CCheckbox label='clake' className='mr-2'/>
+
                     </Container>
                     <Container inline>
                         <Checkbox ref={c=>this.chk = c} className='mr-1' onChange={e=>{
                             this.setState({
                                 testChecked:!e.target.checked
                             })
-                        }} checked={this.state.pageData.testChecked} label=''/>
+                        }} checked={this.state.pageData.testChecked} label='ddd'/>
                         <Button className='mr-1' size='sm' onClick={e=>{
                             let data = this.state.pageData;
                             data['testChecked'] = !data['testChecked'];
@@ -164,6 +168,20 @@ class Main extends React.Component {
                         </Button>
                     </Container>
                     <Input label='Email' disabled={this.state.testChecked} placeholder='Please enter your email address' size='sm'/>
+                    <Button className='mr-1' size='sm' onClick={e=>{
+                        this.setState({
+                            radioDisabled:!this.state.radioDisabled
+                        });
+                    }}>
+                        禁用 Radio
+                    </Button>
+                    <RadioGroup onChange={(val)=>{
+                        console.log(val);
+                    }} data='2' disabled={this.state.radioDisabled}>
+                        <Radio label='Check1' className='mr-2' name='ccc' data='1'/>
+                        <Radio label='Check2' className='mr-2' name='ccc' data='2'/>
+                        <Radio label='Check3' className='mr-2' name='ccc' data='3'/>
+                    </RadioGroup>
                 </Card>
                 <Card className='mb-2' header='Table'>
                     <Table onRefresh={()=>{}} refreshText='刷新列表' hover={true} select={true} headerTheme='light' data={this.dataTable}>

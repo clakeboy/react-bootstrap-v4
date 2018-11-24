@@ -14,6 +14,7 @@ class Form extends React.PureComponent {
         super(props);
         this.vals = {};
         this.components = {};
+        this.events = {};
     }
 
     componentDidMount() {
@@ -48,6 +49,9 @@ class Form extends React.PureComponent {
             if (typeof this.props.onChange === 'function') {
                 this.props.onChange(field,val);
             }
+            if (typeof this.events[field] === 'function') {
+                this.events[field](val);
+            }
         };
     };
 
@@ -56,6 +60,9 @@ class Form extends React.PureComponent {
             this.vals[field] = {text:val,value:row};
             if (typeof this.props.onChange === 'function') {
                 this.props.onChange(field,val,row);
+            }
+            if (typeof this.events[field] === 'function') {
+                this.events[field](val,row);
             }
         };
     };
@@ -66,6 +73,9 @@ class Form extends React.PureComponent {
             if (typeof this.props.onChange === 'function') {
                 this.props.onChange(field,e.target.value);
             }
+            if (typeof this.events[field] === 'function') {
+                this.events[field](e);
+            }
         };
     };
 
@@ -75,6 +85,9 @@ class Form extends React.PureComponent {
             if (typeof this.props.onChange === 'function') {
                 this.props.onChange(field,text,val);
             }
+            if (typeof this.events[field] === 'function') {
+                this.events[field](text,val);
+            }
         }
     }
 
@@ -83,6 +96,9 @@ class Form extends React.PureComponent {
             this.vals[field] = e.target.checked;
             if (typeof this.props.onChange === 'function') {
                 this.props.onChange(field,e.target.checked);
+            }
+            if (typeof this.events[field] === 'function') {
+                this.events[field](e);
             }
         };
     };
@@ -109,6 +125,10 @@ class Form extends React.PureComponent {
                 return;
             }
             if (item.type === Input) {
+                if (typeof item.props.onChange === 'function') {
+                    this.events[field] = item.props.onChange;
+                }
+
                 if (item.props.combo) {
                     item.props.onChange = this.comboChangeHandler(field);
                 } else {
@@ -118,15 +138,27 @@ class Form extends React.PureComponent {
                 // item.props.ref = this.components[field];
                 item.props.ref = this.refComponent(field);
             } else if (item.type === Select) {
+                if (typeof item.props.onSelect === 'function') {
+                    this.events[field] = item.props.onSelect;
+                }
                 item.props.onSelect = this.selectChangeHandler(field);
                 // item.props.ref = this.refComponent(field);
             } else if (item.type === Checkbox) {
+                if (typeof item.props.onChange === 'function') {
+                    this.events[field] = item.props.onChange;
+                }
                 item.props.onChange = this.checkChangeHandler(field);
                 // item.props.ref = this.refComponent(field);
             } else if (item.type === TextArea) {
+                if (typeof item.props.onChange === 'function') {
+                    this.events[field] = item.props.onChange;
+                }
                 item.props.onChange = this.inputChangeHandler(field);
                 // item.props.ref = this.refComponent(field);
             } else if (item.type === Dropdown) {
+                if (typeof item.props.onChange === 'function') {
+                    this.events[field] = item.props.onChange;
+                }
                 item.props.onChange = this.dropdownChangeHandler(field);
             }
         }

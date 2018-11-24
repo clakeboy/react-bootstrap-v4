@@ -123,8 +123,10 @@ class Menu extends React.PureComponent {
                 e.stopPropagation()
             }} id={this.domId} ref={c=>this.mainDom = c} onMouseDown={(e)=>{e.preventDefault();e.stopPropagation();}} className={this.getClasses()} style={this.getStyles()}>
                 {React.Children.map(this.props.children,(item)=>{
-                    item.props.parent = this;
-                    return React.cloneElement(item,item.props)
+                    if (item) {
+                        item.props.parent = this;
+                        return React.cloneElement(item,item.props)
+                    }
                 })}
                 {/*{this.props.children}*/}
             </div>

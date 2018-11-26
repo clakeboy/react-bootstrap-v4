@@ -5,10 +5,15 @@ import classNames from 'classnames/bind';
 class Icon extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            icon:this.props.icon
+        };
     }
 
-    componentDidMount() {
-
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            icon: nextProps.icon
+        });
     }
 
     getClasses() {
@@ -26,7 +31,9 @@ class Icon extends React.Component {
             default:
                 base = 'fas';
         }
-        base = classNames(base,'fa-'+this.props.icon);
+        if (this.state.icon) {
+            base = classNames(base,'fa-'+this.state.icon);
+        }
         if (this.props.spin) {
             base = classNames(base,'fa-spin');
         }

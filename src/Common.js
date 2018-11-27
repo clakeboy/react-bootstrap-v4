@@ -224,6 +224,10 @@ export var explainUrl = (path) => {
     return ext_path + arr.join('/') + "/" + module;
 };
 
+export var Clone = (obj) => {
+    return JSON.parse(JSON.stringify(obj));
+};
+
 export default {
     extend:extend,
     GetDomXY:GetDomXY,
@@ -236,4 +240,5 @@ export default {
     ucFirst:ucFirst,
     under2hump:under2hump,
     explainUrl:explainUrl,
+    Clone:Clone,
 };

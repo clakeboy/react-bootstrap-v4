@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 
-class Icon extends React.Component {
+class Icon extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {
@@ -12,7 +12,7 @@ class Icon extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         this.setState({
-            icon: nextProps.icon
+            icon: nextProps.icon,
         });
     }
 

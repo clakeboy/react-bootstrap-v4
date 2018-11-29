@@ -15,15 +15,16 @@ class TabsContent extends React.PureComponent {
 }
 
 TabsContent.propTypes = {
-    id: PropTypes.string,
-    text: PropTypes.string,
-    active: PropTypes.bool,
-    fade: PropTypes.bool,
+    id      : PropTypes.string,
+    text    : PropTypes.string,
+    active  : PropTypes.bool,
+    fade    : PropTypes.bool,
     disabled: PropTypes.bool,
+    onClick : PropTypes.func,
 };
 
 TabsContent.defaultProps = {
-    fade:true,
+    fade: false,
 };
 
 export default TabsContent;

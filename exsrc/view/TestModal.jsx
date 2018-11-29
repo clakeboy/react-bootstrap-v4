@@ -311,9 +311,13 @@ class TestModal extends React.PureComponent {
                     </TabsContent>
                 </Tabs>
                 <hr/>
-                <Tabs border={false} sm>
-                    <TabsContent id='smlabel1' text='Small-1' active/>
-                    <TabsContent id='smlabel2' text='Small-2'/>
+                <Tabs sm>
+                    <TabsContent id='smlabel1' text='Small-1'/>
+                    <TabsContent id='smlabel2' text='Small-2' disabled/>
+                    <TabsContent id='smlabel3' text='Small-3' onClick={(tabid)=>{
+                        this.modal.alert(tabid);
+                    }}/>
+                    <TabsContent id='smlabel4' text='Small-4'/>
                 </Tabs>
 
                 <Modal ref={c => this.modal = c}/>

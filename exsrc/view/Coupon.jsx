@@ -105,7 +105,8 @@ class Coupon extends React.PureComponent {
 
                     <Button onClick={e=>this.modal.alert({
                         title:'测试',
-                        content:'测试一下效果'
+                        content:'测试一下效果',
+                        center:true
                     })}>测试 alert 警告 Modal</Button>
                     <Button theme='success' onClick={e=>this.modal.confirm({
                         content:'确定要按下这个按钮?',
@@ -132,7 +133,9 @@ class Coupon extends React.PureComponent {
                         content:<Loader loadPath='/skill/AddCoupon' import={GetComponent}/>
                     })}>测试 view 自定义内容 Modal</Button>
 
-                    <Button className='mt-4' block>Button Block</Button>
+                    <Button className='mt-4' block onClick={e=>{
+                        this.modal.alert("测试")
+                    }}>Button Block</Button>
                 </Card>
                 <Card className='mt-2' header='树组件 Card 自定义头' custom border='light'>
                     <Tree data={this.state.tree} onSelect={(item,id)=>{

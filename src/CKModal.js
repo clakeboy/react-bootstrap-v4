@@ -121,8 +121,7 @@ class CKModal extends React.PureComponent {
             content:opt.content||opt||'',
             isCloseBtn:true,
             type:ModalAlert,
-            center:opt.center||this.props.center,
-            fade:opt.fade||this.props.fade
+            center:typeof opt.center === 'undefined'?this.props.center:opt.center,
         },()=>{
             this.open({
                 backdrop:'static',
@@ -149,8 +148,7 @@ class CKModal extends React.PureComponent {
             content:opt.content||'',
             isCloseBtn:true,
             type:ModalConfirm,
-            center:opt.center||this.props.center,
-            fade:opt.fade||this.props.fade
+            center:typeof opt.center === 'undefined'?this.props.center:opt.center,
         },()=>{
             this.open({
                 backdrop:'static',
@@ -175,8 +173,7 @@ class CKModal extends React.PureComponent {
             content:opt.content||opt||'',
             isCloseBtn:false,
             type:ModalLoading,
-            center:opt.center||this.props.center,
-            fade:false
+            center:typeof opt.center === 'undefined'?this.props.center:opt.center,
         },()=>{
             this.open({
                 backdrop:'static',
@@ -203,8 +200,7 @@ class CKModal extends React.PureComponent {
             content:opt.content||'',
             isCloseBtn:true,
             type:ModalView,
-            center:opt.center||this.props.center,
-            fade:opt.fade||this.props.fade
+            center:typeof opt.center === 'undefined'?this.props.center:opt.center,
         },()=>{
             this.open({
                 backdrop:'static',

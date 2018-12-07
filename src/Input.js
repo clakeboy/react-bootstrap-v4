@@ -13,9 +13,9 @@ class Input extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            value   : this.props.data,
-            validate: true,
-            disabled: this.props.disabled,
+            value    : this.props.data,
+            validate : true,
+            disabled : this.props.disabled,
             comboData: this.props.comboData
         };
 
@@ -52,7 +52,7 @@ class Input extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         this.setState({
-            value: nextProps.data,
+            value    : nextProps.data,
             comboData: nextProps.comboData
         });
     }
@@ -144,6 +144,10 @@ class Input extends React.Component {
 
         if (this.props.readOnly && (this.props.calendar || this.props.combo)) {
             base = classNames(base, 'ck-input-select');
+        }
+
+        if (this.props.align) {
+            base = classNames(base,`text-${this.props.align}`)
         }
 
         return classNames(base, size);
@@ -336,7 +340,8 @@ Input.propTypes = {
     comboData     : PropTypes.object,
     absolute      : PropTypes.bool,
     x             : PropTypes.string,
-    y             : PropTypes.string
+    y             : PropTypes.string,
+    align         : PropTypes.string
 };
 
 Input.defaultProps = {

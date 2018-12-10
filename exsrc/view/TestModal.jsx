@@ -321,7 +321,15 @@ class TestModal extends React.PureComponent {
                     }}/>
                     <TabsContent id='smlabel4' text='Small-4'/>
                 </Tabs>
-
+                <Tabs className='mb-1' border={false} onSelect={()=>{
+                    this.setState({
+                        currentPage:2
+                    })
+                }}>
+                    <TabsContent id='all' text='全部任务'/>
+                    <TabsContent id='loop' text='循环任务'/>
+                    <TabsContent id='once' text='单次任务'/>
+                </Tabs>
                 <Modal ref={c => this.modal = c}/>
             </Container>
         );

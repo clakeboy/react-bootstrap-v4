@@ -20,11 +20,24 @@ class Tabs extends React.PureComponent {
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState({
-            currentShow: nextProps.showTab,
-            disabled: nextProps.disabled
-        });
+        let stateData = {};
+        if (nextProps.showTab) {
+            stateData.currentShow = nextProps.showTab;
+        }
+
+        if (typeof nextProps.disabled !== 'undefined') {
+            stateData.disabled = nextProps.disabled;
+        }
+
+        this.setState(stateData);
     }
+
+    // shouldComponentUpdate(nextProps, nextState) {
+    //     if (this.state.currentShow !== nextState.currentShow) {
+    //         return true;
+    //     }
+    //     return this.state.disabled !== nextState.disabled
+    // }
 
     selectHandler = (e) => {
         this.setState({
@@ -95,6 +108,7 @@ class Tabs extends React.PureComponent {
                 {React.Children.map(this.props.children, (item, index) => {
                     let class_name = 'nav-link';
                     if (!this.state.currentShow && index === 0) {
+                        this.state.currentShow = item.props.id;
                         class_name = classNames(class_name, 'active');
                     } else if (this.state.currentShow === item.props.id) {
                         class_name = classNames(class_name, 'active');

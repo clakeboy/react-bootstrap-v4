@@ -311,7 +311,9 @@ class TestModal extends React.PureComponent {
                     </TabsContent>
                 </Tabs>
                 <hr/>
-                <Tabs sm>
+                <Tabs onSelect={(tbid)=>{
+                    console.log(tbid);
+                }} sm>
                     <TabsContent id='smlabel1' text='Small-1'/>
                     <TabsContent id='smlabel2' text='Small-2' disabled/>
                     <TabsContent id='smlabel3' text='Small-3' onClick={(tabid)=>{

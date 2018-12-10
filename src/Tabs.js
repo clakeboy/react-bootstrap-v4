@@ -31,7 +31,7 @@ class Tabs extends React.PureComponent {
             currentShow: e.currentTarget.dataset.tabid
         }, () => {
             if (typeof this.props.onSelect === 'function') {
-                this.props.onSelect(e.currentTarget.dataset.tabid);
+                this.props.onSelect(this.state.currentShow);
             }
         });
     };

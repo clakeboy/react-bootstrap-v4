@@ -239,6 +239,11 @@ class CKModal extends React.PureComponent {
         return classNames(base,this.props.className);
     }
 
+    getDialogStyles() {
+        let base = {};
+        return base;
+    }
+
     getShadowClasses() {
         let base = 'modal-backdrop show ck-modal-shadow';
 
@@ -299,7 +304,7 @@ class CKModal extends React.PureComponent {
         let content =  (
             <React.Fragment>
                 <div ref={c=>this._modal=c} className={this.getClasses()} style={modalIndex} tabIndex="-1" id={this.domId} role="dialog">
-                    <div className={this.getDialogClasses()} role="document">
+                    <div className={this.getDialogClasses()} style={this.getDialogStyles()} role="document">
                         <div className="modal-content">
                             <div className="modal-header">
                                 <h5 className="modal-title">{this.state.title}</h5>

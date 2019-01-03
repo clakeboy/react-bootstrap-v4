@@ -134,6 +134,8 @@ class Input extends React.Component {
                 size = ''
         }
 
+        base = classNames(base, size);
+
         if (!this.state.validate) {
             base = classNames(base, 'is-invalid');
         }
@@ -150,7 +152,7 @@ class Input extends React.Component {
             base = classNames(base,`text-${this.props.align}`)
         }
 
-        return classNames(base, size);
+        return classNames(base, this.props.textClass);
     }
 
     getInputStyle() {
@@ -341,7 +343,8 @@ Input.propTypes = {
     absolute      : PropTypes.bool,
     x             : PropTypes.string,
     y             : PropTypes.string,
-    align         : PropTypes.string
+    align         : PropTypes.string,
+    textClass: PropTypes.string
 };
 
 Input.defaultProps = {

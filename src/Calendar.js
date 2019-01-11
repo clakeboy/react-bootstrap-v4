@@ -73,7 +73,9 @@ class Calendar extends React.PureComponent {
     }
 
     componentDidMount() {
-        window.addEventListener('mousedown',this.hide,false);
+        if (this.props.absolute) {
+            window.addEventListener('mousedown',this.hide,false);
+        }
     }
 
     componentWillUnmount() {

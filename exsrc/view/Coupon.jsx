@@ -102,7 +102,7 @@ class Coupon extends React.PureComponent {
                     </div>
                 </Card>
                 <Card className='mt-2' header="模态窗口">
-
+                    <ButtonGroup>
                     <Button onClick={e=>this.modal.alert({
                         title:'测试',
                         content:'测试一下效果',
@@ -121,7 +121,10 @@ class Coupon extends React.PureComponent {
                             if (idx === 0) {
                                 this.modal.close();
                             } else {
-                                this.modal.loading('加载中....读秒('+idx+')');
+                                this.modal.loading({
+                                    header:false,
+                                    content:'加载中....读秒('+idx+')',
+                                });
                                 idx--;
                                 setTimeout(callLoad,1000);
                             }
@@ -130,9 +133,9 @@ class Coupon extends React.PureComponent {
                     }}>测试 loading 加载 Modal</Button>
                     <Button theme='info' onClick={e=>this.modal.view({
                         title:'添加优惠券',
-                        content:<Loader loadPath='/skill/AddCoupon' import={GetComponent}/>
+                        content:<Loader loadPath='/skill/AddCoupon' import={GetComponent}/>,
                     })}>测试 view 自定义内容 Modal</Button>
-
+                    </ButtonGroup>
                     <Button className='mt-4' block onClick={e=>{
                         this.modal.alert("测试")
                     }}>Button Block</Button>
@@ -169,7 +172,7 @@ class Coupon extends React.PureComponent {
                         }}/>
                     </TabsContent>
                 </Tabs>
-                <CKModal ref={c=>this.modal=c} blurSelector='#react-main'/>
+                <CKModal ref={c=>this.modal=c} fade blurSelector='#react-main'/>
             </Container>
         );
     }

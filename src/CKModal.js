@@ -20,10 +20,12 @@ class CKModal extends React.PureComponent {
             content:'',
             title:'',
             isCloseBtn:true,
+            header:true,
             type:ModalAlert,
             center:this.props.center,
             fade:this.props.fade,
-            show:false
+            show:false,
+            width:null
         };
         //modal type
         this.modalType = ModalAlert;
@@ -53,6 +55,7 @@ class CKModal extends React.PureComponent {
     open() {
         this._modal.classList.add("d-block");
         this._shadow.classList.remove("d-none");
+        this._shadow.classList.add('show');
         let modals = parseInt(document.body.dataset.modals);
         if (!modals) {
             modals = 0;
@@ -67,13 +70,14 @@ class CKModal extends React.PureComponent {
         if (this.props.blurSelector) {
             let selector = document.querySelector(this.props.blurSelector);
             if (selector) {
-                selector.classList.add("ck-modal-shadow");
+                selector.classList.add("ck-model-blur");
             }
         }
     }
 
     close() {
         this._modal.classList.remove("d-block");
+        this._shadow.classList.remove("show");
         this._shadow.classList.add("d-none");
         let modals = parseInt(document.body.dataset.modals);
         modals -= 1;
@@ -84,7 +88,7 @@ class CKModal extends React.PureComponent {
             if (this.props.blurSelector) {
                 let selector = document.querySelector(this.props.blurSelector);
                 if (selector) {
-                    selector.classList.remove("ck-modal-shadow");
+                    selector.classList.remove("ck-model-blur");
                 }
             }
         }
@@ -119,7 +123,8 @@ class CKModal extends React.PureComponent {
         this.setState({
             title:opt.title||'提示',
             content:opt.content||opt||'',
-            isCloseBtn:true,
+            isCloseBtn:typeof opt.close !== 'undefined'?opt.close:true,
+            header:typeof opt.header !== 'undefined'?opt.header:true,
             type:ModalAlert,
             center:typeof opt.center === 'undefined'?this.props.center:opt.center,
         },()=>{
@@ -146,7 +151,8 @@ class CKModal extends React.PureComponent {
         this.setState({
             title:opt.title||'提示',
             content:opt.content||'',
-            isCloseBtn:true,
+            isCloseBtn:typeof opt.close !== 'undefined'?opt.close:true,
+            header:typeof opt.header !== 'undefined'?opt.header:true,
             type:ModalConfirm,
             center:typeof opt.center === 'undefined'?this.props.center:opt.center,
         },()=>{
@@ -172,6 +178,7 @@ class CKModal extends React.PureComponent {
             // ),
             content:opt.content||opt||'',
             isCloseBtn:false,
+            header:typeof opt.header !== 'undefined'?opt.header:true,
             type:ModalLoading,
             center:typeof opt.center === 'undefined'?this.props.center:opt.center,
         },()=>{
@@ -198,7 +205,9 @@ class CKModal extends React.PureComponent {
         this.setState({
             title:opt.title||'提示',
             content:opt.content||'',
-            isCloseBtn:true,
+            isCloseBtn:typeof opt.close !== 'undefined'?opt.close:true,
+            header:typeof opt.header !== 'undefined'?opt.header:true,
+            width:typeof opt.width !== 'undefined'?opt.width:null,
             type:ModalView,
             center:typeof opt.center === 'undefined'?this.props.center:opt.center,
         },()=>{
@@ -215,7 +224,7 @@ class CKModal extends React.PureComponent {
             base = classNames(base,"bd-example-modal-lg");
         }
         if (this.state.fade) {
-            base = classNames(base,'fade');
+            base = classNames(base,'ck-modal-fade');
         }
 
         if (this.state.show) {
@@ -241,11 +250,14 @@ class CKModal extends React.PureComponent {
 
     getDialogStyles() {
         let base = {};
+        if (this.state.width) {
+            base['maxWidth'] = this.state.width;
+        }
         return base;
     }
 
     getShadowClasses() {
-        let base = 'modal-backdrop show ck-modal-shadow';
+        let base = 'modal-backdrop ck-modal-shadow';
 
         if (this.state.show) {
             base = classNames(base,'show');
@@ -306,14 +318,14 @@ class CKModal extends React.PureComponent {
                 <div ref={c=>this._modal=c} className={this.getClasses()} style={modalIndex} tabIndex="-1" id={this.domId} role="dialog">
                     <div className={this.getDialogClasses()} style={this.getDialogStyles()} role="document">
                         <div className="modal-content">
-                            <div className="modal-header">
+                            {this.state.header?<div className="modal-header">
                                 <h5 className="modal-title">{this.state.title}</h5>
                                 {this.state.isCloseBtn?<button type="button" className="close" onClick={()=>{
                                     this.close();
                                 }}>
                                     <span aria-hidden="true">&times;</span>
                                 </button>:null}
-                            </div>
+                            </div>:null}
                             <div className="modal-body">
                                 {this.state.type === ModalLoading?<React.Fragment>
                                     <Load/>&nbsp;&nbsp;&nbsp;{this.state.content}

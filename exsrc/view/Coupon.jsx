@@ -25,6 +25,7 @@ import {
     CKModal
 } from '../../src/index';
 import Loader from '../components/Loader';
+import CDropdown from "../../src/CDropdown";
 
 class Coupon extends React.PureComponent {
     constructor(props) {
@@ -95,6 +96,9 @@ class Coupon extends React.PureComponent {
                     <div className='form-row'>
                         <Input className='col-6' label='Name' plaintext data='Clake'/>
                         <Input className='col-6' label='Last Name' data='Lee'/>
+                    </div>
+                    <div className='form-row'>
+                        <CDropdown className='col-6' label='Name' text='下拉' data='Clake'/>
                     </div>
                     <div className='form-row'>
                         <div className='col-2 form-group pt-2'><label>middle垂直居中</label></div>

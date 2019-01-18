@@ -6,6 +6,7 @@ import ReactDOM from "react-dom";
 import Button from './Button';
 import Load from "./Load";
 import './css/Modal.less';
+import ButtonGroup from "./ButtonGroup";
 
 const ModalAlert = 0;
 const ModalConfirm = 1;
@@ -273,7 +274,7 @@ class CKModal extends React.PureComponent {
         switch (this.state.type) {
             case ModalAlert:
                 content = (
-                    <Button data-dismiss="modal" onClick={e=>{
+                    <Button className='' block data-dismiss="modal" onClick={e=>{
                         this.close();
                         if (typeof this.callback === 'function') {
                             this.callback(1);
@@ -283,20 +284,20 @@ class CKModal extends React.PureComponent {
                 break;
             case ModalConfirm:
                 content = (
-                    <React.Fragment>
-                        <Button onClick={()=>{
-                            this.close();
-                            if (typeof this.callback === 'function') {
-                                this.callback(1);
-                            }
-                        }}>确定</Button>
-                        <Button onClick={()=>{
-                            this.close();
-                            if (typeof this.callback === 'function') {
-                                this.callback(0);
-                            }
-                        }} theme='secondary'>取消</Button>
-                    </React.Fragment>
+                        <ButtonGroup className='w-100'>
+                            <Button className='w-100' onClick={()=>{
+                                this.close();
+                                if (typeof this.callback === 'function') {
+                                    this.callback(1);
+                                }
+                            }}>确定</Button>
+                            <Button className='w-100' onClick={()=>{
+                                this.close();
+                                if (typeof this.callback === 'function') {
+                                    this.callback(0);
+                                }
+                            }} theme='secondary'>取消</Button>
+                        </ButtonGroup>
                 );
                 break;
             default:
@@ -304,7 +305,7 @@ class CKModal extends React.PureComponent {
         }
 
         return (
-            <div className="modal-footer">
+            <div className='p-2'>
                 {content}
             </div>
         )

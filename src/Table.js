@@ -32,7 +32,7 @@ class Table extends React.Component {
     }
 
     componentDidMount() {
-        this.mainDom.addEventListener('scroll',this.scrollHandler,false);
+        this.mainDom.addEventListener('scroll', this.scrollHandler, false);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -52,13 +52,13 @@ class Table extends React.Component {
     initTableWidth() {
         if (this.props.width) {
             this.width = 0;
-            let reg = /(\d+)(px|rem|cm|mm|pt)$/;
-            let unit = '';
+            let reg    = /(\d+)(px|rem|cm|mm|pt)$/;
+            let unit   = '';
             React.Children.map(this.props.children, (item, key) => {
                 if (item.props.width) {
                     let matchs = item.props.width.match(reg);
                     this.width += parseInt(matchs[1]);
-                    unit = matchs[2];
+                    unit       = matchs[2];
                 }
             });
             this.width += unit;
@@ -164,7 +164,7 @@ class Table extends React.Component {
     getMainClass() {
         let base = 'ck-table-main';
         if (this.props.scroll) {
-            base = classNames(base,'ck-table-scroll');
+            base = classNames(base, 'ck-table-scroll');
         }
         return classNames(base, this.props.className);
     }
@@ -183,8 +183,8 @@ class Table extends React.Component {
 
         if (this.props.absolute) {
             base.position = 'absolute';
-            base.top  = this.props.y;
-            base.left = this.props.x;
+            base.top      = this.props.y;
+            base.left     = this.props.x;
         }
 
         return common.extend(base, this.props.style)
@@ -208,7 +208,7 @@ class Table extends React.Component {
         return classNames(base, this.props.headClass);
     }
 
-    scrollHandler = (e)=>{
+    scrollHandler = (e) => {
         this.tableHeader.style.transform = `translateY(${e.currentTarget.scrollTop}px)`;
     };
 
@@ -222,9 +222,7 @@ class Table extends React.Component {
                 <table className={this.getClasses()} style={this.getTableStyles()}>
                     {this.props.header ? this.renderHeader() : null}
                     <tbody>
-                    {this.state.data.map((row, i) => {
-                        return this.renderRow(row, i);
-                    })}
+                    {this.renderBody()}
                     </tbody>
                 </table>
             </div>
@@ -233,9 +231,11 @@ class Table extends React.Component {
 
     renderHeader() {
         return (
-            <thead ref={c=>this.tableHeader=c} className={this.getHeaderClasses()}>
+            <thead ref={c => this.tableHeader = c} className={this.getHeaderClasses()}>
             <tr>
-                {this.state.select ? <th width={10}><input type='checkbox' style={{width:'20px'}} onChange={this.selectAll}/></th> : null}
+                {this.state.select ?
+                    <th width={10}><input type='checkbox' style={{width: '20px'}} onChange={this.selectAll}/>
+                    </th> : null}
                 {React.Children.map(this.props.children, (item, key) => {
                     if (!item || item.props.hide) {
                         return null;
@@ -266,18 +266,32 @@ class Table extends React.Component {
         );
     }
 
+    renderBody() {
+        if (!this.state.data || this.state.data.length <= 0) {
+            return <tr>
+                <td align="center" colSpan={React.Children.count(this.props.children)}>{this.props.emptyText}</td>
+            </tr>;
+        }
+
+        return this.state.data.map((row, i) => {
+            return this.renderRow(row, i);
+        });
+    }
+
     renderRow(row, i, parentRow) {
         return (
             <React.Fragment>
                 <tr className={this.props.onClick ? 'click-row' : null} onClick={this.clickHandler(row, i)}>
                     {this.state.select ?
-                        <th><input type='checkbox' style={{width:'20px'}} ref={'row_' + i} onChange={this.changeHandler(row, i)}/></th> : null}
+                        <th>
+                            <input type='checkbox' style={{width: '20px'}} ref={'row_' + i} onChange={this.changeHandler(row, i)}/>
+                        </th> : null}
                     {React.Children.map(this.props.children, (item, key) => {
                         if (!item || item.props.hide) {
                             return null;
                         }
                         //set style
-                        let style={...this.props.columnStyle};
+                        let style = {...this.props.columnStyle};
 
                         style.textAlign = item.props.align || this.props.align;
                         if (item.props.width) {
@@ -371,9 +385,10 @@ Table.propTypes = {
     absolute   : PropTypes.bool,
     x          : PropTypes.string,
     y          : PropTypes.string,
-    width: PropTypes.string,
-    height: PropTypes.string,
-    scroll: PropTypes.bool
+    width      : PropTypes.string,
+    height     : PropTypes.string,
+    scroll     : PropTypes.bool,
+    emptyText  : PropTypes.string,
 };
 
 Table.defaultProps = {
@@ -385,6 +400,7 @@ Table.defaultProps = {
     hover      : true,
     striped    : true,
     align      : 'left',
+    emptyText  : 'no data',
 };
 
 Table.Header = TableHeader;

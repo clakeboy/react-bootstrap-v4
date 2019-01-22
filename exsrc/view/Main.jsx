@@ -202,6 +202,23 @@ class Main extends React.Component {
                         }} />
                     </Table>
                     <Pagination count={1000} current={1} number={30} showPage={10}/>
+                    <Table hover={true} select={true} headerTheme='light'>
+                        <Table.Header text='Name' field='name' onSort={(field,sort)=>{
+                            alert(field+'-'+sort);
+
+                        }}/>
+                        <Table.Header text='Age' field='age' align='center'/>
+                        <Table.Header text='Birthday' field='birthday'/>
+                        <Table.Header text='Address' field='address' hide/>
+                        <Table.Header text='Both' field='both'/>
+                        <Table.Header text='Test' field='test'/>
+                        <Table.Header text='Paid' field='is_paid' onFormat={row=>{
+                            return <Switch size='sm'/>
+                        }}/>
+                        <Table.Header text='Action' align='center' onFormat={row=>{
+                            return <Button className='color-blue' size='sm' icon='plus'>Add</Button>
+                        }} />
+                    </Table>
                     <Table hover={true} select={true} sm data={this.dataTable} fontSm>
                         <Table.Header text='Name' field='name' onSort={(sort)=>{alert(sort)}}/>
                         <Table.Header text='Age' field='age' hide/>

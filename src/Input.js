@@ -345,7 +345,7 @@ Input.propTypes = {
     y             : PropTypes.string,
     align         : PropTypes.string,
     textClass     : PropTypes.string,
-    textStyle    : PropTypes.object
+    textStyle     : PropTypes.object
 };
 
 Input.defaultProps = {

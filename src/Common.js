@@ -5,7 +5,7 @@
  */
 export var extend = (org,exd) => {
     if (typeof exd === "object") {
-        for (let key in org) {
+        for (let key in exd) {
             org[key] = exd[key];
         }
     }

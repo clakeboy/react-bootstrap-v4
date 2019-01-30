@@ -36,7 +36,7 @@ class Table extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (this.state.data !== nextProps.data) {
+        if (this.props.data !== nextProps.data) {
             this.select_all = false;
             this.selectRows = {};
             this.setState({
@@ -45,9 +45,9 @@ class Table extends React.Component {
         }
     }
 
-    // shouldComponentUpdate(nextProps, nextState) {
-    //     return nextState.data !== this.state.data || nextState.tree !== this.state.tree;
-    // }
+    shouldComponentUpdate(nextProps, nextState) {
+        return nextState.data !== this.state.data || nextState.tree !== this.state.tree;
+    }
 
     initTableWidth() {
         if (this.props.width) {

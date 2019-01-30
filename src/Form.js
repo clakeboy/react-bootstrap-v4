@@ -8,6 +8,7 @@ import Select from './Select';
 import TextArea from './TextArea';
 import {map} from './Common';
 import Dropdown from "./Dropdown";
+import Switch from './Switch';
 
 class Form extends React.PureComponent {
     constructor(props) {
@@ -103,6 +104,18 @@ class Form extends React.PureComponent {
         };
     };
 
+    switchChangeHandler(field) {
+        return (checked)=>{
+            this.vals[field] = checked;
+            if (typeof this.props.onChange === 'function') {
+                this.props.onChange(field,checked);
+            }
+            if (typeof this.events[field] === 'function') {
+                this.events[field](checked);
+            }
+        };
+    }
+
     refComponent(field) {
         return (c)=>{
             this.components[field] = c;
@@ -160,6 +173,11 @@ class Form extends React.PureComponent {
                     this.events[field] = item.props.onChange;
                 }
                 item.props.onChange = this.dropdownChangeHandler(field);
+            } else if (item.type === Switch) {
+                if (typeof item.props.onChange === 'function') {
+                    this.events[field] = item.props.onChange;
+                }
+                item.props.onChange = this.switchChangeHandler(field);
             }
         }
     }

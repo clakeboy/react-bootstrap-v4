@@ -149,7 +149,7 @@ class Input extends React.Component {
         }
 
         if (this.props.align) {
-            base = classNames(base,`text-${this.props.align}`)
+            base = classNames(base, `text-${this.props.align}`)
         }
 
         return classNames(base, this.props.textClass);
@@ -163,7 +163,7 @@ class Input extends React.Component {
         if (this.props.height) {
             base.height = this.props.height;
         }
-        return base;
+        return common.extend(base, this.props.textStyle)
     }
 
     check() {
@@ -344,7 +344,8 @@ Input.propTypes = {
     x             : PropTypes.string,
     y             : PropTypes.string,
     align         : PropTypes.string,
-    textClass: PropTypes.string
+    textClass     : PropTypes.string,
+    textStyle    : PropTypes.object
 };
 
 Input.defaultProps = {

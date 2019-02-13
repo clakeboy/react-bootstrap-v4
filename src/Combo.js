@@ -25,7 +25,7 @@ class Combo extends React.Component {
     }
 
     componentWillUnmount() {
-
+        window.removeEventListener('mousedown',this.hide,false);
     }
 
     componentWillReceiveProps(nextProps) {

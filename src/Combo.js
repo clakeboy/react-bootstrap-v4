@@ -6,6 +6,7 @@ import TableHeader from './TableHeader';
 import {map} from './Common';
 import "./css/Combo.less";
 import Load from "./Load";
+import common from "./Common";
 
 class Combo extends React.Component {
     constructor(props) {
@@ -18,6 +19,8 @@ class Combo extends React.Component {
 
         this.filterTime = null;
         this.search = this.props.search;
+
+        this.parentDom = null;
     }
 
     componentDidMount() {
@@ -46,7 +49,8 @@ class Combo extends React.Component {
         }
     }
 
-    show(search) {
+    show(search,dom) {
+        this.parentDom = dom;
         window.addEventListener('mousedown',this.hide,false);
         document.querySelectorAll('.ck-combo').forEach((item)=>{
             item.classList.add('d-none');
@@ -55,12 +59,37 @@ class Combo extends React.Component {
         this.filter(search||'');
     }
 
+    fixPosition() {
+        let position = common.GetDomXY(this.parentDom,null);
+        if (position.top + this.mainDom.offsetHeight >
+            document.documentElement.scrollTop + document.documentElement.clientHeight) {
+            this.mainDom.style.top = -(this.parentDom.offsetHeight+this.mainDom.offsetHeight)+'px';
+            this.mainDom.classList.remove('ck-combo-up');
+            this.mainDom.classList.add('ck-combo-bottom');
+            if (this.props.sm) {
+                this.mainDom.classList.remove('ck-combo-up-sm');
+                this.mainDom.classList.add('ck-combo-bottom-sm');
+            }
+        } else {
+            this.mainDom.style.top = '0';
+            this.mainDom.classList.remove('ck-combo-bottom');
+            this.mainDom.classList.add('ck-combo-up');
+            if (this.props.sm) {
+                this.mainDom.classList.remove('ck-combo-bottom-sm');
+                this.mainDom.classList.add('ck-combo-up-sm');
+            }
+        }
+    }
+
     hide = () => {
         window.removeEventListener('mousedown',this.hide,false);
         this.mainDom.classList.add("d-none");
         if (this.conDom) {
             this.conDom.style.overflowY = 'none';
             this.conDom.style.height = '100%';
+        }
+        if (typeof this.props.onClose === 'function') {
+            this.props.onClose();
         }
         if (this.isRemote) {
             this.setState({
@@ -105,11 +134,10 @@ class Combo extends React.Component {
                 }
             });
         }
-        if (data.length === 0) {
-            this.setState({data:null});
-        } else {
-            this.setState({data:data});
-        }
+        this.setState({data:data.length === 0?null:data},()=>{
+            //fixed out window area
+            this.fixPosition();
+        });
     }
 
     filterColumns() {
@@ -218,6 +246,7 @@ Combo.propTypes = {
     search: PropTypes.string,
     onSearch: PropTypes.func,
     onSelect: PropTypes.func,
+    onClose: PropTypes.func,
     sm: PropTypes.bool,
     //filter column exp: ['name','age'] or [{field:'name',width:'100px'},{field:'age',width:'100px'}]
     filterColumns: PropTypes.array,

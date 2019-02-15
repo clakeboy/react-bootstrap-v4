@@ -4,27 +4,25 @@
   display: inline-block;
   z-index: 1160;
   background-color: white;
-  width: 248px;
   table {
     max-width: 100%;
     background-color: transparent;
     empty-cells: show;
     border-collapse: collapse;
     border-spacing: 0;
+    table-layout: fixed;
   }
 
   th,td {
-    width: 34px;
-    height: 34px;
     text-align: center;
     display: table-cell;
     vertical-align: inherit;
+    padding: .2rem .3rem;
   }
 
   .top-header {
     background-color: #17a2b8!important;
     color: white;
-    height: 40px;
     .th-btn {
       cursor: pointer;
     }
@@ -72,11 +70,29 @@
     border: solid transparent;
   }
 }
+
+.ck-calendar-sm {
+  font-size: .75rem;
+}
+
 .ck-calendar-absolute {
   position: absolute!important;
 }
 .ck-calendar-none {
   display: none;
+}
+
+.ck-calendar-up-sm {
+  &:before {
+    border-width: 6px!important;
+    left: 4px !important;
+    top: -12px !important;
+  }
+  &:after {
+    border-width: 4px!important;
+    left: 6px !important;
+    top: -8px !important;
+  }
 }
 
 .ck-calendar-up:before{
@@ -151,6 +167,19 @@
   left:10px;
 }
 
+.ck-calendar-bottom-sm {
+  &:before {
+    border-width: 6px!important;
+    bottom: -12px !important;
+    left: 4px !important;
+  }
+  &:after {
+    border-width: 4px!important;
+    bottom: -8px !important;
+    left: 6px !important;
+  }
+}
+
 .ck-shadow {
   box-shadow: 0 .1rem 1rem rgba(0,0,0,.1)!important;
 }
@@ -162,9 +191,9 @@
   text-align: center;
   .item {
     display: inline-block;
-    width: 33%;
     cursor: pointer;
-    padding: 5px 0;
+    padding: .2rem .3rem;
+    width: 33%;
     &:hover {
       background-color: #F0F0F0;
     }

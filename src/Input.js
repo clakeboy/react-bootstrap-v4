@@ -42,7 +42,7 @@ class Input extends React.Component {
         }
         if (this.props.combo) {
             this.input.addEventListener('focus', (e) => {
-                this.combo.show(this.state.value);
+                this.combo.show(this.state.value,e.currentTarget);
             }, false);
             this.input.addEventListener('mousedown', (e) => {
                 e.stopPropagation();
@@ -274,7 +274,10 @@ class Input extends React.Component {
                     if (this.props.onChange && typeof this.props.onChange === 'function') {
                         this.props.onChange(val, this);
                     }
-                }} value={this.state.value} format={this.props.calendarFormat} lang={lang.short} none shadow absolute triangular='up'/>
+                }} value={this.state.value} format={this.props.calendarFormat}
+                          lang={lang.short} none shadow absolute
+                          sm={this.props.size==='xs'}
+                          triangular='up'/>
                 <div className={input_icon} onClick={() => {
                     this.input.focus();
                 }}><Icon iconType='regular' icon='calendar-alt'/></div>

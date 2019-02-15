@@ -229,7 +229,29 @@ class Calendar extends React.PureComponent {
         //     });
         // }
         // $(ReactDOM.findDOMNode(this)).show();
-        this.mainDom.classList.remove('ck-calendar-none')
+        this.mainDom.classList.remove('ck-calendar-none');
+        //fixed out window area
+        let position = common.GetDomXY(dom,null);
+        if (position.top + this.mainDom.offsetHeight >
+            document.documentElement.scrollTop + document.documentElement.clientHeight) {
+            this.mainDom.style.top = -(dom.offsetHeight+this.mainDom.offsetHeight)+'px';
+            this.mainDom.classList.remove('ck-calendar-up');
+            this.mainDom.classList.add('ck-calendar-bottom');
+            if (this.props.sm) {
+                this.mainDom.classList.remove('ck-calendar-up-sm');
+                this.mainDom.classList.add('ck-calendar-bottom-sm');
+            }
+        } else {
+            this.mainDom.style.top = '0';
+            this.mainDom.classList.remove('ck-calendar-bottom');
+            this.mainDom.classList.add('ck-calendar-up');
+            if (this.props.sm) {
+                this.mainDom.classList.remove('ck-calendar-bottom-sm');
+                this.mainDom.classList.add('ck-calendar-up-sm');
+            }
+        }
+
+        this.clientWidth = this.mainTable.clientWidth;
     }
 
     getClasses() {
@@ -246,18 +268,30 @@ class Calendar extends React.PureComponent {
         if (this.props.absolute) {
             base = classNames(base,'ck-calendar-absolute');
         }
+        //triangular
         if (this.props.triangular) {
-            base = classNames(base,'ck-calendar-'+this.props.triangular)
+            let cls = 'ck-calendar-'+this.props.triangular;
+            base = classNames(base,cls);
+            if (this.props.sm) {
+                base = classNames(base,cls+'-sm');
+            }
+        }
+        //small
+        if (this.props.sm) {
+            base = classNames(base,'ck-calendar-sm');
         }
         return classNames(base, this.props.className);
     }
 
     renderMonth() {
+        let divStyle = {
+            width:this.clientWidth+'px'
+        };
         let lang = i18n[this.props.lang];
         return (
             <tr>
                 <td colSpan={7}>
-                    <div className='ck-calendar-list'>
+                    <div className='ck-calendar-list' style={divStyle}>
                         {lang.month.map((item,i)=>{
                             let class_name = 'item';
                             if (this.show_date.getMonth() === i) {
@@ -285,10 +319,13 @@ class Calendar extends React.PureComponent {
         for (let i=start_year;i<start_year+12;i++) {
             year_list.push(i);
         }
+        let divStyle = {
+            width:this.clientWidth+'px'
+        };
         return (
             <tr>
                 <td colSpan={7}>
-                    <div className='ck-calendar-list'>
+                    <div className='ck-calendar-list' style={divStyle}>
                         {year_list.map((item)=>{
                             let class_name = 'item';
                             if (this.show_date.getFullYear() === item) {
@@ -336,7 +373,7 @@ class Calendar extends React.PureComponent {
             <div ref={c=>this.mainDom=c} className={this.getClasses()} onMouseDown={(e)=>{
                 e.stopPropagation();
             }}>
-                <table>
+                <table ref={c=>this.mainTable=c}>
                     <thead>
                     <tr className='top-header'>
                         <th className='th-btn' onClick={e => this.privMonth()}><Icon icon='arrow-left'/></th>
@@ -401,6 +438,7 @@ Calendar.propTypes = {
     onSelect: PropTypes.func,
     triangular: PropTypes.oneOf(['up','left','bottom','right']),
     format:   PropTypes.string,
+    sm: PropTypes.bool
 };
 
 Calendar.defaultProps = {

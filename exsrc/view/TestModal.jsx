@@ -247,6 +247,9 @@ class TestModal extends React.PureComponent {
                                      } else {
                                          callback(null);
                                      }
+                                },(e)=>{
+                                    console.log(e);
+                                    callback(null);
                                 });
                             }
                         }} onChange={(val,row)=>{

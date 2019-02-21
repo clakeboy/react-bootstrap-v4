@@ -64,6 +64,7 @@ class Table extends React.Component {
             this.width += unit;
         }
     }
+
     //checkbox handler
     changeHandler(row, i) {
         return (e) => {
@@ -104,8 +105,8 @@ class Table extends React.Component {
         common.map(this.refs, (item) => {
             item.checked = this.select_all;
         });
-        this.state.data.forEach((item,idx)=>{
-             this.selectRows[idx] = this.select_all?item:null;
+        this.state.data.forEach((item, idx) => {
+            this.selectRows[idx] = this.select_all ? item : null;
         });
     };
 

@@ -219,14 +219,14 @@ class Main extends React.Component {
                             return <Button className='color-blue' size='sm' icon='plus'>Add</Button>
                         }} />
                     </Table>
-                    <Table hover={true} select={true} sm data={this.dataTable} fontSm>
-                        <Table.Header text='Name' field='name' onSort={(sort)=>{alert(sort)}}/>
-                        <Table.Header text='Age' field='age' hide/>
-                        <Table.Header text='Birthday' field='birthday'/>
-                        <Table.Header text='Address' field='address'/>
-                        <Table.Header text='Both' field='both'/>
-                        <Table.Header text='Test' field='test'/>
-                        <Table.Header text='Action' onFormat={row=>{
+                    <Table hover={true} select={true} sm data={this.dataTable} fontSm width='100%'>
+                        <Table.Header text='Name' field='name' width='100px' onSort={(sort)=>{alert(sort)}}/>
+                        <Table.Header text='Age' field='age' width='150px' hide/>
+                        <Table.Header text='Birthday' field='birthday' width='150px'/>
+                        <Table.Header text='Address' field='address' width='150px'/>
+                        <Table.Header text='Both' field='both' width='300px'/>
+                        <Table.Header text='Test' field='test' width='400px'/>
+                        <Table.Header text='Action' width='100px' onFormat={row=>{
                             return <Button className='color-blue' size='xs' icon='plus'>Add</Button>
                         }} />
                     </Table>

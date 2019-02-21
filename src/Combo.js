@@ -11,7 +11,7 @@ import common from "./Common";
 class Combo extends React.Component {
     constructor(props) {
         super(props);
-        this.isRemote = this.props.onSearch?true:false;
+        this.isRemote = !!this.props.onSearch;
         this.state = {
             data:this.props.data,
             loading:this.isRemote

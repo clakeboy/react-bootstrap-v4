@@ -55,7 +55,7 @@ class Table extends React.Component {
             let reg    = /(\d+)(px|rem|cm|mm|pt)$/;
             let unit   = '';
             React.Children.map(this.props.children, (item, key) => {
-                if (item.props.width) {
+                if (item.props.width && item.props.width.match) {
                     let matchs = item.props.width.match(reg);
                     this.width += parseInt(matchs[1]);
                     unit       = matchs[2];
@@ -158,6 +158,7 @@ class Table extends React.Component {
         if (this.props.responsive) {
             base = classNames(base, 'table-responsive');
         }
+
         return base;
     }
 
@@ -165,6 +166,12 @@ class Table extends React.Component {
         let base = 'ck-table-main';
         if (this.props.scroll) {
             base = classNames(base, 'ck-table-scroll');
+        }
+        if (this.props.height) {
+            base = classNames(base, 'ck-table-scroll-height');
+        }
+        if (this.props.width) {
+            base = classNames(base, 'ck-table-scroll-width');
         }
         return classNames(base, this.props.className);
     }
@@ -192,7 +199,7 @@ class Table extends React.Component {
 
     getTableStyles() {
         let base = {};
-
+        console.log(this.width);
         if (this.width) {
             base.width = this.width;
         }

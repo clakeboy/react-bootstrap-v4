@@ -14,10 +14,10 @@ import ReactBootstrap4,{
     Select,
     Calendar,
     TextArea,
-    Switch
+    Switch,
+    RadioGroup,
+    Radio
 } from '../../src/index';
-import Radio from "../../src/Radio";
-import RadioGroup from "../../src/RadioGroup";
 
 class Main extends React.Component {
     constructor(props) {

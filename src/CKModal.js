@@ -53,6 +53,10 @@ class CKModal extends React.PureComponent {
 
     }
 
+    hasScrollbar() {
+        return document.body.scrollHeight > (window.innerHeight || document.documentElement.clientHeight);
+    }
+
     open() {
         this._modal.classList.add("d-block");
         this._shadow.classList.remove("d-none");
@@ -66,7 +70,9 @@ class CKModal extends React.PureComponent {
         }
         document.body.dataset.modals = modals+'';
         document.body.classList.add("modal-open");
-        document.body.style.paddingRight = '15px';
+        if (this.hasScrollbar()) {
+            document.body.style.paddingRight = '15px';
+        }
         this.is_open = true;
         if (this.props.blurSelector) {
             let selector = document.querySelector(this.props.blurSelector);
@@ -85,7 +91,9 @@ class CKModal extends React.PureComponent {
         document.body.dataset.modals = modals+'';
         if (modals === 0) {
             document.body.classList.remove("modal-open");
-            document.body.style.paddingRight = '0';
+            if (this.hasScrollbar()) {
+                document.body.style.paddingRight = '0';
+            }
             if (this.props.blurSelector) {
                 let selector = document.querySelector(this.props.blurSelector);
                 if (selector) {

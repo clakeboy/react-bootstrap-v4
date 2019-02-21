@@ -55,10 +55,12 @@ class Table extends React.Component {
             let reg    = /(\d+)(px|rem|cm|mm|pt)$/;
             let unit   = '';
             React.Children.map(this.props.children, (item, key) => {
-                if (item.props.width && item.props.width.match) {
-                    let matchs = item.props.width.match(reg);
-                    this.width += parseInt(matchs[1]);
-                    unit       = matchs[2];
+                if (item.type === TableHeader) {
+                    if (item.props.width && item.props.width.match) {
+                        let matchs = item.props.width.match(reg);
+                        this.width += parseInt(matchs[1]);
+                        unit       = matchs[2];
+                    }
                 }
             });
             this.width += unit;

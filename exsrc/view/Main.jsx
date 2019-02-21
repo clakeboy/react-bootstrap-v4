@@ -184,7 +184,10 @@ class Main extends React.Component {
                     </RadioGroup>
                 </Card>
                 <Card className='mb-2' header='Table'>
-                    <Table onRefresh={()=>{}} refreshText='刷新列表' hover={true} select={true} headerTheme='light' data={this.dataTable}>
+                    <Button onClick={()=>{
+                        console.log(this.mainTable.getSelectRows());
+                    }}>得到选中数据</Button>
+                    <Table ref={c=>this.mainTable = c} onRefresh={()=>{}} refreshText='刷新列表' hover={true} select={true} headerTheme='light' data={this.dataTable}>
                         <Table.Header text='Name' field='name' onSort={(field,sort)=>{
                             alert(field+'-'+sort);
 

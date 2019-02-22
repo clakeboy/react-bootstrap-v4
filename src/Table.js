@@ -134,7 +134,8 @@ class Table extends React.Component {
     setSelectRows(key, list) {
         this.state.data.map((row, i) => {
             if (list.indexOf(row[key]) !== -1) {
-                this.refs['row_' + i].setChecked(true);
+                this.refs['row_' + i].checked = true;
+                this.selectRows[i] = row;
             }
         });
     }

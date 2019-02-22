@@ -136,6 +136,9 @@ class Table extends React.Component {
             if (list.indexOf(row[key]) !== -1) {
                 this.refs['row_' + i].checked = true;
                 this.selectRows[i] = row;
+            } else {
+                this.refs['row_' + i].checked = false;
+                this.selectRows[i] = null;
             }
         });
     }

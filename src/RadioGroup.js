@@ -60,7 +60,6 @@ RadioGroup.propTypes = {
 };
 
 RadioGroup.defaultProps = {
-
 };
 
 export default RadioGroup;

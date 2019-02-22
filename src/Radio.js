@@ -53,6 +53,11 @@ class Radio extends React.Component {
         return base;
     }
 
+    inputClasses() {
+        let base = 'form-check-input';
+        return classNames(base, this.props.inputClass);
+    }
+
     /*********************
      * Event
      *********************/
@@ -67,7 +72,7 @@ class Radio extends React.Component {
             <div className={this.getClasses()} style={this.getStyles()}>
                 <input {...this.props}
                        onChange={this.changeHandler}
-                       className="form-check-input"
+                       className={this.inputClasses()}
                        type="radio"
                        name={this.props.name}
                        id={this.domId}
@@ -81,15 +86,16 @@ class Radio extends React.Component {
 }
 
 Radio.propTypes = {
-    id      : PropTypes.string,
-    checked : PropTypes.bool,
-    name    : PropTypes.string,
-    label   : PropTypes.string,
-    onChange: PropTypes.func,
-    absolute: PropTypes.bool,
-    data    : PropTypes.any,
-    x       : PropTypes.string,
-    y       : PropTypes.string
+    id          : PropTypes.string,
+    checked     : PropTypes.bool,
+    name        : PropTypes.string,
+    label       : PropTypes.string,
+    onChange    : PropTypes.func,
+    absolute    : PropTypes.bool,
+    data        : PropTypes.any,
+    x           : PropTypes.string,
+    y           : PropTypes.string,
+    inputClass  : PropTypes.string,
 };
 
 Radio.defaultProps = {

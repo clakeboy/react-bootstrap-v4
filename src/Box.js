@@ -18,7 +18,9 @@ class Box extends React.PureComponent {
     }
 
     getStyles() {
-        let base = {};
+        let base = {
+            borderColor:'#c3c3c3'
+        };
 
         if (this.props.width) {
             base.width = this.props.width;

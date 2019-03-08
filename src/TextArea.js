@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import common from "./Common";
-
+import './css/TextArea.less';
 class TextArea extends React.PureComponent {
     constructor(props) {
         super(props);
@@ -79,8 +79,17 @@ class TextArea extends React.PureComponent {
             case 'sm':
                 size = 'form-control-sm';
                 break;
+            case 'xs':
+                size = 'ck-text-area-xs';
+                break;
             default:
                 size = ''
+        }
+
+        base = classNames(base, size);
+        //height
+        if (this.props.height) {
+            base = classNames(base,'h-100')
         }
 
         return classNames(base, size);

@@ -49,35 +49,31 @@ gulp.task('server', () => {
 });
 
 gulp.task('clean:publish', (callback) => {
-    del([
+    return del([
         'lib/*'
-    ]);
-    callback();
+    ],callback);
 });
 
 gulp.task('clean:build', (callback) => {
-    del([
+    return del([
         'dist/*'
-    ]);
-    callback();
+    ],callback);
 });
 
 gulp.task('clean',['clean:build','clean:publish']);
 
 gulp.task('publish:pack',['clean:publish','publish:css'],(callback)=>{
-    gulp.src('src/**/*.js')
+    return gulp.src('src/**/*.js')
         .pipe(sourcemaps.init())
         .pipe(babel({presets: ['env','es2015', 'stage-0', 'react']}))
         .pipe(header(banner))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('lib'));
-    callback();
 });
 
 gulp.task('publish:css',['clean:publish'],(callback)=>{
-    gulp.src('src/css/*.less')
+    return gulp.src('src/css/*.less')
         .pipe(gulp.dest('lib/css'));
-    callback();
 });
 
 gulp.task('build:pack', (callback)=>{
@@ -91,10 +87,9 @@ gulp.task('build:pack', (callback)=>{
 });
 
 gulp.task('build:over',['build:pack'],(callback)=>{
-    gulp.src('dist/*.js')
+    return gulp.src('dist/*.js')
         .pipe(header(banner))
         .pipe(gulp.dest('dist/'));
-    callback();
 });
 
 gulp.task('default', ['server']);

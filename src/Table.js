@@ -70,11 +70,13 @@ class Table extends React.Component {
     //checkbox handler
     changeHandler(row, i) {
         return (e) => {
+            this.selectRows[i] = e.target.checked ? row: undefined;
             if (e.target.checked) {
-                this.selectRows[i] = row;
+                e.target.parentNode.parentNode.classList.add('ck-table-selected');
             } else {
-                this.selectRows[i] = undefined;
+                e.target.parentNode.parentNode.classList.remove('ck-table-selected');
             }
+
             if (typeof this.props.onCheck === "function") {
                 this.props.onCheck(e.target.checked, row);
             }
@@ -106,6 +108,11 @@ class Table extends React.Component {
         this.select_all = e.target.checked;
         common.map(this.refs, (item) => {
             item.checked = this.select_all;
+            if (this.select_all) {
+                item.parentNode.parentNode.classList.add('ck-table-selected');
+            } else {
+                item.parentNode.parentNode.classList.remove('ck-table-selected');
+            }
         });
         this.state.data.forEach((item, idx) => {
             this.selectRows[idx] = this.select_all ? item : null;

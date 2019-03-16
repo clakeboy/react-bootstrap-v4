@@ -21,7 +21,7 @@ class CKModal extends React.PureComponent {
             content:'',
             title:'',
             isCloseBtn:true,
-            header:true,
+            header:this.props.header,
             type:ModalAlert,
             center:this.props.center,
             fade:this.props.fade,
@@ -133,7 +133,7 @@ class CKModal extends React.PureComponent {
             title:opt.title||'提示',
             content:opt.content||opt||'',
             isCloseBtn:typeof opt.close !== 'undefined'?opt.close:true,
-            header:typeof opt.header !== 'undefined'?opt.header:true,
+            header:typeof opt.header !== 'undefined'?opt.header:this.props.header,
             type:ModalAlert,
             center:typeof opt.center === 'undefined'?this.props.center:opt.center,
         },()=>{
@@ -161,7 +161,7 @@ class CKModal extends React.PureComponent {
             title:opt.title||'提示',
             content:opt.content||'',
             isCloseBtn:typeof opt.close !== 'undefined'?opt.close:true,
-            header:typeof opt.header !== 'undefined'?opt.header:true,
+            header:typeof opt.header !== 'undefined'?opt.header:this.props.header,
             type:ModalConfirm,
             center:typeof opt.center === 'undefined'?this.props.center:opt.center,
         },()=>{
@@ -187,7 +187,7 @@ class CKModal extends React.PureComponent {
             // ),
             content:opt.content||opt||'',
             isCloseBtn:false,
-            header:typeof opt.header !== 'undefined'?opt.header:true,
+            header:typeof opt.header !== 'undefined'?opt.header:this.props.header,
             type:ModalLoading,
             center:typeof opt.center === 'undefined'?this.props.center:opt.center,
         },()=>{
@@ -215,7 +215,7 @@ class CKModal extends React.PureComponent {
             title:opt.title||'提示',
             content:opt.content||'',
             isCloseBtn:typeof opt.close !== 'undefined'?opt.close:true,
-            header:typeof opt.header !== 'undefined'?opt.header:true,
+            header:typeof opt.header !== 'undefined'?opt.header:this.props.header,
             width:typeof opt.width !== 'undefined'?opt.width:null,
             type:ModalView,
             center:typeof opt.center === 'undefined'?this.props.center:opt.center,
@@ -359,12 +359,14 @@ CKModal.propTypes = {
     onClose: PropTypes.func,
     center: PropTypes.bool,
     fade: PropTypes.bool,
+    header: PropTypes.bool,
     blurSelector: PropTypes.string
 };
 
 CKModal.defaultProps = {
     center:false,
-    fade:false
+    fade:false,
+    header:true
 };
 
 export default CKModal;

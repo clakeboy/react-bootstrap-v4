@@ -305,6 +305,7 @@ class TestModal extends React.PureComponent {
                         <Input label="测试本地数据 Combo 只读(小)" size='sm' readOnly combo={{
                             searchColumn:'task_name',
                             width:'100%',
+                            multi:true
                         }} comboData={this.state.child} onChange={(val,row)=>{
                             console.log(val,row);
                         }}/>

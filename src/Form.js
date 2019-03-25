@@ -16,6 +16,7 @@ class Form extends React.PureComponent {
         this.vals = {};
         this.components = {};
         this.events = {};
+        this.newColumn = {};
     }
 
     componentDidMount() {
@@ -24,6 +25,10 @@ class Form extends React.PureComponent {
 
     getValues()  {
         return this.vals;
+    }
+
+    getNew() {
+        return Object.assign({},this.newColumn);
     }
 
     setValue(field,val) {
@@ -35,7 +40,7 @@ class Form extends React.PureComponent {
     }
 
     setValues(vals) {
-        this.vals = vals;
+        this.vals = Object.assign(this.vals,vals);
         map(vals,(item,key)=>{
             if (this.components[key]) {
                 console.log(this.components);
@@ -137,6 +142,7 @@ class Form extends React.PureComponent {
             } else {
                 return;
             }
+            this.newColumn[field] = '';
             if (item.type === Input) {
                 if (typeof item.props.onChange === 'function') {
                     this.events[field] = item.props.onChange;

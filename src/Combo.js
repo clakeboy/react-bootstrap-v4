@@ -105,6 +105,17 @@ class Combo extends React.Component {
         this.hide();
     };
 
+    multiSelectHandler = (check)=>{
+        if (typeof this.props.onSelect === 'function') {
+            let valList = [];
+            this.table.getSelectRows().forEach((item)=>{
+                valList.push(item[this.props.searchColumn]);
+            });
+
+            this.props.onSelect(valList.join(','),this.table.getSelectRows());
+        }
+    };
+
     filter(search) {
         this.search = search;
         if (typeof this.props.onSearch === 'function') {
@@ -214,7 +225,10 @@ class Combo extends React.Component {
         let columns = this.filterColumns();
         return (
             <div ref={c=>this.conDom=c} className='ck-combo-content'>
-                <Table ref={c=>this.table=c} select={false} header={false} striped={false} sm={this.props.sm} data={this.state.data} onClick={this.selectHandler}>
+                <Table ref={c=>this.table=c} select={this.props.multi} header={false} striped={false} sm={this.props.sm}
+                       data={this.state.data}
+                       onCheck={this.props.multi?this.multiSelectHandler:null}
+                       onClick={this.props.multi?null:this.selectHandler}>
                     {map(columns,(item)=>{
                         return <TableHeader field={item.field} width={item.width}
                                             onFormat={item.field === this.props.searchColumn?this.filterFormat:null}/>
@@ -248,6 +262,7 @@ Combo.propTypes = {
     onSelect: PropTypes.func,
     onClose: PropTypes.func,
     sm: PropTypes.bool,
+    multi: PropTypes.bool,
     //filter column exp: ['name','age'] or [{field:'name',width:'100px'},{field:'age',width:'100px'}]
     filterColumns: PropTypes.array,
     noSearch: PropTypes.bool
@@ -256,7 +271,8 @@ Combo.propTypes = {
 Combo.defaultProps = {
     showRows:5,
     data:[],
-    search:""
+    search:"",
+    multi:false,
 };
 
 export default Combo;

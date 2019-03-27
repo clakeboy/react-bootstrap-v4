@@ -306,11 +306,11 @@ class Table extends React.Component {
         }
 
         return this.state.data.map((row, i) => {
-            return this.renderRow(row, i);
+            return this.renderRow(row, i,null,0);
         });
     }
 
-    renderRow(row, i, parentRow) {
+    renderRow(row, i, parentRow,indent) {
         return (
             <React.Fragment>
                 <tr className={this.props.onClick ? 'click-row' : null} onClick={this.clickHandler(row, i)}>
@@ -333,23 +333,41 @@ class Table extends React.Component {
                         let tree, parent;
                         if (item.props.tree) {
                             if (parentRow) {
-                                parent = <span className='mr-4'/>
+                                parent = [];
                             }
-                            tree = <Icon data-open='close' onClick={() => {
-                                if (typeof this.props.onClickTree === 'function') {
-                                    this.props.onClickTree(row, (data) => {
-                                        if (!data) {
-                                            return
-                                        }
-                                        let tree        = this.state.tree;
-                                        tree[i]         = data;
-                                        this.state.tree = null;
-                                        this.setState({
-                                            tree: tree
-                                        })
-                                    });
+                            for (let i=0;i<indent;i++) {
+                                parent.push(<span className='mr-4'/>)
+                            }
+                            tree = <Icon data-open='close' onClick={(e) => {
+                                let target = e.target;
+                                if (target.dataset.open === 'close') {
+                                    if (typeof this.props.onClickTree === 'function') {
+                                        this.props.onClickTree(row, (data) => {
+                                            if (!data) {
+                                                return
+                                            }
+                                            let tree        = this.state.tree;
+                                            tree[i]         = data;
+                                            this.state.tree = null;
+                                            this.setState({
+                                                tree: tree
+                                            })
+                                        });
+                                    }
+                                    target.dataset.open = 'open';
+                                    target.classList.remove('fa-plus-square');
+                                    target.classList.add('fa-minus-square');
+                                } else {
+                                    target.dataset.open = 'close';
+                                    target.classList.remove('fa-minus-square');
+                                    target.classList.add('fa-plus-square');
+                                    let tree        = this.state.tree;
+                                    tree[i]         = null;
+                                    this.state.tree = null;
+                                    this.setState({
+                                        tree: tree
+                                    })
                                 }
-
                             }} className='mr-1 text-primary' icon='plus-square' iconType='regular'/>
                         }
 
@@ -366,18 +384,18 @@ class Table extends React.Component {
                         }
                     })}
                 </tr>
-                {this.props.tree ? this.renderTreeRow(row, i) : null}
+                {this.props.tree ? this.renderTreeRow(row, i,indent+1) : null}
             </React.Fragment>
         );
     }
 
-    renderTreeRow(row, i) {
+    renderTreeRow(row, i,indent) {
         let data = this.state.tree[i];
         if (!data) {
             return null;
         }
         return data.map((item, idx) => {
-            return this.renderRow(item, `${i}-${idx}`, row);
+            return this.renderRow(item, `${i}-${idx}`, row,indent);
         });
         // return (
         //     <tr className='table-tree-row d-none' id={`tree-${i}`}>

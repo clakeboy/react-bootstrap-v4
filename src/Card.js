@@ -92,7 +92,11 @@ Card.propTypes = {
 };
 
 Card.defaultProps = {
-    border: 'transparent'
+    border: 'transparent',
+    scroll:false,
+    sm:false,
+    absolute:false,
+    divider:true
 };
 
 export default Card;

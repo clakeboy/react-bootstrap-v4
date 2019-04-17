@@ -5,6 +5,7 @@ import Icon from './Icon';
 import $ from 'jquery';
 
 import './css/Tree.less';
+import common from "./Common";
 
 class Tree extends React.PureComponent {
     constructor(props) {
@@ -14,6 +15,7 @@ class Tree extends React.PureComponent {
         };
 
         this.parents = {};
+        this.domId = 'tree-' + common.RandomString(8);
     }
 
     componentDidMount() {
@@ -30,29 +32,65 @@ class Tree extends React.PureComponent {
      */
     selectHandler = (item,id) => {
         return (e)=>{
-            let parent = this.parents[id];
-            if (parent) {
-                let jq = $(parent);
-                if (parent.dataset.show === '0') {
-                    // jq.removeClass('d-none');
-                    jq.slideDown(300);
-                    parent.dataset.show = '1';
-                    e.currentTarget.querySelector('.ck-tree-icon').classList.add('ck-tree-icon-down');
-                    // $(e.currentTarget).find('.ck-tree-icon').addClass('ck-tree-icon-down');
-                } else {
-                    // jq.addClass('d-none');
-                    jq.slideUp(300);
-                    parent.dataset.show = '0';
-                    e.currentTarget.querySelector('.ck-tree-icon').classList.remove('ck-tree-icon-down');
-                    // $(e.currentTarget).find('.ck-tree-icon').removeClass('ck-tree-icon-down');
-                }
-                return
-            }
-            if (typeof this.props.onSelect === 'function') {
-                this.props.onSelect(item,id);
+            if (typeof this.props.onClick === 'function') {
+                this.props.onClick(item,id);
             }
         };
     };
+
+    dbClickHandler = (item,id)=>{
+        return (e)=> {
+            if (typeof this.props.onDbClick === 'function') {
+                let isShowChild = this.props.onDbClick(item,id);
+                if (isShowChild !== false) {
+                    this.showChild(id);
+                }
+            } else {
+                this.showChild(id);
+            }
+        }
+    };
+
+    iconHandler = (item,id)=>{
+        return (e)=>{
+            this.showChild(id);
+            // let parent = this.parents[id];
+            // if (parent) {
+            //     if (parent.dataset.show === '0') {
+            //         // jq.removeClass('d-none');
+            //         // jq.slideDown(300);
+            //         // parent.style.height = 'unset';
+            //         parent.dataset.show = '1';
+            //         parent.classList.remove('d-none');
+            //         e.currentTarget.querySelector('i').classList.add('ck-tree-icon-down');
+            //         // $(e.currentTarget).find('.ck-tree-icon').addClass('ck-tree-icon-down');
+            //     } else {
+            //         // jq.addClass('d-none');
+            //         // jq.slideUp(300);
+            //         // parent.style.height = 0;
+            //         parent.dataset.show = '0';
+            //         parent.classList.add('d-none');
+            //         e.currentTarget.querySelector('i').classList.remove('ck-tree-icon-down');
+            //         // $(e.currentTarget).find('.ck-tree-icon').removeClass('ck-tree-icon-down');
+            //     }
+            // }
+        };
+    };
+
+    showChild(id) {
+        let parent = this.parents[id];
+        if (parent) {
+            if (parent.dataset.show === '0') {
+                parent.dataset.show = '1';
+                parent.classList.remove('d-none');
+                parent.previousElementSibling.querySelector('i').classList.add('ck-tree-icon-down');
+            } else {
+                parent.dataset.show = '0';
+                parent.classList.add('d-none');
+                parent.previousElementSibling.querySelector('i').classList.remove('ck-tree-icon-down');
+            }
+        }
+    }
 
     /**
      * get main div class name
@@ -79,14 +117,17 @@ class Tree extends React.PureComponent {
             let style = {
                 'marginLeft':pad+'rem'
             };
-            let id = `${parent_key}_${idx}`;
+            let id = `${parent_key}-${idx}`;
             return <div className='ck-tree-item' style={style}>
-                <div className='ck-tree-content' onClick={this.selectHandler(val,id)}>
-                    <Icon className='ck-tree-icon' icon={val.children?'caret-right':val.icon}/>
-                    {'\u0020'}
-                    <span className='ck-tree-item-text'>{val.text}{id}</span>
+                <div className='ck-tree-content d-flex' >
+                    {val.children?<span className='ck-tree-icon' onClick={this.iconHandler(val,id)}>
+                        <Icon icon={val.children?'angle-right':val.icon}/>
+                    </span>:<span className='ck-tree-icon'/>}
+                    <span className='ck-tree-item-text'
+                          onDoubleClick={this.dbClickHandler(val,id)}
+                          onClick={this.selectHandler(val,id)}>{val.text}{id}</span>
                 </div>
-                {val.children?<div id={id} className='ck-tree-children' data-show="0" ref={c=>this.parents[id]=c}>
+                {val.children?<div id={this.domId+'-'+id} className='ck-tree-children d-none' data-show="0" ref={c=>this.parents[id]=c}>
                     {this.renderItem(val.children,val,level+1,id)}
                 </div>:null}
             </div>
@@ -104,7 +145,8 @@ class Tree extends React.PureComponent {
 
 Tree.propTypes = {
     data: PropTypes.object,
-    onSelect: PropTypes.func,
+    onClick: PropTypes.func,
+    onDbClick: PropTypes.func
 };
 
 Tree.defaultProps = {

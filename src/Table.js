@@ -220,7 +220,6 @@ class Table extends React.Component {
 
     getTableStyles() {
         let base = {};
-        console.log(this.width);
         if (this.width) {
             base.width = this.width;
         }

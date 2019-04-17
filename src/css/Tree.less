@@ -1,5 +1,9 @@
 .ck-tree {
   padding: .5rem;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .ck-tree-item {
@@ -13,23 +17,27 @@
   }
 }
 
+
 .ck-tree-icon {
   display: inline-block;
-  width: .5rem;
-  margin-right: .25rem;
-  transform:rotate(0deg);
-  transition:transform 300ms;
+  width: 1rem;
+  i {
+    transform:rotate(0deg);
+    transition:transform 300ms;
+  }
 }
 
 .ck-tree-icon-down {
-  transform:rotate(90deg);
+  transform:rotate(90deg)!important;
 }
 
 .ck-tree-children {
-  display: none;
+  //display: none;
+  //transition: height 300ms;
   //height: 0;
+  overflow: hidden;
 }
 
 .ck-tree-item-text {
-  margin-left: .25rem;
+
 }

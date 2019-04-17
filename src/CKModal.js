@@ -126,8 +126,8 @@ class CKModal extends React.PureComponent {
      * }
      * @param opt object
      */
-    alert(opt) {
-        this.callback = opt.callback||null;
+    alert(opt,cb) {
+        this.callback = opt.callback||cb||null;
         this.modalType = ModalAlert;
         this.setState({
             title:opt.title||'提示',
@@ -154,8 +154,8 @@ class CKModal extends React.PureComponent {
      * }
      * @param opt
      */
-    confirm(opt) {
-        this.callback = opt.callback||null;
+    confirm(opt,cb) {
+        this.callback = opt.callback||cb||null;
         this.modalType = ModalConfirm;
         this.setState({
             title:opt.title||'提示',

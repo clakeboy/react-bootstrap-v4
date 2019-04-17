@@ -129,6 +129,9 @@ class Form extends React.PureComponent {
     }
 
     bindingComponent(item) {
+        if (typeof item !== 'object') {
+            return;
+        }
         if (typeof item.props.children === 'object') {
             React.Children.map(item.props.children,(child_item)=>{
                 this.bindingComponent(child_item);

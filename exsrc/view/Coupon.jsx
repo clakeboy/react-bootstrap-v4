@@ -26,6 +26,7 @@ import {
 } from '../../src/index';
 import Loader from '../components/Loader';
 import CDropdown from "../../src/CDropdown";
+import Form from "../../src/Form";
 
 class Coupon extends React.PureComponent {
     constructor(props) {
@@ -81,6 +82,10 @@ class Coupon extends React.PureComponent {
     }
 
     render() {
+        let data = {
+            item1:'asdfasdf',
+            item2:'asdg3222'
+        };
         return (
             <Container>
                 <h1>React Bootstrap v4 Demo 2</h1>
@@ -93,24 +98,25 @@ class Coupon extends React.PureComponent {
                     </div>
                 </Card>
                 <Card divider border={'info'} className='mt-2' header="优惠券添加">
-                    <div className='form-row'>
-                        <Input className='col-6' label='Name' plaintext data='Clake'/>
-                        <Input className='col-6' label='Last Name' data='Lee'/>
-                    </div>
-                    <div className='form-row'>
-                        <CDropdown className='col-6' label='Name' text='下拉' data='Clake'/>
-                    </div>
-                    <div className='form-row'>
-                        <div className='col-2 form-group pt-2'><label>middle垂直居中</label></div>
-                        <Input className='col-10' data='Lee'/>
-                    </div>
+                    <Form>
+                        <div className='form-row'>
+                            <Input className='col-6' label='Name' plaintext data='Clake'/>
+                            <Input className='col-6' label='Last Name' data='Lee'/>
+                        </div>
+                        {data.item1}
+                        <div className='form-row'>
+                            <CDropdown className='col-6' label='Name' text='下拉' data='Clake'/>
+                        </div>
+                        <div className='form-row'>
+                            <div className='col-2 form-group pt-2'><label>middle垂直居中</label></div>
+                            <Input className='col-10' data='Lee'/>
+                        </div>
+                    </Form>
                 </Card>
                 <Card className='mt-2' header="模态窗口">
                     <ButtonGroup>
-                    <Button onClick={e=>this.modal.alert({
-                        title:'测试',
-                        content:'测试一下效果',
-                        center:true
+                    <Button onClick={e=>this.modal.alert('测试效果',()=>{
+                        console.log('asdfsadf');
                     })}>测试 alert 警告 Modal</Button>
                     <Button theme='success' onClick={e=>this.modal.confirm({
                         content:'确定要按下这个按钮?',

@@ -1,5 +1,7 @@
 @border: 1px solid #dee2e6;
 .ck-tabs {
+  display: flex;
+  flex-direction: column;
   .nav-item a {
     cursor: pointer;
     -webkit-user-select: none;
@@ -8,16 +10,41 @@
     user-select: none;
     color:#007bff;
   }
+
+  .nav-link {
+    border-color: #dee2e6 #dee2e6 transparent;
+    padding: .45rem .95rem;
+    margin-top: .1rem;
+    &:hover {
+      border-color: #c3c3c3 #c3c3c3 transparent;
+    }
+  }
+
+  .nav-link.active {
+    padding: .5rem 1rem;
+    margin-top: 0;
+  }
 }
 
 .ck-tabs-sm {
   .nav-link {
-    padding: .25rem .5rem;
+    padding: .20rem .45rem;
+    margin-top: .1rem;
     font-size: .75rem;
+  }
+  .nav-link.active {
+    padding: .25rem .5rem;
+    margin-top: 0;
   }
 }
 
+.ck-tabs-header {
+  flex-shrink: 1;
+}
+
 .ck-tabs-content {
+  flex-grow: 1;
+  overflow: hidden;
   width: 100%;
   height: 100%;
   .tab-pane {

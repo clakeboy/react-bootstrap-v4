@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import common from "./Common";
 import './css/Tabs.less';
+import Icon from "./Icon";
 
 class Tabs extends React.PureComponent {
     constructor(props) {
@@ -60,7 +61,7 @@ class Tabs extends React.PureComponent {
     }
 
     getClasses() {
-        let base = 'nav';
+        let base = 'nav ck-tabs-header';
         if (this.props.pills) {
             base = classNames(base, 'nav-pills');
         } else {
@@ -130,9 +131,17 @@ class Tabs extends React.PureComponent {
                             clickEvt = this.selectHandler;
                         }
                     }
+                    let is_close = typeof this.props.onClose === 'function';
                     return (
                         <li className="nav-item">
                             <a className={class_name} data-tabid={item.props.id} onClick={clickEvt}>
+                                {is_close?<><Icon className='mr-2' icon='times-circle' onClick={(e)=>{
+                                    e.stopPropagation();
+                                    if (this.state.currentShow === item.props.id) {
+                                        this.state.currentShow = null;
+                                    }
+                                    this.props.onClose(item.props.id,index);
+                                }}/></>:null}
                                 {item.props.text}
                             </a>
                         </li>
@@ -201,6 +210,7 @@ Tabs.propTypes = {
     showTab : PropTypes.string,
     position: PropTypes.object,
     disabled: PropTypes.bool,
+    onClose: PropTypes.func
 };
 
 Tabs.defaultProps = {

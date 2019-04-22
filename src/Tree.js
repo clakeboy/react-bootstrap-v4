@@ -125,7 +125,10 @@ class Tree extends React.PureComponent {
                     </span>:<span className='ck-tree-icon'/>}
                     <span className='ck-tree-item-text'
                           onDoubleClick={this.dbClickHandler(val,id)}
-                          onClick={this.selectHandler(val,id)}>{val.text}{id}</span>
+                          onClick={this.selectHandler(val,id)}>
+                        {val.icon?<><Icon icon={val.icon}/>{'\u0020'}</>:null}
+                        {val.text}
+                    </span>
                 </div>
                 {val.children?<div id={this.domId+'-'+id} className='ck-tree-children d-none' data-show="0" ref={c=>this.parents[id]=c}>
                     {this.renderItem(val.children,val,level+1,id)}

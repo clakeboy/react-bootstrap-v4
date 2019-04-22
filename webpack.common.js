@@ -37,12 +37,12 @@ export default {
             { test: /\.svg$/,  use: "url-loader?limit=10000&mimetype=image/svg+xml" },
             {
                 test: /\.jsx$/,
-                use: {loader:'babel-loader',query:{presets:['es2015', 'stage-0', 'react']}},
+                use: {loader:'babel-loader',query:{presets:["@babel/preset-env", "@babel/preset-react"]}},
                 exclude: /node_modules/
             },
             {
                 test: /\.js$/,
-                use: {loader:'babel-loader',query:{presets:['es2015', 'stage-0', 'react']}},
+                use: {loader:'babel-loader',query:{presets:["@babel/preset-env", "@babel/preset-react"]}},
                 exclude: /node_modules/
             },
             {

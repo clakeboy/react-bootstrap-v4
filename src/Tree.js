@@ -33,7 +33,7 @@ class Tree extends React.PureComponent {
     selectHandler = (item,id) => {
         return (e)=>{
             if (typeof this.props.onClick === 'function') {
-                this.props.onClick(item,id);
+                this.props.onClick(e,item,id);
             }
         };
     };

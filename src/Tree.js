@@ -54,27 +54,15 @@ class Tree extends React.PureComponent {
     iconHandler = (item,id)=>{
         return (e)=>{
             this.showChild(id);
-            // let parent = this.parents[id];
-            // if (parent) {
-            //     if (parent.dataset.show === '0') {
-            //         // jq.removeClass('d-none');
-            //         // jq.slideDown(300);
-            //         // parent.style.height = 'unset';
-            //         parent.dataset.show = '1';
-            //         parent.classList.remove('d-none');
-            //         e.currentTarget.querySelector('i').classList.add('ck-tree-icon-down');
-            //         // $(e.currentTarget).find('.ck-tree-icon').addClass('ck-tree-icon-down');
-            //     } else {
-            //         // jq.addClass('d-none');
-            //         // jq.slideUp(300);
-            //         // parent.style.height = 0;
-            //         parent.dataset.show = '0';
-            //         parent.classList.add('d-none');
-            //         e.currentTarget.querySelector('i').classList.remove('ck-tree-icon-down');
-            //         // $(e.currentTarget).find('.ck-tree-icon').removeClass('ck-tree-icon-down');
-            //     }
-            // }
         };
+    };
+
+    menuHandler = (item,id)=>{
+        return (e)=>{
+            if (typeof this.props.onMenu === 'function') {
+                this.props.onMenu(e,item,id);
+            }
+        }
     };
 
     showChild(id) {
@@ -119,7 +107,7 @@ class Tree extends React.PureComponent {
             };
             let id = `${parent_key}-${idx}`;
             return <div className='ck-tree-item' style={style}>
-                <div className='ck-tree-content d-flex' >
+                <div className='ck-tree-content d-flex' onContextMenu={this.menuHandler(val,id)}>
                     {val.children?<span className='ck-tree-icon' onClick={this.iconHandler(val,id)}>
                         <Icon icon={val.children?'angle-right':val.icon}/>
                     </span>:<span className='ck-tree-icon'/>}
@@ -149,7 +137,8 @@ class Tree extends React.PureComponent {
 Tree.propTypes = {
     data: PropTypes.object,
     onClick: PropTypes.func,
-    onDbClick: PropTypes.func
+    onDbClick: PropTypes.func,
+    onMenu: PropTypes.func,
 };
 
 Tree.defaultProps = {

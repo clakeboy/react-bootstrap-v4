@@ -172,6 +172,7 @@ Select.propTypes = {
 
 Select.defaultProps = {
     data: [],
+    label: ''
 };
 
 export default Select;

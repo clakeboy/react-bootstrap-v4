@@ -37,7 +37,7 @@ class Combo extends React.Component {
 
     componentDidUpdate() {
         if (this.table) {
-            if (this.state.data.length > 5) {
+            if (this.state.data.length > this.props.showRows) {
                 let mainDom = this.table.mainDom;
                 let height = mainDom.querySelector('tr').clientHeight;
                 this.conDom.style.overflowY = 'auto';
@@ -158,7 +158,9 @@ class Combo extends React.Component {
 
                 return {
                     field: is_obj?item.field:item,
-                    width:  is_obj?item.width:null
+                    width:  is_obj?item.width:null,
+                    text: is_obj?item.text:item.field,
+                    format:is_obj?item.format:null
                 };
             });
         } else {
@@ -166,7 +168,9 @@ class Combo extends React.Component {
             return map(row,(item,key)=>{
                 return {
                     field: key,
-                    width: null
+                    width: null,
+                    text:  key,
+                    format:null,
                 };
             });
         }
@@ -225,13 +229,13 @@ class Combo extends React.Component {
         let columns = this.filterColumns();
         return (
             <div ref={c=>this.conDom=c} className='ck-combo-content'>
-                <Table ref={c=>this.table=c} select={this.props.multi} header={false} striped={false} sm={this.props.sm}
+                <Table ref={c=>this.table=c} select={this.props.multi} header={this.props.header} striped={false} sm={this.props.sm}
                        data={this.state.data}
                        onCheck={this.props.multi?this.multiSelectHandler:null}
                        onClick={this.props.multi?null:this.selectHandler}>
                     {map(columns,(item)=>{
-                        return <TableHeader field={item.field} width={item.width}
-                                            onFormat={item.field === this.props.searchColumn?this.filterFormat:null}/>
+                        return <TableHeader field={item.field} width={item.width} text={item.text}
+                                            onFormat={item.field === this.props.searchColumn?this.filterFormat:item.format}/>
                     })}
                 </Table>
             </div>
@@ -265,7 +269,8 @@ Combo.propTypes = {
     multi: PropTypes.bool,
     //filter column exp: ['name','age'] or [{field:'name',width:'100px'},{field:'age',width:'100px'}]
     filterColumns: PropTypes.array,
-    noSearch: PropTypes.bool
+    noSearch: PropTypes.bool,
+    header: PropTypes.bool
 };
 
 Combo.defaultProps = {
@@ -273,6 +278,7 @@ Combo.defaultProps = {
     data:[],
     search:"",
     multi:false,
+    header:false,
 };
 
 export default Combo;

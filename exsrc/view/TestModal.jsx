@@ -75,6 +75,48 @@ class TestModal extends React.PureComponent {
                 "notified_number": 12,
                 "source"         : "",
                 "created_date"   : 1530767866
+            }, {
+                "id"             : 1,
+                "task_name"      : "测试任务",
+                "time_rule"      : "0 * * * * *",
+                "once"           : true,
+                "is_execute"     : true,
+                "disable"        : false,
+                "notify_url"     : "http://localhost:9803",
+                "notify_method"  : "GET",
+                "notify_data"    : "asdfasdf",
+                "notify_number"  : 7,
+                "notified_number": 12,
+                "source"         : "",
+                "created_date"   : 1530767866
+            }, {
+                "id"             : 1,
+                "task_name"      : "测试任务",
+                "time_rule"      : "0 * * * * *",
+                "once"           : true,
+                "is_execute"     : true,
+                "disable"        : false,
+                "notify_url"     : "http://localhost:9803",
+                "notify_method"  : "GET",
+                "notify_data"    : "asdfasdf",
+                "notify_number"  : 7,
+                "notified_number": 12,
+                "source"         : "",
+                "created_date"   : 1530767866
+            }, {
+                "id"             : 1,
+                "task_name"      : "测试任务",
+                "time_rule"      : "0 * * * * *",
+                "once"           : true,
+                "is_execute"     : true,
+                "disable"        : false,
+                "notify_url"     : "http://localhost:9803",
+                "notify_method"  : "GET",
+                "notify_data"    : "asdfasdf",
+                "notify_number"  : 7,
+                "notified_number": 12,
+                "source"         : "",
+                "created_date"   : 1530767866
             }],
         };
 
@@ -292,13 +334,25 @@ class TestModal extends React.PureComponent {
                             });
                         }}>改变值</Button>
                         <Input label="测试本地数据 Combo (超小)" size={'xs'} combo={{
-                            searchColumn:'task_name'
+                            searchColumn:'task_name',
+                            header:true,
+                            showRows:10,
+                            filterColumns:[
+                                {field:'task_name',text:'任务名称'},
+                                {field:'time_rule',text:'时间规则'},
+                                {field:'notify_method',text:'任务名称'},
+                                {field:'source',text:'任务名称'},
+                                {field:'created_date',text:'创建时间',format:(val,row)=>{
+                                    return new Date(val*1000).toLocaleString();
+                                    }}
+                            ],
                         }} comboData={this.state.child} onChange={(val,row)=>{
                             console.log(val,row);
                         }}/>
                         <Input label="测试本地数据 Combo 只读(正常)" readOnly combo={{
                             searchColumn:'task_name',
-                            width:'100%',
+                            // width:'100%',
+                            header:true
                         }} comboData={this.state.child} onChange={(val,row)=>{
                             console.log(val,row);
                         }}/>

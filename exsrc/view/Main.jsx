@@ -94,6 +94,7 @@ class Main extends React.Component {
                 </Container>
                 <Container className='p-0 mb-1' inline fluid>
                     <Input className='mr-1' disabled size='sm' absolute x='50px' y='150px' width='100px' placeholder='用户名' onChange={this.changeHandler('user_name')} data={this.state.pageData.user_name}/>
+                    <Select className='col-6' data={this.dataList} defaultValue='3'/>
                     <Input className='mr-1' placeholder='密码' type='password'/>
                     <Input className='mr-1' placeholder='日期' calendar/>
                     <InputGroup className='mr-1' ref={c=>this.ing=c} width={200} label="测试" data="11111"/>

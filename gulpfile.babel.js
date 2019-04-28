@@ -69,7 +69,9 @@ gulp.task('publish:pack',['clean:publish','publish:css'],(callback)=>{
             "presets": ["@babel/preset-env", "@babel/preset-react"],
             "plugins": [
                 "@babel/plugin-proposal-object-rest-spread",
-                "@babel/plugin-transform-runtime",
+                ["@babel/plugin-transform-runtime",{
+                    "helpers": false
+                }],
                 "@babel/plugin-proposal-class-properties",
                 "@babel/plugin-syntax-dynamic-import",
                 "@babel/plugin-proposal-export-default-from"

@@ -27,6 +27,14 @@ class Tree extends React.PureComponent {
         };
     }
 
+    componentWillReceiveProps(nextProps, nextContext) {
+        if (nextProps.data !== this.state.data) {
+            this.setState({
+                data:nextProps.data
+            })
+        }
+    }
+
     /**
      * 选择事件
      */

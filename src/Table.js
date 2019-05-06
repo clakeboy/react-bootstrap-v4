@@ -39,9 +39,11 @@ class Table extends React.Component {
     componentWillReceiveProps(nextProps) {
         if (this.props.data !== nextProps.data) {
             this.select_all = false;
-            this.allchk.setChecked(false);
-            this.allchk.setHalf(false);
             this.selectRows = [];
+            if (this.allchk) {
+                this.allchk.setChecked(false);
+                this.allchk.setHalf(false);
+            }
             this.setState({
                 data: nextProps.data
             });

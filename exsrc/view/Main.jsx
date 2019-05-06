@@ -147,8 +147,8 @@ class Main extends React.Component {
                         </Button>
                     </Container>
                     <Container inline>
-                        <CCheckbox label='clake' className='mr-2'/>
-
+                        <CCheckbox label='clake' disabled className='mr-2'/>
+                        <CCheckbox label='clake' disabled checked className='mr-2'/>
                     </Container>
                     <Container inline>
                         <Checkbox ref={c=>this.chk = c} className='mr-1' onChange={e=>{
@@ -156,6 +156,7 @@ class Main extends React.Component {
                                 testChecked:!e.target.checked
                             })
                         }} checked={this.state.pageData.testChecked} label='ddd'/>
+                        <CCheckbox label='clake' className='mr-2'/>
                         <Button className='mr-1' size='sm' onClick={e=>{
                             let data = this.state.pageData;
                             data['testChecked'] = !data['testChecked'];

@@ -2,12 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import TableHeader from './TableHeader';
-import Checkbox from './Checkbox';
+import CCheckbox from "./CCheckbox";
 import Button from './Button';
 import common from "./Common";
 import Icon from './Icon';
 
 import './css/Table.less';
+import * as ReactDOM from "react-dom";
 
 class Table extends React.Component {
     constructor(props) {
@@ -22,7 +23,7 @@ class Table extends React.Component {
 
         this.select_all = false;
 
-        this.selectRows = {};
+        this.selectRows = [];
 
         this.treeHeader = {};
 
@@ -38,7 +39,9 @@ class Table extends React.Component {
     componentWillReceiveProps(nextProps) {
         if (this.props.data !== nextProps.data) {
             this.select_all = false;
-            this.selectRows = {};
+            this.allchk.setChecked(false);
+            this.allchk.setHalf(false);
+            this.selectRows = [];
             this.setState({
                 data: nextProps.data
             });
@@ -69,20 +72,46 @@ class Table extends React.Component {
 
     //checkbox handler
     changeHandler(row, i) {
-        return (e) => {
-            this.selectRows[i] = e.target.checked ? row: undefined;
-            if (e.target.checked) {
-                e.target.parentNode.parentNode.classList.add('ck-table-selected');
-            } else {
-                e.target.parentNode.parentNode.classList.remove('ck-table-selected');
-            }
-
+        return (checked,e) => {
+            this.setRowCheck(checked,i);
+            this.checkAllCheckHalf();
             if (typeof this.props.onCheck === "function") {
                 this.props.onCheck(e.target.checked, row);
             }
         };
     }
+    checkAllCheckHalf() {
+        if (this.selectRows.length > 0 && this.selectRows.length !== this.state.data.length) {
+            this.allchk.setHalf(true);
+        }
+        if (this.selectRows.length === 0) {
+            this.allchk.setHalf(false);
+            this.allchk.setChecked(false);
+        } else if (this.selectRows.length === this.state.data.length) {
+            this.allchk.setHalf(false);
+            this.allchk.setChecked(true);
+        }
+    }
+    setRowCheck(checked,rowIdx) {
+        if (checked) {
+            if (this.selectRows.indexOf(rowIdx) === -1) {
+                this.selectRows.push(rowIdx);
+            }
+            // this.selectRows[rowIdx] = this.state.data[rowIdx];
+        } else {
+            if (this.selectRows.indexOf(rowIdx) !== -1) {
+                this.selectRows.splice(this.selectRows.indexOf(rowIdx),1);
+            }
+        }
+        let row = this.refs['row_'+rowIdx];
+        if (checked) {
+            ReactDOM.findDOMNode(row).parentNode.parentNode.classList.add('ck-table-selected');
+        } else {
+            ReactDOM.findDOMNode(row).parentNode.parentNode.classList.remove('ck-table-selected');
+        }
+    }
 
+    //table row check handler
     clickHandler(row, i) {
         return () => {
             if (typeof this.props.onClick === 'function') {
@@ -90,7 +119,7 @@ class Table extends React.Component {
             }
         }
     }
-
+    //table head sort
     sortHandler(field, callback) {
         return (e) => {
             let dom       = e.currentTarget;
@@ -104,18 +133,11 @@ class Table extends React.Component {
         }
     };
 
-    selectAll = (e) => {
-        this.select_all = e.target.checked;
-        common.map(this.refs, (item) => {
-            item.checked = this.select_all;
-            if (this.select_all) {
-                item.parentNode.parentNode.classList.add('ck-table-selected');
-            } else {
-                item.parentNode.parentNode.classList.remove('ck-table-selected');
-            }
-        });
-        this.state.data.forEach((item, idx) => {
-            this.selectRows[idx] = this.select_all ? item : null;
+    selectAll = (checked) => {
+        this.select_all = checked;
+        common.map(this.refs, (item,key,idx) => {
+            item.setChecked(this.select_all);
+            this.setRowCheck(this.select_all,idx);
         });
     };
 
@@ -124,13 +146,16 @@ class Table extends React.Component {
      * @returns {*}
      */
     getSelectRows() {
-        let list = [];
-        common.map(this.selectRows, (item) => {
-            if (item) {
-                list.push(item);
-            }
+        // let list = [];
+        // common.map(this.selectRows, (item) => {
+        //     if (item) {
+        //         list.push(item);
+        //     }
+        // });
+        // return list;
+        return this.selectRows.map((item)=>{
+            return this.state.data[item];
         });
-        return list;
     }
 
     /**
@@ -139,15 +164,16 @@ class Table extends React.Component {
      * @param list 要选中的数据值
      */
     setSelectRows(key, list) {
-        this.state.data.map((row, i) => {
+        this.state.data.forEach((row, i) => {
             if (list.indexOf(row[key]) !== -1) {
-                this.refs['row_' + i].checked = true;
-                this.selectRows[i] = row;
+                this.refs['row_' + i].setChecked(true);
+                this.setRowCheck(true,i);
             } else {
-                this.refs['row_' + i].checked = false;
-                this.selectRows[i] = null;
+                this.refs['row_' + i].setChecked(false);
+                this.setRowCheck(false,i);
             }
         });
+        this.checkAllCheckHalf();
     }
 
     getClasses() {
@@ -178,6 +204,10 @@ class Table extends React.Component {
         //responsive
         if (this.props.responsive) {
             base = classNames(base, 'table-responsive');
+        }
+        //fixed
+        if (this.props.fixed) {
+            base = classNames(base, 'fixed');
         }
 
         return base;
@@ -261,7 +291,7 @@ class Table extends React.Component {
             <thead ref={c => this.tableHeader = c} className={this.getHeaderClasses()}>
             <tr>
                 {this.state.select ?
-                    <th width={10}><input type='checkbox' style={{width: '20px'}} onChange={this.selectAll}/>
+                    <th style={{width:'20px',textAlign:'center'}}><CCheckbox ref={c=>this.allchk=c} onChange={this.selectAll}/>
                     </th> : null}
                 {React.Children.map(this.props.children, (item, key) => {
                     if (!item || item.props.hide) {
@@ -314,8 +344,8 @@ class Table extends React.Component {
             <React.Fragment>
                 <tr className={this.props.onClick ? 'click-row' : null} onClick={this.clickHandler(row, i)}>
                     {this.state.select ?
-                        <th>
-                            <input type='checkbox' style={{width: '20px'}} ref={'row_' + i} onChange={this.changeHandler(row, i)}/>
+                        <th style={{width:'20px',textAlign:'center'}}>
+                            <CCheckbox ref={'row_' + i} onChange={this.changeHandler(row, i)}/>
                         </th> : null}
                     {React.Children.map(this.props.children, (item, key) => {
                         if (!item || item.props.hide) {
@@ -438,6 +468,7 @@ Table.propTypes = {
     height     : PropTypes.string,
     scroll     : PropTypes.bool,
     emptyText  : PropTypes.string,
+    fixed: PropTypes.bool
 };
 
 Table.defaultProps = {
@@ -448,6 +479,7 @@ Table.defaultProps = {
     currentPage: 1,
     hover      : true,
     striped    : true,
+    fixed: false,
     align      : 'left',
     emptyText  : 'no data',
 };

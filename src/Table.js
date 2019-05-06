@@ -291,7 +291,8 @@ class Table extends React.Component {
             <thead ref={c => this.tableHeader = c} className={this.getHeaderClasses()}>
             <tr>
                 {this.state.select ?
-                    <th style={{width:'20px',textAlign:'center'}}><CCheckbox ref={c=>this.allchk=c} onChange={this.selectAll}/>
+                    <th style={{width:'20px',textAlign:'center'}}>
+                        <CCheckbox ref={c=>this.allchk=c} onChange={this.selectAll}/>
                     </th> : null}
                 {React.Children.map(this.props.children, (item, key) => {
                     if (!item || item.props.hide) {

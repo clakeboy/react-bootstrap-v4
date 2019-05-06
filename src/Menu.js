@@ -48,6 +48,9 @@ class Menu extends React.PureComponent {
             if (option.evt.pageY + this.mainDom.clientHeight >
                 document.documentElement.scrollTop + document.documentElement.clientHeight) {
                 y -= this.mainDom.clientHeight;
+                if (y < 0) {
+                    y = 0;
+                }
             }
 
             if (option.evt.pageX + this.mainDom.clientWidth >

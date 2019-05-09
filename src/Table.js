@@ -21,6 +21,8 @@ class Table extends React.Component {
             refresh: typeof this.props.onRefresh === 'function'
         };
 
+        this.treeOpens = {};
+
         this.select_all = false;
 
         this.selectRows = [];
@@ -148,13 +150,6 @@ class Table extends React.Component {
      * @returns {*}
      */
     getSelectRows() {
-        // let list = [];
-        // common.map(this.selectRows, (item) => {
-        //     if (item) {
-        //         list.push(item);
-        //     }
-        // });
-        // return list;
         return this.selectRows.map((item)=>{
             return this.state.data[item];
         });
@@ -343,6 +338,17 @@ class Table extends React.Component {
     }
 
     renderRow(row, i, parentRow,indent) {
+        let tree_status = 'close';
+        if (row.children) {
+            if (!this.treeOpens[i] || this.treeOpens[i] === 'open') {
+                this.state.tree[i] = row.children;
+                tree_status = 'open';
+            } else {
+                delete this.state.tree[i];
+                tree_status = 'close';
+            }
+        }
+        let dynamic_tree = typeof this.props.onClickTree === 'function';
         return (
             <React.Fragment>
                 <tr className={this.props.onClick ? 'click-row' : null} onClick={this.clickHandler(row, i)}>
@@ -370,8 +376,8 @@ class Table extends React.Component {
                             for (let i=0;i<indent;i++) {
                                 parent.push(<span className='mr-4'/>)
                             }
-                            tree = <Icon data-open='close' onClick={(e) => {
-                                let target = e.target;
+                            tree = <Icon data-open={tree_status} onClick={(e) => {
+                                let target = e.currentTarget;
                                 if (target.dataset.open === 'close') {
                                     if (typeof this.props.onClickTree === 'function') {
                                         this.props.onClickTree(row, (data) => {
@@ -385,22 +391,31 @@ class Table extends React.Component {
                                                 tree: tree
                                             })
                                         });
+                                    } else {
+                                        this.treeOpens[i] = 'open';
+                                        let tree        = this.state.tree;
+                                        tree[i] = row.children;
+                                        this.state.tree = null;
+                                        this.setState({
+                                            tree: tree
+                                        })
                                     }
                                     target.dataset.open = 'open';
                                     target.classList.remove('fa-plus-square');
                                     target.classList.add('fa-minus-square');
                                 } else {
+                                    this.treeOpens[i] = 'close';
                                     target.dataset.open = 'close';
                                     target.classList.remove('fa-minus-square');
                                     target.classList.add('fa-plus-square');
                                     let tree        = this.state.tree;
-                                    tree[i]         = null;
+                                    delete tree[i];
                                     this.state.tree = null;
                                     this.setState({
                                         tree: tree
                                     })
                                 }
-                            }} className='mr-1 text-primary' icon='plus-square' iconType='regular'/>
+                            }} className='mr-1 text-primary' icon={tree_status==='open'?'minus-square':'plus-square'} iconType='regular'/>
                         }
 
                         if (item.props.children) {
@@ -412,7 +427,7 @@ class Table extends React.Component {
                                 })}</td>
                             );
                         } else {
-                            return <td style={style} key={'col_' + key}>{parent}{tree}{item.props.onFormat ? item.props.onFormat(row[item.props.field], row) : row[item.props.field]}</td>;
+                            return <td style={style} key={'col_' + key}>{parent}{dynamic_tree||row.children?tree:null}{item.props.onFormat ? item.props.onFormat(row[item.props.field], row) : row[item.props.field]}</td>;
                         }
                     })}
                 </tr>
@@ -429,13 +444,6 @@ class Table extends React.Component {
         return data.map((item, idx) => {
             return this.renderRow(item, `${i}-${idx}`, row,indent);
         });
-        // return (
-        //     <tr className='table-tree-row d-none' id={`tree-${i}`}>
-        //         <td colSpan={this.state.select?this.props.children.length+1:this.props.children.length}>
-        //             {React.createElement(Table,{data:data},this.props.children)}
-        //         </td>
-        //     </tr>
-        // )
     }
 
 }
@@ -457,7 +465,7 @@ Table.propTypes = {
     fontSm     : PropTypes.bool,
     responsive : PropTypes.bool,
     align      : PropTypes.string,
-    tree       : PropTypes.string,
+    tree       : PropTypes.bool,
     onClickTree: PropTypes.func,
     onClick    : PropTypes.func,
     onCheck    : PropTypes.func,

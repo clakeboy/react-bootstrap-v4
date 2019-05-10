@@ -24,7 +24,11 @@ class Combo extends React.Component {
     }
 
     componentDidMount() {
-
+        // if (this.props.multiDef) {
+        //     common.map(this.props.multiDef,(val,key)=>{
+        //         this.table.setSelectRows(key,val);
+        //     });
+        // }
     }
 
     componentWillUnmount() {
@@ -47,6 +51,10 @@ class Combo extends React.Component {
                 this.conDom.style.height = '100%';
             }
         }
+    }
+
+    setSelectRows(key,val) {
+        this.table.setSelectRows(key,val);
     }
 
     show(search,dom) {
@@ -267,6 +275,7 @@ Combo.propTypes = {
     onClose: PropTypes.func,
     sm: PropTypes.bool,
     multi: PropTypes.bool,
+    multiDef: PropTypes.object,
     //filter column exp: ['name','age'] or [{field:'name',width:'100px'},{field:'age',width:'100px'}]
     filterColumns: PropTypes.array,
     noSearch: PropTypes.bool,
@@ -278,6 +287,7 @@ Combo.defaultProps = {
     data:[],
     search:"",
     multi:false,
+    multiDef:null,
     header:false,
 };
 

@@ -85,6 +85,10 @@ class Table extends React.Component {
         };
     }
     checkAllCheckHalf() {
+        if (!this.allchk) {
+            return;
+        }
+
         if (this.selectRows.length > 0 && this.selectRows.length !== this.state.data.length) {
             this.allchk.setHalf(true);
         }

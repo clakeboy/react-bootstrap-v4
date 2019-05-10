@@ -218,6 +218,12 @@ class Input extends React.Component {
         });
     };
 
+    setSelectRows(key,val) {
+        if (this.props.combo) {
+            this.combo.setSelectRows(key,val);
+        }
+    }
+
     keyUpHandler = (e) => {
         if (e.keyCode === 13) {
             if (typeof this.props.onEnter === 'function') {

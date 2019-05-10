@@ -33,6 +33,7 @@ class TestModal extends React.PureComponent {
             data       : [],
             count      : 0,
             currentPage: 1,
+            comboSelect: {'id':[1,3,5]},
             child : [{
                 "id"             : 3,
                 "task_name"      : "测试通知",
@@ -76,7 +77,7 @@ class TestModal extends React.PureComponent {
                 "source"         : "",
                 "created_date"   : 1530767866
             }, {
-                "id"             : 1,
+                "id"             : 4,
                 "task_name"      : "测试任务",
                 "time_rule"      : "0 * * * * *",
                 "once"           : true,
@@ -90,7 +91,7 @@ class TestModal extends React.PureComponent {
                 "source"         : "",
                 "created_date"   : 1530767866
             }, {
-                "id"             : 1,
+                "id"             : 5,
                 "task_name"      : "测试任务",
                 "time_rule"      : "0 * * * * *",
                 "once"           : true,
@@ -104,7 +105,7 @@ class TestModal extends React.PureComponent {
                 "source"         : "",
                 "created_date"   : 1530767866
             }, {
-                "id"             : 1,
+                "id"             : 6,
                 "task_name"      : "测试任务",
                 "time_rule"      : "0 * * * * *",
                 "once"           : true,
@@ -126,6 +127,7 @@ class TestModal extends React.PureComponent {
     componentDidMount() {
         this.loadTask(1);
         this.loadTree();
+        this.selectCombo.setSelectRows('id',[1,3,4])
     }
 
     getClasses() {
@@ -419,6 +421,16 @@ class TestModal extends React.PureComponent {
                         }} comboData={this.state.child} onChange={(val,row)=>{
                             console.log(val,row);
                         }}/>
+                        <Input ref={c=>this.selectCombo=c} label="测试本地数据 Combo 只读(小) 多选 设置选中" size='sm' readOnly combo={{
+                            searchColumn:'task_name',
+                            width:'100%',
+                            multi:true,
+                        }} comboData={this.state.child} onChange={(val,row)=>{
+                            console.log(val,row);
+                        }}/>
+                        <Button onClick={(e)=>{
+                            this.selectCombo.setSelectRows('id',[2,4,6])
+                        }}>改变选中</Button>
                     </TabsContent>
                     <TabsContent id='label2' text='标题2'>
 

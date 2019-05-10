@@ -136,6 +136,7 @@ class CKModal extends React.PureComponent {
             header:typeof opt.header !== 'undefined'?opt.header:this.props.header,
             type:ModalAlert,
             center:typeof opt.center === 'undefined'?this.props.center:opt.center,
+            width:typeof opt.width !== 'undefined'?opt.width:null,
         },()=>{
             this.open({
                 backdrop:'static',
@@ -164,6 +165,7 @@ class CKModal extends React.PureComponent {
             header:typeof opt.header !== 'undefined'?opt.header:this.props.header,
             type:ModalConfirm,
             center:typeof opt.center === 'undefined'?this.props.center:opt.center,
+            width:typeof opt.width !== 'undefined'?opt.width:null,
         },()=>{
             this.open({
                 backdrop:'static',
@@ -190,6 +192,7 @@ class CKModal extends React.PureComponent {
             header:typeof opt.header !== 'undefined'?opt.header:this.props.header,
             type:ModalLoading,
             center:typeof opt.center === 'undefined'?this.props.center:opt.center,
+            width:typeof opt.width !== 'undefined'?opt.width:null,
         },()=>{
             this.open({
                 backdrop:'static',

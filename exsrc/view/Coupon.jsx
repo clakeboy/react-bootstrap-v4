@@ -144,6 +144,7 @@ class Coupon extends React.PureComponent {
                     <Button theme='info' onClick={e=>this.modal.view({
                         title:'添加优惠券',
                         content:<Loader loadPath='/skill/AddCoupon' import={GetComponent}/>,
+                        width:'1000px',
                     })}>测试 view 自定义内容 Modal</Button>
                     </ButtonGroup>
                     <Button className='mt-4' block onClick={e=>{

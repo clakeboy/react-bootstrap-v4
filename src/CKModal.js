@@ -83,6 +83,9 @@ class CKModal extends React.PureComponent {
     }
 
     close() {
+        if (!this.is_open) {
+            return;
+        }
         this._modal.classList.remove("d-block");
         this._shadow.classList.remove("show");
         this._shadow.classList.add("d-none");

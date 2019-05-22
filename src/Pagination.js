@@ -63,7 +63,12 @@ class Pagination extends React.PureComponent {
             this.is_after = false;
         }
 
-        this.is_more = end + 1;
+        // this.is_more = end + 1;
+        if (this.count > this.show_pages) {
+            this.is_more = end + 1;
+        } else {
+            this.is_more = false;
+        }
 
         for (let i=start;i<=end;i++) {
             if (i <= this.count) {
@@ -99,7 +104,9 @@ class Pagination extends React.PureComponent {
         return (
             <nav {...this.props}>
                 <ul className={this.getClasses()}>
-                    <li className="page-item disabled"><span className="page-link">共有{this.props.count}条记录</span></li>
+                    <li className="page-item disabled">
+                        {this.renderInfo()}
+                    </li>
                     <li className="page-item"><a className="page-link" href="javascript://" onClick={this.clickHandler('first')}>首页</a></li>
                     <li className="page-item"><a className="page-link" href="javascript://" onClick={this.clickHandler('prev')}><Icon icon='angle-double-left'/></a></li>
                     {this.is_after?this.renderMore(this.is_after):null}
@@ -110,6 +117,18 @@ class Pagination extends React.PureComponent {
                 </ul>
             </nav>
         );
+    }
+
+    renderInfo() {
+        if (this.props.info) {
+            return this.props.info;
+        }
+        return (
+            <span className="page-link text-nowrap">
+                总记录<span className='text-info'>{this.props.count}</span> 条,
+                共有 <span className='text-info'>{this.count}</span> 页
+            </span>
+        )
     }
 
     renderMore(page) {
@@ -146,7 +165,8 @@ Pagination.propTypes = {
     showPage: PropTypes.number,
     onSelect: PropTypes.func,
     align: PropTypes.oneOf(['left','center','right']),
-    size: PropTypes.oneOf(['sm','lg'])
+    size: PropTypes.oneOf(['sm','lg']),
+    info: PropTypes.any,//任意显示
 };
 
 Pagination.defaultProps = {
@@ -155,6 +175,7 @@ Pagination.defaultProps = {
     number  : 30,
     showPages : 10,
     align: 'right',
+    info:null,
 };
 
 export default Pagination;

@@ -207,7 +207,7 @@ class Main extends React.Component {
                             return <Button className='color-blue' size='sm' icon='plus'>Add</Button>
                         }} />
                     </Table>
-                    <Pagination count={1000} current={1} number={30} showPage={10}/>
+                    <Pagination count={1000} current={1} number={100} showPage={10}/>
                     <Table hover={true} select={true} headerTheme='light'>
                         <Table.Header text='Name' field='name' onSort={(field,sort)=>{
                             alert(field+'-'+sort);

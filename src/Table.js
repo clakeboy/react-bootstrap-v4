@@ -291,6 +291,9 @@ class Table extends React.Component {
         return (
             <thead ref={c => this.tableHeader = c} className={this.getHeaderClasses()}>
             <tr>
+                {this.props.serialNumber?<th style={{width:'20px',textAlign:'center'}}>
+
+                </th>:null}
                 {this.state.select ?
                     <th style={{width:'20px',textAlign:'center'}}>
                         <CCheckbox ref={c=>this.allchk=c} onChange={this.selectAll}/>
@@ -341,6 +344,18 @@ class Table extends React.Component {
         });
     }
 
+    formatSn(i) {
+        if (typeof i === 'string') {
+            let arr = i.split('-');
+            for (let i=0;i<arr.length;i++) {
+                arr[i] = parseInt(arr[i])+1;
+            }
+            return arr.join('-');
+        } else {
+            return i+1;
+        }
+    }
+
     renderRow(row, i, parentRow,indent) {
         let tree_status = 'close';
         if (row.children) {
@@ -355,11 +370,15 @@ class Table extends React.Component {
         let dynamic_tree = typeof this.props.onClickTree === 'function';
         return (
             <React.Fragment>
-                <tr className={this.props.onClick ? 'click-row' : null} onClick={this.clickHandler(row, i)}>
-                    {this.state.select ?
-                        <th style={{width:'20px',textAlign:'center'}}>
-                            <CCheckbox ref={'row_' + i} onChange={this.changeHandler(row, i)}/>
+                <tr className={this.props.onClick ? 'click-row' : this.getHeaderClasses()} onClick={this.clickHandler(row, i)}>
+                    {this.props.serialNumber ?
+                        <th className='sn text-nowrap'>
+                            {this.formatSn(i)}
                         </th> : null}
+                    {this.state.select ?
+                        <td style={{width:'20px',textAlign:'center'}}>
+                            <CCheckbox ref={'row_' + i} onChange={this.changeHandler(row, i)}/>
+                        </td> : null}
                     {React.Children.map(this.props.children, (item, key) => {
                         if (!item || item.props.hide) {
                             return null;
@@ -483,7 +502,8 @@ Table.propTypes = {
     height     : PropTypes.string,
     scroll     : PropTypes.bool,
     emptyText  : PropTypes.string,
-    fixed: PropTypes.bool
+    fixed: PropTypes.bool,
+    serialNumber: PropTypes.bool, //是否显示序列号
 };
 
 Table.defaultProps = {
@@ -497,6 +517,7 @@ Table.defaultProps = {
     fixed: false,
     align      : 'left',
     emptyText  : 'no data',
+    serialNumber: true,
 };
 
 Table.Header = TableHeader;

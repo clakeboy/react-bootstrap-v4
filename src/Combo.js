@@ -238,6 +238,7 @@ class Combo extends React.Component {
         return (
             <div ref={c=>this.conDom=c} className='ck-combo-content'>
                 <Table ref={c=>this.table=c} select={this.props.multi} header={this.props.header} striped={false} sm={this.props.sm}
+                       serialNumber={false}
                        data={this.state.data}
                        onCheck={this.props.multi?this.multiSelectHandler:null}
                        onClick={this.props.multi?null:this.selectHandler}>

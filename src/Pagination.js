@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import Icon from './Icon';
+import Dropdown from "./Dropdown";
+import {Input} from "./index";
+import Select from "./Select";
 class Pagination extends React.PureComponent {
     constructor(props) {
         super(props);
@@ -13,15 +16,21 @@ class Pagination extends React.PureComponent {
         this.is_after = false;
 
         this.state = {
-            data: this.showPages()
+            data: this.showPages(),
+            showNumber:this.props.number
         };
     }
 
     componentWillReceiveProps(nextProps) {
-        if (this.props.count !== nextProps.count || this.props.current !== nextProps.current) {
+        if (this.props.count !== nextProps.count ||
+            this.props.current !== nextProps.current ||
+            this.props.number !== nextProps.number) {
             this.current = nextProps.current;
             this.count = calculatePages(nextProps.count,this.props.number);
-            this.setState({data:this.showPages()});
+            this.setState({
+                data:this.showPages(),
+                showNumber:nextProps.number
+            });
         }
     }
 
@@ -30,21 +39,21 @@ class Pagination extends React.PureComponent {
             e.preventDefault();
             switch (page){
                 case 'first':
-                    this.props.onSelect(1);
+                    this.props.onSelect(1,this.state.showNumber);
                     break;
                 case 'prev':
-                    this.props.onSelect(this.current-1<1 ? 1 : this.current-1);
+                    this.props.onSelect(this.current-1<1 ? 1 : this.current-1,this.state.showNumber);
                     break;
                 case 'next':
-                    this.props.onSelect(this.current+1>this.count ? this.count : this.current+1);
+                    this.props.onSelect(this.current+1>this.count ? this.count : this.current+1,this.state.showNumber);
                     break;
                 case 'last':
-                    this.props.onSelect(this.count);
+                    this.props.onSelect(this.count,this.state.showNumber);
                     break;
                 case 'stop':
                     break;
                 default:
-                    this.props.onSelect(page);
+                    this.props.onSelect(page,this.state.showNumber);
             }
 
         };
@@ -104,6 +113,16 @@ class Pagination extends React.PureComponent {
         return (
             <nav {...this.props}>
                 <ul className={this.getClasses()}>
+                    {this.props.numberList && this.props.numberList.length > 0 ? <li>
+                        <Select size={this.props.size} className='mr-1'
+                                data={this.props.numberList}
+                                value={this.state.showNumber}
+                                onSelect={(e)=>{
+                                    this.props.onSelect(1,e.currentTarget.value);
+                                }}
+                        />
+                    </li>:null}
+
                     <li className="page-item disabled">
                         {this.renderInfo()}
                     </li>
@@ -167,14 +186,20 @@ Pagination.propTypes = {
     align: PropTypes.oneOf(['left','center','right']),
     size: PropTypes.oneOf(['sm','lg']),
     info: PropTypes.any,//任意显示
+    numberList: PropTypes.array,
 };
 
 Pagination.defaultProps = {
     current : 1,
     count   : 1,
-    number  : 30,
+    number  : 50,
     showPages : 10,
     align: 'right',
+    numberList: [
+        // {text:'显示50条',value:50},
+        // {text:'显示100条',value:100},
+        // {text:'显示150条',value:150}
+    ],
     info:null,
 };
 

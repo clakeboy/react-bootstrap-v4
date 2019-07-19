@@ -236,7 +236,11 @@ class Main extends React.Component {
                             return <Button className='color-blue' size='xs' icon='plus'>Add</Button>
                         }} />
                     </Table>
-                    <Pagination size='sm' count={1000} current={1} number={30} showPage={10}/>
+                    <Pagination size='sm' numberList={[
+                        {text:'每页显示30条',value:30},{text:'每页显示50条',value:50}
+                    ]} count={1000} current={1} number={50} showPage={10} onSelect={(page,showNumber)=>{
+                        console.log(page,showNumber)
+                    }}/>
                 </Card>
                 <Card header='Calendar'>
                     <Calendar value={this.state.chose_date} lang='en' shadow/>

@@ -135,13 +135,13 @@ class Tabs extends React.PureComponent {
                     return (
                         <li className="nav-item">
                             <a className={class_name} data-tabid={item.props.id} onClick={clickEvt}>
-                                {is_close?<><Icon className='mr-2' icon='times-circle' onClick={(e)=>{
+                                {is_close?<Icon className='mr-2' icon='times-circle' onClick={(e)=>{
                                     e.stopPropagation();
                                     if (this.state.currentShow === item.props.id) {
                                         this.state.currentShow = null;
                                     }
                                     this.props.onClose(item.props.id,index);
-                                }}/></>:null}
+                                }}/>:null}
                                 {item.props.text}
                             </a>
                         </li>

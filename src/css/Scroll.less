@@ -1,20 +1,40 @@
 .ck-scroll {
   position: absolute;
-  top:0;
-  right:0;
   opacity: 0;
-  transition: background-color .2s ease-in-out,opacity .3s ease-in-out,width .2s ease-in-out;
-  width: 6px;
+  transition: background-color .2s ease-in-out,opacity .3s ease-in-out,width .2s ease-in-out,height .2s ease-in-out;
   height: 200px;
-  padding: 2px 0;
   user-select: none;
   background-color: rgba(0,0,0,0);
+}
+
+.ck-scroll-v {
+  top:0;
+  right:0;
+  width: 6px;
+  padding: 2px 0;
   &:hover {
     opacity: 1;
     width:13px;
     background-color: rgba(0,0,0,.1);
-    .ck-scroll-bar {
+    .ck-scroll-bar-v {
       width: 10px;
+      border-radius: 5px;
+      background-color: rgba(0,0,0,.5);
+    }
+  }
+}
+
+.ck-scroll-h {
+  bottom:0;
+  left:0;
+  height: 6px;
+  padding: 0 2px;
+  &:hover {
+    opacity: 1;
+    height:13px;
+    background-color: rgba(0,0,0,.1);
+    .ck-scroll-bar-h {
+      height: 10px;
       border-radius: 5px;
       background-color: rgba(0,0,0,.5);
     }
@@ -23,27 +43,47 @@
 
 .ck-scroll-bar {
   position: absolute;
-  top: 0;
-  right:1px;
   background-color: rgba(0,0,0,.25);
-  width: 6px;
   border-radius: 3px;
-  transition: background-color .2s ease-in-out,width .2s;
+  transition: background-color .2s ease-in-out,width .2s,height .2s;
   &:hover {
     background-color: rgba(0,0,0,.5);
   }
+}
+
+.ck-scroll-bar-v {
+  top: 0;
+  right:1px;
+  width: 6px;
+}
+
+.ck-scroll-bar-h {
+  left: 0;
+  bottom:1px;
+  height: 6px;
 }
 
 .ck-scroll-show {
   opacity: 1;
 }
 
-.ck-scroll-scrolling {
+.ck-scroll-scrolling-v {
   opacity: 1;
   width:13px;
   background-color: rgba(0,0,0,.1);
-  .ck-scroll-bar {
+  .ck-scroll-bar-v {
     width: 10px;
+    border-radius: 5px;
+    background-color: rgba(0,0,0,.5);
+  }
+}
+
+.ck-scroll-scrolling-h {
+  opacity: 1;
+  height:13px;
+  background-color: rgba(0,0,0,.1);
+  .ck-scroll-bar-h {
+    height: 10px;
     border-radius: 5px;
     background-color: rgba(0,0,0,.5);
   }

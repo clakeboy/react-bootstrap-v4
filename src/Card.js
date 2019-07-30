@@ -5,6 +5,7 @@ import Title from './Title';
 import './css/Card.less'
 import Scroll from "./Scroll";
 import common from "./Common";
+import HScroll from "./HScroll";
 
 class Card extends React.PureComponent {
     constructor(props) {
@@ -71,7 +72,12 @@ class Card extends React.PureComponent {
                 <div id={this.domId} className="card-body">
                     {this.props.children}
                 </div>
-                {this.props.scroll?<Scroll selector={`#${this.domId}`}/>:null}
+                {this.props.scroll?
+                    <>
+                        <Scroll selector={`#${this.domId}`}/>
+                        <HScroll selector={`#${this.domId}`}/>
+                    </>
+                    :null}
             </div>
         );
     }

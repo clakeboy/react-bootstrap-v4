@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import {GetDomXY} from "./Common";
-import Drag from './Drag';
 import './css/Scroll.less';
 
 class Scroll extends React.PureComponent {
@@ -45,12 +44,12 @@ class Scroll extends React.PureComponent {
             this.parentDom.addEventListener('mouseout',this.hideHandler,false);
         }
 
-        this.dom.addEventListener("mousedown",this.beginDragHandler,false);
+        // this.dom.addEventListener("mousedown",this.beginDragHandler,false);
         this.dom.addEventListener("wheel",this.scrollHandler,false);
     }
 
     getClasses() {
-        let base = 'ck-scroll';
+        let base = 'ck-scroll ck-scroll-v';
 
         return classNames(base,this.props.className);
     }
@@ -72,7 +71,9 @@ class Scroll extends React.PureComponent {
     };
 
     scrollHandler = (e)=>{
-        e.preventDefault();
+        if (e.deltaY !== 0) {
+            e.preventDefault();
+        }
         if (!this.isShow) {
             this.showHandler();
         }
@@ -81,14 +82,19 @@ class Scroll extends React.PureComponent {
 
     scrollClickHandler = (e)=>{
         this.setBarTop(e.pageY-this.domXY.top-this.scrollDom.clientHeight/2);
-        this.scrollX = parseInt(this.scrollDom.style.left);
-        this.scrollY = parseInt(this.scrollDom.style.top);
-        this.x = parseInt(e.pageX);
-        this.y = parseInt(e.pageY);
+        // this.scrollX = parseInt(this.scrollDom.style.left);
+        // this.scrollY = parseInt(this.scrollDom.style.top);
+        // this.x = parseInt(e.pageX);
+        // this.y = parseInt(e.pageY);
+        this.beginDragHandler(e);
     };
 
     beginDragHandler = (e)=>{
-        this.dom.classList.add('ck-scroll-scrolling');
+        e.stopPropagation();
+        e.preventDefault();
+        this.scrollY = parseInt(this.scrollDom.style.top);
+        this.y = parseInt(e.pageY);
+        this.dom.classList.add('ck-scroll-scrolling-v');
         window.addEventListener('mousemove',this.moveDragHandler,false);
         window.addEventListener('mouseup',this.endDragHandler,false);
     };
@@ -98,7 +104,7 @@ class Scroll extends React.PureComponent {
     };
 
     endDragHandler = (e)=>{
-        this.dom.classList.remove('ck-scroll-scrolling');
+        this.dom.classList.remove('ck-scroll-scrolling-v');
         window.removeEventListener('mousemove',this.moveDragHandler);
         window.removeEventListener('mouseup',this.endDragHandler);
     };
@@ -121,7 +127,7 @@ class Scroll extends React.PureComponent {
     render() {
         return (
             <div ref={c=>this.dom=c} className={this.getClasses()} onMouseDown={this.scrollClickHandler}>
-                <div ref={c=>this.scrollDom=c} className='ck-scroll-bar' onMouseDown={e=>e.stopPropagation()}/>
+                <div ref={c=>this.scrollDom=c} className='ck-scroll-bar ck-scroll-bar-v' onMouseDown={this.beginDragHandler}/>
             </div>
         );
     }
@@ -131,10 +137,12 @@ Scroll.propTypes = {
     parent: PropTypes.any,
     selector: PropTypes.string,
     speed: PropTypes.number,
+    align: PropTypes.oneOf(['right','left']),
 };
 
 Scroll.defaultProps = {
-    speed: 5
+    speed: 5,
+    align: 'right',
 };
 
 export default Scroll;

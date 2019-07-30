@@ -9,6 +9,8 @@ import Icon from './Icon';
 
 import './css/Table.less';
 import * as ReactDOM from "react-dom";
+import Scroll from "./Scroll";
+import HScroll from "./HScroll";
 
 class Table extends React.Component {
     constructor(props) {
@@ -32,6 +34,11 @@ class Table extends React.Component {
         this.sortList = {};
 
         this.initTableWidth();
+
+        this.domId = 'table-'+common.RandomString(16);
+        if (this.props.id) {
+            this.domId = this.props.id;
+        }
     }
 
     componentDidMount() {
@@ -272,17 +279,21 @@ class Table extends React.Component {
 
     render() {
         return (
-            <div ref={c => this.mainDom = c} className={this.getMainClass()} style={this.getStyles()}>
-                {this.state.refresh ? (
-                    <Button className='ck-table-refresh-btn' icon='sync-alt' onClick={this.props.onRefresh} size="sm" theme='dark'>
-                        {this.props.refreshText}
-                    </Button>) : null}
-                <table className={this.getClasses()} style={this.getTableStyles()}>
-                    {this.props.header ? this.renderHeader() : null}
-                    <tbody>
-                    {this.renderBody()}
-                    </tbody>
-                </table>
+            <div className='position-relative'>
+                <div ref={c => this.mainDom = c} id={this.domId} className={this.getMainClass()} style={this.getStyles()}>
+                    {this.state.refresh ? (
+                        <Button className='ck-table-refresh-btn' icon='sync-alt' onClick={this.props.onRefresh} size="sm" theme='dark'>
+                            {this.props.refreshText}
+                        </Button>) : null}
+                    <table className={this.getClasses()} style={this.getTableStyles()}>
+                        {this.props.header ? this.renderHeader() : null}
+                        <tbody>
+                        {this.renderBody()}
+                        </tbody>
+                    </table>
+                </div>
+                {this.props.height?<Scroll selector={`#${this.domId}`}/>:null}
+                {this.props.width?<HScroll selector={`#${this.domId}`} alignParent/>:null}
             </div>
         );
     }

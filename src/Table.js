@@ -214,9 +214,10 @@ class Table extends React.Component {
             base = classNames(base, 'table-responsive');
         }
         //fixed
-        if (this.props.fixed) {
+        if (this.props.fixed || this.props.scroll || this.props.width) {
             base = classNames(base, 'fixed');
         }
+
 
         return base;
     }

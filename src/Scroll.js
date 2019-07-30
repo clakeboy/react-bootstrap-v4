@@ -30,6 +30,18 @@ class Scroll extends React.PureComponent {
         this.initParentEvent();
     }
 
+    componentWillUnmount() {
+        if (this.parentDom) {
+            this.parentDom.classList.remove('ck-scroll-over');
+            this.parentDom.removeEventListener('wheel',this.scrollHandler);
+            this.parentDom.removeEventListener('mouseover',this.showHandler);
+            this.parentDom.removeEventListener('mouseout',this.hideHandler);
+        }
+
+        // this.dom.addEventListener("mousedown",this.beginDragHandler,false);
+        this.dom.removeEventListener("wheel",this.scrollHandler);
+    }
+
     initParentEvent() {
         if (this.parent) {
             this.parentDom = ReactDOM.findDOMNode(this.parent);
@@ -56,6 +68,10 @@ class Scroll extends React.PureComponent {
 
     showHandler = (e)=>{
         this.scrollProportion = this.parentDom.offsetHeight/this.parentDom.scrollHeight;
+        if (this.scrollProportion === 1) {
+            this.isShow = false;
+            return;
+        }
         this.scrollDom.style.height = (this.parentDom.offsetHeight*this.scrollProportion) + 'px';
         this.dom.style.top = this.parentDom.offsetTop+'px';
         this.dom.style.height = this.parentDom.offsetHeight+'px';

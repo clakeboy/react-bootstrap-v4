@@ -29,6 +29,7 @@ export Box from './Box';
 export Menu from './Menu';
 export RImage from './RImage';
 export Scroll from './Scroll';
+export HScroll from './HScroll';
 export Form from './Form';
 export Common from './Common';
 export Radio from './Radio';

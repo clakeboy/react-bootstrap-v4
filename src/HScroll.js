@@ -91,6 +91,9 @@ class HScroll extends React.PureComponent {
 
     setPosition = (e) => {
         let scrollTop = this.alignParent.scrollTop;
+        if (this.alignParent === document.documentElement) {
+            scrollTop = Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop);
+        }
         let clientHeight = this.alignParent.clientHeight;
         let bottom = this.parentDom.clientHeight + this.domXY.top - clientHeight - scrollTop;
         if (bottom < 0 || bottom >= this.parentDom.clientHeight) {
@@ -107,12 +110,10 @@ class HScroll extends React.PureComponent {
     }
 
     showHandler = (e)=>{
-        console.log(this.parentDom.offsetWidth,this.parentDom.scrollWidth);
         this.scrollProportion = this.parentDom.offsetWidth/this.parentDom.scrollWidth;
         if (this.scrollProportion === 1) {
             return;
         }
-        console.log(this.scrollProportion);
         this.scrollDom.style.width = (this.parentDom.offsetWidth*this.scrollProportion) + 'px';
         // this.dom.style.top = this.parentDom.offsetTop+'px';
         this.dom.style.width = this.parentDom.offsetWidth+'px';

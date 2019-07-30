@@ -279,7 +279,7 @@ class Table extends React.Component {
 
     render() {
         return (
-            <div className='position-relative'>
+            <div className='position-relative' style={this.getStyles()}>
                 <div ref={c => this.mainDom = c} id={this.domId} className={this.getMainClass()} style={this.getStyles()}>
                     {this.state.refresh ? (
                         <Button className='ck-table-refresh-btn' icon='sync-alt' onClick={this.props.onRefresh} size="sm" theme='dark'>

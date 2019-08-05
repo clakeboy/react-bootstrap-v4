@@ -71,7 +71,7 @@ class TestTable extends React.PureComponent {
                             <Table.Header text='Age' field='age' width='250px' hide/>
                             <Table.Header text='Birthday' field='birthday' width='350px'/>
                             <Table.Header text='Address' field='address' width='350px'/>
-                            <Table.Header text='Both' field='both' width='300px'/>
+                            <Table.Header text='Both' field='both' width='1300px'/>
                             <Table.Header text='Test' field='test' width='400px'/>
                             <Table.Header text='Action' width='100px' onFormat={row=>{
                                 return <Button className='color-blue' size='xs' icon='plus'>Add</Button>

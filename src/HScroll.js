@@ -23,6 +23,8 @@ class HScroll extends React.PureComponent {
         this.scrollY = 0;
         //scroll top xy
         this.domXY = {};
+        //offset dom body left
+        this.domLeft = 0;
         //parent scroll dom
         this.alignParent = null;
     }
@@ -121,6 +123,7 @@ class HScroll extends React.PureComponent {
         this.dom.classList.add('ck-scroll-show');
         this.isShow = true;
 
+        this.domLeft = GetDomXY(this.dom).left;
         this.domXY = GetDomXY(this.dom.offsetParent,this.alignParent);
         if (this.props.alignParent) {
             this.setPosition();
@@ -143,7 +146,11 @@ class HScroll extends React.PureComponent {
     };
 
     scrollClickHandler = (e)=>{
-        this.setBarLeft(e.pageX-this.domXY.left-this.scrollDom.clientWidth/2);
+        let bar_left = e.pageX-this.domXY.left-this.scrollDom.clientWidth/2;
+        if (this.alignParent !== document.documentElement) {
+            bar_left -= this.domLeft;
+        }
+        this.setBarLeft(bar_left);
         // this.scrollX = parseInt(this.scrollDom.style.left);
         // this.scrollY = parseInt(this.scrollDom.style.top);
         // this.x = parseInt(e.pageX);

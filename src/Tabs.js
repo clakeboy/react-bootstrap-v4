@@ -161,9 +161,9 @@ class Tabs extends React.PureComponent {
         }
 
         let style = {};
-        if (this.props.absolute && this.props.height) {
-            style.marginTop = this.props.sm ? '-28px' : '-42px';
-        }
+        // if (this.props.absolute && this.props.height) {
+        //     style.marginTop = this.props.sm ? '-28px' : '-42px';
+        // }
         return (
             <div className={base} id={`${this.domId}-content`} style={style}>
                 {React.Children.map(this.props.children, (item, index) => {

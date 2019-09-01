@@ -1,6 +1,6 @@
 {
   "name": "@clake/react-bootstrap4",
-  "version": "0.9.16",
+  "version": "0.9.17",
   "description": "react bootstrap v4",
   "main": "lib/index.js",
   "scripts": {

@@ -110,7 +110,7 @@ class Main extends React.Component {
                                 drop2: '普通数据'
                             }
                         })
-                    }}>搜索</Button>
+                    }} loading>搜索</Button>
                 </Container>
                 <Card className='mb-2' header='User Info'>
                     <div className='form-row'>

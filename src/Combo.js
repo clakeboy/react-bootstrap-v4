@@ -65,6 +65,9 @@ class Combo extends React.Component {
         });
         this.mainDom.classList.remove("d-none");
         this.filter(search||'');
+        if (typeof this.props.onShow === 'function') {
+            this.props.onShow();
+        }
     }
 
     fixPosition() {
@@ -274,6 +277,7 @@ Combo.propTypes = {
     onSearch: PropTypes.func,
     onSelect: PropTypes.func,
     onClose: PropTypes.func,
+    onShow: PropTypes.func,
     sm: PropTypes.bool,
     multi: PropTypes.bool,
     multiDef: PropTypes.object,

@@ -23,6 +23,9 @@ class Input extends React.Component {
         if (this.props.id) {
             this.domId = this.props.id;
         }
+
+        //combo show
+
     }
 
     componentDidMount() {
@@ -302,7 +305,7 @@ class Input extends React.Component {
         return (
             <div className='ck-input-calendar'>
                 <Combo ref={c => this.combo = c} {...this.props.combo} sm={this.props.size === 'sm' || this.props.size === 'xs'}
-                       data={this.state.comboData} noSearch={this.props.readOnly}
+                       data={this.state.comboData} noSearch={this.props.readOnly} onShow={()=>{}}
                        onSelect={this.selectHandler}/>
                 <div className={input_icon} onClick={() => {
                     this.input.focus();

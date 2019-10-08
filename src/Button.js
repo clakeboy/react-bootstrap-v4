@@ -72,6 +72,13 @@ class Button extends React.PureComponent {
     }
 
     renderIcon() {
+        if (this.props.loading) {
+            return (
+                <>
+                    <span className="spinner-border spinner-border-sm" role="status"/>{'\u0020'}
+                </>
+            )
+        }
         if (this.props.icon) {
             return (
                 <React.Fragment>
@@ -89,6 +96,7 @@ Button.propTypes = {
     size: PropTypes.oneOf(['df','sm','lg','xs']),
     onClick: PropTypes.func,
     icon: PropTypes.string,
+    loading: PropTypes.bool,
     disabled: PropTypes.bool,
     block: PropTypes.bool,
     absolute   : PropTypes.bool,
@@ -102,6 +110,7 @@ Button.defaultProps = {
     theme: 'primary',
     outline: false,
     size: 'df',
+    loading: false,
 };
 
 export default Button;

@@ -140,7 +140,7 @@ class Input extends React.Component {
         base = classNames(base, size);
 
         if (!this.state.validate) {
-            base = classNames(base, 'is-invalid');
+            base = classNames(base, 'ck-input-valid');
         }
 
         if (this.props.calendar || this.props.combo) {
@@ -325,9 +325,9 @@ class Input extends React.Component {
                        className={this.getInputClasses()}
                        style={this.getInputStyle()}
                        id={this.domId}/>
-                {this.renderSummary()}
                 {this.renderCalendar()}
                 {this.renderCombo()}
+                {this.renderSummary()}
             </div>
         );
     }
@@ -348,7 +348,7 @@ Input.propTypes = {
     onEnter       : PropTypes.func,
     plaintext     : PropTypes.bool,
     calendarFormat: PropTypes.string,
-    validate      : PropTypes.object,
+    validate      : PropTypes.object,  //{text:'',rule:/asdf/}
     disabled      : PropTypes.bool,
     combo         : PropTypes.object,
     comboData     : PropTypes.object,

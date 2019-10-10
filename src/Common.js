@@ -210,7 +210,7 @@ export var ucFirst = (str) => {
 export var under2hump = (str) => {
     let arr = str.split('_');
     let hump = arr.map((item)=>{
-        return this.ucFirst(item);
+        return ucFirst(item);
     });
     return hump.join('');
 };
@@ -219,7 +219,7 @@ export var explainUrl = (path) => {
     let arr = path.split('/');
     arr.shift();
     let module = arr.pop();
-    module = this.under2hump(module);
+    module = under2hump(module);
     let ext_path = arr.length > 0 ? '/' : '';
     return ext_path + arr.join('/') + "/" + module;
 };

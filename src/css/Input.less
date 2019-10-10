@@ -1,15 +1,17 @@
 .ck-input-calendar-icon {
-  right: .5rem;
+  right: .75rem;
   bottom: .5rem;
   position: absolute;
 }
 
 .ck-input-calendar-icon-xs {
   bottom: .1rem!important;
+  right: .5rem!important;
 }
 
 .ck-input-calendar-icon-sm {
   bottom: .25rem!important;
+  right: .5rem!important;
 }
 
 .ck-input-calendar-icon-lg {
@@ -30,6 +32,7 @@
 }
 
 .form-control-xs {
+  height: calc(1.2em + .5rem + 2px);
   padding: .1rem .3rem;
   font-size: .875rem;
   line-height: 1.5;
@@ -39,4 +42,12 @@
 .ck-input-select {
   background-color: #fff!important;
   cursor: default;
+}
+
+.ck-input-valid {
+  border-color: #dc3545;
+  &:focus {
+    border-color: #dc3545;
+    box-shadow: 0 0 0 0.2rem rgba(220,53,69,.25);
+  }
 }

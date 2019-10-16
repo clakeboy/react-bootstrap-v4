@@ -24,6 +24,10 @@ class Scroll extends React.PureComponent {
         this.scrollY = 0;
         //scroll top xy
         this.domXY = {};
+        //
+        this.state = {
+            show: false
+        };
     }
 
     componentDidMount() {
@@ -70,8 +74,10 @@ class Scroll extends React.PureComponent {
         this.scrollProportion = this.parentDom.offsetHeight/this.parentDom.scrollHeight;
         if (this.scrollProportion === 1) {
             this.isShow = false;
+            this.dom.classList.add('d-none');
             return;
         }
+        this.dom.classList.remove('d-none');
         this.scrollDom.style.height = (this.parentDom.offsetHeight*this.scrollProportion) + 'px';
         this.dom.style.top = this.parentDom.offsetTop+'px';
         this.dom.style.height = this.parentDom.offsetHeight+'px';
@@ -141,6 +147,7 @@ class Scroll extends React.PureComponent {
     }
 
     render() {
+
         return (
             <div ref={c=>this.dom=c} className={this.getClasses()} onMouseDown={this.scrollClickHandler}>
                 <div ref={c=>this.scrollDom=c} className='ck-scroll-bar ck-scroll-bar-v' onMouseDown={this.beginDragHandler}/>

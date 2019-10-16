@@ -343,9 +343,8 @@ class Table extends React.Component {
     renderBody() {
         if (!this.state.data || this.state.data.length <= 0) {
             let columnCount = React.Children.count(this.props.children);
-            if (this.state.select) {
-                columnCount += 1;
-            }
+            if (this.props.select) columnCount += 1;
+            if (this.props.serialNumber) columnCount += 1;
             return <tr>
                 <td align="center" colSpan={columnCount}>{this.props.emptyText}</td>
             </tr>;

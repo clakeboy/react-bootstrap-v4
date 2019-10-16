@@ -142,7 +142,9 @@ class Window extends React.Component {
                         <Input size='xs' onMouseDown={(e)=>{e.stopPropagation();}}/>
                     </Menu.Item>
                     <Menu.Item field="filter" text='More...' child>
-                        <Menu.Item>Child Menu 1</Menu.Item>
+                        <Menu.Item onClick={(e,field,data)=>{
+                            console.log(field,data);
+                        }}>Child Menu 1</Menu.Item>
                         <Menu.Item>Child Menu 2</Menu.Item>
                         <Menu.Item>Child Menu 3</Menu.Item>
                     </Menu.Item>

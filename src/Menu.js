@@ -167,9 +167,8 @@ class MenuItem extends React.PureComponent {
         if (typeof this.props.onClick === "function") {
             this.props.onClick(e,this.props.field,this.parent.data);
             this.parent.hide(e);
-        } else {
-            this.parent.clickHandler(e,this.props.field);
         }
+        this.parent.clickHandler(e,this.props.field);
     };
 
     showChildHandler = (e)=>{

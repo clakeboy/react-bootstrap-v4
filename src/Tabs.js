@@ -188,7 +188,7 @@ class Tabs extends React.PureComponent {
 
     render() {
         return (
-            <div {...this.props} className={this.getMainClasses()} style={this.getStyle()}>
+            <div className={this.getMainClasses()} style={this.getStyle()}>
                 {this.renderTabs()}
                 {this.renderContents()}
             </div>

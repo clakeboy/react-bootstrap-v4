@@ -154,6 +154,7 @@ class Table extends React.Component {
             item.setChecked(this.select_all);
             this.setRowCheck(this.select_all,idx);
         });
+        this.checkAllCheckHalf();
     };
 
     /**

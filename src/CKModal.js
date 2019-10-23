@@ -26,6 +26,7 @@ class CKModal extends React.PureComponent {
             center:this.props.center,
             fade:this.props.fade,
             show:false,
+            size:'lg',
             width:null
         };
         //modal type
@@ -223,6 +224,7 @@ class CKModal extends React.PureComponent {
             isCloseBtn:typeof opt.close !== 'undefined'?opt.close:true,
             header:typeof opt.header !== 'undefined'?opt.header:this.props.header,
             width:typeof opt.width !== 'undefined'?opt.width:null,
+            size: typeof opt.size !== 'undefined'?opt.size:'lg',  // sm,lg(default),xl
             type:ModalView,
             center:typeof opt.center === 'undefined'?this.props.center:opt.center,
         },()=>{
@@ -254,7 +256,7 @@ class CKModal extends React.PureComponent {
     getDialogClasses() {
         let base = 'modal-dialog';
         if (this.modalType === ModalView) {
-            base = classNames(base,"modal-lg");
+            base = classNames(base,"modal-"+this.state.size);
         }
         if (this.state.center) {
             base = classNames(base,"modal-dialog-centered");

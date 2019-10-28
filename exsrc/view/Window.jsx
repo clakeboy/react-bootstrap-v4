@@ -84,7 +84,12 @@ class Window extends React.Component {
     }
 
     componentDidMount() {
-
+        document.oncontextmenu=(e)=>{
+            e.preventDefault();
+            this.mainMenu.show({evt:e,type:'mouse',data:'',close:()=>{
+                    console.log("close");
+                }});
+        }
     }
 
     render() {
@@ -97,12 +102,7 @@ class Window extends React.Component {
                         this.props.history.replace('/',this.state);
                     }}>回到首页</Button>
                 </Container>
-                <Card className='mt-2' header='Window Test' onContextMenu={(e)=>{
-                    e.preventDefault();
-                    this.mainMenu.show({evt:e,type:'mouse',data:'',close:()=>{
-                        console.log("close");
-                    }});
-                }}>
+                <Card className='mt-2 h-100' header='Window Test'>
                     <Label text='Clake Lee'/>
                     <Button onClick={(e)=>{
                         this.mainMenu.show({evt:e,type:'dom-left',data:'',close:()=>{
@@ -110,17 +110,6 @@ class Window extends React.Component {
                             }});
                     }}>点击打开菜单</Button>
                 </Card>
-                <Table absolute x='100px' y='300px' width='500px' height='300px' headerTheme='light' scroll hover={true} select={true} sm data={this.dataTable}>
-                    <Table.Header width='100px' text='Name' field='name' onSort={(sort)=>{alert(sort)}}/>
-                    <Table.Header width='100px' text='Age' field='age' hide/>
-                    <Table.Header width='100px' text='Birthday' field='birthday'/>
-                    <Table.Header width='100px' text='Address' field='address'/>
-                    <Table.Header width='100px' text='Both' field='both'/>
-                    <Table.Header width='100px' text='Test' field='test'/>
-                    <Table.Header width='100px' text='Action' onFormat={row=>{
-                        return <Button className='color-blue' size='xs' icon='plus'>Add</Button>
-                    }} />
-                </Table>
                 <Menu ref={c=>this.mainMenu=c} onClick={(key)=>{
                     console.log(key);
                 }}>
@@ -145,7 +134,13 @@ class Window extends React.Component {
                         <Menu.Item onClick={(e,field,data)=>{
                             console.log(field,data);
                         }}>Child Menu 1</Menu.Item>
-                        <Menu.Item>Child Menu 2</Menu.Item>
+                        <Menu.Item text='Child Menu 2' child>
+                            <Menu.Item onClick={(e,field,data)=>{
+                                console.log(field,data);
+                            }}>Child Menu 1</Menu.Item>
+                            <Menu.Item>Child Menu 2</Menu.Item>
+                            <Menu.Item>Child Menu 3</Menu.Item>
+                        </Menu.Item>
                         <Menu.Item>Child Menu 3</Menu.Item>
                     </Menu.Item>
                 </Menu>

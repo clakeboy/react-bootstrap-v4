@@ -15,9 +15,9 @@ import {
     Select,
     Calendar,
     Switch,
-    RImage
+    RImage,
+    Modal
 } from '../../../src/index';
-import Modal from "../../../src/Modal";
 
 class Jump extends React.PureComponent {
     constructor(props) {

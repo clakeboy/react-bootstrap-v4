@@ -21,6 +21,10 @@ class Combo extends React.Component {
         this.search = this.props.search;
 
         this.parentDom = null;
+
+        this.currentSelect = null;
+        this.nodeList = null;
+        this.isClose = true;
     }
 
     componentDidMount() {
@@ -33,6 +37,11 @@ class Combo extends React.Component {
 
     componentWillUnmount() {
         window.removeEventListener('mousedown',this.hide,false);
+        if (this.parentDom) {
+            this.parentDom.removeEventListener('keydown',this.keyDownHandler,false);
+            this.parentDom.removeEventListener('blur',this.hide,false);
+            this.parentDom.removeEventListener('click',this.checkShow,false);
+        }
     }
 
     componentWillReceiveProps(nextProps) {
@@ -50,6 +59,10 @@ class Combo extends React.Component {
                 this.conDom.style.overflowY = 'none';
                 this.conDom.style.height = '100%';
             }
+            if (!this.props.multi) {
+                this.clearSelect();
+            }
+            this.nodeList = this.table.mainDom.querySelectorAll('tbody tr');
         }
     }
 
@@ -59,14 +72,122 @@ class Combo extends React.Component {
 
     show(search,dom) {
         this.parentDom = dom;
+        this.parentDom.addEventListener('keydown',this.keyDownHandler,false);
+        this.parentDom.addEventListener('blur',this.hide,false);
+        this.parentDom.addEventListener('click',this.checkShow,false);
         window.addEventListener('mousedown',this.hide,false);
-        document.querySelectorAll('.ck-combo').forEach((item)=>{
-            item.classList.add('d-none');
-        });
+        // document.querySelectorAll('.ck-combo').forEach((item)=>{
+        //     item.classList.add('d-none');
+        // });
         this.mainDom.classList.remove("d-none");
         this.filter(search||'');
         if (typeof this.props.onShow === 'function') {
             this.props.onShow();
+        }
+        this.isClose = false;
+    }
+
+    checkShow = (e)=> {
+        if (this.isClose) {
+            this.show(this.search,this.parentDom);
+        }
+    };
+
+    keyDownHandler = (e)=>{
+        if (this.isClose) {
+            this.show(this.search,this.parentDom);
+        }
+        switch (e.keyCode) {
+            case 38: //key up
+                e.preventDefault();
+                e.stopPropagation();
+                this.moveItem(-1);
+                break;
+            case 40: //key down
+                e.preventDefault();
+                e.stopPropagation();
+                this.moveItem(1);
+                break;
+            case 32: //key space
+                if (this.props.noSearch) {
+                    this.selectItem();
+                }
+                break;
+            case 13: //key enter
+                this.selectItem();
+                break;
+            case 27: //key esc
+                this.hide();
+                break;
+            case 9: //key tab
+                this.selectItem();
+                break;
+        }
+        console.log(e.keyCode);
+    };
+
+    clearSelect() {
+        if (this.currentSelect === null) {
+            return
+        }
+        // let nodeList = document.querySelectorAll(`${this.table.domId} tbody tr`);
+        if (this.nodeList.length > 0 && this.nodeList[this.currentSelect]) {
+            let node = this.nodeList[this.currentSelect];
+            node.classList.remove('ck-combo-selected')
+        }
+        this.currentSelect = null;
+        this.nodeList = null;
+    }
+
+    moveItem(step) {
+        if (!this.nodeList) {
+            return
+        }
+        if (this.currentSelect === null) {
+            this.currentSelect = 0;
+        } else {
+            if (this.nodeList[this.currentSelect]) {
+                this.nodeList[this.currentSelect].classList.remove('ck-combo-selected');
+            }
+            this.currentSelect += step;
+            if (this.currentSelect < 0) {
+                this.currentSelect = 0;
+            }
+            if (this.currentSelect >= this.nodeList.length) {
+                this.currentSelect = this.nodeList.length-1;
+            }
+        }
+
+        if (this.nodeList[this.currentSelect]) {
+            let node = this.nodeList[this.currentSelect];
+            node.classList.add('ck-combo-selected');
+            // console.log(this.conDom.scrollHeight,this.conDom.scrollTop,this.conDom.clientHeight);
+            if (this.conDom.scrollHeight === this.conDom.clientHeight) {
+                return
+            }
+
+            let nodePos = common.GetDomXY(node,this.conDom);
+            let start = nodePos.top;
+            let end = start+node.clientHeight;
+            let posStart = this.conDom.scrollTop;
+            let posEnd = this.conDom.scrollTop + this.conDom.clientHeight;
+
+            if (start > posStart && end < posEnd) {
+                return
+            }
+            if (start < posStart) {
+                this.conDom.scrollTo(0,start);
+            }
+
+            if (end > posEnd) {
+                this.conDom.scrollTo(0,end-this.conDom.clientHeight);
+            }
+        }
+    }
+
+    selectItem() {
+        if (this.nodeList && this.nodeList[this.currentSelect]) {
+            this.nodeList[this.currentSelect].click();
         }
     }
 
@@ -107,9 +228,17 @@ class Combo extends React.Component {
                 loading:true
             });
         }
+        this.clearSelect();
+        this.isClose = true;
     };
 
     selectHandler = (row,i)=>{
+        if (this.props.multi) {
+            let node = this.nodeList[i];
+            console.log(node.firstChild);
+            node.firstChild.firstChild.click();
+            return
+        }
         if (typeof this.props.onSelect === 'function') {
             this.props.onSelect(row[this.props.searchColumn],row);
         }
@@ -218,6 +347,7 @@ class Combo extends React.Component {
             <div ref={c=>this.mainDom=c} className={this.getClasses()} style={this.getStyles()}
                  onMouseDown={(e)=>{
                      e.stopPropagation();
+                     e.preventDefault();
                  }}>
                 {this.state.loading?this.renderLoading():
                     this.state.data?this.renderList():this.renderNotResult()}
@@ -244,7 +374,7 @@ class Combo extends React.Component {
                        serialNumber={false}
                        data={this.state.data}
                        onCheck={this.props.multi?this.multiSelectHandler:null}
-                       onClick={this.props.multi?null:this.selectHandler}>
+                       onClick={this.selectHandler}>
                     {map(columns,(item)=>{
                         return <TableHeader field={item.field} width={item.width} text={item.text}
                                             onFormat={item.field === this.props.searchColumn?this.filterFormat:item.format}/>
@@ -284,7 +414,7 @@ Combo.propTypes = {
     //filter column exp: ['name','age'] or [{field:'name',width:'100px'},{field:'age',width:'100px'}]
     filterColumns: PropTypes.array,
     noSearch: PropTypes.bool,
-    header: PropTypes.bool
+    header: PropTypes.bool,
 };
 
 Combo.defaultProps = {

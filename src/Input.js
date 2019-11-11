@@ -210,7 +210,7 @@ class Input extends React.Component {
 
     /**
      * Combo select event
-     * @param text string
+     * @param text stringminimist
      * @param row object
      */
     selectHandler = (text, row) => {

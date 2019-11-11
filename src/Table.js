@@ -263,7 +263,9 @@ class Table extends React.Component {
         if (this.width) {
             base.width = this.width;
         }
-
+        if (this.props.height) {
+            base.transformStyle = 'preserve-3d';
+        }
         return base;
     }
 
@@ -276,7 +278,7 @@ class Table extends React.Component {
     }
 
     scrollHandler = (e) => {
-        this.tableHeader.style.transform = `translateY(${e.currentTarget.scrollTop}px)`;
+        this.tableHeader.style.transform = `translate3d(0,${e.currentTarget.scrollTop}px,10px)`;
     };
 
     render() {
@@ -289,7 +291,7 @@ class Table extends React.Component {
                         </Button>) : null}
                     <table className={this.getClasses()} style={this.getTableStyles()}>
                         {this.props.header ? this.renderHeader() : null}
-                        <tbody>
+                        <tbody style={{'transform':'translateZ(1px)'}}>
                         {this.renderBody()}
                         </tbody>
                     </table>
@@ -528,7 +530,7 @@ Table.defaultProps = {
     striped    : true,
     fixed: false,
     align      : 'left',
-    emptyText  : 'no data',
+    emptyText  : 'Not data',
     serialNumber: true,
 };
 

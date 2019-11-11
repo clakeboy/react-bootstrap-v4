@@ -49,33 +49,37 @@ class Menu extends React.PureComponent {
             this.mainDom.style.left = fixPosition.x + 'px';
         } else {
             let pos = GetDomXY(option.evt.currentTarget);
-            let x,y;
+            let fixPos;
             switch (option.type) {
                 case 'dom-top':
-                    this.mainDom.style.top = (pos.top-this.height)+'px';
-                    this.mainDom.style.left = pos.left+'px';
+                    fixPos = {
+                        x:pos.left,
+                        y:(pos.top-this.height)
+                    };
                     break;
                 case 'dom-bottom':
-                    this.mainDom.style.top = (pos.top+option.evt.currentTarget.clientHeight)+'px';
-                    this.mainDom.style.left = pos.left+'px';
+                    fixPos = {
+                        x:pos.left,
+                        y:(pos.top+option.evt.currentTarget.clientHeight)
+                    };
                     break;
                 case 'dom-left':
-                    this.mainDom.style.top = pos.top+'px';
-                    this.mainDom.style.left = (pos.left-this.width)+'px';
+                    fixPos = {
+                        x:(pos.left-this.width),
+                        y:pos.top
+                    };
                     break;
                 case 'dom-right':
-                    // this.mainDom.style.top = pos.top+'px';
-                    // this.mainDom.style.left = (pos.left+option.evt.currentTarget.clientWidth)+'px';
-                    // break;
                 default:
-                    // this.mainDom.style.top = pos.top+'px';
-                    // this.mainDom.style.left = (pos.left+option.evt.currentTarget.clientWidth)+'px';
-                    y = pos.top;
-                    x = pos.left+option.evt.currentTarget.clientWidth;
-                    let fixPos = this.fixPositionScreen(x,y,-option.evt.currentTarget.clientWidth,option.evt.currentTarget.clientHeight);
-                    this.mainDom.style.top = fixPos.y + 'px';
-                    this.mainDom.style.left = fixPos.x + 'px';
+                    fixPos = this.fixPositionScreen(
+                        pos.left+option.evt.currentTarget.clientWidth,
+                        pos.top,
+                        -option.evt.currentTarget.clientWidth,
+                        option.evt.currentTarget.clientHeight);
+
             }
+            this.mainDom.style.top = fixPos.y + 'px';
+            this.mainDom.style.left = fixPos.x + 'px';
         }
     }
 

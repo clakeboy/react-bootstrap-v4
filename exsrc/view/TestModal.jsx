@@ -309,7 +309,7 @@ class TestModal extends React.PureComponent {
                                 onSelect={page => this.loadTask(page)}/>
                 </Card>
                 <Card header='测试静态数据'>
-                    <Table select={false} striped={false} tree headerTheme='light' data={this.state.treeData}>
+                    <Table select={false} striped={false} height='500px' tree headerTheme='light' data={this.state.treeData}>
                         <Table.Header text='任务ID' field='id'/>
                         <Table.Header text='任务名称' field='task_name' tree/>
                         <Table.Header text='时间规则' field='time_rule'/>

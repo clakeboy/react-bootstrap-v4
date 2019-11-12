@@ -70,6 +70,8 @@ class Calendar extends React.PureComponent {
         };
 
         this.year = {};
+
+        this.isClose = true;
     }
 
     componentDidMount() {
@@ -81,6 +83,10 @@ class Calendar extends React.PureComponent {
     componentWillUnmount() {
         // $(window).off('mousedown',this.hide);
         window.removeEventListener('mousedown',this.hide,false);
+        if (this.parentDom) {
+            this.parentDom.removeEventListener('blur',this.hide,false);
+            this.parentDom.removeEventListener('click',this.checkShow,false);
+        }
     }
 
     componentWillReceiveProps(nextProp) {
@@ -211,24 +217,18 @@ class Calendar extends React.PureComponent {
 
     hide = (e) => {
         // $(ReactDOM.findDOMNode(this)).hide();
-        this.mainDom.classList.add('ck-calendar-none')
+        this.mainDom.classList.add('ck-calendar-none');
+        this.isClose = true;
     };
 
     show(dom) {
-        document.querySelectorAll('.ck-calendar-absolute').forEach((item)=>{
-            item.classList.add('ck-calendar-none');
-        });
-
-        // $('.ck-calendar-absolute').hide();
-        // if (dom) {
-        //     let position = common.GetDomXY(dom);
-        //     console.log(position);
-        //     $(ReactDOM.findDOMNode(this)).css({
-        //         'left':position.left,
-        //         'top':position.top+position.height+10,
-        //     });
-        // }
-        // $(ReactDOM.findDOMNode(this)).show();
+        this.parentDom = dom;
+        this.isClose = false;
+        // document.querySelectorAll('.ck-calendar-absolute').forEach((item)=>{
+        //     item.classList.add('ck-calendar-none');
+        // });
+        this.parentDom.addEventListener('blur',this.hide,false);
+        this.parentDom.addEventListener('click',this.checkShow,false);
         this.mainDom.classList.remove('ck-calendar-none');
         //fixed out window area
         let position = common.GetDomXY(dom,null);
@@ -253,6 +253,12 @@ class Calendar extends React.PureComponent {
 
         this.clientWidth = this.mainTable.clientWidth;
     }
+
+    checkShow = (e)=> {
+        if (this.isClose) {
+            this.show(this.parentDom);
+        }
+    };
 
     getClasses() {
         let base = 'ck-calendar border p-1';
@@ -372,6 +378,7 @@ class Calendar extends React.PureComponent {
         let content = (
             <div ref={c=>this.mainDom=c} className={this.getClasses()} onMouseDown={(e)=>{
                 e.stopPropagation();
+                e.preventDefault();
             }}>
                 <table ref={c=>this.mainTable=c}>
                     <thead>
@@ -410,11 +417,6 @@ class Calendar extends React.PureComponent {
             </div>
         );
 
-        // if (this.props.absolute) {
-        //     return ReactDOM.createPortal(
-        //         content,document.body
-        //     );
-        // }
         return content;
     }
 

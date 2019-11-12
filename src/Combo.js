@@ -123,7 +123,6 @@ class Combo extends React.Component {
                 this.selectItem();
                 break;
         }
-        console.log(e.keyCode);
     };
 
     clearSelect() {
@@ -235,7 +234,6 @@ class Combo extends React.Component {
     selectHandler = (row,i)=>{
         if (this.props.multi) {
             let node = this.nodeList[i];
-            console.log(node.firstChild);
             node.firstChild.firstChild.click();
             return
         }
@@ -277,7 +275,7 @@ class Combo extends React.Component {
         let data = [];
         if (this.props.noSearch) {
             data = this.props.data;
-        } else {
+        } else if (this.props.data) {
             let reg = new RegExp("^"+search);
             this.props.data.forEach((item)=>{
                 if (reg.test(item[this.props.searchColumn])) {

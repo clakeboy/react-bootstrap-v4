@@ -222,7 +222,7 @@ class MenuItem extends React.PureComponent {
                      onMouseOver={this.showChildHandler}>
                     <span>{this.props.text}</span>
                     <span className='ml-auto'>
-                        {'\u0010'}{'\u0010'}<Icon icon='caret-right'/>
+                        &nbsp;&nbsp;<Icon icon='caret-right'/>
                     </span>
                 </div>
                 <Menu ref={c=>{this.childMenu=c;this.parent.childMenus.push(c)}} zIndex={this.parent.props.zIndex+1} onClick={(key)=>{

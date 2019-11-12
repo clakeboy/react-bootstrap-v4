@@ -2,6 +2,7 @@ export Dropdown from "./Dropdown";
 export Pagination from "./Pagination";
 export Container from "./Container";
 export Input from './Input';
+export InputStyle from './InputStyle';
 export InputGroup from "./InputGroup";
 export Button from './Button';
 export Icon from './Icon';

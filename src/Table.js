@@ -466,7 +466,7 @@ class Table extends React.Component {
                                 })}</td>
                             );
                         } else {
-                            return <td style={style} key={'col_' + key}>{parent}{dynamic_tree||row.children?tree:null}{item.props.onFormat ? item.props.onFormat(row[item.props.field], row) : row[item.props.field]}</td>;
+                            return <td style={style} key={'col_' + key}>{parent}{dynamic_tree||row.children?tree:null}{item.props.onFormat ? item.props.onFormat(row[item.props.field], row,i) : row[item.props.field]}</td>;
                         }
                     })}
                 </tr>

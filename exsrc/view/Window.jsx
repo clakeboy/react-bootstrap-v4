@@ -143,6 +143,13 @@ class Window extends React.Component {
                         </Menu.Item>
                         <Menu.Item>Child Menu 3</Menu.Item>
                     </Menu.Item>
+                    <Menu.Item text='Child Menu 2' child>
+                        <Menu.Item onClick={(e,field,data)=>{
+                            console.log(field,data);
+                        }}>Child Menu 1</Menu.Item>
+                        <Menu.Item>Child Menu 2</Menu.Item>
+                        <Menu.Item>Child Menu 3</Menu.Item>
+                    </Menu.Item>
                 </Menu>
             </Container>
         );

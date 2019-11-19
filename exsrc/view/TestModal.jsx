@@ -25,6 +25,7 @@ import {
     Load
 } from '../../src/index';
 import Fetch from "../common/Fetch";
+import Icon from "../../src/Icon";
 
 class TestModal extends React.PureComponent {
     constructor(props) {
@@ -442,7 +443,7 @@ class TestModal extends React.PureComponent {
                 }} sm>
                     <TabsContent id='smlabel1' text='Small-1'/>
                     <TabsContent id='smlabel2' text='Small-2' disabled/>
-                    <TabsContent id='smlabel3' text='Small-3' onClick={(tabid)=>{
+                    <TabsContent id='smlabel3' text={<span><Icon icon='external-link-alt'/> Small-Click</span>} onClick={(tabid)=>{
                         this.modal.alert(tabid);
                     }}/>
                     <TabsContent id='smlabel4' text='Small-4'/>

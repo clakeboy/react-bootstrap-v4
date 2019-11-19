@@ -74,6 +74,8 @@ class Table extends React.Component {
                         let matchs = item.props.width.match(reg);
                         this.width += parseInt(matchs[1]);
                         unit       = matchs[2];
+                    } else {
+                        unit = 100;
                     }
                 }
             });

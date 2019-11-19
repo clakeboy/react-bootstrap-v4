@@ -111,6 +111,7 @@ class Menu extends React.PureComponent {
         this.childMenus.forEach((item)=>{
             if (item && typeof item.hide === 'function') {
                 item.hide(e);
+                item.closeChild(e);
             }
         })
     }
@@ -185,6 +186,7 @@ class MenuItem extends React.PureComponent {
     };
 
     showChildHandler = (e)=>{
+        this.parent.closeChild(e);
         this.childMenu.show({evt:e,type:'dom',data:this.parent.data});
     };
 

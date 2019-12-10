@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import Table from './Table';
@@ -50,14 +51,20 @@ class Combo extends React.Component {
 
     componentDidUpdate() {
         if (this.table) {
+            let mainDom = this.table.mainDom;
+            let height = mainDom.querySelector('tr').clientHeight;
+            let fixHeader = 0;
+            if (this.props.header) {
+                fixHeader = mainDom.querySelector('thead').clientHeight;
+            }
             if (this.state.data.length > this.props.showRows) {
-                let mainDom = this.table.mainDom;
-                let height = mainDom.querySelector('tr').clientHeight;
-                this.conDom.style.overflowY = 'auto';
-                this.conDom.style.height = (height*this.props.showRows)+'px';
+                // let mainDom = this.table.mainDom;
+                // let height = mainDom.querySelector('tr').clientHeight;
+                // this.conDom.style.overflowY = 'auto';
+                // this.conDom.style.height = (height*this.props.showRows)+'px';
+                this.table.setHeight((height*this.props.showRows+fixHeader)+'px');
             } else {
-                this.conDom.style.overflowY = 'none';
-                this.conDom.style.height = '100%';
+                this.table.setHeight((height*this.state.data.length+fixHeader)+'px');
             }
             if (!this.props.multi) {
                 this.clearSelect();
@@ -158,28 +165,34 @@ class Combo extends React.Component {
         }
 
         if (this.nodeList[this.currentSelect]) {
+            let fixHeight = 0;
+            if (this.props.header) {
+                fixHeight = this.table.mainDom.querySelector('thead').clientHeight;
+            }
+            let scrollDom = this.table.mainDom;//this.conDom
             let node = this.nodeList[this.currentSelect];
             node.classList.add('ck-combo-selected');
             // console.log(this.conDom.scrollHeight,this.conDom.scrollTop,this.conDom.clientHeight);
-            if (this.conDom.scrollHeight === this.conDom.clientHeight) {
+            if (scrollDom.scrollHeight === scrollDom.clientHeight) {
                 return
             }
 
-            let nodePos = common.GetDomXY(node,this.conDom);
-            let start = nodePos.top;
+            let nodePos = common.GetDomXY(node,scrollDom);
+            let start = nodePos.top - fixHeight;
             let end = start+node.clientHeight;
-            let posStart = this.conDom.scrollTop;
-            let posEnd = this.conDom.scrollTop + this.conDom.clientHeight;
-
+            let posStart = scrollDom.scrollTop;
+            let posEnd = scrollDom.scrollTop + scrollDom.clientHeight-fixHeight;
             if (start > posStart && end < posEnd) {
                 return
             }
             if (start < posStart) {
-                this.conDom.scrollTo(0,start);
+                // this.conDom.scrollTo(0,start);
+                scrollDom.scrollTo(0,start);
             }
 
             if (end > posEnd) {
-                this.conDom.scrollTo(0,end-this.conDom.clientHeight);
+                // this.conDom.scrollTo(0,end-this.conDom.clientHeight);
+                scrollDom.scrollTo(0,end-(scrollDom.clientHeight-fixHeight));
             }
         }
     }
@@ -368,7 +381,11 @@ class Combo extends React.Component {
         let columns = this.filterColumns();
         return (
             <div ref={c=>this.conDom=c} className='ck-combo-content'>
-                <Table ref={c=>this.table=c} select={this.props.multi} header={this.props.header} striped={false} sm={this.props.sm}
+                <Table ref={c=>this.table=c} height='100px' select={this.props.multi}
+                       header={this.props.header}
+                       headerTheme='light'
+                       striped={false}
+                       sm={this.props.sm}
                        serialNumber={false}
                        data={this.state.data}
                        onCheck={this.props.multi?this.multiSelectHandler:null}

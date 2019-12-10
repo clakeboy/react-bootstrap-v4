@@ -251,12 +251,17 @@ class Table extends React.Component {
             base.height = this.props.height;
         }
 
+        return base;
+    }
+
+    getMainStyle() {
+        //default style
+        let base = {};
         if (this.props.absolute) {
             base.position = 'absolute';
             base.top      = this.props.y;
             base.left     = this.props.x;
         }
-
         return common.extend(base, this.props.style)
     }
 
@@ -280,12 +285,17 @@ class Table extends React.Component {
     }
 
     scrollHandler = (e) => {
-        this.tableHeader.style.transform = `translate3d(0,${e.currentTarget.scrollTop}px,10px)`;
+        if (this.tableHeader)
+            this.tableHeader.style.transform = `translate3d(0,${e.currentTarget.scrollTop}px,10px)`;
     };
+
+    setHeight(height) {
+        this.mainDom.style.height = height;
+    }
 
     render() {
         return (
-            <div className='position-relative' style={this.getStyles()}>
+            <div className='position-relative' style={this.getMainStyle()}>
                 <div ref={c => this.mainDom = c} id={this.domId} className={this.getMainClass()} style={this.getStyles()}>
                     {this.state.refresh ? (
                         <Button className='ck-table-refresh-btn' icon='sync-alt' onClick={this.props.onRefresh} size="sm" theme='dark'>

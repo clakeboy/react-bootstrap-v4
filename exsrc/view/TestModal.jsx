@@ -356,6 +356,17 @@ class TestModal extends React.PureComponent {
                         }} onChange={(val,row)=>{
                             console.log(val,row);
                         }}/>
+                        <Input label="测试远程数据(模拟)" combo={{
+                            searchColumn:'task_name',
+                            filterColumns:[{field:'task_name',width:'100px'},'source','time_rule',{field:'notify_url',width:'200px'}],
+                            onSearch: (search,callback)=>{
+                                setTimeout(()=>{
+                                    callback(this.state.child);
+                                },1000)
+                            }
+                        }} onChange={(val,row)=>{
+                            console.log(val,row);
+                        }}/>
                         <Button onClick={()=>{
                             let data = [{
                                 "id"             : 3,

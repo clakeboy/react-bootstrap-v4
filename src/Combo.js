@@ -267,6 +267,10 @@ class Combo extends React.Component {
         }
     };
 
+    clearMulti() {
+        this.table.selectAll(false);
+    }
+
     filter(search) {
         this.search = search;
         if (typeof this.props.onSearch === 'function') {

@@ -285,8 +285,10 @@ class Table extends React.Component {
     }
 
     scrollHandler = (e) => {
-        if (this.tableHeader)
+        if (this.tableHeader) {
+            // this.tableHeader.style.transform = `translateY(${e.currentTarget.scrollTop}px)`;
             this.tableHeader.style.transform = `translate3d(0,${e.currentTarget.scrollTop}px,10px)`;
+        }
     };
 
     setHeight(height) {
@@ -303,7 +305,7 @@ class Table extends React.Component {
                         </Button>) : null}
                     <table className={this.getClasses()} style={this.getTableStyles()}>
                         {this.props.header ? this.renderHeader() : null}
-                        <tbody style={{'transform':'translateZ(1px)'}}>
+                        <tbody >
                         {this.renderBody()}
                         </tbody>
                     </table>

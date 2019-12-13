@@ -11,8 +11,15 @@ class Icon extends React.PureComponent {
     }
 
     componentWillReceiveProps(nextProps) {
+        // this.setState({
+        //     icon: nextProps.icon,
+        // });
+        this.setIcon(nextProps.icon);
+    }
+
+    setIcon(icon) {
         this.setState({
-            icon: nextProps.icon,
+            icon: icon
         });
     }
 

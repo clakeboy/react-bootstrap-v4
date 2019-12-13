@@ -9,6 +9,10 @@ import i18n from './components/i18n';
 
 import './css/Input.less';
 
+const stopEvent  = function (e) {
+    e.stopPropagation();
+};
+
 class Input extends React.Component {
     constructor(props) {
         super(props);
@@ -16,7 +20,8 @@ class Input extends React.Component {
             value    : this.props.data,
             validate : true,
             disabled : this.props.disabled,
-            comboData: this.props.comboData
+            comboData: this.props.comboData,
+            icon: this.props.combo?'angle-down':this.props.calendar?'calendar-alt':'',
         };
 
         this.domId = 'input-' + common.RandomString(16);
@@ -24,8 +29,7 @@ class Input extends React.Component {
             this.domId = this.props.id;
         }
 
-        //combo show
-
+        this.isFocus = false;
     }
 
     componentDidMount() {
@@ -33,9 +37,9 @@ class Input extends React.Component {
             this.input.addEventListener('focus', (e) => {
                 this.calendar.show(e.currentTarget);
             }, false);
-            this.input.addEventListener('mousedown', (e) => {
-                e.stopPropagation();
-            }, false);
+            this.input.addEventListener('focus', this.focusClearHandler, false);
+            this.input.addEventListener('blur', this.blurClearHandler, false);
+            this.input.addEventListener('mousedown',stopEvent, false);
             // $(ReactDOM.findDOMNode(this.input)).on('focus', (e) => {
             //     this.calendar.show(e.currentTarget);
             // });
@@ -47,10 +51,14 @@ class Input extends React.Component {
             this.input.addEventListener('focus', (e) => {
                 this.combo.show(this.state.value,e.currentTarget);
             }, false);
-            this.input.addEventListener('mousedown', (e) => {
-                e.stopPropagation();
-            }, false);
+            this.input.addEventListener('focus', this.focusClearHandler, false);
+            this.input.addEventListener('blur', this.blurClearHandler, false);
+            this.input.addEventListener('mousedown',stopEvent, false);
         }
+    }
+
+    componentWillUnmount() {
+
     }
 
     componentWillReceiveProps(nextProps) {
@@ -71,6 +79,9 @@ class Input extends React.Component {
             return true
         }
         if (nextState.validate !== this.state.validate) {
+            return true
+        }
+        if (nextState.icon !== this.state.icon) {
             return true
         }
         return nextState.value !== this.state.value;
@@ -189,7 +200,7 @@ class Input extends React.Component {
      *********************/
     changeHandler = (e) => {
         let state = {
-            value: e.target.value
+            value: e.target?e.target.value:e,
         };
 
         this.setState(state, () => {
@@ -231,6 +242,33 @@ class Input extends React.Component {
         if (e.keyCode === 13) {
             if (typeof this.props.onEnter === 'function') {
                 this.props.onEnter(e.target.value);
+            }
+        }
+    };
+
+    focusClearHandler = (e)=>{
+        this.isFocus = true;
+        if (this.clearIcon) {
+            this.setState({
+                icon: 'times-circle',
+            });
+            // this.clearIcon.setIcon('times-circle');
+        }
+    };
+
+    blurClearHandler = ()=>{
+        this.isFocus = false;
+        if (this.clearIcon) {
+            if (this.props.combo) {
+                // this.clearIcon.setIcon('angle-down');
+                this.setState({
+                    icon: 'angle-down',
+                });
+            } else if (this.props.calendar) {
+                this.setState({
+                    icon: 'calendar-alt',
+                });
+                // this.clearIcon.setIcon('calendar-alt');
             }
         }
     };
@@ -287,9 +325,15 @@ class Input extends React.Component {
                           lang={lang.short} none shadow absolute
                           sm={this.props.size==='xs'}
                           triangular='up'/>
-                <div className={input_icon} onClick={() => {
-                    this.input.focus();
-                }}><Icon iconType='regular' icon='calendar-alt'/></div>
+                <div className={input_icon} onMouseDown={(e) => {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    if (this.isFocus) {
+                        this.changeHandler("");
+                    } else {
+                        this.input.focus();
+                    }
+                }}><Icon ref={c=>this.clearIcon=c} icon={this.state.icon}/></div>
             </div>
         )
     }
@@ -307,9 +351,18 @@ class Input extends React.Component {
                 <Combo ref={c => this.combo = c} {...this.props.combo} sm={this.props.size === 'sm' || this.props.size === 'xs'}
                        data={this.state.comboData} noSearch={this.props.readOnly} onShow={()=>{}}
                        onSelect={this.selectHandler}/>
-                <div className={input_icon} onClick={() => {
-                    this.input.focus();
-                }}><Icon icon='angle-down'/></div>
+                <div className={input_icon} onMouseDown={(e) => {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    if (this.isFocus) {
+                        this.changeHandler("");
+                        if (this.props.combo.multi) {
+                            this.combo.clearMulti();
+                        }
+                    } else {
+                        this.input.focus();
+                    }
+                }}><Icon ref={c=>this.clearIcon=c} icon={this.state.icon}/></div>
             </div>
         )
     }

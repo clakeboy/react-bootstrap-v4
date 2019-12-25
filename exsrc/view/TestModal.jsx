@@ -26,6 +26,7 @@ import {
 } from '../../src/index';
 import Fetch from "../common/Fetch";
 import Icon from "../../src/Icon";
+import ComboBox from "../../src/ComboBox";
 
 class TestModal extends React.PureComponent {
     constructor(props) {
@@ -336,8 +337,10 @@ class TestModal extends React.PureComponent {
                 <Title className='mb-2'>
                     Tabs 组件 不使用内容
                 </Title>
-                <Tabs border={false}>
+                <Tabs>
                     <TabsContent id='label1' text='标题1' active>
+                        <div className="p-3 bg-white">
+
                         <Input label="测试远程数据 Combo" combo={{
                             searchColumn:'name',
                             filterColumns:[{field:'name',width:'100px'},'gender','age',{field:'company',width:'200px'}],
@@ -443,9 +446,28 @@ class TestModal extends React.PureComponent {
                         <Button onClick={(e)=>{
                             this.selectCombo.setSelectRows('id',[2,4,6])
                         }}>改变选中</Button>
+                        </div>
                     </TabsContent>
                     <TabsContent id='label2' text='标题2'>
-
+                        <div className="p-3 bg-white">
+                            <ComboBox label="测试本地数据 Combo (超小)" size={'xs'}
+                                      searchColumn='task_name'
+                                      header
+                                      showRows={10}
+                                      data={this.state.child}
+                                      onChange={(val,row)=>{
+                                          console.log(val,row);
+                                      }}
+                            >
+                                <ComboBox.Column field='task_name' text='任务名称'/>
+                                <ComboBox.Column field='time_rule' text='时间规则'/>
+                                <ComboBox.Column field='notify_method' text='通知方法'/>
+                                <ComboBox.Column field='source' text='数据源'/>
+                                <ComboBox.Column field='created_date' text='创建时间' format={(val,row)=>{
+                                    return new Date(val*1000).toLocaleString();
+                                }}/>
+                            </ComboBox>
+                        </div>
                     </TabsContent>
                 </Tabs>
                 <hr/>

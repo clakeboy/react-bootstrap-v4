@@ -54,7 +54,9 @@ class Box extends React.PureComponent {
 
     render() {
         return (
-            <div className={this.getClasses()} style={this.getStyles()}/>
+            <div className={this.getClasses()} style={this.getStyles()}>
+                {this.props.children}
+            </div>
         );
     }
 }

@@ -321,7 +321,7 @@ class Input extends React.Component {
                     if (this.props.onChange && typeof this.props.onChange === 'function') {
                         this.props.onChange(val, this);
                     }
-                }} value={this.state.value} format={this.props.calendarFormat}
+                }} value={this.state.value} format={this.props.calendarFormat} timeBar={this.props.calendarTime}
                           lang={lang.short} none shadow absolute
                           sm={this.props.size==='xs'}
                           triangular='up'/>
@@ -401,6 +401,7 @@ Input.propTypes = {
     onEnter       : PropTypes.func,
     plaintext     : PropTypes.bool,
     calendarFormat: PropTypes.string,
+    calendarTime  : PropTypes.bool,
     validate      : PropTypes.object,  //{text:'',rule:/asdf/}
     disabled      : PropTypes.bool,
     combo         : PropTypes.object,

@@ -130,7 +130,7 @@ class Main extends React.Component {
                     </div>
                     <div className='form-row'>
                         <Input className='col-6' label='Calendar Unix Timestamp' data='1518427253' calendarFormat='unix' calendar readOnly/>
-                        <Input className='col-6' size='sm' label='Calendar' data={this.state.pageData.chose_date} onChange={this.changeHandler('chose_date')} calendar readOnly/>
+                        <Input className='col-6' size='sm' label='Calendar' calendarTime={true} calendarFormat='YYYY-MM-DD H:I:S' data={this.state.pageData.chose_date} onChange={this.changeHandler('chose_date')} calendar readOnly/>
                     </div>
                     <div className='form-row'>
                         <Input className='col-6' size='lg' label='Calendar' data={this.state.pageData.chose_date} onChange={this.changeHandler('chose_date')} calendar readOnly/>

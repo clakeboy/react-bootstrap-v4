@@ -1,9 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, {array} from 'prop-types';
 import classNames from 'classnames/bind';
 import './css/Calender.less';
 import Icon from './Icon';
-import common from './Common';
+import common, {str_pad} from './Common';
+import Button from "./Button";
 const i18n = {
     'zh': {
         'week' : [
@@ -29,6 +30,13 @@ const i18n = {
             '十一月',
             '十二月',
         ],
+        'time':{
+            'hour':'时',
+            'min':'分',
+            'sec':'秒',
+            'time':'时间',
+            'confirm':'确定',
+        }
     },
     'en': {
         'week' : [
@@ -54,6 +62,13 @@ const i18n = {
             'Nov',
             'Dec',
         ],
+        'time':{
+            'hour':'hour',
+            'min':'min',
+            'sec':'sec',
+            'time':'time',
+            'confirm':'Confirm',
+        }
     }
 };
 
@@ -67,11 +82,23 @@ class Calendar extends React.PureComponent {
             days: this.fillDateList(),
             month: false,
             year: false,
+            time: false,
+            hour: '00',
+            minute:'00',
+            second:'00'
         };
 
         this.year = {};
 
         this.isClose = true;
+
+        this.hours = [...Array(24).keys()].map((item,idx)=>{
+            return str_pad(idx,2,'0');
+        });
+        this.minute = [...Array(60).keys()].map((item,idx)=>{
+            return str_pad(idx,2,'0');
+        });
+        this.sec = this.minute.slice();
     }
 
     componentDidMount() {
@@ -96,6 +123,10 @@ class Calendar extends React.PureComponent {
                 days: this.fillDateList()
             });
         }
+    }
+
+    isTimeBar() {
+
     }
 
     setCurrentDate(value) {
@@ -189,6 +220,19 @@ class Calendar extends React.PureComponent {
         }
     }
 
+    selectTimeHandler = ()=>{
+        this.setState({
+            month:false,
+            year:false,
+            time:!this.state.time,
+        },()=>{
+            if (!this.state.time) {
+                if (typeof this.props.onSelect === 'function')
+                    this.props.onSelect(this.format());
+            }
+        });
+    };
+
     format() {
         let keys = {
             "unix":Math.round(this.show_date.valueOf()/1000),
@@ -198,12 +242,18 @@ class Calendar extends React.PureComponent {
             "yy":this.show_date.getFullYear().toString().substr(2),
             "mm":(this.show_date.getMonth()+1).toString(),
             "dd":this.show_date.getDate().toString(),
-            "H":common.strpad(this.show_date.getHours(),2,"0"),
-            "h":this.show_date.getHours().toString(),
-            "I":common.strpad(this.show_date.getMinutes(),2,"0"),
-            "i":this.show_date.getMinutes().toString(),
-            "S":common.strpad(this.show_date.getSeconds(),2,"0"),
-            "s":this.show_date.getSeconds().toString(),
+            // "H":common.strpad(this.show_date.getHours(),2,"0"),
+            "H":this.state.hour,
+            // "h":this.show_date.getHours().toString(),
+            "h":this.state.hour,
+            // "I":common.strpad(this.show_date.getMinutes(),2,"0"),
+            "I":this.state.minute,
+            // "i":this.show_date.getMinutes().toString(),
+            "i":this.state.minute,
+            // "S":common.strpad(this.show_date.getSeconds(),2,"0"),
+            "S":this.state.second,
+            // "s":this.show_date.getSeconds().toString(),
+            "s":this.state.second,
         };
         let time_str = this.props.format;
         let regx;
@@ -348,27 +398,33 @@ class Calendar extends React.PureComponent {
     }
 
     renderDays() {
+        let lang = i18n[this.props.lang];
         return (
             <React.Fragment>
-            {this.state.days.map((row) => {
-                return <tr>
-                    {row.map((item) => {
-                        if (item.disabled) {
-                            return <td className='disable'>{item.value}</td>
-                        }
-                        let class_name = 'day';
-                        if (item.value === this.current_date.getDate() &&
-                            this.current_date.getFullYear() === this.show_date.getFullYear() &&
-                            this.current_date.getMonth() === this.show_date.getMonth()) {
-                            class_name = classNames(class_name, 'active');
-                        }
-
-                        return <td className={class_name} onClick={e => {
-                            this.choseDay(this.show_date.getFullYear(), this.show_date.getMonth(), item.value);
-                        }}>{item.value}</td>
+                <tr className='header'>
+                    {lang.week.map((item)=>{
+                        return <th>{item}</th>
                     })}
                 </tr>
-            })}
+                {this.state.days.map((row) => {
+                    return <tr>
+                        {row.map((item) => {
+                            if (item.disabled) {
+                                return <td className='disable'>{item.value}</td>
+                            }
+                            let class_name = 'day';
+                            if (item.value === this.current_date.getDate() &&
+                                this.current_date.getFullYear() === this.show_date.getFullYear() &&
+                                this.current_date.getMonth() === this.show_date.getMonth()) {
+                                class_name = classNames(class_name, 'active');
+                            }
+
+                            return <td className={class_name} onClick={e => {
+                                this.choseDay(this.show_date.getFullYear(), this.show_date.getMonth(), item.value);
+                            }}>{item.value}</td>
+                        })}
+                    </tr>
+                })}
             </React.Fragment>
         )
     }
@@ -390,12 +446,14 @@ class Calendar extends React.PureComponent {
                                     this.setState({
                                         month:false,
                                         year:true,
+                                        time:false,
                                     });
                                 }}>{this.show_date.getFullYear()}</div>
                                 <div className='col-6 text-center th-btn th-div' onClick={e=>{
                                     this.setState({
                                         month:true,
                                         year:false,
+                                        time:false,
                                     });
                                 }}>
                                     {lang['month'][this.show_date.getMonth()]}
@@ -404,14 +462,10 @@ class Calendar extends React.PureComponent {
                         </th>
                         <th className='th-btn' onClick={e => this.nextMonth()}><Icon icon='arrow-right'/></th>
                     </tr>
-                    <tr className='header'>
-                        {lang.week.map((item)=>{
-                            return <th>{item}</th>
-                        })}
-                    </tr>
                     </thead>
                     <tbody>
                     {this.renderContent()}
+                    {this.props.timeBar?this.renderTimeBar():null}
                     </tbody>
                 </table>
             </div>
@@ -420,11 +474,94 @@ class Calendar extends React.PureComponent {
         return content;
     }
 
+    renderTimeBar() {
+        let lang = i18n[this.props.lang];
+        return (
+            <tr>
+                <td colSpan={7}>
+                    <div className='row no-gutters border-top'>
+                        <div className='col p-1 d-flex align-items-center'>
+                            <span>{this.state.hour}:{this.state.minute}:{this.state.second}</span>
+                        </div>
+                        <div className='col'>
+                            <Button onClick={this.selectTimeHandler} theme='link' size={this.props.sm?'sm':null} block>
+                                {this.state.time?lang['time']['confirm']:lang['time']['time']}
+                            </Button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        );
+    }
+
+    renderTime() {
+        let lang = i18n[this.props.lang];
+        return (
+            <tr>
+                <td colSpan={7}>
+                    <div className='d-flex bd-highlight'>
+                        <div className='flex-fill bd-highlight'>
+                            {lang['time']['hour']}
+                        </div>
+                        <div className='flex-fill bd-highlight'>
+                            {lang['time']['min']}
+                        </div>
+                        <div className='flex-fill bd-highlight'>
+                            {lang['time']['sec']}
+                        </div>
+                    </div>
+                    <div className='d-flex bd-highlight' style={{
+                        'height':'150px'
+                    }}>
+                        <div className='flex-fill bd-highlight overflow-auto border'>
+                            {this.hours.map((item)=>{
+                                if (item === this.state.hour) {
+                                    return <div className='ck-calendar-time-item active'>{item}</div>
+                                }
+                                return <div className='ck-calendar-time-item' onClick={()=>{
+                                    this.setState({
+                                        hour:item
+                                    });
+                                }}>{item}</div>
+                            })}
+                        </div>
+                        <div className='flex-fill bd-highlight overflow-auto border'>
+                            {this.minute.map((item)=>{
+                                if (item === this.state.minute) {
+                                    return <div className='ck-calendar-time-item active'>{item}</div>
+                                }
+                                return <div className='ck-calendar-time-item' onClick={()=>{
+                                    this.setState({
+                                        minute:item
+                                    });
+                                }}>{item}</div>
+                            })}
+                        </div>
+                        <div className='flex-fill bd-highlight overflow-auto border'>
+                            {this.sec.map((item)=>{
+                                if (item === this.state.second) {
+                                    return <div className='ck-calendar-time-item active'>{item}</div>
+                                }
+                                return <div className='ck-calendar-time-item' onClick={()=>{
+                                    this.setState({
+                                        second:item
+                                    });
+                                }}>{item}</div>
+                            })}
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        );
+    }
+
     renderContent() {
         if (this.state.month) {
             return this.renderMonth();
         } else if (this.state.year) {
             return this.renderYear();
+        } else if (this.state.time) {
+            return this.renderTime();
         } else {
             return this.renderDays();
         }
@@ -440,7 +577,8 @@ Calendar.propTypes = {
     onSelect: PropTypes.func,
     triangular: PropTypes.oneOf(['up','left','bottom','right']),
     format:   PropTypes.string,
-    sm: PropTypes.bool
+    sm: PropTypes.bool,
+    timeBar: PropTypes.bool
 };
 
 Calendar.defaultProps = {

@@ -55,6 +55,8 @@ class Table extends React.Component {
             }
             this.setState({
                 data: nextProps.data
+            },()=>{
+                this.hScroll.initAlignParent();
             });
         }
     }
@@ -311,7 +313,7 @@ class Table extends React.Component {
                     </table>
                 </div>
                 {this.props.height?<Scroll selector={`#${this.domId}`}/>:null}
-                {this.props.width?<HScroll selector={`#${this.domId}`} alignParent/>:null}
+                {this.props.width?<HScroll ref={c=>this.hScroll = c} selector={`#${this.domId}`} alignParent/>:null}
             </div>
         );
     }

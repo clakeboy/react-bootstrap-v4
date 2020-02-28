@@ -75,7 +75,7 @@ class HScroll extends React.PureComponent {
     }
     //align parent scroll bottom
     initAlignParent() {
-        if (this.props.alignParent) {
+        if (this.props.alignParent && this.alignParent) {
             if (this.alignParent === document.documentElement) {
                 document.removeEventListener('scroll',this.setPosition);
             } else {

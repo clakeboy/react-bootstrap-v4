@@ -56,7 +56,9 @@ class Table extends React.Component {
             this.setState({
                 data: nextProps.data
             },()=>{
-                this.hScroll.initAlignParent();
+                if (this.hScroll) {
+                    this.hScroll.initAlignParent();
+                }
             });
         }
     }

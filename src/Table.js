@@ -53,19 +53,21 @@ class Table extends React.Component {
     }
 
     syncRowsHeight() {
-        // let orgTable = document.querySelector(`#${this.domId}_body`);
-        if (this.beforeFields.length > 0) {
-            // let beforeTable = document.querySelector(`#${this.domId}_before_body`);
+        if (this.beforeBody) {
             this.beforeBody.tHead.rows[0].style.height = this.tableBody.tHead.rows[0].clientHeight + 'px';
-            // if (beforeTable.tBodies[0].rows) {
-            //     beforeTable.tBodies[0].rows.forEach((row,idx)=>{
-            //         row.style.height = orgTable.tBodies.rows[idx].clientHeight + 'px';
-            //     })
-            // }
-            if (this.beforeBody.tBodies[0]) {
-                for (let i=0; i < this.beforeBody.tBodies[0].rows.length;i++) {
-                    // console.log(beforeTable.tBodies[0].rows[i]);
+        }
+        if (this.afterBody) {
+            this.afterBody.tHead.rows[0].style.height = this.tableBody.tHead.rows[0].clientHeight + 'px';
+        }
+
+        if (this.afterBody || this.beforeBody) {
+            for (let i=0; i < this.tableBody.tBodies[0].rows.length;i++) {
+                // console.log(beforeTable.tBodies[0].rows[i]);
+                if (this.beforeBody){
                     this.beforeBody.tBodies[0].rows[i].style.height = this.tableBody.tBodies[0].rows[i].clientHeight + 'px';
+                }
+                if (this.afterBody) {
+                    this.afterBody.tBodies[0].rows[i].style.height = this.tableBody.tBodies[0].rows[i].clientHeight + 'px';
                 }
             }
         }

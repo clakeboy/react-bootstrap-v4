@@ -35,6 +35,8 @@ class Table extends React.Component {
 
         this.initTableWidth();
 
+        this.initHold();
+
         this.domId = 'table-'+common.RandomString(16);
         if (this.props.id) {
             this.domId = this.props.id;
@@ -85,6 +87,10 @@ class Table extends React.Component {
             });
             this.width += unit;
         }
+    }
+
+    initHold() {
+
     }
 
     //checkbox handler
@@ -314,6 +320,7 @@ class Table extends React.Component {
                         </tbody>
                     </table>
                 </div>
+
                 {this.props.height?<Scroll selector={`#${this.domId}`}/>:null}
                 {this.props.width?<HScroll ref={c=>this.hScroll = c} selector={`#${this.domId}`} alignParent/>:null}
             </div>
@@ -501,6 +508,18 @@ class Table extends React.Component {
         });
     }
 
+    renderHoldBefore() {
+        return (
+            <div className='ck-table-hold-before' style={this.getStyles()}>
+                <table className={this.getClasses()} style={this.getTableStyles()}>
+                    {this.props.header ? this.renderHeader() : null}
+                    <tbody >
+                    {this.renderBody()}
+                    </tbody>
+                </table>
+            </div>
+        )
+    }
 }
 
 Table.propTypes = {

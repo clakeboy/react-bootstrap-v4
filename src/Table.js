@@ -33,9 +33,13 @@ class Table extends React.Component {
 
         this.sortList = {};
 
+        this.afterFields = [];
+
+        this.beforeFields = [];
+
         this.initTableWidth();
 
-        this.initHold();
+        // this.initHold();
 
         this.domId = 'table-'+common.RandomString(16);
         if (this.props.id) {
@@ -45,7 +49,31 @@ class Table extends React.Component {
 
     componentDidMount() {
         this.mainDom.addEventListener('scroll', this.scrollHandler, false);
+        this.syncRowsHeight();
     }
+
+    syncRowsHeight() {
+        // let orgTable = document.querySelector(`#${this.domId}_body`);
+        if (this.beforeFields.length > 0) {
+            // let beforeTable = document.querySelector(`#${this.domId}_before_body`);
+            this.beforeBody.tHead.rows[0].style.height = this.tableBody.tHead.rows[0].clientHeight + 'px';
+            // if (beforeTable.tBodies[0].rows) {
+            //     beforeTable.tBodies[0].rows.forEach((row,idx)=>{
+            //         row.style.height = orgTable.tBodies.rows[idx].clientHeight + 'px';
+            //     })
+            // }
+            if (this.beforeBody.tBodies[0]) {
+                for (let i=0; i < this.beforeBody.tBodies[0].rows.length;i++) {
+                    // console.log(beforeTable.tBodies[0].rows[i]);
+                    this.beforeBody.tBodies[0].rows[i].style.height = this.tableBody.tBodies[0].rows[i].clientHeight + 'px';
+                }
+            }
+        }
+    }
+
+    // componentDidUpdate(prevProps, prevState, snapshot) {
+    //     // this.syncRowsHeight();
+    // }
 
     componentWillReceiveProps(nextProps) {
         if (this.props.data !== nextProps.data) {
@@ -72,25 +100,38 @@ class Table extends React.Component {
     initTableWidth() {
         if (this.props.width) {
             this.width = 0;
+            this.beforeHoldWidth = 0;
+            this.afterHoldWidth = 0;
             let reg    = /(\d+)(px|rem|cm|mm|pt)$/;
             let unit   = '';
             React.Children.map(this.props.children, (item, key) => {
                 if (item.type === TableHeader) {
+                    let matchs;
                     if (item.props.width && item.props.width.match) {
-                        let matchs = item.props.width.match(reg);
+                        matchs = item.props.width.match(reg);
                         this.width += parseInt(matchs[1]);
                         unit       = matchs[2];
                     } else {
                         unit = 100;
                     }
+
+                    if (item.props.beforeHold) {
+                        if (matchs) {
+                            this.beforeHoldWidth += parseInt(matchs[1]);
+                        }
+                        this.beforeFields.push(item.props.field);
+                    } else if (item.props.afterHold) {
+                        if (matchs) {
+                            this.afterHoldWidth += parseInt(matchs[1]);
+                        }
+                        this.afterFields.push(item.props.field);
+                    }
                 }
             });
             this.width += unit;
+            this.beforeHoldWidth += unit;
+            this.afterHoldWidth += unit;
         }
-    }
-
-    initHold() {
-
     }
 
     //checkbox handler
@@ -197,7 +238,7 @@ class Table extends React.Component {
         this.checkAllCheckHalf();
     }
 
-    getClasses() {
+    getClasses(css) {
         let base = 'table ck-table';
         //striped
         if (this.props.striped) {
@@ -232,7 +273,7 @@ class Table extends React.Component {
         }
 
 
-        return base;
+        return classNames(base,css);
     }
 
     getMainClass() {
@@ -275,10 +316,13 @@ class Table extends React.Component {
         return common.extend(base, this.props.style)
     }
 
-    getTableStyles() {
+    getTableStyles(width) {
         let base = {};
         if (this.width) {
             base.width = this.width;
+        }
+        if (width) {
+            base.width = width;
         }
         if (this.props.height) {
             base.transformStyle = 'preserve-3d';
@@ -295,9 +339,27 @@ class Table extends React.Component {
     }
 
     scrollHandler = (e) => {
+        // console.log(e.currentTarget.scrollLeft,e.currentTarget.scrollWidth,e.currentTarget.clientWidth,e.currentTarget);
+        // console.log(e.currentTarget.scrollWidth-e.currentTarget.clientWidth);
         if (this.tableHeader) {
             // this.tableHeader.style.transform = `translateY(${e.currentTarget.scrollTop}px)`;
             this.tableHeader.style.transform = `translate3d(0,${e.currentTarget.scrollTop}px,10px)`;
+        }
+        if (this.beforeFields.length > 0) {
+            if (e.currentTarget.scrollLeft === 0) {
+                this.beforeBody.classList.remove('shadow');
+            } else {
+                this.beforeBody.classList.add('shadow');
+            }
+        }
+
+        if (this.afterFields.length > 0) {
+            let diff = e.currentTarget.scrollWidth-e.currentTarget.clientWidth;
+            if (diff === e.currentTarget.scrollLeft || diff-1 === e.currentTarget.scrollLeft) {
+                this.afterBody.classList.remove('shadow');
+            } else {
+                this.afterBody.classList.add('shadow');
+            }
         }
     };
 
@@ -307,39 +369,42 @@ class Table extends React.Component {
 
     render() {
         return (
-            <div className='position-relative' style={this.getMainStyle()}>
-                <div ref={c => this.mainDom = c} id={this.domId} className={this.getMainClass()} style={this.getStyles()}>
+            <div className='position-relative' id={this.domId+'_main'} style={this.getMainStyle()}>
+                <div ref={c => this.mainDom = c} id={this.domId}  className={this.getMainClass()} style={this.getStyles()}>
                     {this.state.refresh ? (
                         <Button className='ck-table-refresh-btn' icon='sync-alt' onClick={this.props.onRefresh} size="sm" theme='dark'>
                             {this.props.refreshText}
                         </Button>) : null}
-                    <table className={this.getClasses()} style={this.getTableStyles()}>
+                    <table ref={c=>this.tableBody = c} id={this.domId+'_body'} className={this.getClasses()} style={this.getTableStyles()}>
                         {this.props.header ? this.renderHeader() : null}
-                        <tbody >
+                        <tbody>
                         {this.renderBody()}
                         </tbody>
                     </table>
                 </div>
-
+                {this.renderHoldBefore()}
+                {this.renderHoldAfter()}
                 {this.props.height?<Scroll selector={`#${this.domId}`}/>:null}
-                {this.props.width?<HScroll ref={c=>this.hScroll = c} selector={`#${this.domId}`} alignParent/>:null}
+                {this.props.width?<HScroll ref={c=>this.hScroll = c} showSelector={`#${this.domId}_main`} selector={`#${this.domId}`} alignParent/>:null}
             </div>
         );
     }
 
-    renderHeader() {
+    renderHeader(filter,filter_type) {
         return (
-            <thead ref={c => this.tableHeader = c} className={this.getHeaderClasses()}>
+            <thead ref={c => {if (!filter) this.tableHeader = c}} className={this.getHeaderClasses()}>
             <tr>
-                {this.props.serialNumber?<th style={{width:'20px',textAlign:'center'}}>
-
-                </th>:null}
-                {this.state.select ?
+                {this.props.serialNumber&&filter_type !== 'after'?<th style={{width:'20px',textAlign:'center'}}/>:null}
+                {this.state.select &&filter_type !== 'after'?
                     <th style={{width:'20px',textAlign:'center'}}>
-                        <CCheckbox ref={c=>this.allchk=c} onChange={this.selectAll}/>
+                        <CCheckbox ref={c=>{this.allchk=c}} onChange={this.selectAll}/>
                     </th> : null}
                 {React.Children.map(this.props.children, (item, key) => {
                     if (!item || item.props.hide) {
+                        return null;
+                    }
+                    //hold column
+                    if (filter && filter.indexOf(item.props.field) === -1) {
                         return null;
                     }
                     let align = item.props.align || this.props.align;
@@ -368,7 +433,7 @@ class Table extends React.Component {
         );
     }
 
-    renderBody() {
+    renderBody(filter,filter_type) {
         if (!this.state.data || this.state.data.length <= 0) {
             let columnCount = React.Children.count(this.props.children);
             if (this.props.select) columnCount += 1;
@@ -379,7 +444,7 @@ class Table extends React.Component {
         }
 
         return this.state.data.map((row, i) => {
-            return this.renderRow(row, i,null,0);
+            return this.renderRow(row, i,null,0,filter,filter_type);
         });
     }
 
@@ -395,7 +460,7 @@ class Table extends React.Component {
         }
     }
 
-    renderRow(row, i, parentRow,indent) {
+    renderRow(row, i, parentRow,indent,filter,filter_type) {
         let tree_status = 'close';
         if (row.children) {
             if (!this.treeOpens[i] || this.treeOpens[i] === 'open') {
@@ -410,16 +475,20 @@ class Table extends React.Component {
         return (
             <React.Fragment>
                 <tr className={this.props.onClick ? 'click-row' : this.getHeaderClasses()} onClick={this.clickHandler(row, i)}>
-                    {this.props.serialNumber ?
+                    {this.props.serialNumber && filter_type !== 'after' ?
                         <th className='sn text-nowrap'>
                             {this.formatSn(i)}
                         </th> : null}
-                    {this.state.select ?
+                    {this.state.select && filter_type !== 'after' ?
                         <td style={{width:'20px',textAlign:'center'}}>
                             <CCheckbox ref={'row_' + i} onChange={this.changeHandler(row, i)}/>
                         </td> : null}
                     {React.Children.map(this.props.children, (item, key) => {
                         if (!item || item.props.hide) {
+                            return null;
+                        }
+                        //hold column
+                        if (filter && filter.indexOf(item.props.field) === -1) {
                             return null;
                         }
                         //set style
@@ -493,28 +562,47 @@ class Table extends React.Component {
                         }
                     })}
                 </tr>
-                {this.props.tree ? this.renderTreeRow(row, i,indent+1) : null}
+                {this.props.tree ? this.renderTreeRow(row, i,indent+1,filter,filter_type) : null}
             </React.Fragment>
         );
     }
 
-    renderTreeRow(row, i,indent) {
+    renderTreeRow(row, i,indent,filter,filter_type) {
         let data = this.state.tree[i];
         if (!data) {
             return null;
         }
         return data.map((item, idx) => {
-            return this.renderRow(item, `${i}-${idx}`, row,indent);
+            return this.renderRow(item, `${i}-${idx}`, row,indent,filter,filter_type);
         });
     }
 
     renderHoldBefore() {
+        if (this.beforeFields.length <= 0) {
+            return null;
+        }
         return (
-            <div className='ck-table-hold-before' style={this.getStyles()}>
-                <table className={this.getClasses()} style={this.getTableStyles()}>
-                    {this.props.header ? this.renderHeader() : null}
+            <div className='ck-table-hold-before'>
+                <table ref={c=>this.beforeBody=c} id={this.domId+'_before_body'} className={this.getClasses()} style={this.getTableStyles(this.beforeHoldWidth)}>
+                    {this.props.header ? this.renderHeader(this.beforeFields) : null}
+                    <tbody>
+                    {this.renderBody(this.beforeFields)}
+                    </tbody>
+                </table>
+            </div>
+        )
+    }
+
+    renderHoldAfter() {
+        if (this.afterFields.length <= 0) {
+            return null;
+        }
+        return (
+            <div className='ck-table-hold-after'>
+                <table ref={c=>this.afterBody=c} id={this.domId+'_after_body'} className={this.getClasses('shadow')} style={this.getTableStyles(this.afterHoldWidth)}>
+                    {this.props.header ? this.renderHeader(this.afterFields,'after') : null}
                     <tbody >
-                    {this.renderBody()}
+                    {this.renderBody(this.afterFields,'after')}
                     </tbody>
                 </table>
             </div>

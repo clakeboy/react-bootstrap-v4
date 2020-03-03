@@ -41,6 +41,12 @@ class HScroll extends React.PureComponent {
             this.parentDom.removeEventListener('mouseout',this.hideHandler);
         }
 
+        if (this.showDom) {
+            this.showDom.removeEventListener('wheel',this.scrollHandler);
+            this.showDom.removeEventListener('mouseover',this.showHandler);
+            this.showDom.removeEventListener('mouseout',this.hideHandler);
+        }
+
         // this.dom.addEventListener("mousedown",this.beginDragHandler,false);
         this.dom.removeEventListener("wheel",this.scrollHandler);
         if (this.props.alignParent) {
@@ -57,6 +63,13 @@ class HScroll extends React.PureComponent {
             this.parentDom = ReactDOM.findDOMNode(this.parent);
         } else {
             this.parentDom = document.querySelector(this.props.selector);
+        }
+
+        if (this.props.showSelector) {
+            this.showDom = document.querySelector(this.props.showSelector);
+            this.showDom.addEventListener('wheel',this.scrollHandler,false);
+            this.showDom.addEventListener('mouseover',this.showHandler,false);
+            this.showDom.addEventListener('mouseout',this.hideHandler,false);
         }
 
         if (this.parentDom) {
@@ -212,6 +225,7 @@ class HScroll extends React.PureComponent {
 HScroll.propTypes = {
     parent: PropTypes.any,
     selector: PropTypes.string,
+    showSelector: PropTypes.string,
     speed: PropTypes.number,
     align: PropTypes.oneOf(['top','bottom']),
     alignParent: PropTypes.bool,

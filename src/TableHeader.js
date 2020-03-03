@@ -26,7 +26,8 @@ TableHeader.propTypes = {
     width: PropTypes.string,
     onClickTree: PropTypes.func,
     //static head
-    hold: PropTypes.bool,
+    afterHold: PropTypes.bool,
+    beforeHold: PropTypes.bool,
     //edit
     edit: PropTypes.object,
 };

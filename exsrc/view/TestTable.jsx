@@ -45,6 +45,8 @@ class TestTable extends React.PureComponent {
             this.editTable.push({
                 'name':(i+1),
                 'age':(i+1),
+                'test1':'test1-'+(i),
+                'test2':'test2-'+(i),
                 'birthday':(i+1),
                 'address':(i+1),
                 'both':'both-'+(i+1),
@@ -112,31 +114,33 @@ class TestTable extends React.PureComponent {
                 }}>返回主页</Button>
                 <h3>测试编辑</h3>
                 <Card className='mt-2' header='测试 Table Scroll'>
-                    <Table hover={true} select={true} data={this.state.editData} headerTheme='light' width='100%'>
-                        <Table.Header text='Name' field='name' width='100px' onSort={(sort)=>{alert(sort)}}/>
-                        <Table.Header text='Age' field='age' width='250px' hide/>
+                    <Table hover={true} select={true} data={this.state.editData} headerTheme='light' width='100%' fixed>
+                        <Table.Header text='Name' field='name' width='100px' beforeHold onSort={(sort)=>{alert(sort)}}/>
+                        <Table.Header text='Age' field='age' width='100px' beforeHold/>
+                        <Table.Header text='Test1' field='test1' width='250px' />
+                        <Table.Header text='Test2' field='test2' width='250px' />
                         <Table.Header text='Birthday' field='birthday' width='150px' onFormat={(val,row,idx)=>{
                             if (!row.is_edit) {
                                 return val
                             }
-                            return <input type="number" defaultValue={val} onChange={this.changeTableData(idx,'birthday')}/>
+                            return <input className='w-75' type="number" defaultValue={val} onChange={this.changeTableData(idx,'birthday')}/>
                         }}/>
                         <Table.Header text='Address' field='address' width='150px' onFormat={(val,row,idx)=>{
                             if (!row.is_edit) {
                                 return val
                             }
-                            return <input type="number" defaultValue={val} onChange={this.changeTableData(idx,'address')}/>
+                            return <input className='w-75' type="number" defaultValue={val} onChange={this.changeTableData(idx,'address')}/>
                         }}/>
                         <Table.Header text='Test' field='test' width='200px' onFormat={(val,row,idx)=>{
                             if (!row.is_edit) {
                                 return val
                             }
-                            return <input type="number" defaultValue={val} onChange={this.changeTableData(idx,'test')}/>
+                            return <input className='w-75' type="number" defaultValue={val} onChange={this.changeTableData(idx,'test')}/>
                         }}/>
-                        <Table.Header text='Edit' field='is_edit' width='50px' onFormat={(val)=>{
+                        <Table.Header text='Edit' field='is_edit' width='80px' afterHold onFormat={(val)=>{
                             return val.toString();
                         }}/>
-                        <Table.Header text='Action' width='100px' onFormat={(val,row,index)=>{
+                        <Table.Header text='Action' width='100px' afterHold onFormat={(val,row,index)=>{
                             if (row.is_edit) {
                                 return <Button theme='success' size='sm' icon='save' onClick={this.saveTableData(index)}>Save</Button>
                             }

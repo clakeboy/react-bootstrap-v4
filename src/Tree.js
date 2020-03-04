@@ -117,7 +117,7 @@ class Tree extends React.PureComponent {
             return <div className='ck-tree-item' style={style}>
                 <div className='ck-tree-content d-flex' onContextMenu={this.menuHandler(val,id)}>
                     {val.children?<span className='ck-tree-icon' onClick={this.iconHandler(val,id)}>
-                        <Icon icon={val.children?'angle-right':val.icon}/>
+                        <Icon className={val.show?'ck-tree-icon-down':''} icon={val.children?'angle-right':val.icon}/>
                     </span>:<span className='ck-tree-icon'/>}
                     <span className='ck-tree-item-text'
                           onDoubleClick={this.dbClickHandler(val,id)}
@@ -126,7 +126,7 @@ class Tree extends React.PureComponent {
                         {val.text}
                     </span>
                 </div>
-                {val.children?<div id={this.domId+'-'+id} className='ck-tree-children d-none' data-show="0" ref={c=>this.parents[id]=c}>
+                {val.children?<div id={this.domId+'-'+id} className={'ck-tree-children'+(val.show?'':' d-none')} data-show={val.show?'1':'0'} ref={c=>this.parents[id]=c}>
                     {this.renderItem(val.children,val,level+1,id)}
                 </div>:null}
             </div>

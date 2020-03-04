@@ -37,6 +37,7 @@ class Coupon extends React.PureComponent {
                     icon:'user',
                     key:'main',
                     text:'这是主树',
+                    show:true,
                     children:[
                         {icon:'user',key:'',text:'这是三儿子'},
                         {icon:'',key:'',text:'这是三儿子'},

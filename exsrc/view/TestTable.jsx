@@ -116,8 +116,11 @@ class TestTable extends React.PureComponent {
                 }}>返回主页</Button>
                 <h3>测试编辑</h3>
                 <Card className='mt-2' header='测试 Table Scroll'>
-                    <Table hover={true} select={true} data={this.state.editData} headerTheme='light' width='100%' fixed>
-
+                    <Table hover={true} select={true} data={this.state.editData} headerTheme='light' width='100%'>
+                        <Table.HeaderRow>
+                            <Table.Header text='User' cols={4} align='center'/>
+                            <Table.Header text='Other' cols={3} align='center'/>
+                        </Table.HeaderRow>
                         <Table.Header text='Name' field='name' width='100px' beforeHold onSort={(sort)=>{alert(sort)}}/>
                         <Table.Header text='Age' field='age' width='100px' beforeHold/>
                         <Table.Header text='Test1' field='test1' width='250px' />

@@ -11,6 +11,7 @@ export CCheckbox from './CCheckbox';
 export Checkbox from './Checkbox';
 export Table from './Table';
 export TableHeader from './TableHeader';
+export TableHeaderRow from './TableHeaderRow';
 export Select from './Select';
 export Calendar from './Calendar';
 export TextArea from './TextArea';

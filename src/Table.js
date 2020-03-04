@@ -38,6 +38,10 @@ class Table extends React.Component {
 
         this.beforeFields = [];
 
+        this.tableHeaderRows = [];
+
+        this.headers = [];
+
         this.initTableWidth();
 
         // this.initHold();
@@ -55,10 +59,11 @@ class Table extends React.Component {
 
     syncRowsHeight() {
         if (this.beforeBody) {
-            this.beforeBody.tHead.rows[0].style.height = this.tableBody.tHead.rows[0].clientHeight + 'px';
+            this.setRowsHeight(this.beforeBody.tHead.rows,this.tableBody.tHead.rows);
+            // this.beforeBody.tHead.rows[0].style.height = this.tableBody.tHead.rows[0].clientHeight + 'px';
         }
         if (this.afterBody) {
-            this.afterBody.tHead.rows[0].style.height = this.tableBody.tHead.rows[0].clientHeight + 'px';
+            this.setRowsHeight(this.afterBody.tHead.rows,this.tableBody.tHead.rows);
         }
 
         if (this.afterBody || this.beforeBody) {
@@ -71,6 +76,12 @@ class Table extends React.Component {
                     this.afterBody.tBodies[0].rows[i].style.height = this.tableBody.tBodies[0].rows[i].clientHeight + 'px';
                 }
             }
+        }
+    }
+
+    setRowsHeight(rows,heightRows) {
+        for (let i=0;i<rows.length;i++) {
+            rows[i].style.height = heightRows[i].clientHeight+'px';
         }
     }
 
@@ -101,7 +112,7 @@ class Table extends React.Component {
     }
 
     initTableWidth() {
-        if (this.props.width) {
+        // if (this.props.width) {
             this.width = 0;
             this.beforeHoldWidth = 0;
             this.afterHoldWidth = 0;
@@ -117,7 +128,7 @@ class Table extends React.Component {
                     } else {
                         unit = 100;
                     }
-
+                    this.headers.push(item);
                     if (item.props.beforeHold) {
                         if (matchs) {
                             this.beforeHoldWidth += parseInt(matchs[1]);
@@ -129,12 +140,32 @@ class Table extends React.Component {
                         }
                         this.afterFields.push(item.props.field);
                     }
+                } else if (item.type === TableHeaderRow) {
+                    this.initTableHeaderRow(item)
                 }
             });
+            if (this.props.select) {
+                this.width += 20;
+                this.beforeHoldWidth += 20;
+            }
+            if (this.props.serialNumber) {
+                this.width += 20;
+                this.beforeHoldWidth += 20;
+            }
             this.width += unit;
             this.beforeHoldWidth += unit;
             this.afterHoldWidth += unit;
-        }
+
+    }
+
+    initTableHeaderRow(row) {
+        let headerRow = [];
+        React.Children.map(row.props.children,(item)=>{
+            if (item.type === TableHeader) {
+                headerRow.push(item)
+            }
+        });
+        this.tableHeaderRows.push(headerRow);
     }
 
     //checkbox handler
@@ -271,7 +302,7 @@ class Table extends React.Component {
             base = classNames(base, 'table-responsive');
         }
         //fixed
-        if (this.props.fixed || this.props.scroll || this.props.width) {
+        if ((this.props.fixed || this.props.scroll || this.props.width) && this.tableHeaderRows.length <= 0) {
             base = classNames(base, 'fixed');
         }
 
@@ -321,7 +352,7 @@ class Table extends React.Component {
 
     getTableStyles(width) {
         let base = {};
-        if (this.width) {
+        if (this.props.width) {
             base.width = this.width;
         }
         if (width) {
@@ -342,9 +373,10 @@ class Table extends React.Component {
     }
 
     scrollHandler = (e) => {
+        console.log(e.currentTarget.scrollHeight);
         // console.log(e.currentTarget.scrollLeft,e.currentTarget.scrollWidth,e.currentTarget.clientWidth,e.currentTarget);
         // console.log(e.currentTarget.scrollWidth-e.currentTarget.clientWidth);
-        if (this.tableHeader) {
+        if (this.tableHeader && e.currentTarget.scrollTop > 0) {
             // this.tableHeader.style.transform = `translateY(${e.currentTarget.scrollTop}px)`;
             this.tableHeader.style.transform = `translate3d(0,${e.currentTarget.scrollTop}px,10px)`;
         }
@@ -393,16 +425,65 @@ class Table extends React.Component {
         );
     }
 
+    renderHeaderRow(filter,filter_type) {
+        if (this.tableHeaderRows.length <= 0) return null;
+        let headers = [];
+
+        // headers.push(<colgroup>
+        //     {this.props.serialNumber&&filter_type !== 'after'?<col width='20px'/>:null}
+        //     {this.state.select &&filter_type !== 'after'? <col width='20px'/> : null}
+        //     {this.headers.map((item)=>{
+        //         //hold column
+        //         if (filter && filter.indexOf(item.props.field) === -1) {
+        //             return null;
+        //         }
+        //         return <col width={item.props.width}/>
+        //     })}
+        // </colgroup>);
+
+        this.tableHeaderRows.forEach((list,index)=>{
+            let offset = 0;
+            if (index === 0) {
+                if (this.props.serialNumber) offset++;
+                if (this.props.select) offset++;
+            }
+            let totalCols = 0;
+            headers.push(
+                <tr>
+                    {list.map((item)=>{
+                        let colsCount = item.props.cols;
+
+                        if (filter && totalCols >= filter.length) return null;
+
+                        if (filter && colsCount > filter.length) {
+                            colsCount = filter.length;
+                        }
+                        if (filter_type !== 'after') {
+                            colsCount += offset;
+                        }
+                        totalCols += item.props.cols;
+                        return <th colSpan={colsCount} className='colspan' style={{textAlign:item.props.align}}>
+                            {!filter?item.props.text:null}
+                        </th>
+                    })}
+                </tr>
+             )
+        });
+
+        return headers;
+    }
+
     renderHeader(filter,filter_type) {
         return (
             <thead ref={c => {if (!filter) this.tableHeader = c}} className={this.getHeaderClasses()}>
+            {this.renderHeaderRow(filter,filter_type)}
             <tr>
                 {this.props.serialNumber&&filter_type !== 'after'?<th style={{width:'20px',textAlign:'center'}}/>:null}
                 {this.state.select &&filter_type !== 'after'?
                     <th style={{width:'20px',textAlign:'center'}}>
                         <CCheckbox ref={c=>{this.allchk=c}} onChange={this.selectAll}/>
                     </th> : null}
-                {React.Children.map(this.props.children, (item, key) => {
+                {this.headers.map((item, key) => {
                     if (!item || item.props.hide) {
                         return null;
                     }
@@ -486,7 +567,7 @@ class Table extends React.Component {
                         <td style={{width:'20px',textAlign:'center'}}>
                             <CCheckbox ref={'row_' + i} onChange={this.changeHandler(row, i)}/>
                         </td> : null}
-                    {React.Children.map(this.props.children, (item, key) => {
+                    {this.headers.map((item, key) => {
                         if (!item || item.props.hide) {
                             return null;
                         }
@@ -656,12 +737,13 @@ Table.defaultProps = {
     currentPage: 1,
     hover      : true,
     striped    : true,
-    fixed: false,
+    fixed:     false,
     align      : 'left',
     emptyText  : 'Not data',
     serialNumber: true,
 };
 
 Table.Header = TableHeader;
+Table.HeaderRow = TableHeaderRow;
 
 export default Table;

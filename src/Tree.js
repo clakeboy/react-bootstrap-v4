@@ -13,7 +13,7 @@ class Tree extends React.PureComponent {
         this.state = {
             data : this.props.data
         };
-
+        this.currentSelected;
         this.parents = {};
         this.domId = 'tree-' + common.RandomString(8);
     }
@@ -42,6 +42,14 @@ class Tree extends React.PureComponent {
         return (e)=>{
             if (typeof this.props.onClick === 'function') {
                 this.props.onClick(e,item,id);
+            }
+
+            if (this.props.showSelected && !this.parents[id]) {
+                let active = this.mainDom.querySelector('.active');
+                if (active) {
+                    active.classList.remove('active');
+                }
+                e.currentTarget.parentNode.classList.add('active');
             }
         };
     };
@@ -114,28 +122,30 @@ class Tree extends React.PureComponent {
                 'marginLeft':pad+'rem'
             };
             let id = `${parent_key}-${idx}`;
-            return <div className='ck-tree-item' style={style}>
-                <div className='ck-tree-content d-flex' onContextMenu={this.menuHandler(val,id)}>
-                    {val.children?<span className='ck-tree-icon' onClick={this.iconHandler(val,id)}>
-                        <Icon className={val.show?'ck-tree-icon-down':''} icon={val.children?'angle-right':val.icon}/>
-                    </span>:<span className='ck-tree-icon'/>}
-                    <span className='ck-tree-item-text'
-                          onDoubleClick={this.dbClickHandler(val,id)}
-                          onClick={this.selectHandler(val,id)}>
-                        {val.icon?<><Icon icon={val.icon}/>{'\u0020'}</>:null}
-                        {val.text}
-                    </span>
+            return (
+                <div className='ck-tree-item' style={style}>
+                    <div className='ck-tree-content d-flex' onContextMenu={this.menuHandler(val,id)}>
+                        {val.children?<span className='ck-tree-icon' onClick={this.iconHandler(val,id)}>
+                            <Icon className={val.show?'ck-tree-icon-down':''} icon={val.children?'angle-right':val.icon}/>
+                        </span>:<span className='ck-tree-icon'/>}
+                        <span className='ck-tree-item-text'
+                              onDoubleClick={this.dbClickHandler(val,id)}
+                              onClick={this.selectHandler(val,id)}>
+                            {val.icon?<><Icon icon={val.icon}/>{'\u0020'}</>:null}
+                            {val.text}
+                        </span>
+                    </div>
+                    {val.children?<div id={this.domId+'-'+id} className={'ck-tree-children'+(val.show?'':' d-none')} data-show={val.show?'1':'0'} ref={c=>this.parents[id]=c}>
+                        {this.renderItem(val.children,val,level+1,id)}
+                    </div>:null}
                 </div>
-                {val.children?<div id={this.domId+'-'+id} className={'ck-tree-children'+(val.show?'':' d-none')} data-show={val.show?'1':'0'} ref={c=>this.parents[id]=c}>
-                    {this.renderItem(val.children,val,level+1,id)}
-                </div>:null}
-            </div>
+            )
         });
     }
 
     render() {
         return (
-            <div className={this.getClasses()}>
+            <div ref={c=>this.mainDom = c} className={this.getClasses()}>
                 {this.renderItem(this.state.data)}
             </div>
         );
@@ -147,6 +157,7 @@ Tree.propTypes = {
     onClick: PropTypes.func,
     onDbClick: PropTypes.func,
     onMenu: PropTypes.func,
+    showSelected: PropTypes.bool
 };
 
 Tree.defaultProps = {

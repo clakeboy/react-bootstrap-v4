@@ -153,7 +153,7 @@ class Coupon extends React.PureComponent {
                     }}>Button Block</Button>
                 </Card>
                 <Card className='mt-2' header='树组件 Card 自定义头' custom border='light'>
-                    <Tree data={this.state.tree} onClick={(item,id)=>{
+                    <Tree data={this.state.tree} showSelected onClick={(item,id)=>{
                         // this.modal.alert(item.text+id);
                         console.log(item);
                     }}/>

@@ -56,14 +56,16 @@ class TestTable extends React.PureComponent {
         }
 
         this.state = {
-            editData: this.editTable.slice()
+            editData: []
         };
 
         this.editRows = [];
     }
 
     componentDidMount() {
-
+        this.setState({
+            editData:this.editTable.slice()
+        })
     }
 
     getClasses() {
@@ -115,6 +117,7 @@ class TestTable extends React.PureComponent {
                 <h3>测试编辑</h3>
                 <Card className='mt-2' header='测试 Table Scroll'>
                     <Table hover={true} select={true} data={this.state.editData} headerTheme='light' width='100%' fixed>
+
                         <Table.Header text='Name' field='name' width='100px' beforeHold onSort={(sort)=>{alert(sort)}}/>
                         <Table.Header text='Age' field='age' width='100px' beforeHold/>
                         <Table.Header text='Test1' field='test1' width='250px' />

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import TableHeader from './TableHeader';
+import TableHeaderRow from "./TableHeaderRow";
 import CCheckbox from "./CCheckbox";
 import Button from './Button';
 import common from "./Common";
@@ -73,9 +74,9 @@ class Table extends React.Component {
         }
     }
 
-    // componentDidUpdate(prevProps, prevState, snapshot) {
-    //     // this.syncRowsHeight();
-    // }
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        this.syncRowsHeight();
+    }
 
     componentWillReceiveProps(nextProps) {
         if (this.props.data !== nextProps.data) {

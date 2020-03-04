@@ -14,6 +14,11 @@ const ModalLoading = 2;
 const ModalView = 3;
 const BaseModal = 1050;
 
+const defBtns = {
+    ok:'确定',
+    cancel:'取消',
+};
+
 class CKModal extends React.PureComponent {
     constructor(props) {
         super(props);
@@ -27,7 +32,8 @@ class CKModal extends React.PureComponent {
             fade:this.props.fade,
             show:false,
             size:'lg',
-            width:null
+            width:null,
+            btns:defBtns,
         };
         //modal type
         this.modalType = ModalAlert;
@@ -141,6 +147,7 @@ class CKModal extends React.PureComponent {
             type:ModalAlert,
             center:typeof opt.center === 'undefined'?this.props.center:opt.center,
             width:typeof opt.width !== 'undefined'?opt.width:null,
+            btns: typeof opt.btns != 'undefined' ? opt.btns:defBtns,
         },()=>{
             this.open({
                 backdrop:'static',
@@ -170,6 +177,7 @@ class CKModal extends React.PureComponent {
             type:ModalConfirm,
             center:typeof opt.center === 'undefined'?this.props.center:opt.center,
             width:typeof opt.width !== 'undefined'?opt.width:null,
+            btns: typeof opt.btns != 'undefined' ? opt.btns:defBtns,
         },()=>{
             this.open({
                 backdrop:'static',
@@ -295,7 +303,7 @@ class CKModal extends React.PureComponent {
                         if (typeof this.callback === 'function') {
                             this.callback(1);
                         }
-                    }}>确定</Button>
+                    }}>{this.state.btns['ok']}</Button>
                 );
                 break;
             case ModalConfirm:
@@ -306,13 +314,13 @@ class CKModal extends React.PureComponent {
                                 if (typeof this.callback === 'function') {
                                     this.callback(1);
                                 }
-                            }}>确定</Button>
+                            }}>{this.state.btns['ok']}</Button>
                             <Button className='w-100' onClick={()=>{
                                 this.close();
                                 if (typeof this.callback === 'function') {
                                     this.callback(0);
                                 }
-                            }} theme='secondary'>取消</Button>
+                            }} theme='secondary'>{this.state.btns['cancel']}</Button>
                         </ButtonGroup>
                 );
                 break;

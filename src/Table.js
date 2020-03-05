@@ -42,6 +42,10 @@ class Table extends React.Component {
 
         this.headers = [];
 
+        this.width = 0;
+        this.beforeHoldWidth = 0;
+        this.afterHoldWidth = 0;
+
         this.initTableWidth();
 
         // this.initHold();
@@ -54,7 +58,13 @@ class Table extends React.Component {
 
     componentDidMount() {
         this.mainDom.addEventListener('scroll', this.scrollHandler, false);
+        window.addEventListener('resize',this.holdShow,false);
         this.syncRowsHeight();
+        this.holdShow();
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize',this.holdShow,false);
     }
 
     syncRowsHeight() {
@@ -85,8 +95,30 @@ class Table extends React.Component {
         }
     }
 
+    holdShow = (e) => {
+        if (this.mainDom.clientWidth >= parseInt(this.width)) {
+            if (this.beforeBody) {
+                this.beforeBody.classList.add('d-none')
+            }
+            if (this.afterBody) {
+                this.afterBody.classList.add('d-none')
+            }
+        } else {
+            if (this.beforeBody) {
+                this.beforeBody.classList.remove('d-none')
+            }
+            if (this.afterBody) {
+                this.afterBody.classList.remove('d-none')
+            }
+        }
+        if (e) {
+            this.holdShadow(e);
+        }
+    };
+
     componentDidUpdate(prevProps, prevState, snapshot) {
         this.syncRowsHeight();
+        this.holdShow();
     }
 
     componentWillReceiveProps(nextProps) {
@@ -302,7 +334,7 @@ class Table extends React.Component {
             base = classNames(base, 'table-responsive');
         }
         //fixed
-        if ((this.props.fixed || this.props.scroll || this.props.width) && this.tableHeaderRows.length <= 0) {
+        if ((this.props.fixed || this.props.scroll || this.props.width)) {
             base = classNames(base, 'fixed');
         }
 
@@ -380,7 +412,11 @@ class Table extends React.Component {
             // this.tableHeader.style.transform = `translateY(${e.currentTarget.scrollTop}px)`;
             this.tableHeader.style.transform = `translate3d(0,${e.currentTarget.scrollTop}px,10px)`;
         }
-        if (this.beforeFields.length > 0) {
+        this.holdShadow(e);
+    };
+
+    holdShadow(e) {
+        if (this.beforeBody) {
             if (e.currentTarget.scrollLeft === 0) {
                 this.beforeBody.classList.remove('shadow');
             } else {
@@ -388,7 +424,7 @@ class Table extends React.Component {
             }
         }
 
-        if (this.afterFields.length > 0) {
+        if (this.afterBody) {
             let diff = e.currentTarget.scrollWidth-e.currentTarget.clientWidth;
             if (diff === e.currentTarget.scrollLeft || diff-1 === e.currentTarget.scrollLeft) {
                 this.afterBody.classList.remove('shadow');
@@ -396,7 +432,7 @@ class Table extends React.Component {
                 this.afterBody.classList.add('shadow');
             }
         }
-    };
+    }
 
     setHeight(height) {
         this.mainDom.style.height = height;
@@ -411,6 +447,7 @@ class Table extends React.Component {
                             {this.props.refreshText}
                         </Button>) : null}
                     <table ref={c=>this.tableBody = c} id={this.domId+'_body'} className={this.getClasses()} style={this.getTableStyles()}>
+                        {this.renderCol()}
                         {this.props.header ? this.renderHeader() : null}
                         <tbody>
                         {this.renderBody()}
@@ -425,21 +462,26 @@ class Table extends React.Component {
         );
     }
 
+    renderCol(filter,filter_type) {
+        return <colgroup>
+            {this.props.serialNumber&&filter_type !== 'after'?<col width='30px'/>:null}
+            {this.state.select &&filter_type !== 'after'? <col width={'30px'}/> : null}
+            {this.headers.map((item)=>{
+                //hold column
+                if (filter && filter.indexOf(item.props.field) === -1) {
+                    return null;
+                }
+                if (item.props.hide) {
+                    return null;
+                }
+                return <col width={item.props.width}/>
+            })}
+        </colgroup>
+    }
+
     renderHeaderRow(filter,filter_type) {
         if (this.tableHeaderRows.length <= 0) return null;
         let headers = [];
-
-        // headers.push(<colgroup>
-        //     {this.props.serialNumber&&filter_type !== 'after'?<col width='20px'/>:null}
-        //     {this.state.select &&filter_type !== 'after'? <col width='20px'/> : null}
-        //     {this.headers.map((item)=>{
-        //         //hold column
-        //         if (filter && filter.indexOf(item.props.field) === -1) {
-        //             return null;
-        //         }
-        //         return <col width={item.props.width}/>
-        //     })}
-        // </colgroup>);
 
         this.tableHeaderRows.forEach((list,index)=>{
             let offset = 0;
@@ -450,20 +492,16 @@ class Table extends React.Component {
             let totalCols = 0;
             headers.push(
                 <tr>
+                    {offset>0&&filter_type !== 'after'?<th colSpan={offset}/>:null}
                     {list.map((item)=>{
                         let colsCount = item.props.cols;
-
                         if (filter && totalCols >= filter.length) return null;
-
                         if (filter && colsCount > filter.length) {
                             colsCount = filter.length;
                         }
-                        if (filter_type !== 'after') {
-                            colsCount += offset;
-                        }
                         totalCols += item.props.cols;
                         return <th colSpan={colsCount} className='colspan' style={{textAlign:item.props.align}}>
-                            {!filter?item.props.text:null}
+                            {item.props.text}
                         </th>
                     })}
                 </tr>
@@ -480,7 +518,7 @@ class Table extends React.Component {
             <tr>
                 {this.props.serialNumber&&filter_type !== 'after'?<th style={{width:'20px',textAlign:'center'}}/>:null}
                 {this.state.select &&filter_type !== 'after'?
-                    <th style={{width:'20px',textAlign:'center'}}>
+                    <th className='chk' style={{textAlign:'center'}}>
                         <CCheckbox ref={c=>{this.allchk=c}} onChange={this.selectAll}/>
                     </th> : null}
                 {this.headers.map((item, key) => {
@@ -564,7 +602,7 @@ class Table extends React.Component {
                             {this.formatSn(i)}
                         </th> : null}
                     {this.state.select && filter_type !== 'after' ?
-                        <td style={{width:'20px',textAlign:'center'}}>
+                        <td className='chk' style={{textAlign:'center'}}>
                             <CCheckbox ref={'row_' + i} onChange={this.changeHandler(row, i)}/>
                         </td> : null}
                     {this.headers.map((item, key) => {
@@ -668,6 +706,7 @@ class Table extends React.Component {
         return (
             <div className='ck-table-hold-before'>
                 <table ref={c=>this.beforeBody=c} id={this.domId+'_before_body'} className={this.getClasses()} style={this.getTableStyles(this.beforeHoldWidth)}>
+                    {this.renderCol(this.beforeFields)}
                     {this.props.header ? this.renderHeader(this.beforeFields) : null}
                     <tbody>
                     {this.renderBody(this.beforeFields)}
@@ -684,6 +723,7 @@ class Table extends React.Component {
         return (
             <div className='ck-table-hold-after'>
                 <table ref={c=>this.afterBody=c} id={this.domId+'_after_body'} className={this.getClasses('shadow')} style={this.getTableStyles(this.afterHoldWidth)}>
+                    {this.renderCol(this.afterFields,'after')}
                     {this.props.header ? this.renderHeader(this.afterFields,'after') : null}
                     <tbody >
                     {this.renderBody(this.afterFields,'after')}

@@ -109,7 +109,7 @@ class TestTable extends React.PureComponent {
 
     render() {
         return (
-            <Container>
+            <div>
                 <h1>React Bootstrap v4 Test Table Scroll</h1>
                 <Button onClick={()=>{
                     this.props.history.goBack();
@@ -118,8 +118,8 @@ class TestTable extends React.PureComponent {
                 <Card className='mt-2' header='测试 Table Scroll'>
                     <Table hover={true} select={true} data={this.state.editData} headerTheme='light' width='100%'>
                         <Table.HeaderRow>
-                            <Table.Header text='User' cols={4} align='center'/>
-                            <Table.Header text='Other' cols={3} align='center'/>
+                            <Table.Header text='User' cols={2} align='center'/>
+                            <Table.Header text='Content' cols={4} align='center'/>
                         </Table.HeaderRow>
                         <Table.Header text='Name' field='name' width='100px' beforeHold onSort={(sort)=>{alert(sort)}}/>
                         <Table.Header text='Age' field='age' width='100px' beforeHold/>
@@ -187,7 +187,7 @@ class TestTable extends React.PureComponent {
                         }} />
                     </Table>
                 </Card>
-            </Container>
+            </div>
         );
     }
 }

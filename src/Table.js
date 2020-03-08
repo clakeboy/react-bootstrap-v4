@@ -405,9 +405,6 @@ class Table extends React.Component {
     }
 
     scrollHandler = (e) => {
-        console.log(e.currentTarget.scrollHeight);
-        // console.log(e.currentTarget.scrollLeft,e.currentTarget.scrollWidth,e.currentTarget.clientWidth,e.currentTarget);
-        // console.log(e.currentTarget.scrollWidth-e.currentTarget.clientWidth);
         if (this.tableHeader && e.currentTarget.scrollTop > 0) {
             // this.tableHeader.style.transform = `translateY(${e.currentTarget.scrollTop}px)`;
             this.tableHeader.style.transform = `translate3d(0,${e.currentTarget.scrollTop}px,10px)`;
@@ -447,7 +444,7 @@ class Table extends React.Component {
                             {this.props.refreshText}
                         </Button>) : null}
                     <table ref={c=>this.tableBody = c} id={this.domId+'_body'} className={this.getClasses()} style={this.getTableStyles()}>
-                        {this.renderCol()}
+                        {this.props.width?this.renderCol():null}
                         {this.props.header ? this.renderHeader() : null}
                         <tbody>
                         {this.renderBody()}

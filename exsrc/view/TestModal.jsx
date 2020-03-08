@@ -36,92 +36,94 @@ class TestModal extends React.PureComponent {
             count      : 0,
             currentPage: 1,
             comboSelect: {'id':[1,3,5]},
-            child : [{
-                "id"             : 3,
-                "task_name"      : "测试通知",
-                "time_rule"      : "0 * * * * *",
-                "once"           : true,
-                "is_execute"     : true,
-                "disable"        : false,
-                "notify_url"     : "http://localhost:9803/notify",
-                "notify_method"  : "GET",
-                "notify_data"    : "",
-                "notify_number"  : 6,
-                "notified_number": 6,
-                "source"         : "System",
-                "created_date"   : 1530864160
-            }, {
-                "id"             : 2,
-                "task_name"      : "测试一次通知",
-                "time_rule"      : "* */1 * * * *",
-                "once"           : true,
-                "is_execute"     : true,
-                "disable"        : false,
-                "notify_url"     : "http://localhost:9803/serv/server/status",
-                "notify_method"  : "GET",
-                "notify_data"    : "",
-                "notify_number"  : 3,
-                "notified_number": 7,
-                "source"         : "System",
-                "created_date"   : 1530783655
-            }, {
-                "id"             : 1,
-                "task_name"      : "测试任务",
-                "time_rule"      : "0 * * * * *",
-                "once"           : true,
-                "is_execute"     : true,
-                "disable"        : false,
-                "notify_url"     : "http://localhost:9803",
-                "notify_method"  : "GET",
-                "notify_data"    : "asdfasdf",
-                "notify_number"  : 7,
-                "notified_number": 12,
-                "source"         : "",
-                "created_date"   : 1530767866
-            }, {
-                "id"             : 4,
-                "task_name"      : "测试任务",
-                "time_rule"      : "0 * * * * *",
-                "once"           : true,
-                "is_execute"     : true,
-                "disable"        : false,
-                "notify_url"     : "http://localhost:9803",
-                "notify_method"  : "GET",
-                "notify_data"    : "asdfasdf",
-                "notify_number"  : 7,
-                "notified_number": 12,
-                "source"         : "",
-                "created_date"   : 1530767866
-            }, {
-                "id"             : 5,
-                "task_name"      : "测试任务",
-                "time_rule"      : "0 * * * * *",
-                "once"           : true,
-                "is_execute"     : true,
-                "disable"        : false,
-                "notify_url"     : "http://localhost:9803",
-                "notify_method"  : "GET",
-                "notify_data"    : "asdfasdf",
-                "notify_number"  : 7,
-                "notified_number": 12,
-                "source"         : "",
-                "created_date"   : 1530767866
-            }, {
-                "id"             : 6,
-                "task_name"      : "测试任务",
-                "time_rule"      : "0 * * * * *",
-                "once"           : true,
-                "is_execute"     : true,
-                "disable"        : false,
-                "notify_url"     : "http://localhost:9803",
-                "notify_method"  : "GET",
-                "notify_data"    : "asdfasdf",
-                "notify_number"  : 7,
-                "notified_number": 12,
-                "source"         : "",
-                "created_date"   : 1530767866
-            }],
+            child : [],
         };
+
+        this.child = [{
+            "id"             : 3,
+            "task_name"      : "测试通知",
+            "time_rule"      : "0 * * * * *",
+            "once"           : true,
+            "is_execute"     : true,
+            "disable"        : false,
+            "notify_url"     : "http://localhost:9803/notify",
+            "notify_method"  : "GET",
+            "notify_data"    : "",
+            "notify_number"  : 6,
+            "notified_number": 6,
+            "source"         : "System",
+            "created_date"   : 1530864160
+        }, {
+            "id"             : 2,
+            "task_name"      : "测试一次通知",
+            "time_rule"      : "* */1 * * * *",
+            "once"           : true,
+            "is_execute"     : true,
+            "disable"        : false,
+            "notify_url"     : "http://localhost:9803/serv/server/status",
+            "notify_method"  : "GET",
+            "notify_data"    : "",
+            "notify_number"  : 3,
+            "notified_number": 7,
+            "source"         : "System",
+            "created_date"   : 1530783655
+        }, {
+            "id"             : 1,
+            "task_name"      : "测试任务",
+            "time_rule"      : "0 * * * * *",
+            "once"           : true,
+            "is_execute"     : true,
+            "disable"        : false,
+            "notify_url"     : "http://localhost:9803",
+            "notify_method"  : "GET",
+            "notify_data"    : "asdfasdf",
+            "notify_number"  : 7,
+            "notified_number": 12,
+            "source"         : "",
+            "created_date"   : 1530767866
+        }, {
+            "id"             : 4,
+            "task_name"      : "测试任务",
+            "time_rule"      : "0 * * * * *",
+            "once"           : true,
+            "is_execute"     : true,
+            "disable"        : false,
+            "notify_url"     : "http://localhost:9803",
+            "notify_method"  : "GET",
+            "notify_data"    : "asdfasdf",
+            "notify_number"  : 7,
+            "notified_number": 12,
+            "source"         : "",
+            "created_date"   : 1530767866
+        }, {
+            "id"             : 5,
+            "task_name"      : "测试任务",
+            "time_rule"      : "0 * * * * *",
+            "once"           : true,
+            "is_execute"     : true,
+            "disable"        : false,
+            "notify_url"     : "http://localhost:9803",
+            "notify_method"  : "GET",
+            "notify_data"    : "asdfasdf",
+            "notify_number"  : 7,
+            "notified_number": 12,
+            "source"         : "",
+            "created_date"   : 1530767866
+        }, {
+            "id"             : 6,
+            "task_name"      : "测试任务",
+            "time_rule"      : "0 * * * * *",
+            "once"           : true,
+            "is_execute"     : true,
+            "disable"        : false,
+            "notify_url"     : "http://localhost:9803",
+            "notify_method"  : "GET",
+            "notify_data"    : "asdfasdf",
+            "notify_number"  : 7,
+            "notified_number": 12,
+            "source"         : "",
+            "created_date"   : 1530767866
+        }];
 
         this.pageNumber = 30;
     }
@@ -221,7 +223,8 @@ class TestModal extends React.PureComponent {
         this.setState({
             data       : res.data.list,
             currentPage: page,
-            count      : res.data.count
+            count      : res.data.count,
+            child:this.child,
         });
     }
 
@@ -421,6 +424,23 @@ class TestModal extends React.PureComponent {
                             ],
                         }} comboData={this.state.child} onChange={(val,row)=>{
                             console.log(val,row);
+                        }}/>
+                        <Input className='col-3' label={<div><span style={{color: 'red'}}>* </span>机构</div>}
+                               placeholder='请选择机构'
+                               combo={{
+                                    searchColumn: 'task_name',
+                                    showRows:10,
+                                   filterColumns:[
+                                       {field:'task_name',text:'任务名称'},
+                                       {field:'time_rule',text:'时间规则'},
+                                       {field:'notify_method',text:'任务名称'},
+                                       {field:'source',text:'任务名称'},
+                                       {field:'created_date',text:'创建时间',format:(val,row)=>{
+                                               return new Date(val*1000).toLocaleString();
+                                           }}
+                                   ],
+                        }} comboData={this.state.child} onChange={(val, row) => {
+                            console.log(val,row)
                         }}/>
                         <Input label="测试本地数据 Combo 只读(正常)" readOnly combo={{
                             searchColumn:'task_name',

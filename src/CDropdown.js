@@ -2,34 +2,38 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Input from "./Input";
 
-class CDropdown extends React.PureComponent {
+class CDropdown extends React.Component {
     constructor(props) {
         super(props);
+
+        this.listData = this.props.data;
+        this.state = {
+            data:this.props.data
+        };
     }
 
     render() {
         if (React.Children.count(this.props.children)) {
+            let list = [];
             React.Children.forEach(this.props.children, (item, key) => {
-                let list = [];
                 if (item.type === CDropdownValue) {
                     list.push({
                         text: item.props.text,
                         value: item.props.value,
                     })
                 }
-                this.props.data = list;
             });
+            this.listData = list;
         }
         return (
-            <Input combo={{
+            <Input className={this.props.className} combo={{
                 width: '100%',
                 filterColumns: ['text'],
-                showRows: this.props.showRows,
-                data: this.props.data
-            }} label={this.props.label} readOnly
+                showRows: this.props.showRows
+            }} comboData={this.listData} label={this.props.label} readOnly
                    onChange={this.props.onChange}
                    placeholder={this.props.text}
-                   data={this.props.value}
+                   data={this.state.data}
             />
         );
     }

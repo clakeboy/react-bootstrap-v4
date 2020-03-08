@@ -37,6 +37,7 @@ class Combo extends React.Component {
     }
 
     componentWillUnmount() {
+
         window.removeEventListener('mousedown',this.hide,false);
         if (this.parentDom) {
             this.parentDom.removeEventListener('keydown',this.keyDownHandler,false);
@@ -253,6 +254,7 @@ class Combo extends React.Component {
         if (typeof this.props.onSelect === 'function') {
             this.props.onSelect(row[this.props.searchColumn],row);
         }
+        this.search = row[this.props.searchColumn];
         this.hide();
     };
 
@@ -293,13 +295,14 @@ class Combo extends React.Component {
         if (this.props.noSearch) {
             data = this.props.data;
         } else if (this.props.data) {
-            let reg = new RegExp("^"+search);
+            let reg = new RegExp("^"+search.replace(/\\/g,'\\\\'));
             this.props.data.forEach((item)=>{
                 if (reg.test(item[this.props.searchColumn])) {
                     data.push(item);
                 }
             });
         }
+
         this.setState({data:data.length === 0?null:data},()=>{
             //fixed out window area
             this.fixPosition();
@@ -313,8 +316,8 @@ class Combo extends React.Component {
 
                 return {
                     field: is_obj?item.field:item,
-                    width:  is_obj?item.width:null,
-                    text: is_obj?item.text:item.field,
+                    width: is_obj?item.width:null,
+                    text:  is_obj?item.text:item.field,
                     format:is_obj?item.format:null
                 };
             });
@@ -383,6 +386,7 @@ class Combo extends React.Component {
     }
     renderList() {
         let columns = this.filterColumns();
+
         return (
             <div ref={c=>this.conDom=c} className='ck-combo-content'>
                 <Table ref={c=>this.table=c} height='100px' select={this.props.multi}

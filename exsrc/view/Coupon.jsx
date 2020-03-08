@@ -104,9 +104,11 @@ class Coupon extends React.PureComponent {
                             <Input className='col-6' label='Name' plaintext data='Clake'/>
                             <Input className='col-6' label='Last Name' data='Lee'/>
                         </div>
-                        {data.item1}
                         <div className='form-row'>
-                            <CDropdown className='col-6' label='Name' text='下拉' data='Clake'/>
+                            <CDropdown className='col-6' label='Name' text='下拉' data={'选项1'}>
+                                <CDropdown.Value text='选项1' value={11111}/>
+                                <CDropdown.Value text='选项2' value={222222}/>
+                            </CDropdown>
                         </div>
                         <div className='form-row'>
                             <div className='col-2 form-group pt-2'><label>middle垂直居中</label></div>

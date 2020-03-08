@@ -341,7 +341,7 @@ class Combo extends React.Component {
             base = classNames(base,'ck-calendar-'+this.props.triangular)
         }
         if (this.props.sm) {
-            base = classNames(base,'ck-combo-sm','ck-combo-up-sm');
+            base = classNames(base,'ck-combo-sm','ck-combo-up ck-combo-up-sm');
         } else {
             base = classNames(base,'ck-combo-up');
         }

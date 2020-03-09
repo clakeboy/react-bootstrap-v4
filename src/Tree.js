@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/dedupe';
 import Icon from './Icon';
-import $ from 'jquery';
-
+import CCheckbox from "./CCheckbox";
 import './css/Tree.less';
 import common from "./Common";
 
@@ -16,6 +15,9 @@ class Tree extends React.PureComponent {
         this.currentSelected;
         this.parents = {};
         this.domId = 'tree-' + common.RandomString(8);
+        this.checkObjList = {};
+        this.checkSelectList = {};
+        this.checkItems = {};
     }
 
     componentDidMount() {
@@ -81,6 +83,42 @@ class Tree extends React.PureComponent {
         }
     };
 
+    changeHandler(item,id,parent) {
+        return (check) => {
+            this.setCheckObj(check,item,id,parent);
+        }
+    }
+
+    setCheckObj(check,item,id,parent) {
+        if (typeof this.props.onSelect === 'function') {
+            this.props.onSelect(check,item);
+        }
+        if (check) {
+            this.checkSelectList[parent].push(item);
+        } else {
+            let idx = this.checkSelectList[parent].indexOf(item);
+            this.checkSelectList[parent].splice(idx,1);
+        }
+
+        if (this.checkItems[id] && this.checkItems[id].length > 0) {
+            this.checkItems[id].forEach((data)=>{
+                this.setCheckObj(check,data.data,data.id,id);
+                this.checkObjList[data.id].setChecked(check);
+            });
+        }
+
+        //set parent check status
+        if (this.props.check && this.checkObjList[parent]) {
+            if (this.checkSelectList[parent].length === this.checkItems[parent].length) {
+                this.checkObjList[parent].setChecked(true);
+            } else if (this.checkSelectList[parent].length > 0) {
+                this.checkObjList[parent].setHalf(true);
+            } else {
+                this.checkObjList[parent].setChecked(false);
+            }
+        }
+    }
+
     showChild(id) {
         let parent = this.parents[id];
         if (parent) {
@@ -94,6 +132,10 @@ class Tree extends React.PureComponent {
                 parent.previousElementSibling.querySelector('i').classList.remove('ck-tree-icon-down');
             }
         }
+    }
+
+    getSelected() {
+        return this.checkSelectList;
     }
 
     /**
@@ -117,20 +159,24 @@ class Tree extends React.PureComponent {
             parent_key = 0;
         }
         let pad = parent?1:0;
+        this.checkSelectList[parent_key] = [];
+        this.checkItems[parent_key] = [];
         return list.map((val,idx)=>{
             let style = {
                 'marginLeft':pad+'rem'
             };
             let id = `${parent_key}-${idx}`;
+            this.checkItems[parent_key].push({id:id,data:val});
             return (
                 <div className='ck-tree-item' style={style}>
                     <div className='ck-tree-content d-flex' onContextMenu={this.menuHandler(val,id)}>
                         {val.children?<span className='ck-tree-icon' onClick={this.iconHandler(val,id)}>
                             <Icon className={val.show?'ck-tree-icon-down':''} icon={val.children?'angle-right':val.icon}/>
                         </span>:<span className='ck-tree-icon'/>}
+                        {this.props.check ? <CCheckbox ref={c=>this.checkObjList[id]=c} className='mr-1' inline onChange={this.changeHandler(val,id,parent_key)}/>:null}
                         <span className='ck-tree-item-text'
-                              onDoubleClick={this.dbClickHandler(val,id)}
-                              onClick={this.selectHandler(val,id)}>
+                              onDoubleClick={this.dbClickHandler(val,id,parent_key)}
+                              onClick={this.selectHandler(val,id,parent_key)}>
                             {val.icon?<><Icon icon={val.icon}/>{'\u0020'}</>:null}
                             {val.text}
                         </span>
@@ -146,7 +192,7 @@ class Tree extends React.PureComponent {
     render() {
         return (
             <div ref={c=>this.mainDom = c} className={this.getClasses()}>
-                {this.renderItem(this.state.data)}
+                {this.renderItem(this.state.data,null,0,0)}
             </div>
         );
     }
@@ -157,7 +203,9 @@ Tree.propTypes = {
     onClick: PropTypes.func,
     onDbClick: PropTypes.func,
     onMenu: PropTypes.func,
-    showSelected: PropTypes.bool
+    showSelected: PropTypes.bool,
+    check: PropTypes.bool,
+    onSelect: PropTypes.func,
 };
 
 Tree.defaultProps = {

@@ -47,13 +47,15 @@ class Combo extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState({data:nextProps.data});
+        if (this.props.data !== nextProps.data) {
+            this.setState({data:nextProps.data});
+        }
     }
 
     componentDidUpdate() {
         if (this.table) {
             let mainDom = this.table.mainDom;
-            let height = mainDom.querySelector('tr').clientHeight;
+            let height = mainDom.querySelector('tbody>tr').clientHeight;
             let fixHeader = 0;
             if (this.props.header) {
                 fixHeader = mainDom.querySelector('thead').clientHeight;
@@ -65,7 +67,8 @@ class Combo extends React.Component {
                 // this.conDom.style.height = (height*this.props.showRows)+'px';
                 this.table.setHeight((height*this.props.showRows+fixHeader)+'px');
             } else {
-                this.table.setHeight((height*this.state.data.length+fixHeader)+'px');
+                // this.table.setHeight((height*this.state.data.length+fixHeader)+'px');
+                this.table.setHeight('auto');
             }
             if (!this.props.multi) {
                 this.clearSelect();
@@ -288,14 +291,14 @@ class Combo extends React.Component {
                         });
                     });
                 });
-            },500);
+            },300);
             return;
         }
         let data = [];
         if (this.props.noSearch) {
             data = this.props.data;
         } else if (this.props.data) {
-            let reg = new RegExp("^"+search.replace(/\\/g,'\\\\'));
+            let reg = new RegExp("^"+search.replace(/\\/g,'\\\\'),'i');
             this.props.data.forEach((item)=>{
                 if (reg.test(item[this.props.searchColumn])) {
                     data.push(item);
@@ -354,8 +357,10 @@ class Combo extends React.Component {
         if (this.props.height) {
             base.height = this.props.height;
         }
-        if (this.props.width) {
+        if (this.props.width && !this.state.loading && this.state.data) {
             base.width = this.props.width;
+        } else {
+            base.width = 'auto';
         }
         return base;
     }
@@ -386,16 +391,17 @@ class Combo extends React.Component {
     }
     renderList() {
         let columns = this.filterColumns();
-
         return (
             <div ref={c=>this.conDom=c} className='ck-combo-content'>
                 <Table ref={c=>this.table=c} height='100px' select={this.props.multi}
                        header={this.props.header}
                        headerTheme='light'
+                       truncate={true}
                        striped={false}
                        sm={this.props.sm}
                        serialNumber={false}
                        data={this.state.data}
+                       fixed={!!this.props.width}
                        onCheck={this.props.multi?this.multiSelectHandler:null}
                        onClick={this.selectHandler}>
                     {map(columns,(item)=>{
@@ -407,7 +413,8 @@ class Combo extends React.Component {
         )
     }
     filterFormat = (val,row)=>{
-        let idx = val.indexOf(this.search);
+        console.log(val.toLowerCase(),this.search.toLowerCase());
+        let idx = val.toLowerCase().indexOf(this.search.toLowerCase());
         if (idx === -1) {
             return val;
         }

@@ -96,7 +96,7 @@ class Table extends React.Component {
     }
 
     holdShow = (e) => {
-        if (this.mainDom.clientWidth >= parseInt(this.width)) {
+        if (this.mainDom.clientWidth >= this.tableBody.clientWidth) {
             if (this.beforeBody) {
                 this.beforeBody.classList.add('d-none')
             }
@@ -405,7 +405,7 @@ class Table extends React.Component {
     }
 
     scrollHandler = (e) => {
-        if (this.tableHeader && e.currentTarget.scrollTop > 0) {
+        if (this.tableHeader && e.currentTarget.scrollHeight > e.currentTarget.clientHeight) {
             // this.tableHeader.style.transform = `translateY(${e.currentTarget.scrollTop}px)`;
             this.tableHeader.style.transform = `translate3d(0,${e.currentTarget.scrollTop}px,10px)`;
         }
@@ -513,9 +513,9 @@ class Table extends React.Component {
             <thead ref={c => {if (!filter) this.tableHeader = c}} className={this.getHeaderClasses()}>
             {this.renderHeaderRow(filter,filter_type)}
             <tr>
-                {this.props.serialNumber&&filter_type !== 'after'?<th style={{width:'20px',textAlign:'center'}}/>:null}
+                {this.props.serialNumber&&filter_type !== 'after'?<th style={{width:'30px',textAlign:'center'}}/>:null}
                 {this.state.select &&filter_type !== 'after'?
-                    <th className='chk' style={{textAlign:'center'}}>
+                    <th className='chk' style={{textAlign:'center',width:'30px'}}>
                         <CCheckbox ref={c=>{this.allchk=c}} onChange={this.selectAll}/>
                     </th> : null}
                 {this.headers.map((item, key) => {
@@ -595,11 +595,11 @@ class Table extends React.Component {
             <React.Fragment>
                 <tr className={this.props.onClick ? 'click-row' : this.getHeaderClasses()} onClick={this.clickHandler(row, i)}>
                     {this.props.serialNumber && filter_type !== 'after' ?
-                        <th className='sn text-nowrap'>
+                        <th className='sn text-nowrap' style={{textAlign:'center',width:'30px'}}>
                             {this.formatSn(i)}
                         </th> : null}
                     {this.state.select && filter_type !== 'after' ?
-                        <td className='chk' style={{textAlign:'center'}}>
+                        <td className='chk' style={{textAlign:'center',width:'30px'}}>
                             <CCheckbox ref={'row_' + i} onChange={this.changeHandler(row, i)}/>
                         </td> : null}
                     {this.headers.map((item, key) => {
@@ -677,7 +677,7 @@ class Table extends React.Component {
                                 })}</td>
                             );
                         } else {
-                            return <td style={style} key={'col_' + key}>{parent}{dynamic_tree||row.children?tree:null}{item.props.onFormat ? item.props.onFormat(row[item.props.field], row,i) : row[item.props.field]}</td>;
+                            return <td className={this.props.truncate?'text-truncate':''} style={style} key={'col_' + key}>{parent}{dynamic_tree||row.children?tree:null}{item.props.onFormat ? item.props.onFormat(row[item.props.field], row,i) : row[item.props.field]}</td>;
                         }
                     })}
                 </tr>
@@ -764,6 +764,7 @@ Table.propTypes = {
     emptyText  : PropTypes.string,
     fixed: PropTypes.bool,
     serialNumber: PropTypes.bool, //是否显示序列号
+    truncate: PropTypes.bool,//文字是否截断
 };
 
 Table.defaultProps = {
@@ -778,6 +779,7 @@ Table.defaultProps = {
     align      : 'left',
     emptyText  : 'Not data',
     serialNumber: true,
+    truncate: false,
 };
 
 Table.Header = TableHeader;

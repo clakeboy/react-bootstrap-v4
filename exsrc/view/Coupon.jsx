@@ -159,6 +159,15 @@ class Coupon extends React.PureComponent {
                         // this.modal.alert(item.text+id);
                         console.log(item);
                     }}/>
+                    <Tree ref={c=>this.dataTree=c} data={this.state.tree} onClick={(item,id)=>{
+                        // this.modal.alert(item.text+id);
+                        console.log(item);
+                    }} check onSelect={(check,item)=>{
+                        console.log(check,item);
+                    }}/>
+                    <Button onClick={()=>{
+                        console.log(this.dataTree.getSelected());
+                    }}>输出dataTree值</Button>
                 </Card>
                 <Title className='mb-2'>
                     Tabs 组件 (直接使用 Title 组件)

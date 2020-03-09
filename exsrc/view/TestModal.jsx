@@ -41,6 +41,7 @@ class TestModal extends React.PureComponent {
 
         this.child = [{
             "id"             : 3,
+            "task_name_eng":"Test notify",
             "task_name"      : "测试通知",
             "time_rule"      : "0 * * * * *",
             "once"           : true,
@@ -55,6 +56,7 @@ class TestModal extends React.PureComponent {
             "created_date"   : 1530864160
         }, {
             "id"             : 2,
+            "task_name_eng":"Test one notify",
             "task_name"      : "测试一次通知",
             "time_rule"      : "* */1 * * * *",
             "once"           : true,
@@ -69,6 +71,7 @@ class TestModal extends React.PureComponent {
             "created_date"   : 1530783655
         }, {
             "id"             : 1,
+            "task_name_eng":"Test task",
             "task_name"      : "测试任务",
             "time_rule"      : "0 * * * * *",
             "once"           : true,
@@ -83,6 +86,7 @@ class TestModal extends React.PureComponent {
             "created_date"   : 1530767866
         }, {
             "id"             : 4,
+            "task_name_eng":"Test task",
             "task_name"      : "测试任务",
             "time_rule"      : "0 * * * * *",
             "once"           : true,
@@ -97,6 +101,7 @@ class TestModal extends React.PureComponent {
             "created_date"   : 1530767866
         }, {
             "id"             : 5,
+            "task_name_eng":"Test task",
             "task_name"      : "测试任务",
             "time_rule"      : "0 * * * * *",
             "once"           : true,
@@ -111,6 +116,7 @@ class TestModal extends React.PureComponent {
             "created_date"   : 1530767866
         }, {
             "id"             : 6,
+            "task_name_eng":"Test task",
             "task_name"      : "测试任务",
             "time_rule"      : "0 * * * * *",
             "once"           : true,
@@ -428,10 +434,12 @@ class TestModal extends React.PureComponent {
                         <Input className='col-3' label={<div><span style={{color: 'red'}}>* </span>机构</div>}
                                placeholder='请选择机构'
                                combo={{
-                                    searchColumn: 'task_name',
-                                    showRows:10,
+                                   searchColumn: 'task_name_eng',
+                                   showRows:10,
+                                   width:'500px',
                                    filterColumns:[
-                                       {field:'task_name',text:'任务名称'},
+                                       {field:'task_name_eng',text:'任务名称',width:'200px'},
+                                       {field:'task_name',text:'任务名称',width:'200px'},
                                        {field:'time_rule',text:'时间规则'},
                                        {field:'notify_method',text:'任务名称'},
                                        {field:'source',text:'任务名称'},
@@ -445,14 +453,16 @@ class TestModal extends React.PureComponent {
                         <Input label="测试本地数据 Combo 只读(正常)" readOnly combo={{
                             searchColumn:'task_name',
                             // width:'100%',
-                            header:true
+                            header:true,
+                            filterColumns:['task_name','time_rule','notify_method','source','created_date'],
                         }} comboData={this.state.child} onChange={(val,row)=>{
                             console.log(val,row);
                         }}/>
                         <Input label="测试本地数据 Combo 只读(小)" size='sm' readOnly combo={{
                             searchColumn:'task_name',
                             width:'100%',
-                            multi:true
+                            multi:true,
+                            filterColumns:['task_name','time_rule','notify_method','source','created_date'],
                         }} comboData={this.state.child} onChange={(val,row)=>{
                             console.log(val,row);
                         }}/>
@@ -460,6 +470,7 @@ class TestModal extends React.PureComponent {
                             searchColumn:'task_name',
                             width:'100%',
                             multi:true,
+                            filterColumns:['task_name','time_rule','notify_method','source','created_date'],
                         }} comboData={this.state.child} onChange={(val,row)=>{
                             console.log(val,row);
                         }}/>

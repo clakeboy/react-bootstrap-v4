@@ -22,7 +22,7 @@ class CCheckbox extends React.PureComponent {
     }
 
     componentWillReceiveProps(nextProp) {
-        this.setState({checked: nextProp.checked});
+        this.setState({checked: nextProp.checked, half:nextProp.half});
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -67,7 +67,7 @@ class CCheckbox extends React.PureComponent {
     setValue = this.setChecked;
 
     setChecked(checked) {
-        this.setState({checked: checked})
+        this.setState({checked: checked,half:false})
     }
 
     setHalf(flag) {
@@ -135,7 +135,8 @@ CCheckbox.defaultProps = {
     label   : '',
     checked : false,
     disabled: false,
-    inline  : false
+    inline  : false,
+    half:     false,
 };
 
 export default CCheckbox;

@@ -413,7 +413,6 @@ class Combo extends React.Component {
         )
     }
     filterFormat = (val,row)=>{
-        console.log(val.toLowerCase(),this.search.toLowerCase());
         let idx = val.toLowerCase().indexOf(this.search.toLowerCase());
         if (idx === -1) {
             return val;

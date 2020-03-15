@@ -26,7 +26,7 @@ class Pagination extends React.PureComponent {
             this.props.current !== nextProps.current ||
             this.props.number !== nextProps.number) {
             this.current = nextProps.current;
-            this.count = calculatePages(nextProps.count,this.props.number);
+            this.count = calculatePages(nextProps.count,nextProps.number);
             this.setState({
                 data:this.showPages(),
                 showNumber:nextProps.number

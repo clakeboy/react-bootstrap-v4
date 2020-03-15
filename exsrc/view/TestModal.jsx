@@ -320,19 +320,19 @@ class TestModal extends React.PureComponent {
                                 onSelect={page => this.loadTask(page)}/>
                 </Card>
                 <Card header='测试静态数据'>
-                    <Table select={false} striped={false} height='500px' tree headerTheme='light' data={this.state.treeData}>
-                        <Table.Header text='任务ID' field='id'/>
-                        <Table.Header text='任务名称' field='task_name' tree/>
-                        <Table.Header text='时间规则' field='time_rule'/>
-                        <Table.Header text='执行一次' field='once' onFormat={val => {
+                    <Table select={false} striped={false} height='500px' width='100%' tree headerTheme='light' data={this.state.treeData}>
+                        <Table.Header text='任务ID' field='id' width='80px' beforeHold/>
+                        <Table.Header text='任务名称' field='task_name' width='150px' beforeHold tree/>
+                        <Table.Header text='时间规则' field='time_rule' width='150px'/>
+                        <Table.Header text='执行一次' field='once' width='150px' onFormat={val => {
                             return val ? <span className="badge badge-success">是</span> : '否';
                         }}/>
-                        <Table.Header text='通知次数' field='notify_number'/>
-                        <Table.Header text='已通知次数' field='notified_number'/>
-                        <Table.Header text='创建时间' field='created_date' onFormat={value => {
+                        <Table.Header text='通知次数' field='notify_number' width='150px'/>
+                        <Table.Header text='已通知次数' field='notified_number' width='150px'/>
+                        <Table.Header text='创建时间' field='created_date' width='250px' onFormat={value => {
                             return moment.unix(value).format("YYYY-MM-DD hh:mm:ss");
                         }}/>
-                        <Table.Header text='操作' align='center' onFormat={() => {
+                        <Table.Header text='操作' align='center' width='150px' onFormat={() => {
                             return <ButtonGroup>
                                 <Button size='sm' icon='edit' theme='success'>修改</Button>
                                 <Button size='sm' icon='trash-alt' theme='danger'>册除</Button>

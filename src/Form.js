@@ -9,6 +9,7 @@ import TextArea from './TextArea';
 import {map} from './Common';
 import Dropdown from "./Dropdown";
 import Switch from './Switch';
+import CDropdown from './CDropdown';
 
 class Form extends React.PureComponent {
     constructor(props) {
@@ -178,6 +179,11 @@ class Form extends React.PureComponent {
                 item.props.onChange = this.inputChangeHandler(field);
                 // item.props.ref = this.refComponent(field);
             } else if (item.type === Dropdown) {
+                if (typeof item.props.onChange === 'function') {
+                    this.events[field] = item.props.onChange;
+                }
+                item.props.onChange = this.dropdownChangeHandler(field);
+            } else if (item.type === CDropdown) {
                 if (typeof item.props.onChange === 'function') {
                     this.events[field] = item.props.onChange;
                 }

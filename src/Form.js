@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import Input from './Input';
-import Checkbox from './Checkbox';
+import CCheckbox from './CCheckbox';
 import Select from './Select';
 import TextArea from './TextArea';
 import {map} from './Common';
@@ -99,13 +99,13 @@ class Form extends React.PureComponent {
     }
 
     checkChangeHandler(field) {
-        return (e)=>{
-            this.vals[field] = e.target.checked;
+        return (checked)=>{
+            this.vals[field] = checked;
             if (typeof this.props.onChange === 'function') {
-                this.props.onChange(field,e.target.checked);
+                this.props.onChange(field,checked);
             }
             if (typeof this.events[field] === 'function') {
-                this.events[field](e);
+                this.events[field](checked);
             }
         };
     };
@@ -166,7 +166,7 @@ class Form extends React.PureComponent {
                 }
                 item.props.onSelect = this.selectChangeHandler(field);
                 // item.props.ref = this.refComponent(field);
-            } else if (item.type === Checkbox) {
+            } else if (item.type === CCheckbox) {
                 if (typeof item.props.onChange === 'function') {
                     this.events[field] = item.props.onChange;
                 }

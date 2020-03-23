@@ -10,6 +10,7 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 import gutil from 'gulp-util';
 import pkg from './package.json';
 import babel from 'gulp-babel';
+import plumber from 'gulp-plumber';
 import sourcemaps from 'gulp-sourcemaps';
 import historyApiFallback from 'connect-history-api-fallback';
 import header from 'gulp-header';
@@ -65,6 +66,7 @@ gulp.task('clean',['clean:build','clean:publish']);
 gulp.task('publish:pack',['clean:publish','publish:css'],(callback)=>{
     return gulp.src('src/**/*.js')
         .pipe(sourcemaps.init())
+        .pipe(plumber())
         .pipe(babel({
             "presets": ["@babel/preset-env", "@babel/preset-react"],
             "plugins": [
@@ -74,7 +76,9 @@ gulp.task('publish:pack',['clean:publish','publish:css'],(callback)=>{
                 }],
                 "@babel/plugin-proposal-class-properties",
                 "@babel/plugin-syntax-dynamic-import",
-                "@babel/plugin-proposal-export-default-from"
+                "@babel/plugin-proposal-export-default-from",
+                "@babel/plugin-proposal-nullish-coalescing-operator",
+                "@babel/plugin-proposal-optional-chaining"
             ]
         }))
         .pipe(header(banner))

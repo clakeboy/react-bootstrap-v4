@@ -312,6 +312,11 @@ class Input extends React.Component {
             input_icon = classNames(input_icon, 'ck-input-calendar-icon-' + this.props.size);
         }
         let lang = i18n.getLang();
+        let props = {
+            format:this.props.calendar?.format ?? this.props.calendarFormat,
+            timeBar: this.props.calendar?.time ?? this.props.calendarTime,
+        };
+        console.log(props);
         return (
             <div className='ck-input-calendar'>
                 <Calendar ref={c => this.calendar = c} onSelect={(val) => {
@@ -321,7 +326,7 @@ class Input extends React.Component {
                     if (this.props.onChange && typeof this.props.onChange === 'function') {
                         this.props.onChange(val, this);
                     }
-                }} value={this.state.value} format={this.props.calendarFormat} timeBar={this.props.calendarTime}
+                }} value={this.state.value} format={props.format} timeBar={props.timeBar}
                           lang={lang.short} none shadow absolute
                           sm={this.props.size==='xs'}
                           triangular='up'/>
@@ -396,7 +401,7 @@ Input.propTypes = {
     width         : PropTypes.string,
     height        : PropTypes.string,
     placeholder   : PropTypes.string,
-    calendar      : PropTypes.bool,
+    calendar      : PropTypes.object,
     onChange      : PropTypes.func,
     onEnter       : PropTypes.func,
     plaintext     : PropTypes.bool,

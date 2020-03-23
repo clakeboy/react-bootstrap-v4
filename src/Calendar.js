@@ -131,7 +131,7 @@ class Calendar extends React.PureComponent {
 
     setCurrentDate(value) {
         if (value) {
-            if (/\d{10}/.test(value)) {
+            if (/^\d{1,10}$/.test(value)) {
                 this.current_date = new Date(value*1000);
             } else {
                 this.current_date = new Date(value);

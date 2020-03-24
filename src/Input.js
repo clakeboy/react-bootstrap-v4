@@ -316,7 +316,6 @@ class Input extends React.Component {
             format:this.props.calendar?.format ?? this.props.calendarFormat,
             timeBar: this.props.calendar?.time ?? this.props.calendarTime,
         };
-        console.log(props);
         return (
             <div className='ck-input-calendar'>
                 <Calendar ref={c => this.calendar = c} onSelect={(val) => {

@@ -98,6 +98,18 @@ class Form extends React.PureComponent {
         }
     }
 
+    cdropdownChangeHandler(field) {
+        return (text,row)=>{
+            this.vals[field] = row?.value;
+            if (typeof this.props.onChange === 'function') {
+                this.props.onChange(field,row?.text,row?.value);
+            }
+            if (typeof this.events[field] === 'function') {
+                this.events[field](row?.text,row?.value);
+            }
+        }
+    }
+
     checkChangeHandler(field) {
         return (checked)=>{
             this.vals[field] = checked;
@@ -133,7 +145,7 @@ class Form extends React.PureComponent {
         if (typeof item !== 'object') {
             return;
         }
-        if (typeof item.props.children === 'object') {
+        if (typeof item.props.children === 'object' && item.type !== CDropdown) {
             React.Children.map(item.props.children,(child_item)=>{
                 this.bindingComponent(child_item);
             });
@@ -187,7 +199,7 @@ class Form extends React.PureComponent {
                 if (typeof item.props.onChange === 'function') {
                     this.events[field] = item.props.onChange;
                 }
-                item.props.onChange = this.dropdownChangeHandler(field);
+                item.props.onChange = this.cdropdownChangeHandler(field);
             } else if (item.type === Switch) {
                 if (typeof item.props.onChange === 'function') {
                     this.events[field] = item.props.onChange;

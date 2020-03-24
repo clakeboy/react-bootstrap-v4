@@ -10,9 +10,6 @@ class CDropdown extends React.Component {
         this.state = {
             data:this.props.data
         };
-    }
-
-    render() {
         if (React.Children.count(this.props.children)) {
             let list = [];
             React.Children.forEach(this.props.children, (item, key) => {
@@ -25,6 +22,9 @@ class CDropdown extends React.Component {
             });
             this.listData = list;
         }
+    }
+
+    render() {
         return (
             <Input className={this.props.className} combo={{
                 width: '100%',
@@ -33,7 +33,7 @@ class CDropdown extends React.Component {
             }} comboData={this.listData} label={this.props.label} readOnly
                    onChange={this.props.onChange}
                    placeholder={this.props.text}
-                   data={this.state.data}
+                   data={this.props.data}
             />
         );
     }
@@ -49,7 +49,7 @@ CDropdown.propTypes = {
 };
 
 CDropdown.defaultProps = {
-    data: [],
+    data: '',
     text: '',
     showRows: 5,
 };

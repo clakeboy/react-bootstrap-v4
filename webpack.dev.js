@@ -11,6 +11,11 @@ export default merge(cfg,{
             './exsrc/app.js'
         ]
     },
+    module: {
+        rules: [
+            { test: /\.txt|\.md$/, use: 'raw-loader' }
+        ]
+    },
     output: {
         path: `${__dirname}/examples`,
         filename: '[name].js',

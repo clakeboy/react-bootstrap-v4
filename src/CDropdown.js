@@ -10,6 +10,10 @@ class CDropdown extends React.Component {
         this.state = {
             data:this.props.data
         };
+    }
+
+    render() {
+        let active;
         if (React.Children.count(this.props.children)) {
             let list = [];
             React.Children.forEach(this.props.children, (item, key) => {
@@ -17,14 +21,14 @@ class CDropdown extends React.Component {
                     list.push({
                         text: item.props.text,
                         value: item.props.value,
-                    })
+                    });
+                    if (item.props.active) {
+                        active = item.props.text;
+                    }
                 }
             });
             this.listData = list;
         }
-    }
-
-    render() {
         return (
             <Input className={this.props.className} combo={{
                 width: '100%',
@@ -33,7 +37,7 @@ class CDropdown extends React.Component {
             }} comboData={this.listData} label={this.props.label} readOnly
                    onChange={this.props.onChange}
                    placeholder={this.props.text}
-                   data={this.props.data}
+                   data={active??this.props.data}
             />
         );
     }
@@ -57,7 +61,8 @@ CDropdown.defaultProps = {
 class CDropdownValue extends React.Component {}
 CDropdownValue.propTypes = {
     text: PropTypes.string,
-    value: PropTypes.string
+    value: PropTypes.string,
+    active: PropTypes.bool
 };
 
 CDropdown.Value = CDropdownValue;

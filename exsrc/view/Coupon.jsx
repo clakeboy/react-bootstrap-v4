@@ -115,9 +115,9 @@ class Coupon extends React.Component {
                             <Input className='col-6' field='name_s' label='Last Name' data='Lee' data={this.state.data.name_s}/>
                         </div>
                         <div className='form-row'>
-                            <CDropdown className='col-6' field='text_drop' label='Name' text='下拉选择'  data={this.state.data.text_drop}>
-                                <CDropdown.Value text='选项1' value={11111}/>
-                                <CDropdown.Value text='选项2' value={222222}/>
+                            <CDropdown className='col-6' field='text_drop' label='Name' text='下拉选择'>
+                                <CDropdown.Value text='选项1' value={11111} active={this.state.data.text_drop==='选项1'}/>
+                                <CDropdown.Value text='选项2' value={222222} active={this.state.data.text_drop==='选项2'}/>
                             </CDropdown>
                             {/*<Input className='col-6' field='text_drop' label='Name' data={this.state.data.text_drop} readOnly comboData={[*/}
                             {/*    {text:'选项1',value:11111},{text:'选项2',value:22222}*/}

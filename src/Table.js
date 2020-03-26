@@ -482,10 +482,10 @@ class Table extends React.Component {
 
         this.tableHeaderRows.forEach((list,index)=>{
             let offset = 0;
-            if (index === 0) {
+            // if (index === 0) {
                 if (this.props.serialNumber) offset++;
                 if (this.props.select) offset++;
-            }
+            // }
             let totalCols = 0;
             headers.push(
                 <tr>

@@ -73,7 +73,7 @@ Files in the stream are annotated with a `babel` property, which contains the me
 
 #### Example
 
-```js
+```javascript
 const gulp = require('gulp');
 const babel = require('gulp-babel');
 const through = require('through2');

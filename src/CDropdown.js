@@ -38,6 +38,7 @@ class CDropdown extends React.Component {
                    onChange={this.props.onChange}
                    placeholder={this.props.text}
                    data={active??this.props.data}
+                   size={this.props.size}
             />
         );
     }
@@ -50,6 +51,7 @@ CDropdown.propTypes = {
     value: PropTypes.string,
     onChange: PropTypes.func,
     showRows: PropTypes.number,
+    size: PropTypes.string,
 };
 
 CDropdown.defaultProps = {

@@ -7,7 +7,7 @@ import {
 import {GetMarkdownRaw} from "../../common/Funcs";
 import '../../css/github-markdown.css';
 import CodeBlock from "../../components/CodeBlock";
-import text from '../../md/test.md';
+import text from '../../md/index.md';
 class Main extends React.Component {
     constructor(props) {
         super(props);

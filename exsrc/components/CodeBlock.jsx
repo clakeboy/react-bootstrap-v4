@@ -4,7 +4,8 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import { dark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+// import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 class CodeBlock extends PureComponent {
     static propTypes = {
@@ -18,13 +19,11 @@ class CodeBlock extends PureComponent {
 
     render() {
         const { language, value } = this.props;
-        console.log(language,value);
         return (
             <>
-                <SyntaxHighlighter language={language} style={docco}>
+                <SyntaxHighlighter showLineNumbers language={language} style={dark}>
                     {value}
                 </SyntaxHighlighter>
-                {language === 'jsx'?<span>{value}</span>:null}
             </>
         );
     }

@@ -281,27 +281,51 @@ class Calendar extends React.PureComponent {
         this.parentDom.addEventListener('click',this.checkShow,false);
         this.mainDom.classList.remove('ck-calendar-none');
         //fixed out window area
-        let position = common.GetDomXY(dom,null);
-        if (position.top + this.mainDom.offsetHeight >
-            document.documentElement.scrollTop + document.documentElement.clientHeight) {
-            this.mainDom.style.top = -(dom.offsetHeight+this.mainDom.offsetHeight)+'px';
-            this.mainDom.classList.remove('ck-calendar-up');
-            this.mainDom.classList.add('ck-calendar-bottom');
+        this.fixPosition();
+
+        this.clientWidth = this.mainTable.clientWidth;
+    }
+
+    fixPosition() {
+        // let position = common.GetDomXY(this.parentDom,null);
+        // if (position.top + this.parentDom.clientHeight + this.mainDom.offsetHeight >
+        //     document.documentElement.scrollTop + document.documentElement.clientHeight) {
+        //     this.mainDom.style.top = -(this.parentDom.offsetHeight+this.mainDom.offsetHeight)+'px';
+        //     this.mainDom.classList.remove('ck-calendar-up');
+        //     this.mainDom.classList.add('ck-calendar-bottom');
+        //     if (this.props.sm) {
+        //         this.mainDom.classList.remove('ck-calendar-up-sm');
+        //         this.mainDom.classList.add('ck-calendar-bottom-sm');
+        //     }
+        // } else {
+        //     this.mainDom.style.top = '0';
+        //     this.mainDom.classList.remove('ck-calendar-bottom');
+        //     this.mainDom.classList.add('ck-calendar-up');
+        //     if (this.props.sm) {
+        //         this.mainDom.classList.remove('ck-calendar-bottom-sm');
+        //         this.mainDom.classList.add('ck-calendar-up-sm');
+        //     }
+        // }
+        let scrollParent = common.hasScrolledParent(this.parentDom) ?? document.documentElement;
+        let position = common.GetDomXY(this.parentDom,null);
+        if (position.top + this.parentDom.clientHeight + this.mainDom.offsetHeight >
+            scrollParent.scrollTop + scrollParent.clientHeight) {
+            this.mainDom.style.top = -(this.parentDom.offsetHeight+this.mainDom.offsetHeight)+'px';
+            this.mainDom.classList.remove('ck-combo-up');
+            this.mainDom.classList.add('ck-combo-bottom');
             if (this.props.sm) {
-                this.mainDom.classList.remove('ck-calendar-up-sm');
-                this.mainDom.classList.add('ck-calendar-bottom-sm');
+                this.mainDom.classList.remove('ck-combo-up-sm');
+                this.mainDom.classList.add('ck-combo-bottom-sm');
             }
         } else {
             this.mainDom.style.top = '0';
-            this.mainDom.classList.remove('ck-calendar-bottom');
-            this.mainDom.classList.add('ck-calendar-up');
+            this.mainDom.classList.remove('ck-combo-bottom');
+            this.mainDom.classList.add('ck-combo-up');
             if (this.props.sm) {
-                this.mainDom.classList.remove('ck-calendar-bottom-sm');
-                this.mainDom.classList.add('ck-calendar-up-sm');
+                this.mainDom.classList.remove('ck-combo-bottom-sm');
+                this.mainDom.classList.add('ck-combo-up-sm');
             }
         }
-
-        this.clientWidth = this.mainTable.clientWidth;
     }
 
     checkShow = (e)=> {

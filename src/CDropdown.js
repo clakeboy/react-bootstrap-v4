@@ -31,7 +31,9 @@ class CDropdown extends React.Component {
         }
         return (
             <Input className={this.props.className} combo={{
-                width: '100%',
+                searchColumn:'text',
+                noSearch:true,
+                width: this.props.dropWidth,
                 filterColumns: ['text'],
                 showRows: this.props.showRows
             }} comboData={this.listData} label={this.props.label} readOnly
@@ -52,12 +54,14 @@ CDropdown.propTypes = {
     onChange: PropTypes.func,
     showRows: PropTypes.number,
     size: PropTypes.string,
+    dropWidth: PropTypes.string,
 };
 
 CDropdown.defaultProps = {
     data: '',
     text: '',
     showRows: 5,
+    dropWidth: '100%',
 };
 
 class CDropdownValue extends React.Component {}

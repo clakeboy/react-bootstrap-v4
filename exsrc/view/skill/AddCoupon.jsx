@@ -19,7 +19,7 @@ import {
     Calendar,
     TextArea,
     CKModal,
-    Form
+    Form, CDropdown
 } from '../../../src/index';
 
 class AddCoupon extends React.PureComponent {
@@ -87,6 +87,49 @@ class AddCoupon extends React.PureComponent {
                     }}>显示数据</Button>
                 </Form>
                 <CKModal ref={c=>this.modal=c} center/>
+                <Card divider border={'info'} className='mt-2' header="优惠券添加">
+                    <Form onChange={(field,val,row)=>{
+                        console.log(field,val,row);
+                        let data = this.state.data;
+                        data[field] = val;
+                        this.setState({
+                            data:data
+                        },()=>{
+                            console.log(this.state.data);
+                        })
+                    }}>
+                        <div className='form-row'>
+                            <Input className='col-6' field='name' label='Name' plaintext data='Clake'/>
+                            <Input className='col-6' field='name_s' label='Last Name' data='Lee' calendar/>
+                        </div>
+                        <div className='form-row'>
+                            <CDropdown className='col-6' field='text_drop' label='Name' text='下拉选择'>
+                                <CDropdown.Value text='选项1' value={11111} active/>
+                                <CDropdown.Value text='选项2' value={222222} />
+                            </CDropdown>
+                            <CDropdown className='col-6' size='sm' field='text_drop' label='Name' text='下拉选择'>
+                                <CDropdown.Value text='选项1' value={11111} />
+                                <CDropdown.Value text='选项2' value={222222} active/>
+                            </CDropdown>
+                        </div>
+                        <div className='form-row'>
+                            <div className='col-2 form-group pt-2'><label>middle垂直居中</label></div>
+                            <Input className='col-10' data='Lee'/>
+                        </div>
+                        <div className='form-row'>
+                            <Input className='col-6' field='name' label='Name' plaintext data='Clake'/>
+                            <Input field='birthday' className='col-6' label='Calendar' data='1518427253' calendar readOnly/>
+                        </div>
+                        <div className='form-row'>
+                            <Input className='col-6' field='name' label='Name' plaintext data='Clake'/>
+                            <Input field='birthday' className='col-6' label='Calendar' data='1518427253' calendar readOnly/>
+                        </div>
+                        <div className='form-row'>
+                            <Input className='col-6' field='name' label='Name' plaintext data='Clake'/>
+                            <Input className='col-6' field='name_s' label='Last Name' data='Lee'/>
+                        </div>
+                    </Form>
+                </Card>
             </div>
         );
     }

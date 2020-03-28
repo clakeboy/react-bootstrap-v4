@@ -65,14 +65,18 @@ gulp.task('clean',['clean:build','clean:publish']);
 
 gulp.task('publish:pack',['clean:publish','publish:css'],(callback)=>{
     return gulp.src('src/**/*.js')
-        .pipe(sourcemaps.init())
+        // .pipe(sourcemaps.init())
         .pipe(plumber())
         .pipe(babel({
-            "presets": ["@babel/preset-env", "@babel/preset-react"],
+            "presets": [
+                "@babel/preset-env",
+                "@babel/preset-react"
+            ],
             "plugins": [
                 "@babel/plugin-proposal-object-rest-spread",
                 ["@babel/plugin-transform-runtime",{
-                    "helpers": false
+                    "helpers": false,
+                    "useESModules": false
                 }],
                 "@babel/plugin-proposal-class-properties",
                 "@babel/plugin-syntax-dynamic-import",
@@ -82,7 +86,7 @@ gulp.task('publish:pack',['clean:publish','publish:css'],(callback)=>{
             ]
         }))
         .pipe(header(banner))
-        .pipe(sourcemaps.write('.'))
+        // .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('lib'));
 });
 

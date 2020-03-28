@@ -208,9 +208,10 @@ class Combo extends React.Component {
     }
 
     fixPosition() {
+        let scrollParent = common.hasScrolledParent(this.parentDom) ?? document.documentElement;
         let position = common.GetDomXY(this.parentDom,null);
-        if (position.top + this.mainDom.offsetHeight >
-            document.documentElement.scrollTop + document.documentElement.clientHeight) {
+        if (position.top + this.parentDom.clientHeight + this.mainDom.offsetHeight >
+            scrollParent.scrollTop + scrollParent.clientHeight) {
             this.mainDom.style.top = -(this.parentDom.offsetHeight+this.mainDom.offsetHeight)+'px';
             this.mainDom.classList.remove('ck-combo-up');
             this.mainDom.classList.add('ck-combo-bottom');

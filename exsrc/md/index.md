@@ -22,7 +22,7 @@ $ npm install --save-dev gulp-babel@7 babel-core babel-preset-env
 
 ## Usage
 
-```js
+```javascript
 const gulp = require('gulp');
 const babel = require('gulp-babel');
 
@@ -48,7 +48,7 @@ See the Babel [options](http://babeljs.io/docs/en/options), except for `sourceMa
 
 Use [gulp-sourcemaps](https://github.com/floridoo/gulp-sourcemaps) like this:
 
-```js
+```javascript
 const gulp = require('gulp');
 const sourcemaps = require('gulp-sourcemaps');
 const babel = require('gulp-babel');
@@ -113,7 +113,7 @@ $ npm install --save @babel/runtime
 
 Use it as plugin:
 
-```js
+```javascript
 const gulp = require('gulp');
 const babel = require('gulp-babel');
 

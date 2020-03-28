@@ -5,7 +5,6 @@ import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { dark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
-// import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 class CodeBlock extends PureComponent {
     static propTypes = {

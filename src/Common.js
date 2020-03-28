@@ -228,6 +228,14 @@ export var Clone = (obj) => {
     return JSON.parse(JSON.stringify(obj));
 };
 
+function hasScrolled(el, direction = "vertical") {
+    if(direction === "vertical") {
+        return el.scrollHeight > el.clientHeight;
+    }else if(direction === "horizontal") {
+        return el.scrollWidth > el.clientWidth;
+    }
+}
+
 export default {
     extend:extend,
     GetDomXY:GetDomXY,
@@ -241,4 +249,5 @@ export default {
     under2hump:under2hump,
     explainUrl:explainUrl,
     Clone:Clone,
+    hasScrolled,
 };

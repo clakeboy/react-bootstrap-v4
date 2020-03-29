@@ -228,7 +228,7 @@ export var Clone = (obj) => {
     return JSON.parse(JSON.stringify(obj));
 };
 
-function hasScrolledParent(el, direction = "vertical") {
+export function hasScrolledParent(el, direction = "vertical") {
     while ((el = el.offsetParent) && el !== undefined) {
         if(direction === "vertical") {
             let overflow = window.getComputedStyle(el).overflowY;

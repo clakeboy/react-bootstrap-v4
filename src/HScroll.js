@@ -1,8 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, {instanceOf} from 'prop-types';
 import classNames from 'classnames/bind';
 import ReactDOM from "react-dom";
-import {GetDomXY} from "./Common";
+import {GetDomXY,hasScrolledParent} from "./Common";
 
 class HScroll extends React.PureComponent {
     constructor(props) {
@@ -36,15 +36,17 @@ class HScroll extends React.PureComponent {
     componentWillUnmount() {
         if (this.parentDom) {
             this.parentDom.classList.remove('ck-scroll-over');
-            this.parentDom.removeEventListener('wheel',this.scrollHandler);
-            this.parentDom.removeEventListener('mouseover',this.showHandler);
-            this.parentDom.removeEventListener('mouseout',this.hideHandler);
+            if (!this.showDom) {
+                this.parentDom.removeEventListener('wheel',this.scrollHandler);
+                this.parentDom.removeEventListener('mouseenter',this.showHandler);
+                this.parentDom.removeEventListener('mouseleave',this.hideHandler);
+            }
         }
 
         if (this.showDom) {
             this.showDom.removeEventListener('wheel',this.scrollHandler);
-            this.showDom.removeEventListener('mouseover',this.showHandler);
-            this.showDom.removeEventListener('mouseout',this.hideHandler);
+            this.showDom.removeEventListener('mouseenter',this.showHandler);
+            this.showDom.removeEventListener('mouseleave',this.hideHandler);
         }
 
         // this.dom.addEventListener("mousedown",this.beginDragHandler,false);
@@ -68,15 +70,17 @@ class HScroll extends React.PureComponent {
         if (this.props.showSelector) {
             this.showDom = document.querySelector(this.props.showSelector);
             this.showDom.addEventListener('wheel',this.scrollHandler,false);
-            this.showDom.addEventListener('mouseover',this.showHandler,false);
-            this.showDom.addEventListener('mouseout',this.hideHandler,false);
+            this.showDom.addEventListener('mouseenter',this.showHandler,false);
+            this.showDom.addEventListener('mouseleave',this.hideHandler,false);
         }
 
         if (this.parentDom) {
             this.parentDom.classList.add('ck-scroll-over');
-            this.parentDom.addEventListener('wheel',this.scrollHandler,false);
-            this.parentDom.addEventListener('mouseover',this.showHandler,false);
-            this.parentDom.addEventListener('mouseout',this.hideHandler,false);
+            if (!this.showDom) {
+                this.parentDom.addEventListener('wheel',this.scrollHandler,false);
+                this.parentDom.addEventListener('mouseenter',this.showHandler,false);
+                this.parentDom.addEventListener('mouseleave',this.hideHandler,false);
+            }
         }
 
         // this.dom.addEventListener("mousedown",this.beginDragHandler,false);
@@ -95,15 +99,8 @@ class HScroll extends React.PureComponent {
                 this.alignParent.removeEventListener('scroll',this.setPosition);
             }
         }
-        let e = this.dom;
-        while ((e = e.offsetParent) && e.scrollHeight === e.clientHeight) {
 
-        }
-        if (e === null) {
-            e = document.documentElement;
-        }
-
-        this.alignParent = e;
+        this.alignParent = hasScrolledParent(this.dom) ?? document.documentElement;
         if (this.alignParent === document.documentElement) {
             document.addEventListener('scroll',this.setPosition,false);
         } else {
@@ -119,7 +116,7 @@ class HScroll extends React.PureComponent {
         let clientHeight = this.alignParent.clientHeight;
         let bottom = this.parentDom.clientHeight + this.domXY.top - clientHeight - scrollTop;
         if (bottom < 0 || bottom >= this.parentDom.clientHeight) {
-            this.dom.style.bottom = 0;
+            this.dom.style.bottom = '0';
         } else {
             this.dom.style.bottom = bottom + 2 + 'px';
         }
@@ -132,6 +129,7 @@ class HScroll extends React.PureComponent {
     }
 
     showHandler = (e)=>{
+        if (this.isShow) return false;
         this.scrollProportion = this.parentDom.offsetWidth/this.parentDom.scrollWidth;
         if (this.scrollProportion === 1) {
             return;
@@ -151,6 +149,7 @@ class HScroll extends React.PureComponent {
     };
 
     hideHandler = (e)=>{
+        if (!this.isShow) return;
         this.isShow = false;
         this.dom.classList.remove('ck-scroll-show');
     };

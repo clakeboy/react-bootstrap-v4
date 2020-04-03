@@ -1,0 +1,50 @@
+.ck-intriangle {
+  &:before,&:after {
+    position:absolute;
+    display:block;
+    content:'';
+    border: 10px solid transparent;
+  }
+}
+
+.ck-intriangle-top:before{
+  border-top-color: #dee2e6;
+  left: calc(50% - 10px);
+  top: -20px;
+}
+
+.ck-intriangle-xl:before{
+  left: 5px !important;
+}
+
+.ck-intriangle-xr:before{
+  left: unset!important;
+  right: 5px;
+}
+
+.ck-intriangle-bottom:before{
+  border-bottom-color: #dee2e6;
+  left: calc(50% - 10px);
+  bottom: -10px;
+}
+
+.ck-intriangle-left:before {
+  border-left-color: #dee2e6;
+  left: -20px;
+  top: calc(50% - 10px);
+}
+
+.ck-intriangle-yt:before {
+  top: 5px !important;
+}
+
+.ck-intriangle-yb:before {
+  top: unset !important;
+  bottom: 5px;
+}
+
+.ck-intriangle-right:before {
+  border-right-color: #dee2e6;
+  right: -20px;
+  top: calc(50% - 10px);
+}

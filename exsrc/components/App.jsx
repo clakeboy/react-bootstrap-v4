@@ -31,17 +31,20 @@ export default class App extends React.Component {
         let arr = path.split('/');
         arr.shift();
         let module = arr.pop();
-        if (module === "") {
+        if (arr[0] === 'doc') {
             module = 'Main';
         } else {
-            module = this.under2hump(module)
+            if (module === "") {
+                module = 'Main';
+            } else {
+                module = this.under2hump(module)
+            }
         }
         let ext_path = arr.length > 0 ? '/' : '';
         return ext_path + arr.join('/') + "/" + module;
     }
 
     render() {
-        console.log("render app");
         let load_path = this.explainUrl(this.props.location.pathname);
         return <Loader loadPath={load_path} import={GetComponent} {...this.props}/>
     }

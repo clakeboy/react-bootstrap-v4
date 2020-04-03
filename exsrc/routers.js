@@ -9,10 +9,12 @@ import {
 } from 'react-router-dom';
 
 import App from './components/App';
+import Doc from './doc/Main';
 
 const routes = (
     <Router>
         <Switch>
+            <Route path='/doc/:path*' component={Doc}/>
             <Route component={App}/>
         </Switch>
     </Router>

@@ -91,9 +91,12 @@ class Main extends React.Component {
                     <Button className='mr-1' onClick={e=>{
                         this.props.history.push('/window',this.state);
                     }}>转到 Window</Button>
-                    <Button onClick={e=>{
+                    <Button className='mr-1' onClick={e=>{
                         this.props.history.push('/test_table',this.state);
                     }}>转到 Table Scroll</Button>
+                    <Button className='mr-1' onClick={e=>{
+                        this.props.history.push('/test_triangle',this.state);
+                    }}>转到 Triangle</Button>
                 </Container>
                 <Container className='p-0 mb-1' inline fluid>
                     <Input className='mr-1' disabled size='sm' absolute x='50px' y='150px' width='100px' placeholder='用户名' onChange={this.changeHandler('user_name')} data={this.state.pageData.user_name}/>

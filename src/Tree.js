@@ -15,8 +15,11 @@ class Tree extends React.PureComponent {
         this.currentSelected;
         this.parents = {};
         this.domId = 'tree-' + common.RandomString(8);
+        //ccheck components
         this.checkObjList = {};
+        //checked list
         this.checkSelectList = {};
+        //check parent list
         this.checkItems = {};
     }
 
@@ -167,13 +170,16 @@ class Tree extends React.PureComponent {
             };
             let id = `${parent_key}-${idx}`;
             this.checkItems[parent_key].push({id:id,data:val});
+            if (val?.checked) {
+                this.checkSelectList[parent_key].push(val);
+            }
             return (
                 <div className='ck-tree-item' style={style}>
                     <div className='ck-tree-content d-flex' onContextMenu={this.menuHandler(val,id)}>
                         {val.children?<span className='ck-tree-icon' onClick={this.iconHandler(val,id)}>
                             <Icon className={val.show?'ck-tree-icon-down':''} icon={val.children?'angle-right':val.icon}/>
                         </span>:<span className='ck-tree-icon'/>}
-                        {this.props.check ? <CCheckbox ref={c=>this.checkObjList[id]=c} className='mr-1' inline onChange={this.changeHandler(val,id,parent_key)}/>:null}
+                        {this.props.check ? <CCheckbox ref={c=>this.checkObjList[id]=c} checked={val?.checked} className='mr-1' inline onChange={this.changeHandler(val,id,parent_key)}/>:null}
                         <span className='ck-tree-item-text'
                               onDoubleClick={this.dbClickHandler(val,id,parent_key)}
                               onClick={this.selectHandler(val,id,parent_key)}>

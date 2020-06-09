@@ -43,7 +43,7 @@ class Coupon extends React.Component {
                         {icon:'user',key:'',text:'这是三儿子'},
                         {icon:'',key:'',text:'这是三儿子'},
                         {icon:'',key:'',text:'这是三儿子'},
-                        {icon:'',key:'',text:'这是三儿子'},
+                        {icon:'',key:'',text:'这是三儿子',checked:true},
                         {icon:'',key:'',text:'这是三儿子'}
                     ]
                 },

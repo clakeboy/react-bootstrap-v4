@@ -80,10 +80,10 @@ class Table extends React.Component {
             for (let i=0; i < this.tableBody.tBodies[0].rows.length;i++) {
                 // console.log(beforeTable.tBodies[0].rows[i]);
                 if (this.beforeBody){
-                    this.beforeBody.tBodies[0].rows[i].style.height = this.tableBody.tBodies[0].rows[i].clientHeight + 'px';
+                    this.beforeBody.tBodies[0].rows[i].style.height = this.tableBody.tBodies[0].rows[i].getBoundingClientRect().height + 'px';
                 }
                 if (this.afterBody) {
-                    this.afterBody.tBodies[0].rows[i].style.height = this.tableBody.tBodies[0].rows[i].clientHeight + 'px';
+                    this.afterBody.tBodies[0].rows[i].style.height = this.tableBody.tBodies[0].rows[i].getBoundingClientRect().height + 'px';
                 }
             }
         }
@@ -91,7 +91,7 @@ class Table extends React.Component {
 
     setRowsHeight(rows,heightRows) {
         for (let i=0;i<rows.length;i++) {
-            rows[i].style.height = heightRows[i].clientHeight+'px';
+            rows[i].style.height = heightRows[i].getBoundingClientRect().height+'px';
         }
     }
 

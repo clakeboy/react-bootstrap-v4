@@ -329,7 +329,7 @@ class Input extends React.Component {
                           lang={lang.short} none shadow absolute
                           sm={this.props.size==='xs'}
                           triangular='up'/>
-                <div className={input_icon} onMouseDown={(e) => {
+                {!this.props.disabled?<div className={input_icon} onMouseDown={(e) => {
                     e.stopPropagation();
                     e.preventDefault();
                     if (this.isFocus) {
@@ -337,7 +337,7 @@ class Input extends React.Component {
                     } else {
                         this.input.focus();
                     }
-                }}><Icon ref={c=>this.clearIcon=c} icon={this.state.icon}/></div>
+                }}><Icon ref={c=>this.clearIcon=c} icon={this.state.icon}/></div>:null}
             </div>
         )
     }

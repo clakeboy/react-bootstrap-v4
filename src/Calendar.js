@@ -311,19 +311,19 @@ class Calendar extends React.PureComponent {
         if (position.top + this.parentDom.clientHeight + this.mainDom.offsetHeight >
             scrollParent.scrollTop + scrollParent.clientHeight) {
             this.mainDom.style.top = -(this.parentDom.offsetHeight+this.mainDom.offsetHeight)+'px';
-            this.mainDom.classList.remove('ck-combo-up');
-            this.mainDom.classList.add('ck-combo-bottom');
+            this.mainDom.classList.remove('ck-calendar-up');
+            this.mainDom.classList.add('ck-calendar-bottom');
             if (this.props.sm) {
-                this.mainDom.classList.remove('ck-combo-up-sm');
-                this.mainDom.classList.add('ck-combo-bottom-sm');
+                this.mainDom.classList.remove('ck-calendar-up-sm');
+                this.mainDom.classList.add('ck-calendar-bottom-sm');
             }
         } else {
             this.mainDom.style.top = '0';
-            this.mainDom.classList.remove('ck-combo-bottom');
-            this.mainDom.classList.add('ck-combo-up');
+            this.mainDom.classList.remove('ck-calendar-bottom');
+            this.mainDom.classList.add('ck-calendar-up');
             if (this.props.sm) {
-                this.mainDom.classList.remove('ck-combo-bottom-sm');
-                this.mainDom.classList.add('ck-combo-up-sm');
+                this.mainDom.classList.remove('ck-calendar-bottom-sm');
+                this.mainDom.classList.add('ck-calendar-up-sm');
             }
         }
     }

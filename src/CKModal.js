@@ -39,6 +39,9 @@ class CKModal extends React.PureComponent {
         this.modalType = ModalAlert;
         //alert confirm callback function
         this.callback = null;
+        //event
+        this.evtClosed = null;
+        this.evtOpened = null;
 
         this.domId = 'modal-'+common.RandomString(16);
         if (this.props.id) {
@@ -112,11 +115,16 @@ class CKModal extends React.PureComponent {
             }
         }
         this.is_open = false;
+        this.closeHandler('close');
     }
 
     closeHandler = (e)=>{
         if (typeof this.props.onClose === 'function') {
             this.props.onClose();
+        }
+        if (typeof this.evtClosed === 'function') {
+            this.evtClosed();
+            this.evtClosed = null;
         }
     };
 
@@ -226,6 +234,7 @@ class CKModal extends React.PureComponent {
     view(opt) {
         this.callback = opt.callback||null;
         this.modalType = ModalView;
+        this.evtClosed = opt.close||null;
         this.setState({
             title:opt.title||'提示',
             content:opt.content||'',

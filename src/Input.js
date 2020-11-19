@@ -55,10 +55,20 @@ class Input extends React.Component {
             this.input.addEventListener('blur', this.blurClearHandler, false);
             this.input.addEventListener('mousedown',stopEvent, false);
         }
+
+        if (this.props.validate) {
+            let options = {
+                'trigger':'manual',
+                'template':'<div class="tooltip ck-input-tip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner bg-danger"></div></div>',
+            };
+            $('#'+this.domId).tooltip(options);
+        }
     }
 
     componentWillUnmount() {
-
+        if (this.props.validate) {
+            $('#'+this.domId).tooltip('dispose');
+        }
     }
 
     componentWillReceiveProps(nextProps) {
@@ -190,7 +200,9 @@ class Input extends React.Component {
 
     validate(val) {
         if (this.props.validate) {
-            return this.props.validate.rule.test(val);
+            let valid = this.props.validate.rule.test(val);
+                $('#'+this.domId).tooltip(valid?'hide':'show');
+            return valid;
         }
         return true;
     }
@@ -371,9 +383,21 @@ class Input extends React.Component {
         )
     }
 
+    //build tooltip
+    renderValidateTip() {
+        if (this.props.validate) {
+            return {
+                'data-toggle':'tooltip',
+                'data-placement':'right',
+                'title':this.props.validate.text,
+            };
+        }
+        return {}
+    }
+
     render() {
         return (
-            <div className={this.getMainClasses()} style={this.getMainStyles()}>
+            <div id={this.domId+'-main'} className={this.getMainClasses()} style={this.getMainStyles()} >
                 {this.renderLabel()}
                 <input type='text' {...this.props} ref={c => this.input = c} onBlur={this.blurHandler}
                        onChange={this.changeHandler}
@@ -381,7 +405,7 @@ class Input extends React.Component {
                        value={this.state.value??""}
                        className={this.getInputClasses()}
                        style={this.getInputStyle()}
-                       id={this.domId}/>
+                       id={this.domId} {...this.renderValidateTip()}/>
                 {this.renderCalendar()}
                 {this.renderCombo()}
                 {this.renderSummary()}

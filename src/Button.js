@@ -3,10 +3,24 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import Icon from './Icon';
 import './css/Button.less';
+import common from "./Common";
 
 class Button extends React.PureComponent {
     constructor(props) {
         super(props);
+        this.domId = 'btn-'+common.RandomString(16);
+    }
+
+    componentDidMount() {
+        if (this.props.tip) {
+            $('#'+this.domId).tooltip();
+        }
+    }
+
+    componentWillUnmount() {
+        if (this.props.tip) {
+            $('#'+this.domId).tooltip('dispose');
+        }
     }
 
     getClasses() {
@@ -65,8 +79,7 @@ class Button extends React.PureComponent {
 
     render() {
         return (
-            <button {...this.props} disabled={this.props.disabled} onClick={this.clickHandler} className={this.getClasses()} style={this.getStyles()}>
-                {this.renderTip()}
+            <button {...this.props} id={this.domId} disabled={this.props.disabled} onClick={this.clickHandler} className={this.getClasses()} style={this.getStyles()} data-toggle="tooltip" data-placement="bottom" title={this.props.tip}>
                 {this.renderIcon()}{this.props.children}
             </button>
         );
@@ -88,17 +101,6 @@ class Button extends React.PureComponent {
             )
         }
         return null;
-    }
-
-    renderTip() {
-        if (!this.props.tip) {
-            return null
-        }
-        return (
-            <>
-                <span className="tip-text">{this.props.tip}</span>
-            </>
-        )
     }
 }
 

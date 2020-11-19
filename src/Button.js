@@ -10,7 +10,7 @@ class Button extends React.PureComponent {
     }
 
     getClasses() {
-        let base = 'btn';
+        let base = 'btn ck-btn';
         let base_style = ['btn'];
         //is outline theme
         if (this.props.outline) {
@@ -66,6 +66,7 @@ class Button extends React.PureComponent {
     render() {
         return (
             <button {...this.props} disabled={this.props.disabled} onClick={this.clickHandler} className={this.getClasses()} style={this.getStyles()}>
+                {this.renderTip()}
                 {this.renderIcon()}{this.props.children}
             </button>
         );
@@ -88,6 +89,17 @@ class Button extends React.PureComponent {
         }
         return null;
     }
+
+    renderTip() {
+        if (!this.props.tip) {
+            return null
+        }
+        return (
+            <>
+                <span className="tip-text">{this.props.tip}</span>
+            </>
+        )
+    }
 }
 
 Button.propTypes = {
@@ -103,7 +115,8 @@ Button.propTypes = {
     x          : PropTypes.string,
     y          : PropTypes.string,
     width      : PropTypes.string,
-    height     : PropTypes.string
+    height     : PropTypes.string,
+    tip: PropTypes.string,
 };
 
 Button.defaultProps = {

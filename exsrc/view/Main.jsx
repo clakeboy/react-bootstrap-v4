@@ -81,7 +81,7 @@ class Main extends React.Component {
                 <Container fluid className='mb-1 p-0'>
                     <Button className='mr-1' onClick={e=>{
                         this.props.history.push('/skill/jump',this.state);
-                    }}>转到内联</Button>
+                    }} tip="转到内联">转到内联</Button>
                     <Button className='mr-1' onClick={e=>{
                         this.props.history.push('/coupon',this.state);
                     }}>转到 Demo2</Button>

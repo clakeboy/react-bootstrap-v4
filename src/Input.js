@@ -378,7 +378,7 @@ class Input extends React.Component {
                 <input type='text' {...this.props} ref={c => this.input = c} onBlur={this.blurHandler}
                        onChange={this.changeHandler}
                        onKeyUp={this.keyUpHandler}
-                       value={this.state.value}
+                       value={this.state.value??""}
                        className={this.getInputClasses()}
                        style={this.getInputStyle()}
                        id={this.domId}/>

@@ -135,10 +135,16 @@ class TextArea extends React.PureComponent {
         return (
             <div className={this.getMainClasses()} style={this.getMainStyles()}>
                 {this.renderLabel()}
-                <textarea ref={c => this.input = c} {...this.props} onChange={this.changeHandler} value={this.state.value} className={this.getInputClasses()} id={this.domId}/>
+                <textarea ref={c => this.input = c} {...this.props} onChange={this.changeHandler} value={this.state.value??''} className={this.getInputClasses()} id={this.domId}/>
                 {this.renderSummary()}
             </div>
         );
+    }
+
+    renderHtmlEdit() {
+        return <div contentEditable>
+
+        </div>
     }
 }
 
@@ -157,7 +163,8 @@ TextArea.propTypes = {
     row        : PropTypes.number,
     absolute: PropTypes.bool,
     x       : PropTypes.string,
-    y       : PropTypes.string
+    y       : PropTypes.string,
+    htmlMode: PropTypes.bool
 };
 
 TextArea.defaultProps = {
@@ -165,6 +172,7 @@ TextArea.defaultProps = {
     data    : null,
     summary : '',
     readOnly: false,
+    htmlMode: false
 };
 
 export default TextArea;

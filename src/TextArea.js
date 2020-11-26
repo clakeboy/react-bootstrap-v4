@@ -7,6 +7,7 @@ class TextArea extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {
+            html: this.props.data,
             value: this.props.data
         };
 
@@ -21,19 +22,30 @@ class TextArea extends React.PureComponent {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
+        if (this.props.htmlMode) {
+            return nextState.value !== this.state.html;
+        }
         return nextState.value !== this.state.value;
     }
 
     getValue() {
+        if (this.props.htmlMode) return this.state.html;
         return this.state.value;
     }
 
     setValue(val) {
+        if (this.props.htmlMode) {
+            this.setValue({
+                value:val,
+                html:val,
+            });
+            return
+        }
         this.setState({value: val});
     }
 
     getMainClasses() {
-        let base = 'form-group';
+        let base = 'form-group ck-text-area';
         if (this.props.absolute) {
             base = classNames(base, 'position-absolute');
         }
@@ -70,6 +82,10 @@ class TextArea extends React.PureComponent {
         if (this.props.plaintext) {
             base = 'form-control-plaintext';
         }
+        //html mode
+        if (this.props.htmlMode) {
+            base = classNames(base,'html');
+        }
         //size
         let size;
         switch (this.props.size) {
@@ -92,6 +108,10 @@ class TextArea extends React.PureComponent {
             base = classNames(base,'h-100')
         }
 
+        if (this.props.htmlMode) {
+            base = classNames(base,'overflow-auto')
+        }
+
         return classNames(base, size);
     }
 
@@ -102,12 +122,67 @@ class TextArea extends React.PureComponent {
         this.setState({
             value: e.target.value
         });
-
         if (this.props.onChange && typeof this.props.onChange === 'function') {
             this.props.onChange(e.target.value, this);
         }
     };
 
+    inputHandler = (e) =>{
+        this.setState({
+            html: this.input.innerHTML
+        },()=>{
+            if (this.props.onChange && typeof this.props.onChange === 'function') {
+                this.props.onChange(this.state.html, this);
+            }
+        });
+    };
+
+    pasteHandler = (e)=>{
+        e.stopPropagation();
+        e.preventDefault();
+        if (e.clipboardData.types.indexOf('Files') !== -1) {
+            let file = e.clipboardData.files[0];
+            this.insertImage(file);
+        } else {
+            let paste = (e.clipboardData || window.clipboardData).getData('text');
+            this.insertHtmlNode(document.createTextNode(paste));
+        }
+    };
+
+    dropHandler = (e)=> {
+        e.stopPropagation();
+        e.preventDefault();
+        if (e.dataTransfer.files.length > 0) {
+            for (let file of e.dataTransfer.files) {
+                this.insertImage(file);
+            }
+        }
+    };
+    /*********************
+     * edit html process method
+     *********************/
+    insertImage(file) {
+        let reg = /^image\/(png|jpg|jpeg|gif)/ig;
+        if (!reg.test(file.type)) {
+            console.log('can not insert non-picture file');
+            return
+        }
+        let read = new FileReader();
+        read.onload = e=> {
+            let img = document.createElement('img');
+            img.src = read.result;
+            this.insertHtmlNode(img);
+        };
+        read.readAsDataURL(file);
+    }
+
+    insertHtmlNode(node) {
+        const selection = window.getSelection();
+        if (!selection.rangeCount) return false;
+        selection.deleteFromDocument();
+        selection.getRangeAt(0).insertNode(node);
+        this.inputHandler(null);
+    }
     /*********************
      * render method
      *********************/
@@ -135,16 +210,31 @@ class TextArea extends React.PureComponent {
         return (
             <div className={this.getMainClasses()} style={this.getMainStyles()}>
                 {this.renderLabel()}
-                <textarea ref={c => this.input = c} {...this.props} onChange={this.changeHandler} value={this.state.value??''} className={this.getInputClasses()} id={this.domId}/>
+                {this.props.htmlMode?this.renderHtmlEdit():this.renderTextArea()}
                 {this.renderSummary()}
             </div>
         );
     }
 
-    renderHtmlEdit() {
-        return <div contentEditable>
+    renderTextArea() {
+        return <textarea ref={c => this.input = c} {...this.props} onChange={this.changeHandler} value={this.state.value??''} className={this.getInputClasses()} id={this.domId}/>
+    }
 
-        </div>
+    renderHtmlEdit() {
+        console.log(this.state.value);
+        return <div ref={c=>this.input=c}
+                    {...this.props}
+                    contentEditable={!this.props.readOnly}
+                    id={this.domId}
+                    className={this.getInputClasses()}
+                    onInput={this.inputHandler}
+                    onPaste={this.pasteHandler}
+                    // onDragOver={e=>{e.preventDefault();}}
+                    // onDragEnd={this.dragEndHandler}
+                    onDrop={this.dropHandler}
+                    dangerouslySetInnerHTML={{__html:this.state.value??''}}
+                >
+                </div>
     }
 }
 

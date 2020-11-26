@@ -1,0 +1,56 @@
+/**
+ * Created by clakeboy on 2020/11/24.
+ */
+import React from 'react';
+import PropTypes from 'prop-types';
+import classNames from 'classnames/bind';
+import {
+    Button,
+    Container,
+    Card
+} from "../../src";
+import TextArea from "../../src/TextArea";
+
+class TestEdit extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            html:""
+        }
+    }
+
+    componentDidMount() {
+
+    }
+
+    render() {
+        return (
+            <Container>
+                <h1>React Bootstrap v4 HTML Editor Demo</h1>
+                <Container fluid className='mb-1 p-0'>
+                    <Button onClick={() => {
+                        this.props.history.goBack();
+                    }}>返回主页</Button>
+                </Container>
+                <Card header='HTML模式'>
+                    <TextArea htmlMode height='500px' data={this.state.html} onChange={(val)=>{
+                        this.setState({
+                            html:val
+                        })
+                    }}/>
+                </Card>
+            </Container>
+        );
+    }
+}
+
+TestEdit.propTypes = {
+
+};
+
+TestEdit.defaultProps = {
+
+};
+
+export default TestEdit;

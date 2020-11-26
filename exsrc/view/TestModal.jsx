@@ -37,6 +37,7 @@ class TestModal extends React.PureComponent {
             currentPage: 1,
             comboSelect: {'id':[1,3,5]},
             child : [],
+            inputData:{}
         };
 
         this.child = [{
@@ -286,7 +287,6 @@ class TestModal extends React.PureComponent {
     }
 
     render() {
-
         return (
             <Container className={'mb-5'}>
                 <h1>React Bootstrap v4 Test Table Tree Modal</h1>
@@ -378,7 +378,7 @@ class TestModal extends React.PureComponent {
                             }
                         }} onChange={(val,row)=>{
                             console.log(val,row);
-                        }}/>
+                        }} data={this.state?.inputData?.task_name?.text}/>
                         <Button onClick={()=>{
                             let data = [{
                                 "id"             : 3,

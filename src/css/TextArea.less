@@ -3,7 +3,17 @@ textarea {
 }
 
 .ck-text-area {
-
+  position: relative;
+  .html {
+    &::before {
+      color: #999999;
+      content: 'HTML';
+      position: absolute;
+      right: 5px;
+      bottom: 0;
+      font-size: .7rem;
+    }
+  }
 }
 
 .ck-text-area-xs {

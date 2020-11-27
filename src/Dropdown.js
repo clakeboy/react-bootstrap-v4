@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import common from './Common';
+import Button from "./Button";
+import CDropdown from "./CDropdown";
 
 class Dropdown extends React.PureComponent {
     constructor(props) {
@@ -65,7 +67,7 @@ class Dropdown extends React.PureComponent {
     }
 
     getClasses() {
-        let base = 'dropdown';
+        let base = 'dropdown btn-group';
         return classNames(base,this.props.className);
     }
 
@@ -81,26 +83,67 @@ class Dropdown extends React.PureComponent {
     renderList() {
         let list = this.state.list;
         if (!list || !list instanceof Array) {
+            if (React.Children.count(this.props.children)) {
+                list = [];
+                React.Children.forEach(this.props.children, (item, key) => {
+                    if (item.type === DropdownValue) {
+                        list.push({
+                            text: item.props.text,
+                            value: item.props.value,
+                            active: item.props.active,
+                        });
+                    }
+                });
+            } else {
+                return null
+            }
+        }
+        return list.map((item)=>{
+            let classList = 'dropdown-item';
+            if (item.active) {
+                classList += ' active';
+            }
+            if (typeof item === 'string') {
+                return <Button className={classList} size={this.props.size} onClick={this.selectHandler} data-value={item}>{item}</Button>
+            }
+            return <Button className={classList} size={this.props.size} onClick={this.selectHandler} data-value={item.value}>{item.text}</Button>
+        });
+    }
+
+    renderGrid() {
+        let list = this.state.list;
+        if (!list || !list instanceof Array) {
             return null;
         }
-
-        return list.map((item)=>{
-            if (typeof item === 'string') {
-                return <button className="dropdown-item" onClick={this.selectHandler} data-value={item}>{item}</button>
+        let domList = [];
+        for (let row=0;row<list.length;row++) {
+            let rowList = list[row];
+            if (!rowList || !rowList instanceof Array) {
+                continue
             }
-            return <button className="dropdown-item" onClick={this.selectHandler} data-value={item.value}>{item.text}</button>
-        });
+            let rowDom = <div className='px-2 d-flex d-inline mt-1'>
+                {rowList.map((item)=>{
+                    return <button className='flex-fill bd-highlight border' style={{backgroundColor:item,height:'24px'}} data-value={item} onClick={this.selectHandler}/>
+                })}
+            </div>;
+            domList.push(rowDom);
+        }
+
+        return domList;
     }
 
     render() {
         return (
             <div className={this.getClasses()} style={this.getStyles()}>
-                <button className="btn btn-secondary dropdown-toggle" style={this.getStyles()} role="button" id={this.props.id} data-toggle="dropdown">
+                <Button className='dropdown-toggle' theme={this.props.theme} size={this.props.size} icon={this.props.icon} outline={this.props.outline} style={this.getStyles()} role="button" id={this.props.id} data-toggle="dropdown">
                     {this.state.text}
-                </button>
+                </Button>
+                {/*<Button className="btn btn-secondary dropdown-toggle" style={this.getStyles()} role="button" id={this.props.id} data-toggle="dropdown">*/}
+                {/*    {this.state.text}*/}
+                {/*</Button>*/}
 
                 <div className="dropdown-menu">
-                    {this.renderList()}
+                    {this.props.grid?this.renderGrid():this.renderList()}
                 </div>
             </div>
         );
@@ -112,11 +155,27 @@ Dropdown.propTypes = {
     width: PropTypes.number,
     text: PropTypes.string,
     onChange: PropTypes.func,
+    outline: PropTypes.bool,
+    theme: PropTypes.string,
+    size: PropTypes.string,
+    icon: PropTypes.string,
+    grid: PropTypes.bool,
 };
 
 Dropdown.defaultProps = {
     data: [],
     text: '',
+    theme: 'secondary',
+    outline: false,
 };
+
+class DropdownValue extends React.Component {}
+DropdownValue.propTypes = {
+    text: PropTypes.string,
+    value: PropTypes.string,
+    active: PropTypes.bool
+};
+
+Dropdown.Value = DropdownValue;
 
 export default Dropdown;

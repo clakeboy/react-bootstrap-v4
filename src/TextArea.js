@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import common from "./Common";
 import './css/TextArea.less';
+import ButtonGroup from "./ButtonGroup";
+import Button from "./Button";
+import Dropdown from "./Dropdown";
 class TextArea extends React.PureComponent {
     constructor(props) {
         super(props);
@@ -15,6 +18,11 @@ class TextArea extends React.PureComponent {
         if (this.props.id) {
             this.domId = this.props.id;
         }
+    }
+
+    componentDidMount() {
+        document.execCommand('insertBrOnReturn',false,true);
+        document.execCommand("styleWithCSS",false,true);
     }
 
     componentWillReceiveProps(nextProp) {
@@ -109,7 +117,7 @@ class TextArea extends React.PureComponent {
         }
 
         if (this.props.htmlMode) {
-            base = classNames(base,'overflow-auto')
+            base = classNames(base,'overflow-auto',this.props.htmlBar?'has-header-bar':'')
         }
 
         return classNames(base, size);
@@ -181,7 +189,12 @@ class TextArea extends React.PureComponent {
         if (!selection.rangeCount) return false;
         selection.deleteFromDocument();
         selection.getRangeAt(0).insertNode(node);
+        selection.collapseToEnd();
         this.inputHandler(null);
+    }
+
+    execCommand(cmd,args) {
+        document.execCommand(cmd,false,args);
     }
     /*********************
      * render method
@@ -210,6 +223,7 @@ class TextArea extends React.PureComponent {
         return (
             <div className={this.getMainClasses()} style={this.getMainStyles()}>
                 {this.renderLabel()}
+                {this.props.htmlMode?this.renderHtmlEditIcon():null}
                 {this.props.htmlMode?this.renderHtmlEdit():this.renderTextArea()}
                 {this.renderSummary()}
             </div>
@@ -221,9 +235,7 @@ class TextArea extends React.PureComponent {
     }
 
     renderHtmlEdit() {
-        console.log(this.state.value);
         return <div ref={c=>this.input=c}
-                    {...this.props}
                     contentEditable={!this.props.readOnly}
                     id={this.domId}
                     className={this.getInputClasses()}
@@ -235,6 +247,57 @@ class TextArea extends React.PureComponent {
                     dangerouslySetInnerHTML={{__html:this.state.value??''}}
                 >
                 </div>
+    }
+
+    renderHtmlEditIcon() {
+
+        let color = [];
+
+        return <div className='mb-1 header-bar'>
+            <ButtonGroup>
+                <Button className='icon' size='sm' icon='bold' outline theme='secondary' tip='Bold' onClick={()=>{
+                    this.execCommand('bold',null);
+                }}/>
+                <Button className='icon' size='sm' icon='italic' outline theme='secondary' tip='Italic' onClick={()=>{
+                    this.execCommand('italic',null);
+                }}/>
+                <Button className='icon' size='sm' icon='underline' outline theme='secondary' tip='Underline' onClick={()=>{
+                    this.execCommand('underline',null);
+                }}/>
+                <Button className='icon' size='sm' icon='undo' outline theme='secondary' tip='Undo' onClick={()=>{
+                    this.execCommand('undo',null);
+                }}/>
+                <Button className='icon' size='sm' icon='redo' outline theme='secondary' tip='Redo' onClick={()=>{
+                    this.execCommand('redo',null);
+                }}/>
+                <Dropdown size='sm' outline icon='text-height' data={[
+                    {text:'x-Small',value:'1'},
+                    {text:'Small',value:'2'},
+                    {text:'Medium',value:'3'},
+                    {text:'Large',value:'4'},
+                    {text:'x-Large',value:'5'},
+                    {text:'xx-Large',value:'6'},
+                    {text:'xxx-Large',value:'7'},
+                ]} onChange={(txt,val)=>{
+                    this.execCommand('fontSize',val);
+                }}/>
+                <Dropdown size='sm' outline icon='highlighter' data={[
+                    ['red','orange','yellow','green','blue','purple'],
+                    ['white','gray','black','brown','silver','purple'],
+                ]} grid onChange={(txt,val)=>{
+                    console.log(txt,val);
+                    this.execCommand('foreColor',val);
+                }}/>
+
+                <Button className='icon' size='sm' icon='eraser' outline theme='secondary' tip='Clean' onClick={()=>{
+                    this.execCommand('removeFormat',null);
+                }}/>
+                {/*<Button className='icon' size='sm' icon='wrench' outline theme='secondary' tip='Clean' onClick={()=>{*/}
+                {/*    console.log(document.queryCommandState('fontSize'));*/}
+                {/*    console.log(document.queryCommandValue('fontSize'));*/}
+                {/*}}/>*/}
+            </ButtonGroup>
+        </div>
     }
 }
 
@@ -254,7 +317,8 @@ TextArea.propTypes = {
     absolute: PropTypes.bool,
     x       : PropTypes.string,
     y       : PropTypes.string,
-    htmlMode: PropTypes.bool
+    htmlMode: PropTypes.bool,
+    htmlBar: PropTypes.bool,
 };
 
 TextArea.defaultProps = {
@@ -262,7 +326,8 @@ TextArea.defaultProps = {
     data    : null,
     summary : '',
     readOnly: false,
-    htmlMode: false
+    htmlMode: false,
+    htmlBar: false,
 };
 
 export default TextArea;

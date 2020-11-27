@@ -79,10 +79,20 @@ class Button extends React.PureComponent {
 
     render() {
         return (
-            <button {...this.props} id={this.domId} disabled={this.props.disabled} onClick={this.clickHandler} className={this.getClasses()} style={this.getStyles()} data-toggle="tooltip" data-placement="bottom" title={this.props.tip}>
+            <button {...this.props} {...this.renderTip()} id={this.domId} disabled={this.props.disabled} onClick={this.clickHandler} className={this.getClasses()} style={this.getStyles()} title={this.props.tip}>
                 {this.renderIcon()}{this.props.children}
             </button>
         );
+    }
+
+    renderTip() {
+        if (!this.props.tip) {
+            return {}
+        }
+        return {
+            'data-toggle':"tooltip",
+            'data-placement':"bottom"
+        };
     }
 
     renderIcon() {

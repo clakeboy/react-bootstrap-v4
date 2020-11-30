@@ -250,9 +250,9 @@ class TextArea extends React.PureComponent {
     }
 
     renderHtmlEditIcon() {
-
-        let color = [];
-
+        if (!this.props.htmlBar) {
+            return null;
+        }
         return <div className='mb-1 header-bar'>
             <ButtonGroup>
                 <Button className='icon' size='sm' icon='bold' outline theme='secondary' tip='Bold' onClick={()=>{
@@ -327,7 +327,7 @@ TextArea.defaultProps = {
     summary : '',
     readOnly: false,
     htmlMode: false,
-    htmlBar: false,
+    htmlBar: true,
 };
 
 export default TextArea;

@@ -34,7 +34,13 @@ class TestEdit extends React.Component {
                     }}>返回主页</Button>
                 </Container>
                 <Card header='HTML模式'>
-                    <TextArea htmlMode htmlBar height='500px' data={this.state.html} onChange={(val)=>{
+                    <TextArea htmlMode htmlBar height='500px' size='sm' data={this.state.html} onChange={(val)=>{
+                        this.setState({
+                            html:val
+                        })
+                    }}/>
+                    <hr/>
+                    <TextArea htmlMode htmlBar height='500px' size='xs' data={this.state.html} onChange={(val)=>{
                         this.setState({
                             html:val
                         })

@@ -255,22 +255,22 @@ class TextArea extends React.PureComponent {
         }
         return <div className='mb-1 header-bar'>
             <ButtonGroup>
-                <Button className='icon' size='sm' icon='bold' outline theme='secondary' tip='Bold' onClick={()=>{
+                <Button className='icon' size={this.props.size} icon='bold' outline theme='secondary' tip='Bold' onClick={()=>{
                     this.execCommand('bold',null);
                 }}/>
-                <Button className='icon' size='sm' icon='italic' outline theme='secondary' tip='Italic' onClick={()=>{
+                <Button className='icon' size={this.props.size} icon='italic' outline theme='secondary' tip='Italic' onClick={()=>{
                     this.execCommand('italic',null);
                 }}/>
-                <Button className='icon' size='sm' icon='underline' outline theme='secondary' tip='Underline' onClick={()=>{
+                <Button className='icon' size={this.props.size} icon='underline' outline theme='secondary' tip='Underline' onClick={()=>{
                     this.execCommand('underline',null);
                 }}/>
-                <Button className='icon' size='sm' icon='undo' outline theme='secondary' tip='Undo' onClick={()=>{
+                <Button className='icon' size={this.props.size} icon='undo' outline theme='secondary' tip='Undo' onClick={()=>{
                     this.execCommand('undo',null);
                 }}/>
-                <Button className='icon' size='sm' icon='redo' outline theme='secondary' tip='Redo' onClick={()=>{
+                <Button className='icon' size={this.props.size} icon='redo' outline theme='secondary' tip='Redo' onClick={()=>{
                     this.execCommand('redo',null);
                 }}/>
-                <Dropdown size='sm' outline icon='text-height' data={[
+                <Dropdown size={this.props.size} outline icon='text-height' data={[
                     {text:'x-Small',value:'1'},
                     {text:'Small',value:'2'},
                     {text:'Medium',value:'3'},
@@ -281,7 +281,7 @@ class TextArea extends React.PureComponent {
                 ]} onChange={(txt,val)=>{
                     this.execCommand('fontSize',val);
                 }}/>
-                <Dropdown size='sm' outline icon='highlighter' data={[
+                <Dropdown size={this.props.size} outline icon='highlighter' data={[
                     ['red','orange','yellow','green','blue','purple'],
                     ['white','gray','black','brown','silver','purple'],
                 ]} grid onChange={(txt,val)=>{
@@ -289,7 +289,7 @@ class TextArea extends React.PureComponent {
                     this.execCommand('foreColor',val);
                 }}/>
 
-                <Button className='icon' size='sm' icon='eraser' outline theme='secondary' tip='Clean' onClick={()=>{
+                <Button className='icon' size={this.props.size} icon='eraser' outline theme='secondary' tip='Clean' onClick={()=>{
                     this.execCommand('removeFormat',null);
                 }}/>
                 {/*<Button className='icon' size='sm' icon='wrench' outline theme='secondary' tip='Clean' onClick={()=>{*/}
@@ -307,6 +307,7 @@ TextArea.propTypes = {
     data       : PropTypes.any,
     summary    : PropTypes.string,
     readOnly   : PropTypes.bool,
+    size       : PropTypes.string,
     width      : PropTypes.string,
     height     : PropTypes.string,
     placeholder: PropTypes.string,

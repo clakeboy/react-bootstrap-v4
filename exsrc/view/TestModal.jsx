@@ -419,6 +419,7 @@ class TestModal extends React.PureComponent {
                             searchColumn:'task_name',
                             header:true,
                             showRows:10,
+                            searchType:'include',
                             filterColumns:[
                                 {field:'task_name',text:'任务名称'},
                                 {field:'time_rule',text:'时间规则'},

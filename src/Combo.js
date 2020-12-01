@@ -299,7 +299,17 @@ class Combo extends React.Component {
         if (this.props.noSearch) {
             data = this.props.data;
         } else if (this.props.data) {
-            let reg = new RegExp("^"+search.replace(/\\/g,'\\\\'),'i');
+            //replace regex key word
+            let searchStr = search.replace(/\\/g,"\\\\");
+            searchStr = searchStr.replace(/\[/g,'\\[');
+            searchStr = searchStr.replace(/\(/g,'\\(');
+            searchStr = searchStr.replace(/\)/g,'\\)');
+            let reg;
+            if (this.props.searchType === 'include') {
+                reg = new RegExp(searchStr,'i');
+            } else {
+                reg = new RegExp("^"+searchStr,'i');
+            }
             this.props.data.forEach((item)=>{
                 if (reg.test(item[this.props.searchColumn])) {
                     data.push(item);
@@ -445,6 +455,7 @@ Combo.propTypes = {
     filterColumns: PropTypes.array,
     noSearch: PropTypes.bool,
     header: PropTypes.bool,
+    searchType: PropTypes.string // 'start','include'
 };
 
 Combo.defaultProps = {
@@ -454,6 +465,7 @@ Combo.defaultProps = {
     multi:false,
     multiDef:null,
     header:false,
+    searchType: 'start'
 };
 
 export default Combo;

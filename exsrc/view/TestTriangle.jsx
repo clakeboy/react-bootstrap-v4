@@ -33,7 +33,7 @@ class TestTriangle extends React.Component {
                     <div className='cleafix'>
                         <div className='position-relative d-inline border p-2 float-right' id='test_drop_panel_left'>
                             <span>点击测试</span>
-                            <DropPanel className='bg-white' selector='#test_drop_panel_left'>
+                            <DropPanel className='bg-white' borderTheme='danger' selector='#test_drop_panel_left'>
                                 <div className='p-1' style={{width:'300px'}}>
                                     <Input/>
                                     <Input/>

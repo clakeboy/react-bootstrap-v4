@@ -142,8 +142,9 @@ class Main extends React.Component {
                         <Input className='col-6' size='lg' label='Calendar' data={this.state.pageData.chose_date} onChange={this.changeHandler('chose_date')} calendar readOnly/>
                         <Input className='col-6' size='xs' label='Calendar' data={this.state.pageData.chose_date} onChange={this.changeHandler('chose_date')} calendar readOnly/>
                     </div>
-                    <TextArea label='Summary' summary='input something' data={this.state.pageData.text_area} rows={10}/>
-                    <TextArea height='33px' width='400px' size='xs'/>
+                    <TextArea label='Summary' htmlMode height='500px' data={this.state.pageData.text_area}/>
+
+                    <TextArea label='Summary' height='500px' data={this.state.pageData.text_area}/>
                 </Card>
                 <Card header='absolute card small size' absolute sm x='0' y='0' width='100px' height='100px'>
 

@@ -383,6 +383,32 @@ class Input extends React.Component {
         )
     }
 
+    renderClear() {
+        if (this.props.disabled) {
+            return null
+        }
+        let input_icon = 'ck-input-calendar-icon';
+        if (this.props.size) {
+            input_icon = classNames(input_icon, 'ck-input-calendar-icon-' + this.props.size);
+        }
+        return (
+            <div className='ck-input-calendar'>
+                <div className={input_icon} onMouseDown={(e) => {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    if (this.isFocus) {
+                        this.changeHandler("");
+                        if (this.props.combo.multi) {
+                            this.combo.clearMulti();
+                        }
+                    } else {
+                        this.input.focus();
+                    }
+                }}><Icon ref={c=>this.clearIcon=c} icon={this.state.icon}/></div>
+            </div>
+        )
+    }
+
     //build tooltip
     renderValidateTip() {
         if (this.props.validate) {
@@ -408,6 +434,7 @@ class Input extends React.Component {
                        id={this.domId} {...this.renderValidateTip()}/>
                 {this.renderCalendar()}
                 {this.renderCombo()}
+                {this.renderClear()}
                 {this.renderSummary()}
             </div>
         );

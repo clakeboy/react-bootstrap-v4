@@ -4,11 +4,14 @@
 
 import React from 'react';
 import {Button, Card, Container, Input, DropPanel} from "../../src";
+import Upload from "../../src/components/Upload";
 // import '../../src/css/Triangle.less';
 
 class TestTriangle extends React.Component {
+    upload;
     constructor(props) {
         super(props);
+        this.upload = new Upload();
     }
 
     componentDidMount() {
@@ -30,6 +33,10 @@ class TestTriangle extends React.Component {
                     }}>回到首页</Button>
                 </Container>
                 <Card className='mt-2' header='DropPanel 测试'>
+                    <Button onClick={()=>{
+
+                    }}>点击上传文件</Button>
+                    <Input label='文件' data={this.state.filename}/>
                     <div className='cleafix'>
                         <div className='position-relative d-inline border p-2 float-right' id='test_drop_panel_left'>
                             <span>点击测试</span>

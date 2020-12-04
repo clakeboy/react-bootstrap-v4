@@ -40,3 +40,4 @@ export RadioGroup from './RadioGroup';
 export i18n from './components/i18n';
 export CDropdown from './CDropdown';
 export DropPanel from './DropPanel';
+export Upload from './components/Upload';

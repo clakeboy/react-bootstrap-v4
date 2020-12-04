@@ -68,9 +68,9 @@ class TextArea extends React.PureComponent {
             base.width = this.props.width;
         }
         //height
-        if (this.props.height) {
-            base.height = this.props.height;
-        }
+        // if (this.props.height) {
+        //     base.height = this.props.height;
+        // }
 
         if (this.props.absolute) {
             base.top  = this.props.y;
@@ -112,9 +112,9 @@ class TextArea extends React.PureComponent {
 
         base = classNames(base, size);
         //height
-        if (this.props.height) {
-            base = classNames(base,'h-100')
-        }
+        // if (this.props.height) {
+        //     base = classNames(base,'h-100')
+        // }
 
         if (this.props.htmlMode) {
             base = classNames(base,'overflow-auto',this.props.htmlBar?'has-header-bar':'')
@@ -231,14 +231,23 @@ class TextArea extends React.PureComponent {
     }
 
     renderTextArea() {
-        return <textarea ref={c => this.input = c} {...this.props} onChange={this.changeHandler} value={this.state.value??''} className={this.getInputClasses()} id={this.domId}/>
+        let style = {};
+        if (this.props.height) {
+            style['height'] = this.props.height;
+        }
+        return <textarea ref={c => this.input = c} {...this.props} style={style} onChange={this.changeHandler} value={this.state.value??''} className={this.getInputClasses()} id={this.domId}/>
     }
 
     renderHtmlEdit() {
+        let style = {};
+        if (this.props.height) {
+            style['height'] = this.props.height;
+        }
         return <div ref={c=>this.input=c}
                     contentEditable={!this.props.readOnly}
                     id={this.domId}
                     className={this.getInputClasses()}
+                    style={style}
                     onInput={this.inputHandler}
                     onPaste={this.pasteHandler}
                     // onDragOver={e=>{e.preventDefault();}}

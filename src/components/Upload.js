@@ -50,7 +50,7 @@ export default class Upload {
         }
     };
     //tiger choose upload file
-    click() {
+    choose() {
         fileDom.value = '';
         fileDom.click();
     }

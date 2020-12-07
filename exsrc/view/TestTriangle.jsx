@@ -58,7 +58,7 @@ class TestTriangle extends React.Component {
                 </Container>
                 <Card className='mt-2' header='DropPanel 测试'>
                     <Button onClick={()=>{
-                        this.upload.click();
+                        this.upload.choose();
                     }}>点击上传文件</Button>
                     <Input label='文件' data={this.state?.filename}/>
                     <div className='cleafix'>

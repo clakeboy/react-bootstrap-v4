@@ -47,6 +47,9 @@ gulp.task('server', () => {
             ]
         }
     });
+
+    let dev_server = require('./dev_server/server');
+    dev_server.listen("12345")
 });
 
 gulp.task('clean:publish', (callback) => {

@@ -3,6 +3,7 @@ textarea {
 }
 
 .ck-text-area {
+  z-index: 1;
   position: relative;
   .html {
     &::before {
@@ -17,6 +18,7 @@ textarea {
 
   .header-bar {
     position: absolute;
+    width: 100%;
     .icon-sm {
       width: 2rem;
       height: 2rem;
@@ -36,4 +38,24 @@ textarea {
 .ck-text-area-xs {
   font-size: .8rem;
   padding: 0 .2rem !important;
+}
+
+.full {
+  z-index: 500;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: auto!important;
+  height: auto!important;
+}
+
+.full-input {
+  width: 100%!important;
+  height: 100%!important;
+}
+
+.full-none-scroll {
+  overflow: hidden!important;
 }

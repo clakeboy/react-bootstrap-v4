@@ -221,7 +221,7 @@ class TextArea extends React.PureComponent {
 
     render() {
         return (
-            <div className={this.getMainClasses()} style={this.getMainStyles()}>
+            <div ref={c=>this.mainDom=c} className={this.getMainClasses()} style={this.getMainStyles()}>
                 {this.renderLabel()}
                 {this.props.htmlMode?this.renderHtmlEditIcon():null}
                 {this.props.htmlMode?this.renderHtmlEdit():this.renderTextArea()}
@@ -308,6 +308,21 @@ class TextArea extends React.PureComponent {
                 {/*    console.log(document.queryCommandValue('fontSize'));*/}
                 {/*}}/>*/}
             </ButtonGroup>
+            <Button className={iconClass+' float-right'} id={this.domId+'-btn-full'} size={size} icon='expand-arrows-alt' outline theme='secondary' tip='Full Screen' onClick={(e)=>{
+                if (this.isFull) {
+                    this.isFull = false;
+                    document.body.classList.remove('full-none-scroll');
+                    this.mainDom.classList.remove('full');
+                    this.input.classList.remove('full-input');
+                    e.currentTarget.querySelector('i').className = 'fas fa-expand-arrows-alt';
+                } else {
+                    this.isFull = true;
+                    document.body.classList.add('full-none-scroll');
+                    this.mainDom.classList.add('full');
+                    this.input.classList.add('full-input');
+                    e.currentTarget.querySelector('i').className = 'fas fa-compress-arrows-alt';
+                }
+            }}/>
         </div>
     }
 }

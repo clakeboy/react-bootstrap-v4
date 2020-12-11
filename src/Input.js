@@ -37,9 +37,7 @@ class Input extends React.Component {
             this.input.addEventListener('focus', (e) => {
                 this.calendar.show(e.currentTarget);
             }, false);
-            this.input.addEventListener('focus', this.focusClearHandler, false);
-            this.input.addEventListener('blur', this.blurClearHandler, false);
-            this.input.addEventListener('mousedown',stopEvent, false);
+
             // $(ReactDOM.findDOMNode(this.input)).on('focus', (e) => {
             //     this.calendar.show(e.currentTarget);
             // });
@@ -51,11 +49,10 @@ class Input extends React.Component {
             this.input.addEventListener('focus', (e) => {
                 this.combo.show(this.state.value,e.currentTarget);
             }, false);
-            this.input.addEventListener('focus', this.focusClearHandler, false);
-            this.input.addEventListener('blur', this.blurClearHandler, false);
-            this.input.addEventListener('mousedown',stopEvent, false);
         }
-
+        this.input.addEventListener('focus', this.focusClearHandler, false);
+        this.input.addEventListener('blur', this.blurClearHandler, false);
+        this.input.addEventListener('mousedown',stopEvent, false);
         if (this.props.validate) {
             let options = {
                 'trigger':'manual',
@@ -281,6 +278,10 @@ class Input extends React.Component {
                     icon: 'calendar-alt',
                 });
                 // this.clearIcon.setIcon('calendar-alt');
+            } else {
+                this.setState({
+                    icon: '',
+                });
             }
         }
     };
@@ -384,7 +385,7 @@ class Input extends React.Component {
     }
 
     renderClear() {
-        if (this.props.disabled) {
+        if (this.props.disabled || this.props.combo || this.props.calendar) {
             return null
         }
         let input_icon = 'ck-input-calendar-icon';

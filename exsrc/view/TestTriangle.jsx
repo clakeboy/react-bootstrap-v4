@@ -24,6 +24,7 @@ class TestTriangle extends React.Component {
     }
 
     chooseFile = (file,e) => {
+        console.log(e);
         this.setState({
             filename: e.target.value
         });

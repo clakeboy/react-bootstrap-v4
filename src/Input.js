@@ -385,7 +385,7 @@ class Input extends React.Component {
     }
 
     renderClear() {
-        if (this.props.disabled || this.props.combo || this.props.calendar) {
+        if (this.props.disabled || this.props.combo || this.props.calendar || this.props.plaintext) {
             return null
         }
         let input_icon = 'ck-input-calendar-icon';
@@ -399,9 +399,6 @@ class Input extends React.Component {
                     e.preventDefault();
                     if (this.isFocus) {
                         this.changeHandler("");
-                        if (this.props.combo.multi) {
-                            this.combo.clearMulti();
-                        }
                     } else {
                         this.input.focus();
                     }

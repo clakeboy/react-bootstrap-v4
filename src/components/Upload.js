@@ -1,4 +1,5 @@
 //upload common component
+import ReactDOM from 'react-dom';
 let fileDom;
 export default class Upload {
     //change event handler
@@ -17,6 +18,8 @@ export default class Upload {
     currentFile;
     //post file field name
     fieldName;
+    //drag file selector
+    dragSelector;
 
     static NewUpload(opts) {
         return new Upload(opts);
@@ -29,6 +32,7 @@ export default class Upload {
         this.errorEvent = opts?.error ?? null;
         this.uploadHost = opts?.host ?? '';
         this.fieldName = opts?.field ?? 'upfile';
+        this.dragSelector = opts?.drag_target ?? null;
         this.initFileDom();
     }
 
@@ -40,8 +44,29 @@ export default class Upload {
             fileDom.addEventListener("change",this.changeHandler);
             // document.body.appendChild(fileDom);
         }
+        let dragDom;
+        if (typeof this.dragSelector === 'string') {
+            dragDom = document.querySelector("#"+this.dragSelector);
+        } else {
+            dragDom = ReactDOM.findDOMNode(this.dragSelector);
+        }
+        if (dragDom) {
+            dragDom.addEventListener("drop",this.dropHandler,false);
+        }
         this.isInit = true;
     }
+
+    dropHandler = (e)=> {
+        e.stopPropagation();
+        e.preventDefault();
+        if (e.dataTransfer.files.length > 0) {
+            let files = e.dataTransfer.files;
+            this.currentFile = files[0];
+            if (typeof this.changeEvent === 'function') {
+                this.changeEvent(this.currentFile,this.currentFile.name);
+            }
+        }
+    };
 
     changeHandler = (e) => {
         this.currentFile = fileDom.files[0];

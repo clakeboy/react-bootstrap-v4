@@ -20,13 +20,15 @@ class TestTriangle extends React.Component {
             error: this.uploadError,      //错误回调
             field: 'update_file',      //上传文件 POST的字段名
             host: 'http://localhost:12345/upload',  //上传后端地址
+            // drag_target: 'drag_file',//上传文件拖动
+            drag_target: this.dragDom,//上传文件拖动对像,可以直接传react ref对像
         });
     }
 
     chooseFile = (file,e) => {
         console.log(e);
         this.setState({
-            filename: e.target.value
+            filename: e.target?.value ?? e
         });
         this.upload.up();
     };
@@ -61,7 +63,7 @@ class TestTriangle extends React.Component {
                     <Button onClick={()=>{
                         this.upload.choose();
                     }}>点击上传文件</Button>
-                    <Input label='文件' data={this.state?.filename}/>
+                    <Input ref={c=>this.dragDom=c} label='文件' data={this.state?.filename}/>
                     <div className='cleafix'>
                         <div className='position-relative d-inline border p-2 float-right' id='test_drop_panel_left'>
                             <span>点击测试</span>

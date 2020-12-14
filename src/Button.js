@@ -13,7 +13,7 @@ class Button extends React.PureComponent {
 
     componentDidMount() {
         if (this.props.tip) {
-            $('#'+this.domId).tooltip();
+            $('#'+this.domId).tooltip({'trigger':'hover'});
         }
     }
 

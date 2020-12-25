@@ -87,6 +87,11 @@ class Table extends React.Component {
                 }
             }
         }
+
+        if (this.tableHeader) {
+            // this.tableHeader.style.transform = `translateY(${e.currentTarget.scrollTop}px)`;
+            this.tableHeader.style.transform = `translate3d(0,0,10px)`;
+        }
     }
 
     setRowsHeight(rows,heightRows) {

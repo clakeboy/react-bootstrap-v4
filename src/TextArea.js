@@ -253,7 +253,7 @@ class TextArea extends React.PureComponent {
                     // onDragOver={e=>{e.preventDefault();}}
                     // onDragEnd={this.dragEndHandler}
                     onDrop={this.dropHandler}
-                    dangerouslySetInnerHTML={{__html:this.state.value??''}}
+                    dangerouslySetInnerHTML={{__html:this.state.value??'<div></div>'}}
                 >
                 </div>
     }

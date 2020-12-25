@@ -418,7 +418,7 @@ class TestModal extends React.PureComponent {
                         <Input label="测试本地数据 Combo (超小)" size={'xs'} combo={{
                             searchColumn:'task_name',
                             header:true,
-                            showRows:10,
+                            showRows:5,
                             searchType:'include',
                             filterColumns:[
                                 {field:'task_name',text:'任务名称'},

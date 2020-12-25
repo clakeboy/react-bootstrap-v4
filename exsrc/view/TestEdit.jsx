@@ -34,6 +34,11 @@ class TestEdit extends React.Component {
                     }}>返回主页</Button>
                 </Container>
                 <Card header='HTML模式'>
+                    <Button onClick={() => {
+                        this.setState({
+                            html:null
+                        })
+                    }}>设置空值</Button>
                     <TextArea htmlMode htmlBar height='500px' size='sm' data={this.state.html} onChange={(val)=>{
                         this.setState({
                             html:val

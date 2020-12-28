@@ -157,6 +157,9 @@ class Table extends React.Component {
             let unit   = '';
             React.Children.map(this.props.children, (item, key) => {
                 if (item.type === TableHeader) {
+                    if (item.props.hide) {
+                        return
+                    }
                     let matchs;
                     if (item.props.width && item.props.width.match) {
                         matchs = item.props.width.match(reg);
@@ -182,12 +185,12 @@ class Table extends React.Component {
                 }
             });
             if (this.props.select) {
-                this.width += 20;
-                this.beforeHoldWidth += 20;
+                this.width += 30;
+                this.beforeHoldWidth += 30;
             }
             if (this.props.serialNumber) {
-                this.width += 20;
-                this.beforeHoldWidth += 20;
+                this.width += 30;
+                this.beforeHoldWidth += 30;
             }
             this.width += unit;
             this.beforeHoldWidth += unit;

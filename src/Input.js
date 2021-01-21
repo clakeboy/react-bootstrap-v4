@@ -286,6 +286,13 @@ class Input extends React.Component {
         }
     };
 
+    dblHandler = (e)=> {
+        if (this.calendar && !this.state.value) {
+            this.calendar.setCurrentDate(new Date());
+            this.setState({value:this.calendar.format()})
+        }
+    };
+
     /*********************
      * render method
      *********************/
@@ -426,6 +433,7 @@ class Input extends React.Component {
                 <input type='text' {...this.props} ref={c => this.input = c} onBlur={this.blurHandler}
                        onChange={this.changeHandler}
                        onKeyUp={this.keyUpHandler}
+                       onDoubleClick={this.dblHandler}
                        value={this.state.value??""}
                        className={this.getInputClasses()}
                        style={this.getInputStyle()}

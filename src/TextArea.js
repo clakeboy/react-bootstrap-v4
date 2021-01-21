@@ -196,6 +196,10 @@ class TextArea extends React.PureComponent {
     execCommand(cmd,args) {
         document.execCommand(cmd,false,args);
     }
+
+    initImageResize() {
+
+    }
     /*********************
      * render method
      *********************/
@@ -255,7 +259,7 @@ class TextArea extends React.PureComponent {
                     onDrop={this.dropHandler}
                     dangerouslySetInnerHTML={{__html:this.state.value??'<div></div>'}}
                 >
-                </div>
+        </div>
     }
 
     renderHtmlEditIcon() {

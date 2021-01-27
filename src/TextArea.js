@@ -6,7 +6,7 @@ import './css/TextArea.less';
 import ButtonGroup from "./ButtonGroup";
 import Button from "./Button";
 import Dropdown from "./Dropdown";
-class TextArea extends React.PureComponent {
+class TextArea extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -26,11 +26,12 @@ class TextArea extends React.PureComponent {
     }
 
     componentWillReceiveProps(nextProp) {
-        this.setState({value: nextProp.data});
+        this.setState({value: nextProp.data,html:nextProp.data});
     }
 
     shouldComponentUpdate(nextProps, nextState) {
         if (this.props.htmlMode) {
+            // return true;
             return nextState.value !== this.state.html;
         }
         return nextState.value !== this.state.value;
@@ -137,7 +138,8 @@ class TextArea extends React.PureComponent {
 
     inputHandler = (e) =>{
         this.setState({
-            html: this.input.innerHTML
+            html: this.input.innerHTML,
+            // value: this.input.innerHTML
         },()=>{
             if (this.props.onChange && typeof this.props.onChange === 'function') {
                 this.props.onChange(this.state.html, this);
@@ -257,9 +259,15 @@ class TextArea extends React.PureComponent {
                     // onDragOver={e=>{e.preventDefault();}}
                     // onDragEnd={this.dragEndHandler}
                     onDrop={this.dropHandler}
-                    dangerouslySetInnerHTML={{__html:this.state.value??'<div></div>'}}
-                >
-        </div>
+                    dangerouslySetInnerHTML={{__html:this.getContent()}}
+                />
+    }
+
+    getContent() {
+        if (!this.state.value &&this.input) {
+            this.input.innerHTML = '';
+        }
+        return this.state.value??this.state.html;
     }
 
     renderHtmlEditIcon() {

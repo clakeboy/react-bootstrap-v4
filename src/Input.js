@@ -289,7 +289,14 @@ class Input extends React.Component {
     dblHandler = (e)=> {
         if (this.calendar && !this.state.value) {
             this.calendar.setCurrentDate(new Date());
-            this.setState({value:this.calendar.format()})
+            this.setState({value:this.calendar.format()},
+                () => {
+                    if (typeof this.props.onChange === 'function') {
+                        this.props.onChange(this.state.value, null, this);
+                    }
+                    this.calendar.hide();
+                }
+            )
         }
     };
 

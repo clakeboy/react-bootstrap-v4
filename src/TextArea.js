@@ -6,6 +6,7 @@ import './css/TextArea.less';
 import ButtonGroup from "./ButtonGroup";
 import Button from "./Button";
 import Dropdown from "./Dropdown";
+import Drag from './components/Drag';
 class TextArea extends React.Component {
     constructor(props) {
         super(props);
@@ -23,6 +24,7 @@ class TextArea extends React.Component {
     componentDidMount() {
         document.execCommand('insertBrOnReturn',false,true);
         document.execCommand("styleWithCSS",false,true);
+        this.initImageResize();
     }
 
     componentWillReceiveProps(nextProp) {
@@ -35,6 +37,16 @@ class TextArea extends React.Component {
             return nextState.value !== this.state.html;
         }
         return nextState.value !== this.state.value;
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.htmlMode) {
+            this.initImageResize();
+            this.input.querySelectorAll("img").forEach((elm)=>{
+                elm.addEventListener('focus',this.bindingResize,false);
+                elm.addEventListener('blur',this.unBindingResize,false)
+            })
+        }
     }
 
     getValue() {
@@ -118,7 +130,7 @@ class TextArea extends React.Component {
         // }
 
         if (this.props.htmlMode) {
-            base = classNames(base,'overflow-auto',this.props.htmlBar?'has-header-bar':'')
+            base = classNames(base,'overflow-auto position-relative',this.props.htmlBar?'has-header-bar':'')
         }
 
         return classNames(base, size);
@@ -181,7 +193,10 @@ class TextArea extends React.Component {
         read.onload = e=> {
             let img = document.createElement('img');
             img.src = read.result;
+            img.tabIndex = 1;
             this.insertHtmlNode(img);
+            img.addEventListener('focus',this.bindingResize,false)
+            img.addEventListener('blur',this.unBindingResize,false)
         };
         read.readAsDataURL(file);
     }
@@ -200,8 +215,63 @@ class TextArea extends React.Component {
     }
 
     initImageResize() {
+        this.resize = {};
+        let resize,rightBottom;
+        if (this.input.querySelector('.img-edit')) {
+            resize = this.input.querySelector('.img-edit');
+            rightBottom = resize.querySelector('.img-edit-point')
+        } else {
+            resize = document.createElement('div');
+            rightBottom = document.createElement('div');
+        }
 
+        resize.className = "img-edit d-none";
+        rightBottom.className = "img-edit-point";
+        rightBottom.addEventListener("mousedown",(e)=>{
+            e.stopPropagation();
+            e.preventDefault();
+        },false);
+        new Drag(rightBottom,rightBottom,{
+            start:()=>{
+                this.resize.width = resize.clientWidth;
+                this.resize.height = resize.clientHeight;
+                return true;
+            },
+            move:(move)=>{
+                resize.style.width = move.x + 7 + 'px';
+                resize.style.height = move.y + 7 + 'px';
+            },
+            end:()=>{
+                this.currentResize.style.width = resize.style.width;
+                this.currentResize.style.height = resize.style.height;
+                return true;
+            }
+        });
+
+        resize.appendChild(rightBottom);
+        this.input.appendChild(resize);
+        this.resizeImg = resize;
+        this.resizeRB = rightBottom;
     }
+
+    bindingResize = (e) => {
+        let elm = e.currentTarget;
+        this.currentResize = elm;
+        elm.classList.add("img-selected");
+        this.resizeImg.style.width = elm.clientWidth+2+'px';
+        this.resizeImg.style.height = elm.clientHeight+2+'px';
+        this.resizeImg.style.left = elm.offsetLeft+'px';
+        this.resizeImg.style.top = elm.offsetTop+'px';
+        this.resizeRB.style.top = (elm.clientHeight-5)+'px';
+        this.resizeRB.style.left = (elm.clientWidth-5)+'px';
+        this.resizeImg.classList.remove('d-none');
+    };
+    unBindingResize = (e)=>{
+        let elm = e.currentTarget;
+        this.currentResize = null;
+        elm.classList.remove("img-selected");
+        this.resizeImg.classList.add('d-none');
+    };
     /*********************
      * render method
      *********************/

@@ -17,6 +17,7 @@ textarea {
   }
 
   .header-bar {
+    z-index: 2;
     position: absolute;
     width: 100%;
     .icon-sm {
@@ -36,7 +37,25 @@ textarea {
 
   .img-edit {
     position: absolute;
-    visibility: hidden;
+    background-color: rgba(0, 107, 255,.1);
+    border: 1px dotted #333!important;
+  }
+  .img-edit-point {
+    position: absolute;
+    width: 11px;
+    height: 11px;
+    background-color: #333;
+    cursor: nwse-resize;
+    &:hover {
+      background-color: #dc3545;
+    }
+  }
+  img {
+    border: 1px solid #cccccc!important;
+  }
+  .img-selected {
+    border: 1px solid #0c80ba!important;
+    outline: none;
   }
 }
 

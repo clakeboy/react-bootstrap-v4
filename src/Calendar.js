@@ -102,9 +102,7 @@ class Calendar extends React.PureComponent {
     }
 
     componentDidMount() {
-        if (this.props.absolute) {
-            window.addEventListener('mousedown',this.hide,false);
-        }
+
     }
 
     componentWillUnmount() {
@@ -112,6 +110,7 @@ class Calendar extends React.PureComponent {
         window.removeEventListener('mousedown',this.hide,false);
         if (this.parentDom) {
             this.parentDom.removeEventListener('blur',this.hide,false);
+            this.parentDom.removeEventListener('keypress',this.autoComplete,false);
             this.parentDom.removeEventListener('click',this.checkShow,false);
         }
     }
@@ -128,6 +127,12 @@ class Calendar extends React.PureComponent {
     isTimeBar() {
 
     }
+
+    keyPressHandler = (e) => {
+        if (e.keyCode === 13) {
+            this.autoComplete(e.target.value);
+        }
+    };
 
     setCurrentDate(value) {
         if (value) {
@@ -266,9 +271,13 @@ class Calendar extends React.PureComponent {
     }
 
     hide = (e) => {
+        if (e.type === 'blur') {
+            this.autoComplete(e.target.value);
+        }
         // $(ReactDOM.findDOMNode(this)).hide();
         this.mainDom.classList.add('ck-calendar-none');
         this.isClose = true;
+        window.removeEventListener('mousedown',this.hide,false);
     };
 
     show(dom) {
@@ -277,8 +286,12 @@ class Calendar extends React.PureComponent {
         // document.querySelectorAll('.ck-calendar-absolute').forEach((item)=>{
         //     item.classList.add('ck-calendar-none');
         // });
+        if (this.props.absolute) {
+            window.addEventListener('mousedown',this.hide,false);
+        }
         this.parentDom.addEventListener('blur',this.hide,false);
         this.parentDom.addEventListener('click',this.checkShow,false);
+        this.parentDom.addEventListener('keypress',this.keyPressHandler,false);
         this.mainDom.classList.remove('ck-calendar-none');
         //fixed out window area
         this.fixPosition();
@@ -333,6 +346,28 @@ class Calendar extends React.PureComponent {
             this.show(this.parentDom);
         }
     };
+
+    autoComplete(val) {
+        let reg = /^\d{1,2}(\.|-|\/)\d{1,2}$/g;
+        if (reg.test(val)) {
+            let arr = val.split(/\.|-|\//);
+            let month = parseInt(arr[0]);
+            let day = parseInt(arr[1]);
+            if (month < 1 || month > 12) {
+                return
+            }
+            if (day < 1 || day > 31) {
+                return
+            }
+            let currDate = new Date();
+            currDate.setMonth(month-1);
+            currDate.setDate(day);
+            this.setCurrentDate(currDate)
+            if (typeof this.props.onSelect === 'function') {
+                this.props.onSelect(this.format());
+            }
+        }
+    }
 
     getClasses() {
         let base = 'ck-calendar border p-1';

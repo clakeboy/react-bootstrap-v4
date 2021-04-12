@@ -167,7 +167,14 @@ class TextArea extends React.Component {
             this.insertImage(file);
         } else {
             let paste = (e.clipboardData || window.clipboardData).getData('text');
-            this.insertHtmlNode(document.createTextNode(paste));
+            paste = paste.replace(/\r\n/g,"\n");
+            // paste = paste.replace(/\s/g,"&nbsp;");
+            let pasteContents = paste.split(/\n/);
+            pasteContents.forEach((val)=>{
+                let div = document.createElement("div");
+                div.innerHTML = val.replace(/\s/g,"&nbsp;");
+                this.insertHtmlNode(div);
+            });
         }
     };
 

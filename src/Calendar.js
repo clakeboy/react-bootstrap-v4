@@ -271,7 +271,7 @@ class Calendar extends React.PureComponent {
     }
 
     hide = (e) => {
-        if (e.type === 'blur') {
+        if (e && e.type === 'blur') {
             this.autoComplete(e.target.value);
         }
         // $(ReactDOM.findDOMNode(this)).hide();

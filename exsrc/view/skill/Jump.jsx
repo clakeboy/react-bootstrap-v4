@@ -23,7 +23,8 @@ class Jump extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {
-            checked: false
+            checked: false,
+            date: "",
         };
     }
 
@@ -86,6 +87,11 @@ class Jump extends React.PureComponent {
                     </Container>
                     {this.state.checked ? <div>是</div> : <div>否</div>}
                     <Button disabled>禁用</Button>
+                    <Input className='mr-1' width={'200px'} placeholder='日期' calendar data={this.state.date} onChange={(e)=>{
+                        this.setState({
+                            date:e
+                        })
+                    }}/>
                     <Modal ref={c=>this.modal=c}/>
                 </Card>
                 <Card header='Test Image Component' height='500px' scroll>

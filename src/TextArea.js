@@ -70,6 +70,10 @@ class TextArea extends React.Component {
         if (this.props.absolute) {
             base = classNames(base, 'position-absolute');
         }
+        //html mode
+        if (this.props.htmlMode) {
+            base = classNames(base,'ck-text-html');
+        }
         return classNames(base, this.props.className);
     }
 
@@ -103,10 +107,7 @@ class TextArea extends React.Component {
         if (this.props.plaintext) {
             base = 'form-control-plaintext';
         }
-        //html mode
-        if (this.props.htmlMode) {
-            base = classNames(base,'html');
-        }
+
         //size
         let size;
         switch (this.props.size) {
@@ -171,6 +172,9 @@ class TextArea extends React.Component {
             // paste = paste.replace(/\s/g,"&nbsp;");
             let pasteContents = paste.split(/\n/);
             pasteContents.forEach((val)=>{
+                if (val === '') {
+                    return
+                }
                 let div = document.createElement("div");
                 div.innerHTML = val.replace(/\s/g,"&nbsp;");
                 this.insertHtmlNode(div);
@@ -354,7 +358,7 @@ class TextArea extends React.Component {
         let size = this.props.size ?? 'sm';
         let iconClass = 'icon-'+size;
         return <div className='header-bar'>
-            <ButtonGroup>
+            <ButtonGroup className='bg-white'>
                 <Button className={iconClass} size={size} icon='bold' outline theme='secondary' tip='Bold' onClick={()=>{
                     this.execCommand('bold',null);
                 }}/>

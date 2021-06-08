@@ -1,20 +1,21 @@
 textarea {
   resize:none;
 }
+.ck-text-html {
+  &::before {
+    z-index: 3;
+    color: #999999;
+    content: 'HTML';
+    position: absolute;
+    right: 5px;
+    bottom: 0;
+    font-size: .7rem;
+  }
+}
 
 .ck-text-area {
   z-index: 1;
   position: relative;
-  .html {
-    &::before {
-      color: #999999;
-      content: 'HTML';
-      position: absolute;
-      right: 5px;
-      bottom: 0;
-      font-size: .7rem;
-    }
-  }
 
   .header-bar {
     z-index: 2;

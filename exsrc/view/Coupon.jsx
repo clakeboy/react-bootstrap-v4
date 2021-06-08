@@ -24,7 +24,9 @@ import {
     Load,
     CKModal,
     CDropdown,
-    Form
+    Form,
+    InputStyle,
+    Complex
 } from '../../src/index';
 import Loader from '../components/Loader';
 
@@ -128,6 +130,9 @@ class Coupon extends React.Component {
                             <div className='col-2 form-group pt-2'><label>middle垂直居中</label></div>
                             <Input className='col-10' data='Lee'/>
                         </div>
+                        <InputStyle label='Complex'>
+                            <Complex/>
+                        </InputStyle>
                     </Form>
                 </Card>
                 <Card className='mt-2' header="模态窗口">

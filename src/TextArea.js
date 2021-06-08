@@ -169,6 +169,10 @@ class TextArea extends React.Component {
         } else {
             let paste = (e.clipboardData || window.clipboardData).getData('text');
             paste = paste.replace(/\r\n/g,"\n");
+            if (!/\n/.test(paste)) {
+                this.insertHtmlNode(document.createTextNode(paste));
+                return
+            }
             // paste = paste.replace(/\s/g,"&nbsp;");
             let pasteContents = paste.split(/\n/);
             pasteContents.forEach((val)=>{

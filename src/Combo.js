@@ -81,6 +81,10 @@ class Combo extends React.Component {
         this.table.setSelectRows(key,val);
     }
 
+    setSearchText(text) {
+        this.search = text;
+    }
+
     show(search,dom) {
         this.parentDom = dom;
         this.parentDom.addEventListener('keydown',this.keyDownHandler,false);

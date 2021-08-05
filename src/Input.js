@@ -399,7 +399,9 @@ class Input extends React.Component {
     }
 
     renderClear() {
-        if (this.props.disabled || this.props.combo || this.props.calendar || this.props.plaintext) {
+        if (this.props.disabled || this.props.combo ||
+            this.props.calendar || this.props.plaintext ||
+            this.props.disableClear) {
             return null
         }
         let input_icon = 'ck-input-calendar-icon';
@@ -479,7 +481,8 @@ Input.propTypes = {
     y             : PropTypes.string,
     align         : PropTypes.string,
     textClass     : PropTypes.string,
-    textStyle     : PropTypes.object
+    textStyle     : PropTypes.object,
+    disableClear  : PropTypes.bool,
 };
 
 Input.defaultProps = {
@@ -489,7 +492,8 @@ Input.defaultProps = {
     data    : null,
     summary : '',
     readOnly: false,
-    disabled: false
+    disabled: false,
+    disableClear: false,
 };
 
 export default Input;

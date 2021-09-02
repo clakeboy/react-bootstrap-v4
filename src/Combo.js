@@ -428,13 +428,14 @@ class Combo extends React.Component {
         )
     }
     filterFormat = (val,row)=>{
-        let idx = val.toLowerCase().indexOf(this.search.toLowerCase());
+        let con = val.toString();
+        let idx = con.toLowerCase().indexOf(this.search.toLowerCase());
         if (idx === -1) {
             return val;
         }
-        let first = val.substring(0,idx);
-        let center = val.substr(idx,this.search.length);
-        let end = val.substr(idx+this.search.length);
+        let first = con.substring(0,idx);
+        let center = con.substr(idx,this.search.length);
+        let end = con.substr(idx+this.search.length);
         return <React.Fragment>
             {first}<span className='text-danger'>{center}</span>{end}
         </React.Fragment>;

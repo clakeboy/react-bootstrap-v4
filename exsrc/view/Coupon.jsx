@@ -205,7 +205,7 @@ class Coupon extends React.Component {
                         })
                     }}>
                         <div className='form-row'>
-                            <Input className='col-6' field='name' label='Name' plaintext data='Clake' data={this.state.data.name}/>
+                            <Input className='col-6' field='name' label='Name' data='Clake' data={this.state.data.name} multi={{height:'100px'}}/>
                             <Input className='col-6' field='name_s' label='Last Name' data='Lee' data={this.state.data.name_s}/>
                         </div>
                         <div className='form-row'>

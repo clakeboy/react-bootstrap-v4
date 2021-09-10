@@ -8,7 +8,6 @@ import Icon from "./Icon";
 import i18n from './components/i18n';
 
 import './css/Input.less';
-
 const stopEvent  = function (e) {
     e.stopPropagation();
 };
@@ -59,6 +58,11 @@ class Input extends React.Component {
                 'template':'<div class="tooltip ck-input-tip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner bg-danger"></div></div>',
             };
             $('#'+this.domId).tooltip(options);
+        }
+
+        if (this.props.multi) {
+            this.input.addEventListener('focus', this.showMulti, false);
+            this.input.addEventListener('blur', this.hideMulti, false);
         }
     }
 
@@ -173,6 +177,10 @@ class Input extends React.Component {
             base = classNames(base, `text-${this.props.align}`)
         }
 
+        if (this.props.multi) {
+            base = classNames(base, `ck-input-multi`)
+        }
+
         return classNames(base, this.props.textClass);
     }
 
@@ -183,6 +191,8 @@ class Input extends React.Component {
         }
         if (this.props.height) {
             base.height = this.props.height;
+        } else if (this.props.multi) {
+            base.height = 'calc(1.5em + .75rem + 2px)';
         }
         return common.extend(base, this.props.textStyle)
     }
@@ -263,6 +273,20 @@ class Input extends React.Component {
             });
             // this.clearIcon.setIcon('times-circle');
         }
+    };
+
+    //is multi show
+    showMulti = (e) => {
+        let width = this.input.clientWidth;
+        // this.input.style.width = width+'px';
+        // this.input.classList.add('ck-input-multi-show');
+        this.input.style.height = this.props.multi.height ?? '100px';
+    };
+
+    //is multi hide
+    hideMulti = (e) => {
+        // this.input.classList.remove('ck-input-multi-show');
+        this.input.style.height = 'calc(1.5em + .75rem + 2px)';
     };
 
     blurClearHandler = ()=>{
@@ -436,6 +460,9 @@ class Input extends React.Component {
     }
 
     render() {
+        if (this.props.multi) {
+            return this.renderMulti();
+        }
         return (
             <div id={this.domId+'-main'} className={this.getMainClasses()} style={this.getMainStyles()} >
                 {this.renderLabel()}
@@ -449,6 +476,24 @@ class Input extends React.Component {
                        id={this.domId} {...this.renderValidateTip()}/>
                 {this.renderCalendar()}
                 {this.renderCombo()}
+                {this.renderClear()}
+                {this.renderSummary()}
+            </div>
+        );
+    }
+
+    renderMulti() {
+        return (
+            <div id={this.domId+'-main'} className={this.getMainClasses()} style={this.getMainStyles()} >
+                {this.renderLabel()}
+                <textarea {...this.props} ref={c => this.input = c} onBlur={this.blurHandler}
+                  onChange={this.changeHandler}
+                  onKeyUp={this.keyUpHandler}
+                  onDoubleClick={this.dblHandler}
+                  value={this.state.value??""}
+                  className={this.getInputClasses()}
+                  style={this.getInputStyle()}
+                  id={this.domId} {...this.renderValidateTip()}/>
                 {this.renderClear()}
                 {this.renderSummary()}
             </div>
@@ -483,6 +528,7 @@ Input.propTypes = {
     textClass     : PropTypes.string,
     textStyle     : PropTypes.object,
     disableClear  : PropTypes.bool,
+    multi         : PropTypes.object, //多行文本输入
 };
 
 Input.defaultProps = {

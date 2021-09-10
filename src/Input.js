@@ -136,7 +136,7 @@ class Input extends React.Component {
         return common.extend(base, this.props.style)
     }
 
-    getInputClasses() {
+    getInputClasses(append) {
         let base = 'form-control ck-input';
         //readonly
         if (this.props.plaintext) {
@@ -181,7 +181,7 @@ class Input extends React.Component {
             base = classNames(base, `ck-input-multi`)
         }
 
-        return classNames(base, this.props.textClass);
+        return classNames(base, this.props.textClass, append);
     }
 
     getInputStyle() {
@@ -277,16 +277,25 @@ class Input extends React.Component {
 
     //is multi show
     showMulti = (e) => {
-        let width = this.input.clientWidth;
+        let width = this.input.offsetWidth;
+        // let xy = common.GetDomXY(this.input,this.input.parentNode);
         // this.input.style.width = width+'px';
-        // this.input.classList.add('ck-input-multi-show');
+        // this.multi.classList.remove('d-none');
+        // this.multi.style.left = xy.left+'px';
+        // this.multi.style.top = xy.top+'px';
+        // this.multi.style.width = width+'px';
+        // this.multi.style.height = this.props.multi.height ?? '100px';
+        // this.input.style.height = this.props.multi.height ?? '100px';
+        this.input.classList.add('ck-input-multi-show','shadow');
         this.input.style.height = this.props.multi.height ?? '100px';
     };
 
     //is multi hide
     hideMulti = (e) => {
-        // this.input.classList.remove('ck-input-multi-show');
         this.input.style.height = 'calc(1.5em + .75rem + 2px)';
+        setTimeout(()=>{
+            this.input.classList.remove('ck-input-multi-show','shadow');
+        },210)
     };
 
     blurClearHandler = ()=>{
@@ -487,13 +496,13 @@ class Input extends React.Component {
             <div id={this.domId+'-main'} className={this.getMainClasses()} style={this.getMainStyles()} >
                 {this.renderLabel()}
                 <textarea {...this.props} ref={c => this.input = c} onBlur={this.blurHandler}
-                  onChange={this.changeHandler}
-                  onKeyUp={this.keyUpHandler}
-                  onDoubleClick={this.dblHandler}
-                  value={this.state.value??""}
-                  className={this.getInputClasses()}
-                  style={this.getInputStyle()}
-                  id={this.domId} {...this.renderValidateTip()}/>
+                    onChange={this.changeHandler}
+                    onKeyUp={this.keyUpHandler}
+                    onDoubleClick={this.dblHandler}
+                    value={this.state.value??""}
+                    className={this.getInputClasses()}
+                    style={this.getInputStyle()}
+                    id={this.domId} {...this.renderValidateTip()}/>
                 {this.renderClear()}
                 {this.renderSummary()}
             </div>

@@ -341,7 +341,7 @@ class Input extends React.Component {
             return null;
         }
         return (
-            <label htmlFor={this.domId}>{this.props.label}</label>
+            <label htmlFor={this.domId} className={this.props.labelClass}>{this.props.label}</label>
         )
     }
 
@@ -536,6 +536,7 @@ Input.propTypes = {
     align         : PropTypes.string,
     textClass     : PropTypes.string,
     textStyle     : PropTypes.object,
+    labelClass    : PropTypes.string,
     disableClear  : PropTypes.bool,
     multi         : PropTypes.object, //多行文本输入
 };

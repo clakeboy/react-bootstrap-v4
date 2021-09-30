@@ -99,7 +99,7 @@ class Main extends React.Component {
                     }}>转到 Triangle</Button>
                     <Button className='mr-1' onClick={e=>{
                         this.props.history.push('/test_edit',this.state);
-                    }}>转到 HTML Edit</Button>
+                    }}>转到 HTML Edit &gt;&lt;</Button>
                 </Container>
                 <Container className='p-0 mb-1' inline fluid>
                     <Input className='mr-1' disabled size='sm' absolute x='50px' y='150px' width='100px' placeholder='用户名' onChange={this.changeHandler('user_name')} data={this.state.pageData.user_name}/>

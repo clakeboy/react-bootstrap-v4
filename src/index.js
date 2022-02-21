@@ -42,3 +42,4 @@ export CDropdown from './CDropdown';
 export DropPanel from './DropPanel';
 export Upload from './components/Upload';
 export Complex from './Complex';
+export CalendarRange from './CalendarRange';

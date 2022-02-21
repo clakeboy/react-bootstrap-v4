@@ -99,10 +99,18 @@ class Calendar extends React.PureComponent {
             return str_pad(idx,2,'0');
         });
         this.sec = this.minute.slice();
+
+        this.parentDom = this.props.target;
+
+        this.failRange = null;
+        // this.failRange = {
+        //     start: null,
+        //     end: null
+        // };
     }
 
     componentDidMount() {
-
+        this.clientWidth = this.mainTable.clientWidth;
     }
 
     componentWillUnmount() {
@@ -169,6 +177,13 @@ class Calendar extends React.PureComponent {
                 week[first.getDay()]['disabled'] = true;
             }
 
+            if (!week[first.getDay()].disabled && this.failRange) {
+                if (first < this.failRange.start ||
+                    first > this.failRange.end) {
+                    week[first.getDay()].disabled = true;
+                }
+            }
+
             if (first.getDay() === 6) {
                 date.push(week);
                 week = [null, null, null, null, null, null, null];
@@ -209,6 +224,28 @@ class Calendar extends React.PureComponent {
             month: false,
             year:show,
         });
+    }
+
+    setFailRange(start_date,days) {
+        if (!start_date.valueOf()) {
+            start_date = new Date();
+        }
+        let start = new Date(start_date);
+        let end = new Date(start_date);
+        let showMonth = new Date(start_date);
+        showMonth.setDate(showMonth.getDate()+1);
+        end.setDate(end.getDate()+days)
+        this.failRange = {
+            start: start,
+            end: end,
+        }
+        this.show_date = showMonth;
+        this.setState({
+            days: this.fillDateList()
+        });
+
+        return !(this.current_date < start ||
+            this.current_date > end);
     }
 
     choseDay(year, month, day) {
@@ -278,6 +315,9 @@ class Calendar extends React.PureComponent {
         this.mainDom.classList.add('ck-calendar-none');
         this.isClose = true;
         window.removeEventListener('mousedown',this.hide,false);
+        this.parentDom.removeEventListener('blur',this.hide,false);
+        this.parentDom.removeEventListener('click',this.checkShow,false);
+        this.parentDom.removeEventListener('keypress',this.keyPressHandler,false);
     };
 
     show(dom) {
@@ -288,14 +328,18 @@ class Calendar extends React.PureComponent {
         // });
         if (this.props.absolute) {
             window.addEventListener('mousedown',this.hide,false);
+            //fixed out window area
+            this.fixPosition();
+            this.mainDom.classList.remove('ck-calendar-none');
         }
         this.parentDom.addEventListener('blur',this.hide,false);
         this.parentDom.addEventListener('click',this.checkShow,false);
         this.parentDom.addEventListener('keypress',this.keyPressHandler,false);
-        this.mainDom.classList.remove('ck-calendar-none');
-        //fixed out window area
-        this.fixPosition();
 
+        this.refreshWidth();
+    }
+
+    refreshWidth() {
         this.clientWidth = this.mainTable.clientWidth;
     }
 
@@ -637,7 +681,8 @@ Calendar.propTypes = {
     triangular: PropTypes.oneOf(['up','left','bottom','right']),
     format:   PropTypes.string,
     sm: PropTypes.bool,
-    timeBar: PropTypes.bool
+    timeBar: PropTypes.bool,
+    target: PropTypes.element,
 };
 
 Calendar.defaultProps = {

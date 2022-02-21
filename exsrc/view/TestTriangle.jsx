@@ -4,7 +4,7 @@
 
 import React from 'react';
 import {Button, Card, Container, Input, DropPanel,Upload} from "../../src";
-// import '../../src/css/Triangle.less';
+import '../../src/css/Triangle.less';
 
 class TestTriangle extends React.Component {
     upload;

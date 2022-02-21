@@ -10,6 +10,7 @@ import {map} from './Common';
 import Dropdown from "./Dropdown";
 import Switch from './Switch';
 import CDropdown from './CDropdown';
+import ComboBox from "./ComboBox";
 
 class Form extends React.PureComponent {
     constructor(props) {
@@ -205,6 +206,11 @@ class Form extends React.PureComponent {
                     this.events[field] = item.props.onChange;
                 }
                 item.props.onChange = this.switchChangeHandler(field);
+            } else if (item.type === ComboBox) {
+                if (typeof item.props.onChange === 'function') {
+                    this.events[field] = item.props.onChange;
+                }
+                item.props.onChange = this.comboChangeHandler(field);
             }
         }
     }

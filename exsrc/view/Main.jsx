@@ -18,6 +18,7 @@ import ReactBootstrap4,{
     RadioGroup,
     Radio
 } from '../../src/index';
+import CalendarRange from "../../src/CalendarRange";
 
 class Main extends React.Component {
     constructor(props) {
@@ -103,7 +104,6 @@ class Main extends React.Component {
                 </Container>
                 <Container className='p-0 mb-1' inline fluid>
                     <Input className='mr-1' disabled size='sm' absolute x='50px' y='150px' width='100px' placeholder='用户名' onChange={this.changeHandler('user_name')} data={this.state.pageData.user_name}/>
-                    <Select className='col-6' data={this.dataList} defaultValue='3'/>
                     <Input className='mr-1' placeholder='密码' type='password'/>
                     <Input className='mr-1' placeholder='日期' calendar/>
                     <InputGroup className='mr-1' ref={c=>this.ing=c} width={200} label="测试" data="11111"/>
@@ -117,6 +117,9 @@ class Main extends React.Component {
                             }
                         })
                     }} loading>搜索</Button>
+                </Container>
+                <Container className='p-0 mb-1' inline fluid>
+                    <CalendarRange placeholderMin='开始时间' placeholderMax='结束时间'/>
                 </Container>
                 <Card className='mb-2' header='User Info'>
                     <div className='form-row'>
@@ -141,6 +144,9 @@ class Main extends React.Component {
                     <div className='form-row'>
                         <Input className='col-6' size='lg' label='Calendar' data={this.state.pageData.chose_date} onChange={this.changeHandler('chose_date')} calendar readOnly/>
                         <Input className='col-6' size='xs' label='Calendar' data={this.state.pageData.chose_date} onChange={this.changeHandler('chose_date')} calendar readOnly/>
+                    </div>
+                    <div className='form-row'>
+                        <CalendarRange className='col-6' label='Calendar Range'/>
                     </div>
                     <TextArea label='Summary' htmlMode height='500px' data={this.state.pageData.text_area}/>
 
@@ -253,10 +259,10 @@ class Main extends React.Component {
                     }}/>
                 </Card>
                 <Card header='Calendar'>
-                    <Calendar value={this.state.chose_date} lang='en' shadow/>
+                    <Calendar value={this.state.chose_date} lang='en'/>
                     <Calendar value={this.state.chose_date} onSelect={(value)=>{
                         this.setState({chose_date:value})
-                    }} shadow/>
+                    }}/>
                 </Card>
             </Container>
         );

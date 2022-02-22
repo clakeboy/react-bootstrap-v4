@@ -167,7 +167,7 @@ class CalendarRange extends React.PureComponent {
     }
 
     renderCalendar() {
-        return <div ref={c=>this.calendar_panel=c} className='c-panel d-none p-1 shadow'>
+        return <div ref={c=>this.calendar_panel=c} className='c-panel d-none p-1 shadow rounded'>
             <Calendar ref={c=>this.minCalendar=c} target={this.inputMin} value={this.state.min} onSelect={(val)=>{
                 let max = this.state.max;
                 let flag = this.maxCalendar.setFailRange(new Date(val),this.props.days);

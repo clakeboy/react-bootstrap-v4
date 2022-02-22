@@ -1,6 +1,6 @@
 {
   "name": "@clake/react-bootstrap4",
-  "version": "1.7.7",
+  "version": "1.7.8",
   "description": "react bootstrap v4",
   "main": "lib/index.js",
   "scripts": {
@@ -68,7 +68,9 @@
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "react-syntax-highlighter": "^12.2.1",
+    "react-to-typescript-definitions": "^3.1.0",
     "style-loader": "^0.23.1",
+    "through2": "^4.0.2",
     "webpack": "^4.11.1",
     "webpack-dev-middleware": "^3.1.0",
     "webpack-hot-middleware": "^2.21.0",

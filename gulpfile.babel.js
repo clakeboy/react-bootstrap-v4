@@ -11,10 +11,14 @@ import gutil from 'gulp-util';
 import pkg from './package.json';
 import babel from 'gulp-babel';
 import plumber from 'gulp-plumber';
+import path from 'path';
 import sourcemaps from 'gulp-sourcemaps';
 import historyApiFallback from 'connect-history-api-fallback';
 import header from 'gulp-header';
 import gulpLoadPlugins from 'gulp-load-plugins';
+import through2 from 'through2';
+import * as rttyd from 'react-to-typescript-definitions';
+import fs from 'fs';
 let $ = gulpLoadPlugins();
 
 const banner = `/* ${pkg.name} v${pkg.version} | by Clake
@@ -69,6 +73,24 @@ gulp.task('clean',['clean:build','clean:publish']);
 gulp.task('publish:pack',['clean:publish','publish:css'],(callback)=>{
     return gulp.src('src/**/*.js')
         // .pipe(sourcemaps.init())
+        .pipe(through2.obj((chunk, enc, callback)=>{
+            // for (let k in chunk) {
+            //     console.log(k,chunk[k])
+            // }
+            try {
+                let ops = [
+                    'nullishCoalescingOperator',
+                    'exportDefaultFrom'
+                ]
+                let dts_src = rttyd.generateFromFile(path.basename(chunk.path,'.js'),chunk.path,{babylonPlugins:ops})
+                fs.writeFileSync(path.join(chunk.cwd,'lib',path.basename(chunk.path)+'.d.ts'),dts_src)
+            } catch(e) {
+                console.log("generate ts.d file error:",chunk.path,e)
+            }
+
+            // console.log(path.basename(chunk.path,'.js'),path.dirname(chunk.path))
+            callback(null,chunk);
+        }))
         .pipe(plumber())
         .pipe(babel({
             "presets": [

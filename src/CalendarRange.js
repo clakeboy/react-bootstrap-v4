@@ -55,6 +55,16 @@ class CalendarRange extends React.PureComponent {
         window.removeEventListener('mousedown',this.hide,false);
     }
 
+    componentWillReceiveProps(nextProps, nextContext) {
+        if (this.state.min !== nextProps.minData ||
+            this.state.max !== nextProps.maxData) {
+            this.setState({
+                min:nextProps.minData,
+                max:nextProps.maxData,
+            })
+        }
+    }
+
     getClasses() {
         let base = 'form-group ck-calendar-range';
         return classNames(base, this.props.className);

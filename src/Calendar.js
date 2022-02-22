@@ -240,6 +240,7 @@ class Calendar extends React.PureComponent {
             end: end,
         }
         this.show_date = showMonth;
+
         this.setState({
             days: this.fillDateList()
         });
@@ -315,9 +316,9 @@ class Calendar extends React.PureComponent {
         this.mainDom.classList.add('ck-calendar-none');
         this.isClose = true;
         window.removeEventListener('mousedown',this.hide,false);
-        this.parentDom.removeEventListener('blur',this.hide,false);
-        this.parentDom.removeEventListener('click',this.checkShow,false);
-        this.parentDom.removeEventListener('keypress',this.keyPressHandler,false);
+        // this.parentDom.removeEventListener('blur',this.hide,false);
+        // this.parentDom.removeEventListener('click',this.checkShow,false);
+        // this.parentDom.removeEventListener('keypress',this.keyPressHandler,false);
     };
 
     show(dom) {

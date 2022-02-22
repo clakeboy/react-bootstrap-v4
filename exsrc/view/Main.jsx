@@ -119,7 +119,9 @@ class Main extends React.Component {
                     }} loading>搜索</Button>
                 </Container>
                 <Container className='p-0 mb-1' inline fluid>
-                    <CalendarRange placeholderMin='开始时间' placeholderMax='结束时间'/>
+                    <CalendarRange placeholderMin='开始时间' placeholderMax='结束时间' onChange={(min,max)=>{
+                        console.log(min,max)
+                    }}/>
                 </Container>
                 <Card className='mb-2' header='User Info'>
                     <div className='form-row'>

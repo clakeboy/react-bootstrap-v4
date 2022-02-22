@@ -6,6 +6,7 @@ import './css/Input.less';
 import './css/CalendarRange.less';
 import common from "./Common";
 import {Calendar} from "./index";
+import Button from "./Button";
 
 const stopEvent  = function (e) {
     e.stopPropagation();
@@ -35,6 +36,8 @@ class CalendarRange extends React.PureComponent {
         this.inputDom.addEventListener('focus',this.show);
         this.inputMin.addEventListener('focus',this.show);
         this.inputMax.addEventListener('focus',this.show);
+        this.calendar_panel.addEventListener('mousedown',stopEvent);
+        this.inputDom.addEventListener('mousedown',stopEvent);
         this.inputMin.addEventListener('mousedown',stopEvent);
         this.inputMax.addEventListener('mousedown',stopEvent);
         window.addEventListener('mousedown',this.hide,false);
@@ -45,6 +48,8 @@ class CalendarRange extends React.PureComponent {
         this.inputDom.removeEventListener('focus',this.show);
         this.inputMin.removeEventListener('focus',this.show);
         this.inputMax.removeEventListener('focus',this.show);
+        this.calendar_panel.removeEventListener('focus',stopEvent);
+        this.inputDom.removeEventListener('mousedown',stopEvent);
         this.inputMin.removeEventListener('mousedown',stopEvent);
         this.inputMax.removeEventListener('mousedown',stopEvent);
         window.removeEventListener('mousedown',this.hide,false);
@@ -113,7 +118,7 @@ class CalendarRange extends React.PureComponent {
 
     show = () => {
         this.calendar_panel.classList.add('d-flex')
-        this.calendar_panel.style.top = this.mainDom.offsetHeight+3+'px'
+        this.calendar_panel.style.top = this.mainDom.offsetHeight+'px'
         this.minCalendar.refreshWidth();
         this.maxCalendar.refreshWidth();
     }
@@ -129,14 +134,23 @@ class CalendarRange extends React.PureComponent {
         }
     }
 
+    clearHandler = ()=>{
+        this.setState({
+            min:'',
+            max:'',
+        },()=>{
+            this.changeHandler();
+        })
+    }
+
     render() {
         return (
             <div ref={c=>{this.mainDom=c}} id={this.domId} className={this.getClasses()} style={this.getMainStyles()}>
                 {this.renderLabel()}
                 <div ref={c=>{this.inputDom=c}} className={this.getInputClasses()} tabIndex='1'>
-                    <input ref={c=>this.inputMin=c} readOnly value={this.state.min} className='c-input w-50 text-center' placeholder={this.props.placeholderMin??this.props.format}/>
+                    <input ref={c=>this.inputMin=c} disabled value={this.state.min} className='c-input w-50 text-center' placeholder={this.props.placeholderMin??this.props.format}/>
                     <span>{'\u0020-\u0020'}</span>
-                    <input ref={c=>this.inputMax=c} readOnly value={this.state.max} className='c-input w-50 text-center' placeholder={this.props.placeholderMax??this.props.format}/>
+                    <input ref={c=>this.inputMax=c} disabled value={this.state.max} className='c-input w-50 text-center' placeholder={this.props.placeholderMax??this.props.format}/>
                 </div>
                 {this.renderCalendar()}
             </div>
@@ -174,6 +188,10 @@ class CalendarRange extends React.PureComponent {
                     this.changeHandler();
                 })
             }}/>
+            <div className='d-flex flex-column'>
+                <Button className='ml-1 mt-1' size='sm' theme='danger' icon='trash-alt' tip='清除选择' onClick={this.clearHandler}/>
+                <Button className='ml-1 mt-auto' size='sm' theme='secondary' icon='times-circle' tip='关闭' onClick={this.hide}/>
+            </div>
         </div>
     }
 }
@@ -183,7 +201,7 @@ CalendarRange.propTypes = {
     label         : PropTypes.string,
     minData       : PropTypes.string,
     maxData       : PropTypes.string,
-    days          : PropTypes.number,
+    days          : PropTypes.number,  //时间跨度 单位天
     readOnly      : PropTypes.bool,
     placeholderMin: PropTypes.string,
     placeholderMax: PropTypes.string,
@@ -194,6 +212,7 @@ CalendarRange.propTypes = {
     disableClear  : PropTypes.bool,
     labelClass    : PropTypes.string,
     className     : PropTypes.string,
+    width         : PropTypes.string,
 };
 
 CalendarRange.defaultProps = {

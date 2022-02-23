@@ -146,7 +146,9 @@ class Form extends React.PureComponent {
         if (typeof item !== 'object') {
             return;
         }
-        if (typeof item.props.children === 'object' && item.type !== CDropdown) {
+        if (typeof item.props.children === 'object' &&
+            item.type !== CDropdown &&
+            item.type !== ComboBox) {
             React.Children.map(item.props.children,(child_item)=>{
                 this.bindingComponent(child_item);
             });

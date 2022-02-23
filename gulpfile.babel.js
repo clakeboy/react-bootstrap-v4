@@ -73,24 +73,26 @@ gulp.task('clean',['clean:build','clean:publish']);
 gulp.task('publish:pack',['clean:publish','publish:css'],(callback)=>{
     return gulp.src('src/**/*.js')
         // .pipe(sourcemaps.init())
-        .pipe(through2.obj((chunk, enc, callback)=>{
-            // for (let k in chunk) {
-            //     console.log(k,chunk[k])
-            // }
-            try {
-                let ops = [
-                    'nullishCoalescingOperator',
-                    'exportDefaultFrom'
-                ]
-                let dts_src = rttyd.generateFromFile(path.basename(chunk.path,'.js'),chunk.path,{babylonPlugins:ops})
-                fs.writeFileSync(path.join(chunk.cwd,'lib',path.basename(chunk.path)+'.d.ts'),dts_src)
-            } catch(e) {
-                console.log("generate ts.d file error:",chunk.path,e)
-            }
-
-            // console.log(path.basename(chunk.path,'.js'),path.dirname(chunk.path))
-            callback(null,chunk);
-        }))
+        // .pipe(through2.obj((chunk, enc, callback)=>{
+        //     // for (let k in chunk) {
+        //     //     console.log(k,chunk[k])
+        //     // }
+        //     try {
+        //         let ops = [
+        //             'jsx',
+        //             'nullishCoalescingOperator',
+        //             'exportDefaultFrom',
+        //             'dynamicImport'
+        //         ]
+        //         let dts_src = rttyd.generateFromFile(null,chunk.path,{babylonPlugins:ops})
+        //         fs.writeFileSync(path.join(chunk.cwd,'lib',path.basename(chunk.path)+'.d.ts'),dts_src)
+        //     } catch(e) {
+        //         console.log("generate ts.d file error:",chunk.path,e)
+        //     }
+        //
+        //     // console.log(path.basename(chunk.path,'.js'),path.dirname(chunk.path))
+        //     callback(null,chunk);
+        // }))
         .pipe(plumber())
         .pipe(babel({
             "presets": [

@@ -26,7 +26,7 @@ import {
     CDropdown,
     Form,
     InputStyle,
-    Complex
+    Complex, ComboBox
 } from '../../src/index';
 import Loader from '../components/Loader';
 
@@ -210,7 +210,11 @@ class Coupon extends React.Component {
                     }}>
                         <div className='form-row'>
                             <Input className='col-6' field='name' label='Name' data={this.state.data.name} multi={{height:'100px'}}/>
-                            <Input className='col-6' field='name_s' label='Last Name' data={this.state.data.name_s}/>
+                            <ComboBox field='task_combo' label='Task' width='100%' searchColumn='task_name_eng' data={this.child} value={this.state.data.task_combo}>
+                                <ComboBox.Column text='任务名英文' field='task_name_eng'/>
+                                <ComboBox.Column text='任务名' field='task_name'/>
+                                <ComboBox.Column text='时间' field='time_rule'/>
+                            </ComboBox>
                         </div>
                         <div className='form-row'>
                             <CDropdown className='col-6' field='text_drop' label='Name' text='下拉选择'>

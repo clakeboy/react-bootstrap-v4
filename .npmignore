@@ -8,8 +8,9 @@ node_modules
 *.log*
 examples/
 exsrc/
-src/
+#src/
 dist/
+dev_server/
 .editorconfig
 .eslintignore
 .eslintrc

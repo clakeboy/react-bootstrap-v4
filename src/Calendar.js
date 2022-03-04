@@ -245,7 +245,7 @@ class Calendar extends React.PureComponent {
             days: this.fillDateList()
         });
 
-        return !(this.current_date < start ||
+        return !(this.current_date <= start ||
             this.current_date > end);
     }
 

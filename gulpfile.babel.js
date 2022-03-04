@@ -68,31 +68,16 @@ gulp.task('clean:build', (callback) => {
     ],callback);
 });
 
-gulp.task('clean',['clean:build','clean:publish']);
+gulp.task('clean',gulp.series('clean:build','clean:publish'));
 
-gulp.task('publish:pack',['clean:publish','publish:css'],(callback)=>{
+gulp.task('publish:css',()=>{
+    return gulp.src('src/css/*.less')
+        .pipe(gulp.dest('lib/css'));
+});
+
+gulp.task('publish:pack',()=>{
     return gulp.src('src/**/*.js')
         // .pipe(sourcemaps.init())
-        // .pipe(through2.obj((chunk, enc, callback)=>{
-        //     // for (let k in chunk) {
-        //     //     console.log(k,chunk[k])
-        //     // }
-        //     try {
-        //         let ops = [
-        //             'jsx',
-        //             'nullishCoalescingOperator',
-        //             'exportDefaultFrom',
-        //             'dynamicImport'
-        //         ]
-        //         let dts_src = rttyd.generateFromFile(null,chunk.path,{babylonPlugins:ops})
-        //         fs.writeFileSync(path.join(chunk.cwd,'lib',path.basename(chunk.path)+'.d.ts'),dts_src)
-        //     } catch(e) {
-        //         console.log("generate ts.d file error:",chunk.path,e)
-        //     }
-        //
-        //     // console.log(path.basename(chunk.path,'.js'),path.dirname(chunk.path))
-        //     callback(null,chunk);
-        // }))
         .pipe(plumber())
         .pipe(babel({
             "presets": [
@@ -114,12 +99,28 @@ gulp.task('publish:pack',['clean:publish','publish:css'],(callback)=>{
         }))
         .pipe(header(banner))
         // .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest('lib'));
-});
-
-gulp.task('publish:css',['clean:publish'],(callback)=>{
-    return gulp.src('src/css/*.less')
-        .pipe(gulp.dest('lib/css'));
+        .pipe(gulp.dest('lib'))
+        // .pipe(through2.obj((chunk, enc, callback)=>{
+        //     // for (let k in chunk) {
+        //     //     console.log(k,chunk[k])
+        //     // }
+        //     try {
+        //         let ops = [
+        //             'jsx',
+        //             'nullishCoalescingOperator',
+        //             'exportDefaultFrom',
+        //             'dynamicImport'
+        //         ]
+        //         let org_path = chunk.path.replace('lib','src');
+        //         let dts_src = rttyd.generateFromFile(null,org_path,{babylonPlugins:ops})
+        //         fs.writeFileSync(path.join(path.dirname(chunk.path),path.basename(chunk.path)+'.d.ts'),dts_src)
+        //     } catch(e) {
+        //         console.log("generate ts.d file error:",chunk.path,e)
+        //     }
+        //
+        //     // console.log(path.basename(chunk.path,'.js'),path.dirname(chunk.path))
+        //     callback(null,chunk);
+        // }));
 });
 
 gulp.task('build:pack', (callback)=>{
@@ -132,13 +133,13 @@ gulp.task('build:pack', (callback)=>{
     });
 });
 
-gulp.task('build:over',['build:pack'],(callback)=>{
+gulp.task('build:over',()=>{
     return gulp.src('dist/*.js')
         .pipe(header(banner))
         .pipe(gulp.dest('dist/'));
 });
 
-gulp.task('default', ['server']);
+gulp.task('default', gulp.series('server'));
 
-gulp.task('build',['clean:build','build:pack','build:over']);
-gulp.task('publish',['clean:publish','publish:css','publish:pack']);
+gulp.task('build',gulp.series('clean:build','build:pack','build:over'));
+gulp.task('publish',gulp.series('clean:publish','publish:css','publish:pack'));

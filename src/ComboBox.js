@@ -26,7 +26,7 @@ class ComboBox extends React.Component {
         }
 
         return (
-            <Input className={this.props.className} label={this.props.label} data={this.props.value} size={this.props.size} readOnly={this.props.readOnly} disabled={this.props.disabled} onChange={this.props.onChange} combo={this.props} comboData={this.props.data}/>
+            <Input className={this.props.className} placeholder={this.props.text??this.props.placeholder} label={this.props.label} data={this.props.value} size={this.props.size} readOnly={this.props.readOnly} disabled={this.props.disabled} onChange={this.props.onChange} combo={this.props} comboData={this.props.data}/>
         );
     }
 }
@@ -53,6 +53,7 @@ ComboBox.propTypes = {
     header: PropTypes.bool,
     size: PropTypes.string,
     value: PropTypes.string,
+    text: PropTypes.string,
 };
 
 ComboBox.defaultProps = {

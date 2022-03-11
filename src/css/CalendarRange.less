@@ -14,5 +14,14 @@
     background-color: #fff;
     white-space: nowrap;
     z-index: 1000;
+    &>:first-child {
+      border-right: none!important;
+    }
+    &>:first-child+div {
+      border-left: none!important;
+    }
+    //&>.ck-calendar {
+    //  border: none!important;
+    //}
   }
 }

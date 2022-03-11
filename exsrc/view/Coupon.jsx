@@ -257,7 +257,7 @@ class Coupon extends React.Component {
                                 }}/>
                             </InputStyle>
                         </div>
-
+                        {this.renderForm()}
                     </Form>
                 </Card>
                 <Card className='mt-2' header="模态窗口">
@@ -343,6 +343,17 @@ class Coupon extends React.Component {
                 <CKModal ref={c=>this.modal=c} fade blurSelector='#react-main'/>
             </Container>
         );
+    }
+
+    renderForm() {
+        return (
+            <>
+                <div className='form-row'>
+                    <div className='col-2 form-group pt-2'><label>middle垂直居中</label></div>
+                    <Input className='col-10' data='Lee'/>
+                </div>
+            </>
+        )
     }
 }
 

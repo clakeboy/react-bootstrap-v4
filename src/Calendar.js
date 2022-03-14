@@ -230,6 +230,7 @@ class Calendar extends React.PureComponent {
         if (!start_date.valueOf()) {
             start_date = new Date();
         }
+        start_date.setDate(start_date.getDate()-1);
         let start = new Date(start_date);
         let end = new Date(start_date);
         let showMonth = new Date(start_date);

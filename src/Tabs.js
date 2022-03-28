@@ -50,6 +50,12 @@ class Tabs extends React.PureComponent {
         });
     };
 
+    setSelect(tab_id) {
+        this.setState({
+            currentShow: tab_id
+        });
+    }
+
     getMainClasses() {
         let base = 'ck-tabs';
 

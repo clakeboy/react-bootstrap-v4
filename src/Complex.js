@@ -110,7 +110,11 @@ class Complex extends React.Component {
     addNewData(val,row) {
         if (!this.props.duplicate) {
             let isDup = this.state.list.some((item)=>{
-                return item === val
+                if (this.props.dataType === 'string') {
+                    return item === val
+                } else {
+                    return item === row
+                }
             });
             if (isDup) {
                 this.setState({value:''},()=>{
@@ -124,7 +128,12 @@ class Complex extends React.Component {
         }
 
         let list = this.state.list.slice(0);
-        list.push(val);
+        if (this.props.dataType === 'string') {
+            list.push(val);
+        } else {
+            list.push(row);
+        }
+
         let state = {
             value:'',
             list:list,
@@ -148,7 +157,7 @@ class Complex extends React.Component {
             <div ref={c=>this.main=c} className={this.getClasses()} onClick={this.clickHandler}>
                 {this.state.list.map((item,idx)=>{
                     return (<div className="val badge badge-primary">
-                        <span>{item}</span>
+                        <span>{this.props.dataType==='string'?item:item[this.props.dataField]}</span>
                         <Icon className='ml-1' icon='times-circle' onClick={this.deleteHandler(idx)}/>
                     </div>)
                 })}
@@ -201,6 +210,7 @@ Complex.propTypes = {
     onSelect: PropTypes.func,
     list: PropTypes.array,
     dataType: PropTypes.oneOf(['string','object']),
+    dataField: PropTypes.string,
     data: PropTypes.array,
     placeholder: PropTypes.string,
     combo: PropTypes.object,
@@ -211,6 +221,7 @@ Complex.propTypes = {
 Complex.defaultProps = {
     inputWidth: "200px",
     dataType: "string",
+    dataField: "",
     data: [],
     duplicate: false
 };

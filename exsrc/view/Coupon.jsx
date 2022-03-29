@@ -112,7 +112,7 @@ class Coupon extends React.Component {
             "created_date"   : 1530783655
         }, {
             "id"             : 1,
-            "task_name_eng":"Test task",
+            "task_name_eng":"Test task1",
             "task_name"      : "测试任务",
             "time_rule"      : "0 * * * * *",
             "once"           : true,
@@ -142,7 +142,7 @@ class Coupon extends React.Component {
             "created_date"   : 1530767866
         }, {
             "id"             : 5,
-            "task_name_eng":"Test task",
+            "task_name_eng":"Test task2",
             "task_name"      : "测试任务",
             "time_rule"      : "0 * * * * *",
             "once"           : true,
@@ -157,7 +157,7 @@ class Coupon extends React.Component {
             "created_date"   : 1530767866
         }, {
             "id"             : 6,
-            "task_name_eng":"Test task",
+            "task_name_eng":"Test task3",
             "task_name"      : "测试任务",
             "time_rule"      : "0 * * * * *",
             "once"           : true,
@@ -231,7 +231,7 @@ class Coupon extends React.Component {
                             <Input className='col-10' data='Lee'/>
                         </div>
                         <div className='form-row'>
-                            <InputStyle className='col-6' label='Complex Combobox'>
+                            <InputStyle className='col-6' label='Complex Combobox string 模式'>
                                 <Complex combo={{
                                     searchColumn: 'task_name_eng',
                                     showRows:10,
@@ -251,10 +251,32 @@ class Coupon extends React.Component {
                                     console.log(val,list);
                                 }}/>
                             </InputStyle>
-                            <InputStyle className='col-6' label='Complex input'>
+                            <InputStyle className='col-6' label='Complex input string 模式'>
                                 <Complex placeholder="输入添加项" onChange={(val,list)=>{
                                     console.log(val,list);
                                 }}/>
+                            </InputStyle>
+                        </div>
+                        <div className='form-row'>
+                            <InputStyle className='col-6' label='Complex Combobox object 模式'>
+                                <Complex combo={{
+                                    searchColumn: 'task_name_eng',
+                                    showRows:10,
+                                    width:'500px',
+                                    filterColumns:[
+                                        {field:'task_name_eng',text:'任务名称',width:'200px'},
+                                        {field:'task_name',text:'任务名称',width:'200px'},
+                                        {field:'time_rule',text:'时间规则'},
+                                        {field:'notify_method',text:'任务名称'},
+                                        {field:'source',text:'任务名称'},
+                                        {field:'created_date',text:'创建时间',format:(val,row)=>{
+                                                return new Date(val*1000).toLocaleString();
+                                            }}
+                                    ],
+                                }} comboData={this.child} placeholder="选择添加项"
+                                         onChange={(val,list)=>{
+                                             console.log(val,list);
+                                         }} dataType='object' dataField='task_name_eng'/>
                             </InputStyle>
                         </div>
                         {this.renderForm()}

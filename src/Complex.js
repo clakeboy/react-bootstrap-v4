@@ -78,7 +78,7 @@ class Complex extends React.Component {
     };
 
     selectHandler = (val,row)=>{
-        this.addNewData(val);
+        this.addNewData(val,row);
     };
 
     clickHandler = ()=>{
@@ -107,7 +107,7 @@ class Complex extends React.Component {
         }
     }
 
-    addNewData(val) {
+    addNewData(val,row) {
         if (!this.props.duplicate) {
             let isDup = this.state.list.some((item)=>{
                 return item === val
@@ -133,6 +133,9 @@ class Complex extends React.Component {
         this.setState(state,()=>{
             if (this.combo) {
                 this.combo.setSearchText('');
+                if (typeof this.props.onSelect === 'function') {
+                    this.props.onSelect(val,row)
+                }
             }
             if (typeof this.props.onChange === "function") {
                 this.props.onChange(val,list)

@@ -92,6 +92,10 @@ class Window extends React.Component {
         }
     }
 
+    componentWillUnmount() {
+        document.oncontextmenu=null;
+    }
+
     render() {
 
         return (

@@ -212,8 +212,17 @@ class MenuItem extends React.PureComponent {
         return <div className={this.getClasses()}
                     onMouseDown={this.clickHandler}
                     onMouseOver={this.closeChildHandler}>
+            {this.props.icon&&this.renderIcon()}
             {this.props.children}
         </div>
+    }
+
+    renderIcon() {
+        return (
+            <span className='text-center' style={{width:'20px'}}>
+                <Icon icon={this.props.icon}/>
+            </span>
+        )
     }
 
     renderChildMenu() {
@@ -242,7 +251,8 @@ MenuItem.propTypes = {
     field: PropTypes.string,
     onClick: PropTypes.func,
     child: PropTypes.bool,
-    text: PropTypes.string
+    text: PropTypes.string,
+    icon: PropTypes.string,
 };
 
 MenuItem.defaultProps = {

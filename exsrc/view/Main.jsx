@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ReactBootstrap4,{
+import ReactBootstrap4, {
     Container,
     Input,
     InputGroup,
@@ -16,7 +16,7 @@ import ReactBootstrap4,{
     TextArea,
     Switch,
     RadioGroup,
-    Radio
+    Radio, Menu, Icon
 } from '../../src/index';
 import CalendarRange from "../../src/CalendarRange";
 
@@ -224,6 +224,15 @@ class Main extends React.Component {
                         <Table.Header text='Action' align='center' onFormat={row=>{
                             return <Button className='color-blue' size='sm' icon='plus'>Add</Button>
                         }} />
+                        <Menu>
+                            <Menu.Item field="copy" icon='copy' onClick={()=>{
+                                document.execCommand("copy");
+                            }}>复制</Menu.Item>
+                            <Menu.Item step/>
+                            <Menu.Item field='custom' icon='trash-alt' onClick={(e,field,data)=>{
+                                console.log(field,data)
+                            }}>自定义的菜单</Menu.Item>
+                        </Menu>
                     </Table>
                     <Pagination count={1000} current={1} number={100} showPage={10}/>
                     <Table hover={true} select={true} headerTheme='light'>
@@ -266,6 +275,7 @@ class Main extends React.Component {
                         this.setState({chose_date:value})
                     }}/>
                 </Card>
+
             </Container>
         );
     }

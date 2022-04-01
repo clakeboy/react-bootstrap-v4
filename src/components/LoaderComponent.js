@@ -57,7 +57,8 @@ export default class Loader extends React.Component {
 
     renderComponent() {
         let Instance = this.state.instance;
-        return <Instance {...this.props}/>;
+        let props = Object.assign({},this.props,{import:null})
+        return <Instance {...props}/>;
     }
 }
 

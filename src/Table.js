@@ -12,6 +12,7 @@ import './css/Table.less';
 import * as ReactDOM from "react-dom";
 import Scroll from "./Scroll";
 import HScroll from "./HScroll";
+import Menu from "./Menu";
 
 class Table extends React.Component {
     constructor(props) {
@@ -47,8 +48,6 @@ class Table extends React.Component {
         this.afterHoldWidth = 0;
 
         this.initTableWidth();
-
-        // this.initHold();
 
         this.domId = 'table-'+common.RandomString(16);
         if (this.props.id) {
@@ -182,6 +181,9 @@ class Table extends React.Component {
                     }
                 } else if (item.type === TableHeaderRow) {
                     this.initTableHeaderRow(item)
+                } else if (item.type === Menu) {
+                    this.menu = React.cloneElement(item,{ref:(c)=>{this.mainMenu=c}});
+                    // this.menu.props.ref=(c)=>{this.mainMenu=c};
                 }
             });
             if (this.props.select) {
@@ -463,6 +465,7 @@ class Table extends React.Component {
                 {this.renderHoldAfter()}
                 {this.props.height?<Scroll selector={`#${this.domId}`}/>:null}
                 {this.props.width?<HScroll ref={c=>this.hScroll = c} showSelector={`#${this.domId}_main`} selector={`#${this.domId}`} alignParent/>:null}
+                {this.menu}
             </div>
         );
     }
@@ -601,7 +604,11 @@ class Table extends React.Component {
         let dynamic_tree = typeof this.props.onClickTree === 'function';
         return (
             <React.Fragment>
-                <tr className={this.props.onClick ? 'click-row' : this.getHeaderClasses()} onClick={this.clickHandler(row, i)}>
+                <tr onContextMenu={(e)=>{
+                    if (!this.mainMenu) return;
+                    e.preventDefault();
+                    this.mainMenu.show({evt:e,type:'mouse',data:row});
+                }} className={this.props.onClick ? 'click-row' : this.getHeaderClasses()} onClick={this.clickHandler(row, i)}>
                     {this.props.serialNumber && filter_type !== 'after' ?
                         <th className='sn text-nowrap' style={{textAlign:'center',width:'30px'}}>
                             {this.formatSn(i)}
@@ -773,6 +780,7 @@ Table.propTypes = {
     fixed: PropTypes.bool,
     serialNumber: PropTypes.bool, //是否显示序列号
     truncate: PropTypes.bool,//文字是否截断
+    menu :PropTypes.element,
 };
 
 Table.defaultProps = {

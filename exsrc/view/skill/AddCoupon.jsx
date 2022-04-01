@@ -76,6 +76,8 @@ class AddCoupon extends React.PureComponent {
                     </div>
                     <TextArea field='text' label='Summary' summary='input some' rows={10}/>
                     <Checkbox label='是否完成' field='is_done'/>
+                </Form>
+                <div>
                     <Button className='float-right' icon='plus' onClick={()=>{
                         this.modal.alert({
                             title:'试试',
@@ -84,9 +86,9 @@ class AddCoupon extends React.PureComponent {
                     }}>添加</Button>
                     <Button className='float-right' onClick={()=>{
                         console.log(this.form.getValues());
+                        console.log(this.props);
                     }}>显示数据</Button>
-                </Form>
-                <CKModal ref={c=>this.modal=c} center/>
+                </div>
                 <Card divider border={'info'} className='mt-2' header="优惠券添加">
                     <Form onChange={(field,val,row)=>{
                         console.log(field,val,row);
@@ -130,6 +132,7 @@ class AddCoupon extends React.PureComponent {
                         </div>
                     </Form>
                 </Card>
+                <CKModal ref={c=>this.modal=c} center/>
             </div>
         );
     }

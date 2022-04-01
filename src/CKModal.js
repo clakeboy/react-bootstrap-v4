@@ -52,6 +52,9 @@ class CKModal extends React.PureComponent {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
+        if (nextState.content !== null && nextState.content.props) {
+            nextState.content.props.parent = this
+        }
         return this.state.content !== nextState.content
     }
 

@@ -1,17 +1,29 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames/bind';
+import classNames from "classnames/bind";
 
-class Row extends React.Component {
-    constructor(props) {
+interface Props extends React.HTMLProps<any>{
+    noGutters: boolean
+}
+
+interface State {
+    val: string
+}
+
+class Row extends React.Component<Props, State> {
+
+    public static defaultProps:any = {
+        noGutters: false
+    };
+
+    constructor(props?: any) {
         super(props);
+
+        this.state = {
+            val: 'default',
+        }
     }
 
-    componentDidMount() {
-
-    }
-
-    getClasses() {
+    getClasses() : string {
         let base = 'row';
         //no-gutters
         if (this.props.noGutters) {
@@ -29,11 +41,5 @@ class Row extends React.Component {
         );
     }
 }
-
-Row.propTypes = {
-    noGutters: PropTypes.bool,
-};
-
-Row.defaultProps = {};
 
 export default Row;

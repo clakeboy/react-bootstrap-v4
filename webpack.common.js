@@ -36,6 +36,11 @@ export default {
             { test: /\.eot$/,  use: "file-loader" },
             { test: /\.svg$/,  use: "url-loader?limit=10000&mimetype=image/svg+xml" },
             {
+                test: /\.ts|\.tsx$/,
+                use: [{loader:'babel-loader',query:{presets:["@babel/preset-env", "@babel/preset-react","@babel/preset-typescript"]}},'eslint-loader'],
+                exclude: /node_modules/
+            },
+            {
                 test: /\.jsx$/,
                 use: {loader:'babel-loader',query:{presets:["@babel/preset-env", "@babel/preset-react"]}},
                 exclude: /node_modules/
@@ -53,7 +58,7 @@ export default {
     },
     //其它解决方案配置
     resolve: {
-        extensions: [ '.js', '.json', '.less', '.jsx']
+        extensions: [ '.js', '.json', '.less', '.jsx','.tsx','.ts']
     },
     node: {
         fs: 'empty'

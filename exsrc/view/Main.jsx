@@ -19,6 +19,7 @@ import ReactBootstrap4, {
     Radio, Menu, Icon
 } from '../../src/index';
 import CalendarRange from "../../src/CalendarRange";
+import Row from '../../src/Row';
 
 class Main extends React.Component {
     constructor(props) {
@@ -275,7 +276,9 @@ class Main extends React.Component {
                         this.setState({chose_date:value})
                     }}/>
                 </Card>
-
+                <Row>
+                    clake
+                </Row>
             </Container>
         );
     }

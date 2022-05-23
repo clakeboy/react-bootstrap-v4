@@ -1,10 +1,11 @@
 {
   "name": "@clake/react-bootstrap4",
-  "version": "1.8.6",
+  "version": "1.9.0",
   "description": "react bootstrap v4",
   "main": "lib/index.js",
   "scripts": {
     "test": "test",
+    "lint": "eslint --ext .ts --ext .tsx src/",
     "clean": "gulp clean",
     "start": "NODE_ENV=development gulp",
     "start-win": "set NODE_ENV=development&gulp",
@@ -38,13 +39,23 @@
     "@babel/plugin-transform-runtime": "^7.3.4",
     "@babel/preset-env": "^7.3.4",
     "@babel/preset-react": "^7.0.0",
+    "@babel/preset-typescript": "^7.17.12",
     "@babel/register": "^7.0.0",
     "@babel/runtime": "^7.3.4",
+    "@types/classnames": "^2.3.1",
+    "@types/prop-types": "^15.7.5",
+    "@types/react": "^18.0.9",
+    "@typescript-eslint/eslint-plugin": "^5.25.0",
+    "@typescript-eslint/parser": "^5.25.0",
     "babel-loader": "^8.0.5",
     "browser-sync": "^2.24.5",
     "connect-history-api-fallback": "^1.5.0",
     "css-loader": "^0.28.7",
     "del": "^3.0.0",
+    "eslint": "^7.1.0",
+    "eslint-loader": "^4.0.2",
+    "eslint-plugin-react": "^7.30.0",
+    "eslint-plugin-react-hooks": "^4.5.0",
     "express": "^4.17.1",
     "file-loader": "^1.1.5",
     "gulp": "^4.0.2",
@@ -71,6 +82,7 @@
     "react-to-typescript-definitions": "^3.1.0",
     "style-loader": "^0.23.1",
     "through2": "^4.0.2",
+    "typescript": "^4.6.4",
     "webpack": "^4.11.1",
     "webpack-dev-middleware": "^3.1.0",
     "webpack-hot-middleware": "^2.21.0",
@@ -78,7 +90,7 @@
     "whatwg-fetch": "^3.0.0"
   },
   "dependencies": {
-    "classnames": "^2.2.5",
+    "classnames": "^2.3.1",
     "jquery": "^3.3.1"
   }
 }

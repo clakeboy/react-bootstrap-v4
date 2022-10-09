@@ -1,3 +1,7 @@
+// import Dropdown from "./Dropdown";
+// export {
+//     Dropdown
+// };
 export Dropdown from "./Dropdown";
 export Pagination from "./Pagination";
 export Container from "./Container";
@@ -43,3 +47,4 @@ export DropPanel from './DropPanel';
 export Upload from './components/Upload';
 export Complex from './Complex';
 export CalendarRange from './CalendarRange';
+export ImageView from './ImageView';

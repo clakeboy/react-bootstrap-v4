@@ -88,7 +88,7 @@ gulp.task('publish:pack',()=>{
                 "@babel/plugin-proposal-object-rest-spread",
                 ["@babel/plugin-transform-runtime",{
                     "helpers": false,
-                    "useESModules": false
+                    "useESModules": false,
                 }],
                 "@babel/plugin-proposal-class-properties",
                 "@babel/plugin-syntax-dynamic-import",

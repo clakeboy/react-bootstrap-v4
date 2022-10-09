@@ -16,7 +16,8 @@ import {
     Calendar,
     Switch,
     RImage,
-    Modal
+    Modal,
+    ImageView
 } from '../../../src/index';
 
 class Jump extends React.PureComponent {
@@ -97,7 +98,9 @@ class Jump extends React.PureComponent {
                 <Card header='Test Image Component' height='500px' scroll>
                     <RImage height='50px' width='50px' border circle/>
                     <RImage height='50px' width='50px' border circle src='http://img.tubaozhang.com/files/upload/20171008e2RmfXsxOTQ4Mzd9e2tTTHh9.jpg'/>
-                    <RImage onClick={()=>{}} height='100px' width='150px' src='http://dudubao.oss-cn-shenzhen.aliyuncs.com/tmp/poster/008f322df45c4dbcdf4e950173d0f23f.jpg'/>
+                    <RImage onClick={()=>{
+                        this.view.show();
+                    }} height='100px' width='150px' src='http://dudubao.oss-cn-shenzhen.aliyuncs.com/tmp/poster/008f322df45c4dbcdf4e950173d0f23f.jpg'/>
                     <RImage height='100px' width='150px' display='full' border src='http://dudubao.oss-cn-shenzhen.aliyuncs.com/tmp/poster/008f322df45c4dbcdf4e950173d0f23f.jpg'/>
                     <RImage height='100px' width='150px' src='http://dudubao.oss-cn-shenzhen.aliyuncs.com/tmp/poster/008f322df45c4dbcdf4e950173d0f23f.jpg'/>
                     <RImage height='100px' width='150px' src='http://dudubao.oss-cn-shenzhen.aliyuncs.com/tmp/poster/008f322df45c4dbcdf4e950173d0f23f.jpg'/>
@@ -156,10 +159,27 @@ class Jump extends React.PureComponent {
                         }} />
                     </Table>
                 </Card>
-                <Card header='Test Image Component' height='500px' scroll>
-                    <RImage height='50px' width='50px' border circle/>
+                <Card header='测试图片查看器 - ImageView' height='500px' scroll>
+                    <span>点击下面图片查看单张</span>
+                    <RImage onClick={()=>{
+                        this.view.show('https://dudubao.oss-cn-shenzhen.aliyuncs.com/tmp/poster/008f322df45c4dbcdf4e950173d0f23f.jpg');
+                    }} height='100px' width='150px' src='http://dudubao.oss-cn-shenzhen.aliyuncs.com/tmp/poster/008f322df45c4dbcdf4e950173d0f23f.jpg'/>
+                    <span>点击下面图片查看多张</span>
+                    <RImage onClick={()=>{
+                        this.view.show([
+                            'https://dudubao.oss-cn-shenzhen.aliyuncs.com/tmp/poster/0006f86400bc1717f2f614a462261e0d.jpg',
+                            'https://dudubao.oss-cn-shenzhen.aliyuncs.com/tmp/poster/0009af448169e081195ad2429d9cf013.jpg',
+                            'https://dudubao.oss-cn-shenzhen.aliyuncs.com/tmp/poster/00141c63674e7d07b546ddfc971b089e.jpg',
+                            'https://dudubao.oss-cn-shenzhen.aliyuncs.com/tmp/poster/001d546ad57edcd38622fd35341328a0.jpg',
+                            'https://dudubao.oss-cn-shenzhen.aliyuncs.com/tmp/poster/008f322df45c4dbcdf4e950173d0f23f.jpg'
+                        ]);
+                    }} height='100px' width='150px' src='https://dudubao.oss-cn-shenzhen.aliyuncs.com/tmp/poster/0006f86400bc1717f2f614a462261e0d.jpg'/>
                 </Card>
                 <hr/>
+                <ImageView ref={c=>this.view=c} src={[
+                    'http://dudubao.oss-cn-shenzhen.aliyuncs.com/tmp/poster/008f322df45c4dbcdf4e950173d0f23f.jpg',
+                    'http://img.tubaozhang.com/files/upload/20171008e2RmfXsxOTQ4Mzd9e2tTTHh9.jpg'
+                ]}/>
             </Container>
         );
     }

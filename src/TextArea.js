@@ -393,7 +393,6 @@ class TextArea extends React.Component {
                     ['red','orange','yellow','green','blue','purple'],
                     ['white','gray','black','brown','silver','purple'],
                 ]} grid onChange={(txt,val)=>{
-                    console.log(txt,val);
                     this.execCommand('foreColor',val);
                 }}/>
 

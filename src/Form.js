@@ -11,6 +11,7 @@ import Dropdown from "./Dropdown";
 import Switch from './Switch';
 import CDropdown from './CDropdown';
 import ComboBox from "./ComboBox";
+import {CalendarRange} from "../lib";
 
 class Form extends React.PureComponent {
     constructor(props) {
@@ -135,6 +136,18 @@ class Form extends React.PureComponent {
         };
     }
 
+    calendarRangeChangeHandler(field) {
+        return (min,max)=>{
+            this.vals[field] = {min:min,max:max};
+            if (typeof this.props.onChange === 'function') {
+                this.props.onChange(field,min,max);
+            }
+            if (typeof this.events[field] === 'function') {
+                this.events[field](min,max);
+            }
+        }
+    }
+
     refComponent(field) {
         return (c)=>{
             this.components[field] = c;
@@ -213,6 +226,11 @@ class Form extends React.PureComponent {
                     this.events[field] = item.props.onChange;
                 }
                 item.props.onChange = this.comboChangeHandler(field);
+            } else if (item.type === CalendarRange) {
+                if (typeof item.props.onChange === 'function') {
+                    this.events[field] = item.props.onChange;
+                }
+                item.props.onChange = this.calendarRangeChangeHandler(field);
             }
         }
     }

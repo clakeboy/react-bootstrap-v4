@@ -54,6 +54,7 @@ gulp.task('server', () => {
 
     let dev_server = require('./dev_server/server');
     dev_server.listen("12345")
+    console.log('server start port 12345')
 });
 
 gulp.task('clean:publish', (callback) => {
@@ -88,7 +89,7 @@ gulp.task('publish:pack',()=>{
                 "@babel/plugin-proposal-object-rest-spread",
                 ["@babel/plugin-transform-runtime",{
                     "helpers": false,
-                    "useESModules": false,
+                    "useESModules": true,
                 }],
                 "@babel/plugin-proposal-class-properties",
                 "@babel/plugin-syntax-dynamic-import",

@@ -11,7 +11,7 @@ import Dropdown from "./Dropdown";
 import Switch from './Switch';
 import CDropdown from './CDropdown';
 import ComboBox from "./ComboBox";
-import {CalendarRange} from "../lib";
+import CalendarRange from "./CalendarRange";
 
 class Form extends React.PureComponent {
     constructor(props) {

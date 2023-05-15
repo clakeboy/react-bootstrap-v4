@@ -1,5 +1,6 @@
 //upload common component
 import ReactDOM from 'react-dom';
+import Common from '../Common';
 let fileDom;
 export default class Upload {
     //change event handler
@@ -80,10 +81,15 @@ export default class Upload {
         fileDom.click();
     }
     //upload to host
-    up() {
+    up(post_data) {
         let ot,oloaded;
         let data = new FormData();
         data.append(this.fieldName,this.currentFile);
+        if (post_data) {
+            Common.map(post_data,(item,key)=>{
+                data.append(key,item)
+            })
+        }
         let xhr = new XMLHttpRequest();
         xhr.open("post",this.uploadHost,true);
         // 请求成功回调函数

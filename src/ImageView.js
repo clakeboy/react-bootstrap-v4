@@ -79,11 +79,13 @@ class ImageView extends React.Component {
     }
 
     render() {
+        let data = this.state.src[this.state.currIdx]
+        let is_obj = typeof data === "object"
         let con = (
             <div id={this.domId} ref={c=>this.mainDom=c} className={this.getClasses()}>
                 <div id='image-main' className='image-main'>
                     <div className='top'>
-                        <span></span>
+                        <span>{is_obj?data.title:''}</span>
                         <button className="btn-close" onClick={this.closeHandler}>
                             <span>
                                 <svg fill="white" version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100%" height="100%" viewBox="0 0 512 512" >
@@ -94,7 +96,7 @@ class ImageView extends React.Component {
                         </button>
                     </div>
                     <figure>
-                        <RImage display='full' className="img" width='100vw' height='100vw' sizes="100vw" src={this.state.src[this.state.currIdx]}/>
+                        <RImage display='full' className="img" width='100vw' height='100vw' sizes="100vw" src={is_obj?data.src:data}/>
                     </figure>
                     <div className='foot'>
                         <figcaption className="title"></figcaption>

@@ -25,7 +25,7 @@ class CKModal extends React.PureComponent {
         this.state = {
             content:'',
             title:'',
-            isCloseBtn:true,
+            isCloseBtn:this.props.isCloseBtn,
             header:this.props.header,
             type:ModalAlert,
             center:this.props.center,
@@ -388,13 +388,15 @@ CKModal.propTypes = {
     center: PropTypes.bool,
     fade: PropTypes.bool,
     header: PropTypes.bool,
-    blurSelector: PropTypes.string
+    blurSelector: PropTypes.string,
+    isCloseBtn: PropTypes.bool,
 };
 
 CKModal.defaultProps = {
     center:false,
     fade:false,
-    header:true
+    header:true,
+    isCloseBtn:true,
 };
 
 export default CKModal;

@@ -19,7 +19,7 @@ const defBtns = {
     cancel:'取消',
 };
 
-class CKModal extends React.PureComponent {
+class CKModal extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -53,7 +53,7 @@ class CKModal extends React.PureComponent {
 
     shouldComponentUpdate(nextProps, nextState) {
         if (nextState.content !== null && nextState.content.props) {
-            nextState.content.props.parent = this
+            nextState.content.props = Object.assign({...nextState.content.props},{parent:this})
         }
         return this.state.content !== nextState.content
     }

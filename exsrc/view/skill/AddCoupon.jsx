@@ -61,10 +61,14 @@ class AddCoupon extends React.PureComponent {
         return classNames(base,this.props.className);
     }
 
+    changeHandler = (field,val,row)=>{
+        console.log(field,val,row)
+    }
+
     render() {
         return (
             <div className={this.getClasses()}>
-                <Form ref={c=>this.form=c}>
+                <Form ref={c=>this.form=c} onChange={this.changeHandler}>
                     <Container className='p-0 mb-1' inline fluid>
                         <Input field='username' className='mr-1' disabled width='100' placeholder='用户名'/>
                         <Input field='password' className='mr-1' placeholder='密码' type='password'/>
@@ -84,7 +88,7 @@ class AddCoupon extends React.PureComponent {
                         <Input className='col-6' label='Calendar' data='Lee' calendar disabled/>
                     </div>
                     <TextArea field='text' label='Summary' summary='input some' rows={10}/>
-                    <Checkbox label='是否完成' field='is_done'/>
+                    <CCheckbox label='是否完成' field='is_done'/>
                 </Form>
                 <div>
                     <Button className='float-right' icon='plus' onClick={()=>{

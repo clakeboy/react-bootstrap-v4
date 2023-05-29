@@ -157,15 +157,16 @@ class Form extends React.PureComponent {
 
     bindingComponent(item) {
         if (typeof item !== 'object' || item === null) {
-            return;
+            return null;
         }
         if (item.props && typeof item.props.children === 'object' &&
             item.type !== CDropdown &&
             item.type !== ComboBox) {
-            React.Children.map(item.props.children,(child_item)=>{
-                this.bindingComponent(child_item);
+            return React.Children.map(item.props.children,(child_item)=>{
+                return this.bindingComponent(child_item);
             });
         } else {
+            let props = {};
             let field;
             if (typeof item.props.field === 'string') {
                 field = item.props.field;
@@ -181,57 +182,58 @@ class Form extends React.PureComponent {
                 }
 
                 if (item.props.combo) {
-                    item.props.onChange = this.comboChangeHandler(field);
+                    props.onChange = this.comboChangeHandler(field);
                 } else {
-                    item.props.onChange = this.inputChangeHandler(field);
+                    props.onChange = this.inputChangeHandler(field);
                 }
                 // this.components[field] = React.createRef();
                 // item.props.ref = this.components[field];
-                item.props.ref = this.refComponent(field);
+                props.ref = this.refComponent(field);
             } else if (item.type === Select) {
                 if (typeof item.props.onSelect === 'function') {
                     this.events[field] = item.props.onSelect;
                 }
-                item.props.onSelect = this.selectChangeHandler(field);
+                props.onSelect = this.selectChangeHandler(field);
                 // item.props.ref = this.refComponent(field);
             } else if (item.type === CCheckbox) {
                 if (typeof item.props.onChange === 'function') {
                     this.events[field] = item.props.onChange;
                 }
-                item.props.onChange = this.checkChangeHandler(field);
+                props.onChange = this.checkChangeHandler(field);
                 // item.props.ref = this.refComponent(field);
             } else if (item.type === TextArea) {
                 if (typeof item.props.onChange === 'function') {
                     this.events[field] = item.props.onChange;
                 }
-                item.props.onChange = this.inputChangeHandler(field);
+                props.onChange = this.inputChangeHandler(field);
                 // item.props.ref = this.refComponent(field);
             } else if (item.type === Dropdown) {
                 if (typeof item.props.onChange === 'function') {
                     this.events[field] = item.props.onChange;
                 }
-                item.props.onChange = this.dropdownChangeHandler(field);
+                props.onChange = this.dropdownChangeHandler(field);
             } else if (item.type === CDropdown) {
                 if (typeof item.props.onChange === 'function') {
                     this.events[field] = item.props.onChange;
                 }
-                item.props.onChange = this.cdropdownChangeHandler(field);
+                props.onChange = this.cdropdownChangeHandler(field);
             } else if (item.type === Switch) {
                 if (typeof item.props.onChange === 'function') {
                     this.events[field] = item.props.onChange;
                 }
-                item.props.onChange = this.switchChangeHandler(field);
+                props.onChange = this.switchChangeHandler(field);
             } else if (item.type === ComboBox) {
                 if (typeof item.props.onChange === 'function') {
                     this.events[field] = item.props.onChange;
                 }
-                item.props.onChange = this.comboChangeHandler(field);
+                props.onChange = this.comboChangeHandler(field);
             } else if (item.type === CalendarRange) {
                 if (typeof item.props.onChange === 'function') {
                     this.events[field] = item.props.onChange;
                 }
-                item.props.onChange = this.calendarRangeChangeHandler(field);
+                props.onChange = this.calendarRangeChangeHandler(field);
             }
+            return React.cloneElement(item,{...item.props,...props})
         }
     }
 
@@ -239,8 +241,8 @@ class Form extends React.PureComponent {
         return (
             <React.Fragment>
                 {React.Children.map(this.props.children,(item)=>{
-                    this.bindingComponent(item);
-                    return item;
+                    return this.bindingComponent(item);
+                    // return item;
                 })}
             </React.Fragment>
         );

@@ -53,7 +53,7 @@ class CKModal extends React.Component {
 
     shouldComponentUpdate(nextProps, nextState) {
         if (nextState.content !== null && nextState.content.props) {
-            nextState.content.props = Object.assign({...nextState.content.props},{parent:this})
+            nextState.content = React.cloneElement(nextState.content,{...nextState.content.props,parent:this})
         }
         return this.state.content !== nextState.content
     }

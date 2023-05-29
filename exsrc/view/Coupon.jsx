@@ -29,6 +29,8 @@ import {
     Complex, ComboBox
 } from '../../src/index';
 import Loader from '../components/Loader';
+import AddCoupon from "./skill/AddCoupon";
+import Common from "../../src/Common";
 
 class Coupon extends React.Component {
     constructor(props) {
@@ -312,7 +314,7 @@ class Coupon extends React.Component {
                     }}>测试 loading 加载 Modal</Button>
                     <Button theme='info' onClick={e=>this.modal.view({
                         title:'添加优惠券',
-                        content:<Loader loadPath='/skill/AddCoupon' import={GetComponent}/>,
+                        content:<AddCoupon id={Common.RandomString(10)}/>,
                         width:'1000px',
                     })}>测试 view 自定义内容 Modal</Button>
                     </ButtonGroup>

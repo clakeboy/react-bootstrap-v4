@@ -209,12 +209,12 @@ class Calendar extends React.PureComponent {
     }
 
     setMonth(month) {
-        console.log(month);
-        console.log(this.show_date.toLocaleDateString());
+        // console.log(month);
+        // console.log(this.show_date.toLocaleDateString());
         this.show_date.setDate(1);
         this.show_date.setMonth(month);
-        console.log(this.show_date.toLocaleDateString());
-        console.log("set month:",this.show_date.getMonth());
+        // console.log(this.show_date.toLocaleDateString());
+        // console.log("set month:",this.show_date.getMonth());
         this.setState({
             days: this.fillDateList(),
             month: false,
@@ -540,7 +540,6 @@ class Calendar extends React.PureComponent {
     }
 
     render() {
-        console.log("render: ",this.show_date.getMonth());
         let lang = i18n[this.props.lang];
         let content = (
             <div ref={c=>this.mainDom=c} className={this.getClasses()} onMouseDown={(e)=>{

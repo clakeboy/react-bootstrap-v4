@@ -201,7 +201,7 @@ class TextArea extends React.Component {
     insertImage(file) {
         let reg = /^image\/(png|jpg|jpeg|gif)/ig;
         if (!reg.test(file.type)) {
-            console.log('can not insert non-picture file');
+            // console.log('can not insert non-picture file');
             return
         }
         let read = new FileReader();

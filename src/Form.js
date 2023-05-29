@@ -37,7 +37,7 @@ class Form extends React.PureComponent {
     setValue(field,val) {
         this.vals[field] = val;
         if (this.components[field]) {
-            console.log(this.components.current);
+            // console.log(this.components.current);
             // this.components[field].setValue(val);
         }
     }
@@ -46,7 +46,7 @@ class Form extends React.PureComponent {
         this.vals = Object.assign(this.vals,vals);
         map(vals,(item,key)=>{
             if (this.components[key]) {
-                console.log(this.components);
+                // console.log(this.components);
                 // this.components[key].setValue(item);
             }
         });
@@ -151,7 +151,7 @@ class Form extends React.PureComponent {
     refComponent(field) {
         return (c)=>{
             this.components[field] = c;
-            console.log(this.components);
+            // console.log(this.components);
         }
     }
 

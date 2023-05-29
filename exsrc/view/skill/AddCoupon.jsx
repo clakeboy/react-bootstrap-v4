@@ -46,6 +46,15 @@ class AddCoupon extends React.PureComponent {
         // });
     }
 
+    static getDerivedStateFromProps(props,state) {
+        console.log('getDerivedStateFromProps',props,state)
+        return null
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        console.log('componentDidUpdate',prevProps,prevState,this.props,this.state)
+    }
+
     getClasses() {
         let base = '';
 

@@ -120,10 +120,8 @@ class Tabs extends React.PureComponent {
                     } else if (this.state.currentShow === item.props.id) {
                         class_name = classNames(class_name, 'active');
                     }
-                    if (typeof item.props.disabled === 'undefined') {
-                        item.props.disabled = this.props.disabled;
-                    }
-                    if (item.props.disabled) {
+
+                    if (item.props.disabled || this.props.disabled) {
                         class_name = classNames(class_name, 'disabled');
                     }
                     let clickEvt = null;

@@ -235,7 +235,12 @@ class Main extends React.Component {
                             }}>自定义的菜单</Menu.Item>
                         </Menu>
                     </Table>
-                    <Pagination count={1000} current={1} number={100} showPage={10}/>
+                    <Pagination count={1000} current={1} number={100} showPage={10} numberList={[
+                        {text:'每页显示30条',value:30},{text:'每页显示50条',value:50}
+                    ]} onSelect={(page,showNumber)=>{
+                        console.log('select',page,showNumber)
+                        console.log(page.target)
+                    }}/>
                     <Table hover={true} select={true} headerTheme='light'>
                         <Table.Header text='Name' field='name' onSort={(field,sort)=>{
                             alert(field+'-'+sort);
@@ -267,7 +272,8 @@ class Main extends React.Component {
                     <Pagination size='sm' numberList={[
                         {text:'每页显示30条',value:30},{text:'每页显示50条',value:50}
                     ]} count={1000} current={1} number={50} showPage={10} onSelect={(page,showNumber)=>{
-                        console.log(page,showNumber)
+                        console.log('select',page,showNumber)
+                        console.log(page.currentTarget)
                     }}/>
                 </Card>
                 <Card header='Calendar'>

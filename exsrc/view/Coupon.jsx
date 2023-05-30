@@ -219,11 +219,11 @@ class Coupon extends React.Component {
                             </ComboBox>
                         </div>
                         <div className='form-row'>
-                            <CDropdown className='col-6' field='text_drop' label='Name' text='下拉选择'>
+                            <CDropdown className='col-6' field='text_drop' label='asdf' text='下拉选择'>
                                 <CDropdown.Value text='选项1' value={11111} active={this.state.data.text_drop==='选项1'}/>
                                 <CDropdown.Value text='选项2' value={222222} active={this.state.data.text_drop==='选项2'}/>
                             </CDropdown>
-                            <CDropdown className='col-6' size='sm' field='text_drop' label='Name' text='下拉选择'>
+                            <CDropdown className='col-6' size='sm' field='text_drop_2' label='Name' text='下拉选择'>
                                 <CDropdown.Value text='选项1' value={11111} active={this.state.data.text_drop==='选项1'}/>
                                 <CDropdown.Value text='选项2' value={222222} active={this.state.data.text_drop==='选项2'}/>
                             </CDropdown>

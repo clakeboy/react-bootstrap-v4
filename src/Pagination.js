@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import Icon from './Icon';
-import Dropdown from "./Dropdown";
+import CDropdown from "./CDropdown";
 import {Input} from "./index";
 import Select from "./Select";
+
 class Pagination extends React.PureComponent {
     constructor(props) {
         super(props);
@@ -111,16 +112,16 @@ class Pagination extends React.PureComponent {
 
     render() {
         return (
-            <nav {...this.props}>
+            <nav >
                 <ul className={this.getClasses()}>
                     {this.props.numberList && this.props.numberList.length > 0 ? <li>
-                        <Select size={this.props.size} className='mr-1'
-                                data={this.props.numberList}
-                                value={this.state.showNumber}
-                                onSelect={(e)=>{
-                                    this.props.onSelect(1,e.currentTarget.value);
-                                }}
-                        />
+                        <CDropdown className='mr-1' size={this.props.size} text='下拉选择' onChange={(val,row)=>{
+                            this.props.onSelect(row.value,val);
+                        }}>
+                            {this.props.numberList.map((item)=>{
+                                return <CDropdown.Value text={item.text} value={item.value} active={this.state.showNumber===item.value}/>
+                            })}
+                        </CDropdown>
                     </li>:null}
 
                     <li className="page-item disabled">

@@ -157,14 +157,15 @@ class Form extends React.PureComponent {
 
     bindingComponent(item) {
         if (typeof item !== 'object' || item === null) {
-            return null;
+            return item;
         }
         if (item.props && typeof item.props.children === 'object' &&
             item.type !== CDropdown &&
             item.type !== ComboBox) {
-            return React.Children.map(item.props.children,(child_item)=>{
+            let children = React.Children.map(item.props.children,(child_item)=>{
                 return this.bindingComponent(child_item);
             });
+            return React.cloneElement(item,{...item.props},children)
         } else {
             let props = {};
             let field;
@@ -173,7 +174,7 @@ class Form extends React.PureComponent {
             } else if (typeof item.props.field === 'object') {
                 field = item.props.field.key;
             } else {
-                return;
+                return item;
             }
             this.newColumn[field] = '';
             if (item.type === Input) {
@@ -233,18 +234,19 @@ class Form extends React.PureComponent {
                 }
                 props.onChange = this.calendarRangeChangeHandler(field);
             }
+            // return React.cloneElement(item,Object.assign({},item.props,props))
             return React.cloneElement(item,{...item.props,...props})
         }
     }
 
     render() {
         return (
-            <React.Fragment>
+            <>
                 {React.Children.map(this.props.children,(item)=>{
                     return this.bindingComponent(item);
                     // return item;
                 })}
-            </React.Fragment>
+            </>
         );
     }
 }

@@ -1,8 +1,12 @@
 {
   "name": "@clake/react-bootstrap4",
-  "version": "1.9.12",
+  "version": "1.9.13",
   "description": "react bootstrap v4",
   "main": "lib/index.js",
+  "unpkg": "./dist/react-bootstrap-v4.js",
+  "files": [
+    "./dist"
+  ],
   "scripts": {
     "test": "test",
     "lint": "eslint --ext .ts --ext .tsx src/",

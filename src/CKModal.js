@@ -34,6 +34,7 @@ class CKModal extends React.Component {
             size:'lg',
             width:null,
             btns:defBtns,
+            shadowClose:this.props.shadowClose
         };
         //modal type
         this.modalType = ModalAlert;
@@ -71,9 +72,10 @@ class CKModal extends React.Component {
     }
 
     open() {
-        this._modal.classList.add("d-block");
-        this._shadow.classList.remove("d-none");
-        this._shadow.classList.add('show');
+        this._modal.classList.add("visible");
+        this._modal.classList.remove("ck-modal-close-an","invisible");
+        this._shadow.classList.remove("invisible");
+        this._shadow.classList.add('visible');
         let modals = parseInt(document.body.dataset.modals);
         if (!modals) {
             modals = 0;
@@ -93,15 +95,17 @@ class CKModal extends React.Component {
                 selector.classList.add("ck-model-blur");
             }
         }
+        // document.body.classList.add("ck-model-blur")
     }
 
     close() {
         if (!this.is_open) {
             return;
         }
-        this._modal.classList.remove("d-block");
-        this._shadow.classList.remove("show");
-        this._shadow.classList.add("d-none");
+        this._modal.classList.remove("visible");
+        this._modal.classList.add("invisible","ck-modal-close-an");
+        this._shadow.classList.remove("visible");
+        this._shadow.classList.add("invisible");
         let modals = parseInt(document.body.dataset.modals);
         modals -= 1;
         document.body.dataset.modals = modals+'';
@@ -159,6 +163,8 @@ class CKModal extends React.Component {
             center:typeof opt.center === 'undefined'?this.props.center:opt.center,
             width:typeof opt.width !== 'undefined'?opt.width:null,
             btns: typeof opt.btns != 'undefined' ? opt.btns:defBtns,
+            shadowClose:opt.shadowClose||this.props.shadowClose,
+            fade:opt.fade||this.props.fade,
         },()=>{
             this.open({
                 backdrop:'static',
@@ -189,6 +195,8 @@ class CKModal extends React.Component {
             center:typeof opt.center === 'undefined'?this.props.center:opt.center,
             width:typeof opt.width !== 'undefined'?opt.width:null,
             btns: typeof opt.btns != 'undefined' ? opt.btns:defBtns,
+            shadowClose:opt.shadowClose||this.props.shadowClose,
+            fade:opt.fade||this.props.fade,
         },()=>{
             this.open({
                 backdrop:'static',
@@ -211,6 +219,8 @@ class CKModal extends React.Component {
             //     </React.Fragment>
             // ),
             content:opt.content||opt||'',
+            shadowClose:opt.shadowClose||this.props.shadowClose,
+            fade:opt.fade||this.props.fade,
             isCloseBtn:false,
             header:typeof opt.header !== 'undefined'?opt.header:this.props.header,
             type:ModalLoading,
@@ -241,6 +251,8 @@ class CKModal extends React.Component {
         this.setState({
             title:opt.title||'提示',
             content:opt.content||'',
+            shadowClose:opt.shadowClose||this.props.shadowClose,
+            fade:opt.fade||this.props.fade,
             isCloseBtn:typeof opt.close !== 'undefined'?opt.close:true,
             header:typeof opt.header !== 'undefined'?opt.header:this.props.header,
             width:typeof opt.width !== 'undefined'?opt.width:null,
@@ -256,7 +268,7 @@ class CKModal extends React.Component {
     }
 
     getClasses() {
-        let base = 'modal';
+        let base = 'modal d-block ck-modal-close-an';
         if (this.modalType === ModalView) {
             base = classNames(base,"bd-example-modal-lg");
         }
@@ -265,9 +277,9 @@ class CKModal extends React.Component {
         }
 
         if (this.state.show) {
-            base = classNames(base,'d-block');
+            base = classNames(base,'visible');
         } else {
-            base = classNames(base,'d-none');
+            base = classNames(base,'invisible');
         }
 
         return classNames(base,this.props.className);
@@ -297,9 +309,9 @@ class CKModal extends React.Component {
         let base = 'modal-backdrop ck-modal-shadow';
 
         if (this.state.show) {
-            base = classNames(base,'show');
+            base = classNames(base,'visible');
         } else {
-            base = classNames(base,'d-none');
+            base = classNames(base,'invisible');
         }
 
         return classNames(base,this.props.className);
@@ -352,8 +364,13 @@ class CKModal extends React.Component {
         let shadowIndex = {zIndex:BaseModal+this.offsetIndex+1};
         let content =  (
             <React.Fragment>
-                <div ref={c=>this._modal=c} className={this.getClasses()} style={modalIndex} tabIndex="-1" id={this.domId} role="dialog">
-                    <div className={this.getDialogClasses()} style={this.getDialogStyles()} role="document">
+                <div ref={c=>this._modal=c} className={this.getClasses()} style={modalIndex} tabIndex="-1" id={this.domId} role="dialog" onMouseUp={this.state.shadowClose ? (e)=>{
+                    this.close()
+                }:null}>
+                    <div className={this.getDialogClasses()} style={this.getDialogStyles()} role="document" onMouseUp={(e)=>{
+                        e.stopPropagation()
+                        e.preventDefault()
+                    }}>
                         <div className="modal-content">
                             {this.state.header?<div className="modal-header">
                                 <h5 className="modal-title">{this.state.title}</h5>
@@ -390,6 +407,7 @@ CKModal.propTypes = {
     header: PropTypes.bool,
     blurSelector: PropTypes.string,
     isCloseBtn: PropTypes.bool,
+    shadowClose: PropTypes.bool
 };
 
 CKModal.defaultProps = {
@@ -397,6 +415,7 @@ CKModal.defaultProps = {
     fade:false,
     header:true,
     isCloseBtn:true,
+    shadowClose: false,
 };
 
 export default CKModal;

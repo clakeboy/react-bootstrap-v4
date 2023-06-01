@@ -315,6 +315,8 @@ class Coupon extends React.Component {
                     <Button theme='info' onClick={e=>this.modal.view({
                         title:'添加优惠券',
                         content:<AddCoupon id={Common.RandomString(10)}/>,
+                        fade:true,
+                        shadowClose:true,
                         width:'1000px',
                     })}>测试 view 自定义内容 Modal</Button>
                     </ButtonGroup>
@@ -364,7 +366,7 @@ class Coupon extends React.Component {
                         }}/>
                     </TabsContent>
                 </Tabs>
-                <CKModal ref={c=>this.modal=c} fade blurSelector='#react-main'/>
+                <CKModal ref={c=>this.modal=c} blurSelector='#react-main'/>
             </Container>
         );
     }

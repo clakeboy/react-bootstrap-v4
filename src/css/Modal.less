@@ -1,6 +1,6 @@
 .ck-modal-shadow {
-  opacity: 0;
-  transition: opacity 150ms linear;
+  background-color: rgba(0,0,0,.5);
+  transition: visibility 150ms linear;
 }
 
 .ck-model-blur {
@@ -11,6 +11,14 @@
 
 }
 
+.ck-modal-close-an {
+  opacity: 0;
+  transform: scale(.5);
+}
+
+.ck-modal-fade {
+  transition: visibility 150ms linear,opacity 150ms linear,transform 150ms linear;
+}
 //.ck-modal-fade {
 //  .modal-dialog {
 //    opacity: 0;

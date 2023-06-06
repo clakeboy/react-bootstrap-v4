@@ -165,7 +165,7 @@ class Input extends React.Component {
             base = classNames(base, 'ck-input-valid');
         }
 
-        if (this.props.calendar || this.props.combo) {
+        if ((this.props.calendar || this.props.combo) && !this.state.disabled) {
             base = classNames(base, 'ck-input-icon');
         }
 
@@ -318,7 +318,10 @@ class Input extends React.Component {
             }
         }
     };
-
+    /**
+     * input dblclick event
+     * @param e
+     */
     dblHandler = (e)=> {
         if (this.calendar && !this.state.value) {
             this.calendar.setCurrentDate(new Date());
@@ -332,6 +335,12 @@ class Input extends React.Component {
             )
         }
     };
+
+    mainDblHandler = ()=>{
+        if (typeof this.props.onDblClick === 'function') {
+            this.props.onDblClick()
+        }
+    }
 
     /*********************
      * render method
@@ -473,7 +482,7 @@ class Input extends React.Component {
             return this.renderMulti();
         }
         return (
-            <div id={this.domId+'-main'} className={this.getMainClasses()} style={this.getMainStyles()} >
+            <div id={this.domId+'-main'} className={this.getMainClasses()} style={this.getMainStyles()} onDoubleClick={this.mainDblHandler}>
                 {this.renderLabel()}
                 <input type='text' {...this.props} ref={c => this.input = c} onBlur={this.blurHandler}
                        onChange={this.changeHandler}
@@ -523,6 +532,7 @@ Input.propTypes = {
     calendar      : PropTypes.object,
     onChange      : PropTypes.func,
     onEnter       : PropTypes.func,
+    onDblClick    : PropTypes.func,
     plaintext     : PropTypes.bool,
     calendarFormat: PropTypes.string,
     calendarTime  : PropTypes.bool,

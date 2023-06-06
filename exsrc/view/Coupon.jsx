@@ -199,6 +199,9 @@ class Coupon extends React.Component {
                     <Container inline>
                         <Input field='name' width='200px' data={this.state.data.name} multi={{height:'100px'}}/>
                         <Input field='name_s' data={this.state.data.name_s}/>
+                        <Input calendar readOnly width='120px' data={'2023-10-21'} disabled onDblClick={()=>{
+                            this.modal.alert('双击');
+                        }}/>
                     </Container>
                     <Form onChange={(field,val,row)=>{
                         console.log(field,val,row);

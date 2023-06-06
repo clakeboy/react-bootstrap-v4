@@ -144,3 +144,5 @@ gulp.task('default', gulp.series('server'));
 
 gulp.task('build',gulp.series('clean:build','build:pack','build:over'));
 gulp.task('publish',gulp.series('clean:publish','publish:css','publish:pack'));
+
+gulp.task('build-publish',gulp.series('build','publish'))

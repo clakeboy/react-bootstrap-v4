@@ -477,6 +477,11 @@ class Input extends React.Component {
         return {}
     }
 
+    renderDisableMask() {
+        if (!this.props.disabled) return null
+        return <div className='position-absolute w-100 h-100' style={{top:0,left:0}}></div>
+    }
+
     render() {
         if (this.props.multi) {
             return this.renderMulti();
@@ -484,6 +489,7 @@ class Input extends React.Component {
         return (
             <div id={this.domId+'-main'} className={this.getMainClasses()} style={this.getMainStyles()} onDoubleClick={this.mainDblHandler}>
                 {this.renderLabel()}
+                {this.renderDisableMask()}
                 <input type='text' {...this.props} ref={c => this.input = c} onBlur={this.blurHandler}
                        onChange={this.changeHandler}
                        onKeyUp={this.keyUpHandler}

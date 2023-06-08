@@ -141,7 +141,9 @@ class Main extends React.Component {
                         }} data={this.dataArrList} value={this.state.pageData.city} defaultValue='Dropdown Text2' summary='下载文本'/>
                     </div>
                     <div className='form-row'>
-                        <Input className='col-6' label='Calendar Unix Timestamp' data='1518427253' calendarFormat='unix' calendar readOnly/>
+                        <Input className='col-6' label='Calendar Unix Timestamp' data='1518427253' calendarFormat='unix' calendar disabled onDblClick={()=>{
+                            alert('双击');
+                        }}/>
                         <Input className='col-6' size='sm' label='Calendar' calendarTime={true} calendarFormat='YYYY-MM-DD H:I:S' data={this.state.pageData.chose_date} onChange={this.changeHandler('chose_date')} calendar readOnly/>
                     </div>
                     <div className='form-row'>

@@ -28,11 +28,11 @@ class RadioGroup extends React.Component {
     changeHandler = (e)=>{
         this.setState({
             value: e.target.value
+        },()=>{
+            if (typeof this.props.onChange === 'function') {
+                this.props.onChange(this.state.value);
+            }
         });
-
-        if (typeof this.props.onChange === 'function') {
-            this.props.onChange(e.target.value);
-        }
     };
 
     render() {

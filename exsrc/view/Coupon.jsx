@@ -26,7 +26,7 @@ import {
     CDropdown,
     Form,
     InputStyle,
-    Complex, ComboBox
+    Complex, ComboBox, Radio, RadioGroup
 } from '../../src/index';
 import Loader from '../components/Loader';
 import AddCoupon from "./skill/AddCoupon";
@@ -324,7 +324,10 @@ class Coupon extends React.Component {
                     })}>测试 view 自定义内容 Modal</Button>
                     </ButtonGroup>
                     <Button className='mt-4' block onClick={e=>{
-                        this.modal.alert("测试")
+                        this.modal.alert({
+                            fade:true,
+                            content:'测试 fade'
+                        })
                     }}>Button Block</Button>
                 </Card>
                 <Card className='mt-2' header='树组件 Card 自定义头' custom border='light'>
@@ -380,6 +383,13 @@ class Coupon extends React.Component {
                 <div className='form-row'>
                     <div className='col-2 form-group pt-2'><label>middle垂直居中</label></div>
                     <Input className='col-10' data='Lee'/>
+                </div>
+                <div>
+                    <RadioGroup field='radio_test' data={this.state.data.radio_test}>
+                        <Radio label='Check1' className='mr-2' name='ccc' data='1'/>
+                        <Radio label='Check2' className='mr-2' name='222' data='2'/>
+                        <Radio label='Check3' className='mr-2' name='cccccc' data='3'/>
+                    </RadioGroup>
                 </div>
             </>
         )

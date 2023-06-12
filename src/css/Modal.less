@@ -1,6 +1,15 @@
 .ck-modal-shadow {
+  opacity: 1;
   background-color: rgba(0,0,0,.5);
-  transition: visibility 150ms linear;
+}
+
+.ck-modal-shadow-fade {
+  transition: visibility 150ms linear,opacity 150ms linear;
+}
+
+.ck-modal-shadow-close {
+  opacity: 0;
+  transition: visibility 150ms linear 200ms,opacity 150ms linear 200ms;
 }
 
 .ck-model-blur {
@@ -13,12 +22,14 @@
 
 .ck-modal-close-an {
   opacity: 0;
-  transform: scale(.5);
+  transform: translateY(-30px);
+  transition: visibility 150ms linear,opacity 150ms linear,transform 150ms linear;
 }
 
 .ck-modal-fade {
-  transition: visibility 150ms linear,opacity 150ms linear,transform 150ms linear;
+  transition: visibility 150ms linear 100ms,opacity 150ms linear 100ms,transform 150ms linear 100ms;
 }
+
 //.ck-modal-fade {
 //  .modal-dialog {
 //    opacity: 0;

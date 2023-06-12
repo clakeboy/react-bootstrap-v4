@@ -1,7 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import classNames from 'classnames/bind';
 import Input from './Input';
 import CCheckbox from './CCheckbox';
 import Select from './Select';
@@ -12,6 +10,7 @@ import Switch from './Switch';
 import CDropdown from './CDropdown';
 import ComboBox from "./ComboBox";
 import CalendarRange from "./CalendarRange";
+import RadioGroup from "./RadioGroup";
 
 class Form extends React.PureComponent {
     constructor(props) {
@@ -148,6 +147,18 @@ class Form extends React.PureComponent {
         }
     }
 
+    radioChangeHandler(field) {
+        return (val)=>{
+            this.vals[field] = val;
+            if (typeof this.props.onChange === 'function') {
+                this.props.onChange(field,val);
+            }
+            if (typeof this.events[field] === 'function') {
+                this.events[field](val);
+            }
+        };
+    }
+
     refComponent(field) {
         return (c)=>{
             this.components[field] = c;
@@ -161,7 +172,8 @@ class Form extends React.PureComponent {
         }
         if (item.props && typeof item.props.children === 'object' &&
             item.type !== CDropdown &&
-            item.type !== ComboBox) {
+            item.type !== ComboBox &&
+            item.type !== RadioGroup) {
             let children = React.Children.map(item.props.children,(child_item)=>{
                 return this.bindingComponent(child_item);
             });
@@ -233,6 +245,11 @@ class Form extends React.PureComponent {
                     this.events[field] = item.props.onChange;
                 }
                 props.onChange = this.calendarRangeChangeHandler(field);
+            } else if (item.type === RadioGroup) {
+                if (typeof item.props.onChange === 'function') {
+                    this.events[field] = item.props.onChange;
+                }
+                props.onChange = this.radioChangeHandler(field);
             }
             // return React.cloneElement(item,Object.assign({},item.props,props))
             return React.cloneElement(item,{...item.props,...props})

@@ -74,8 +74,8 @@ class CKModal extends React.Component {
     open() {
         this._modal.classList.add("visible");
         this._modal.classList.remove("ck-modal-close-an","invisible");
-        this._shadow.classList.remove("invisible");
         this._shadow.classList.add('visible');
+        this._shadow.classList.remove("invisible",'ck-modal-shadow-close');
         let modals = parseInt(document.body.dataset.modals);
         if (!modals) {
             modals = 0;
@@ -103,17 +103,23 @@ class CKModal extends React.Component {
             return;
         }
         this._modal.classList.remove("visible");
-        this._modal.classList.add("invisible","ck-modal-close-an");
         this._shadow.classList.remove("visible");
+        this._modal.classList.add("invisible");
         this._shadow.classList.add("invisible");
+        if (this.state.fade) {
+            this._modal.classList.add("ck-modal-close-an");
+            this._shadow.classList.add('ck-modal-shadow-close');
+        }
         let modals = parseInt(document.body.dataset.modals);
         modals -= 1;
         document.body.dataset.modals = modals+'';
         if (modals === 0) {
-            document.body.classList.remove("modal-open");
-            if (this.hasScrollbar()) {
-                document.body.style.paddingRight = '0';
-            }
+            setTimeout(()=>{
+                document.body.classList.remove("modal-open");
+                if (this.hasScrollbar()) {
+                    document.body.style.paddingRight = '0';
+                }
+            },this.state.fade?300:0)
             if (this.props.blurSelector) {
                 let selector = document.querySelector(this.props.blurSelector);
                 if (selector) {
@@ -312,6 +318,10 @@ class CKModal extends React.Component {
             base = classNames(base,'visible');
         } else {
             base = classNames(base,'invisible');
+        }
+
+        if (this.state.fade) {
+            base = classNames(base,'ck-modal-shadow-fade');
         }
 
         return classNames(base,this.props.className);

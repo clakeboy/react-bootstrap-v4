@@ -369,6 +369,7 @@ class TestModal extends React.PureComponent {
                             console.log(val,row);
                         }}/>
                         <Input label="测试远程数据(模拟)" combo={{
+                            width:'2000px',
                             searchColumn:'task_name',
                             filterColumns:[{field:'task_name',width:'100px'},'source','time_rule',{field:'notify_url',width:'200px'}],
                             onSearch: (search,callback)=>{

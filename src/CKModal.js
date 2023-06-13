@@ -72,8 +72,12 @@ class CKModal extends React.Component {
     }
 
     open() {
+        if (this.state.fade) {
+            this._modal.classList.add("ck-modal-fade");
+            this._shadow.classList.add('ck-modal-shadow-fade');
+        }
         this._modal.classList.add("visible");
-        this._modal.classList.remove("ck-modal-close-an","invisible");
+        this._modal.classList.remove("invisible",'ck-modal-close-an');
         this._shadow.classList.add('visible');
         this._shadow.classList.remove("invisible",'ck-modal-shadow-close');
         let modals = parseInt(document.body.dataset.modals);

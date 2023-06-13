@@ -41,6 +41,14 @@ class Form extends React.PureComponent {
         }
     }
 
+    check() {
+        map(this.components,(item,key)=>{
+            if (typeof item.check === 'function') {
+                item.check();
+            }
+        })
+    }
+
     setValues(vals) {
         this.vals = Object.assign(this.vals,vals);
         map(vals,(item,key)=>{
@@ -201,7 +209,6 @@ class Form extends React.PureComponent {
                 }
                 // this.components[field] = React.createRef();
                 // item.props.ref = this.components[field];
-                props.ref = this.refComponent(field);
             } else if (item.type === Select) {
                 if (typeof item.props.onSelect === 'function') {
                     this.events[field] = item.props.onSelect;
@@ -252,6 +259,7 @@ class Form extends React.PureComponent {
                 props.onChange = this.radioChangeHandler(field);
             }
             // return React.cloneElement(item,Object.assign({},item.props,props))
+            props.ref = this.refComponent(field);
             return React.cloneElement(item,{...item.props,...props})
         }
     }

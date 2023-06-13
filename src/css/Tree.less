@@ -5,9 +5,11 @@
   -ms-user-select: none;
   user-select: none;
   min-width: 250px;
+  position: relative;
 }
 
 .ck-tree-item {
+  position: relative;
   .active {
     color: #ffffff;
     background-color: #17a2b8;
@@ -21,12 +23,17 @@
     //color: #17a2b8;
     text-decoration: underline;
   }
+  .chk {
+    width: 24px;
+    text-align: center;
+  }
 }
 
 
 .ck-tree-icon {
-  display: inline-block;
-  width: 1rem;
+  //text-align: center;
+  display: block;
+  width: 20px;
   i {
     transform:rotate(0deg);
     transition:transform 300ms;
@@ -41,9 +48,18 @@
   //display: none;
   //transition: height 300ms;
   //height: 0;
+  position: relative;
   overflow: hidden;
 }
 
 .ck-tree-item-text {
 
+}
+
+.ck-tree-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 20px;
 }

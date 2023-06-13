@@ -161,12 +161,12 @@ class Tree extends React.PureComponent {
         if (!parent_key) {
             parent_key = 0;
         }
-        let pad = parent?1:0;
+        let pad = parent?'20':0;
         this.checkSelectList[parent_key] = [];
         this.checkItems[parent_key] = [];
         return list.map((val,idx)=>{
             let style = {
-                'marginLeft':pad+'rem'
+                'marginLeft':pad+'px'
             };
             let id = `${parent_key}-${idx}`;
             this.checkItems[parent_key].push({id:id,data:val});
@@ -179,7 +179,7 @@ class Tree extends React.PureComponent {
                         {val.children?<span className='ck-tree-icon' onClick={this.iconHandler(val,id)}>
                             <Icon className={val.show?'ck-tree-icon-down':''} icon={val.children?'angle-right':val.icon}/>
                         </span>:<span className='ck-tree-icon'/>}
-                        {this.props.check ? <CCheckbox ref={c=>this.checkObjList[id]=c} checked={val?.checked} className='mr-1' inline onChange={this.changeHandler(val,id,parent_key)}/>:null}
+                        {this.props.check ? <CCheckbox ref={c=>this.checkObjList[id]=c} checked={val?.checked} className='chk mr-1' inline onChange={this.changeHandler(val,id,parent_key)}/>:null}
                         <span className='ck-tree-item-text'
                               onDoubleClick={this.dbClickHandler(val,id,parent_key)}
                               onClick={this.selectHandler(val,id,parent_key)}>
@@ -188,6 +188,7 @@ class Tree extends React.PureComponent {
                         </span>
                     </div>
                     {val.children?<div id={this.domId+'-'+id} className={'ck-tree-children'+(val.show?'':' d-none')} data-show={val.show?'1':'0'} ref={c=>this.parents[id]=c}>
+                        <svg className='ck-tree-svg'/>
                         {this.renderItem(val.children,val,level+1,id)}
                     </div>:null}
                 </div>

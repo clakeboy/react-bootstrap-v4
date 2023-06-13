@@ -443,7 +443,7 @@ class Input extends React.Component {
     renderClear() {
         if (this.props.disabled || this.props.combo ||
             this.props.calendar || this.props.plaintext ||
-            this.props.disableClear) {
+            this.props.disableClear || this.props.readOnly) {
             return null
         }
         let input_icon = 'ck-input-calendar-icon';

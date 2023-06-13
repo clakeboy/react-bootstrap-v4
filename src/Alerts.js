@@ -20,7 +20,7 @@ class Alerts extends React.PureComponent {
     }
 
     getClasses() {
-        let base = '';
+        let base = 'ck-alerts-main';
 
         return classNames(base,this.props.className);
     }
@@ -35,10 +35,12 @@ class Alerts extends React.PureComponent {
 }
 
 Alerts.propTypes = {
-    content: PropTypes.string
+    content: PropTypes.string,
+    theme: PropTypes.string,//def danger
 };
 
 Alerts.defaultProps = {
+    theme:'danger',
     content: ''
 };
 

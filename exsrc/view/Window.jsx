@@ -20,6 +20,7 @@ import ReactBootstrap4,{
     Label,
     Menu
 } from '../../src/index';
+import {Svg} from "../../src/components/Svg";
 
 class Window extends React.Component {
     constructor(props) {
@@ -90,10 +91,21 @@ class Window extends React.Component {
                     console.log("close");
                 }});
         }
+        this.testSvg()
     }
 
     componentWillUnmount() {
         document.oncontextmenu=null;
+    }
+
+    testSvg() {
+        const svg = Svg()
+            .attr('x','0')
+            .attr('y','0')
+            .attr('width','200px')
+            .attr('height','200px')
+        let circle = svg.add('circle')
+        svg.attachTo('#svg_con')
     }
 
     render() {
@@ -106,13 +118,16 @@ class Window extends React.Component {
                         this.props.history.replace('/',this.state);
                     }}>回到首页</Button>
                 </Container>
-                <Card className='mt-2 h-100' header='Window Test'>
+                <Card className='mt-2 h-100 mb-2' header='Window Test'>
                     <Label text='Clake Lee'/>
                     <Button onClick={(e)=>{
                         this.mainMenu.show({evt:e,type:'dom-left',data:'',close:()=>{
                                 console.log("close dom-left");
                             }});
                     }}>点击打开菜单</Button>
+                </Card>
+                <Card header='SVG 测试'>
+                    <div id='svg_con'></div>
                 </Card>
                 <Menu ref={c=>this.mainMenu=c} onClick={(key)=>{
                     console.log(key);

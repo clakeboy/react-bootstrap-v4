@@ -77,13 +77,14 @@ gulp.task('publish:css',()=>{
 });
 
 gulp.task('publish:pack',()=>{
-    return gulp.src('src/**/*.js')
-        // .pipe(sourcemaps.init())
+    return gulp.src(['src/**/*.js','src/**/*.tsx'])
+        .pipe(sourcemaps.init())
         .pipe(plumber())
         .pipe(babel({
             "presets": [
                 "@babel/preset-env",
-                "@babel/preset-react"
+                "@babel/preset-react",
+                "@babel/preset-typescript"
             ],
             "plugins": [
                 "@babel/plugin-proposal-object-rest-spread",
@@ -99,7 +100,7 @@ gulp.task('publish:pack',()=>{
             ]
         }))
         .pipe(header(banner))
-        // .pipe(sourcemaps.write('.'))
+        .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('lib'))
         // .pipe(through2.obj((chunk, enc, callback)=>{
         //     // for (let k in chunk) {

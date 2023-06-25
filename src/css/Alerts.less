@@ -1,3 +1,27 @@
 .ck-alerts-main {
-
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 50px;
+  text-align: center;
+  visibility: hidden;
+  transition: visibility 150ms linear,opacity 150ms linear;
+  .main {
+    text-align: left;
+    margin: 0 auto;
+    display: inline-block;
+    position: relative;
+    padding: .5rem 1rem;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+    font-size: .85rem;
+    transition: opacity 150ms linear,transform 150ms linear;
+    opacity: 0;
+    transform: translateY(-40px);
+    cursor: pointer;
+  }
+  .show {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

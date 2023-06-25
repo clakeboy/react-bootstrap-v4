@@ -4,8 +4,10 @@ export class SvgEl {
      * @type SVGElement
      */
     el = null;
-    constructor(el_name,selector) {
-        if (selector) {
+    constructor(el_name,selector,elm) {
+        if (elm) {
+            this.el = elm
+        } else if (selector) {
             this.el = document.querySelector(selector)
         } else {
             this.el = document.createElementNS('http://www.w3.org/2000/svg',el_name??'svg')
@@ -35,4 +37,8 @@ export function Svg() {
 
 export function SvgSelector(selector) {
     return new SvgEl(null,selector)
+}
+
+export function SvgElm(elm) {
+    return new SvgEl(null,null,elm)
 }

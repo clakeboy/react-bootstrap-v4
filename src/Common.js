@@ -17,7 +17,6 @@ export var extend = (org,exd) => {
  * @param str_length
  * @param tab
  * @returns {string}
- * @constructor
  */
 export var RandomString = (str_length,tab="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz") => {
     let num,out_str="";
@@ -91,7 +90,6 @@ export var LoadScript = {
  * get html dom element position
  * @param e
  * @returns {{}}
- * @constructor
  */
 export var GetDomXY = (e,parent) => {
     let t = {
@@ -122,7 +120,6 @@ export var GetDomXY = (e,parent) => {
 /**
  * get current screen DPI size
  * @returns {Array}
- * @constructor
  */
 export var GetDPI = () => {
     let arrDPI = [];
@@ -146,7 +143,6 @@ export var GetDPI = () => {
  * @param needle
  * @param haystack
  * @returns {boolean}
- * @constructor
  */
 export var InArray = (needle,haystack) => {
     if(typeof needle === 'string' || typeof needle === 'number') {

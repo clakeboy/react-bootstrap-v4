@@ -105,11 +105,22 @@ class CCheckbox extends React.Component {
         if (typeof this.props.onChange === 'function') {
             this.props.onChange(chk, e)
         }
-    };
+    }
+
+    keyUpHandler = (e)=>{
+        console.log(e)
+        if (this.props.disabled) return;
+        if (e.key !== 'Enter' && e.key !== ' ') return
+        let chk = !this.state.checked;
+        this.setState({checked: chk, half: false});
+        if (typeof this.props.onChange === 'function') {
+            this.props.onChange(chk, e)
+        }
+    }
 
     render() {
         return (
-            <div {...this.props} className={this.getClasses()} style={this.getStyles()} onClick={this.changeHandler}>
+            <div {...this.props} className={this.getClasses()} style={this.getStyles()} onKeyUp={this.keyUpHandler} onClick={this.changeHandler}>
                 <Icon ref={c => this.icon = c} className='ck-check-icon' icon={this.getCheckedIcon('icon')}
                       iconType={this.getCheckedIcon('type')}/>
                 {this.props.label === '' ? null : <span className="ck-check-label">{this.props.label}</span>}
@@ -137,6 +148,7 @@ CCheckbox.defaultProps = {
     disabled: false,
     inline  : false,
     half:     false,
+    tabIndex: '0'
 };
 
 export default CCheckbox;

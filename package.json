@@ -1,6 +1,6 @@
 {
   "name": "@clake/react-bootstrap4",
-  "version": "1.9.19",
+  "version": "1.10.1",
   "description": "react bootstrap v4",
   "main": "lib/index.js",
   "unpkg": "./dist/react-bootstrap-v4.js",
@@ -8,6 +8,7 @@
     "./dist",
     "./lib"
   ],
+  "types": "./lib/types",
   "scripts": {
     "test": "test",
     "lint": "eslint --ext .ts --ext .tsx src/",
@@ -17,7 +18,8 @@
     "build": "NODE_ENV=production gulp build",
     "build-win": "set NODE_ENV=production&gulp build",
     "build-publish": "gulp build-publish",
-    "publish-package": "gulp publish"
+    "publish-package": "gulp publish",
+    "build:types": "tsc -d --declarationDir lib/types --declarationMap --emitDeclarationOnly"
   },
   "repository": {
     "type": "git",
@@ -50,6 +52,7 @@
     "@types/classnames": "^2.3.1",
     "@types/prop-types": "^15.7.5",
     "@types/react": "^18.0.9",
+    "@types/react-dom": "^18.2.6",
     "@typescript-eslint/eslint-plugin": "^5.25.0",
     "@typescript-eslint/parser": "^5.25.0",
     "babel-loader": "^8.0.5",

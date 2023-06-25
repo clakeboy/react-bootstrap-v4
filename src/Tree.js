@@ -5,6 +5,7 @@ import Icon from './Icon';
 import CCheckbox from "./CCheckbox";
 import './css/Tree.less';
 import common from "./Common";
+import {SvgElm} from "./components/Svg";
 
 class Tree extends React.PureComponent {
     constructor(props) {
@@ -21,6 +22,8 @@ class Tree extends React.PureComponent {
         this.checkSelectList = {};
         //check parent list
         this.checkItems = {};
+        //this svg list
+        this.svgList = [];
     }
 
     componentDidMount() {
@@ -129,6 +132,7 @@ class Tree extends React.PureComponent {
                 parent.dataset.show = '1';
                 parent.classList.remove('d-none');
                 parent.previousElementSibling.querySelector('i').classList.add('ck-tree-icon-down');
+                this.drawLines(parent.querySelector('.ck-tree-svg'))
             } else {
                 parent.dataset.show = '0';
                 parent.classList.add('d-none');
@@ -149,6 +153,29 @@ class Tree extends React.PureComponent {
         let base = 'ck-tree';
 
         return classNames(base,this.props.className);
+    }
+
+    drawLines(item) {
+        if (item.dataset?.done === 'true') return
+        let path = "M 4 0 ",x=3,y=0;
+        let numChild = parseInt(item.dataset.length)
+        console.log(item.clientHeight,item.clientWidth)
+        let itemHeight = (item.clientHeight / numChild)
+        let itemHalf = (itemHeight/2)
+        for (let i = 0;i<numChild;i++) {
+            y += (itemHeight*i)
+            if (i+1 === numChild) {
+                path += `v ${itemHalf.toFixed(2)} h 17`
+            } else {
+                path += `v ${itemHalf.toFixed(2)} h 17 m -17 0 v ${itemHalf.toFixed(2)} `
+            }
+        }
+        // path += 'Z'
+        let svg = SvgElm(item)
+        svg.add('path')
+            .attr('class','path-line')
+            .attr('d',path)
+        item.dataset.done = 'true'
     }
 
     renderItem(list,parent,level,parent_key) {
@@ -188,12 +215,18 @@ class Tree extends React.PureComponent {
                         </span>
                     </div>
                     {val.children?<div id={this.domId+'-'+id} className={'ck-tree-children'+(val.show?'':' d-none')} data-show={val.show?'1':'0'} ref={c=>this.parents[id]=c}>
-                        <svg className='ck-tree-svg'/>
+                        {this.renderSvg(val.children)}
                         {this.renderItem(val.children,val,level+1,id)}
                     </div>:null}
                 </div>
             )
         });
+    }
+
+    renderSvg(children) {
+        return <svg className='ck-tree-svg' data-length={children.length}>
+            {/*<path d={`M3 3 V ${line_height} z`} className='path-line'/>*/}
+        </svg>
     }
 
     render() {

@@ -8,17 +8,9 @@ import ReactBootstrap4,{
     InputGroup,
     Button,
     Card,
-    CCheckbox,
-    Checkbox,
-    Table,
-    Pagination,
-    Dropdown,
-    Select,
-    Calendar,
-    TextArea,
-    Switch,
     Label,
-    Menu
+    Menu,
+    Alerts
 } from '../../src/index';
 import {Svg} from "../../src/components/Svg";
 
@@ -135,6 +127,12 @@ class Window extends React.Component {
                     <Menu.Item field="copy" onClick={()=>{
                         console.log(document.execCommand("copy"))
                     }}>Copy</Menu.Item>
+                    <Menu.Item field="alerts" onClick={()=>{
+                        this.alert.show('这是测试');
+                    }}>Test Alerts</Menu.Item>
+                    <Menu.Item field="alerts-load" onClick={()=>{
+                        this.alert.loading('这是测试');
+                    }}>Test Alerts loading</Menu.Item>
                     <Menu.Item step/>
                     <Menu.Item field="asc">Asc</Menu.Item>
                     <Menu.Item field="desc" onClick={(key)=>{
@@ -170,6 +168,7 @@ class Window extends React.Component {
                         <Menu.Item>Child Menu 3</Menu.Item>
                     </Menu.Item>
                 </Menu>
+                <Alerts ref={c=>this.alert=c}/>
             </Container>
         );
     }

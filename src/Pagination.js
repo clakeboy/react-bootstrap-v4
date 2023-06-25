@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import Icon from './Icon';
 import CDropdown from "./CDropdown";
-import {Input} from "./index";
-import Select from "./Select";
 
 class Pagination extends React.PureComponent {
     constructor(props) {

@@ -18,8 +18,8 @@
     "start-win": "set NODE_ENV=development&gulp",
     "build": "NODE_ENV=production gulp build",
     "build-win": "set NODE_ENV=production&gulp build",
-    "build-publish": "gulp build-publish",
-    "publish-package": "gulp publish && tsc -d --declarationDir lib/types --declarationMap --emitDeclarationOnly",
+    "build-publish": "gulp build-publish && tsc -d --declarationDir lib/types --declarationMap --emitDeclarationOnly",
+    "publish-package": "gulp publish",
     "build:types": "tsc -d --declarationDir lib/types --declarationMap --emitDeclarationOnly"
   },
   "repository": {

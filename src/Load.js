@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import './css/Load.less';
 
-class Load extends React.Component {
+export class Load extends React.Component {
     constructor(props) {
         super(props);
     }

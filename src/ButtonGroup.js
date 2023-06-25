@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 
-class ButtonGroup extends React.PureComponent {
+export class ButtonGroup extends React.PureComponent {
     constructor(props) {
         super(props);
     }

@@ -7,7 +7,7 @@ import './css/Tree.less';
 import common from "./Common";
 import {SvgElm} from "./components/Svg";
 
-class Tree extends React.PureComponent {
+export class Tree extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {

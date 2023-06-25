@@ -12,7 +12,7 @@ import ComboBox from "./ComboBox";
 import CalendarRange from "./CalendarRange";
 import RadioGroup from "./RadioGroup";
 
-class Form extends React.PureComponent {
+export class Form extends React.PureComponent {
     constructor(props) {
         super(props);
         this.vals = {};

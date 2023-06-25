@@ -9,7 +9,7 @@ interface State {
     val: string
 }
 
-class Row extends React.Component<Props, State> {
+export class Row extends React.Component<Props, State> {
 
     public static defaultProps:any = {
         noGutters: false

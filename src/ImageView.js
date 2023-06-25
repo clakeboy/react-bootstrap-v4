@@ -6,7 +6,7 @@ import './css/ImageView.less';
 import common from "./Common";
 import RImage from "./RImage";
 
-class ImageView extends React.Component {
+export class ImageView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {

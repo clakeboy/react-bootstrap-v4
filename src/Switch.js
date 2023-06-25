@@ -5,7 +5,7 @@ import classNames from 'classnames/bind';
 import './css/Switch.less'
 import common from "./Common";
 
-class Switch extends React.PureComponent {
+export class Switch extends React.PureComponent {
     constructor(props) {
         super(props);
         this.checked = this.props.checked;

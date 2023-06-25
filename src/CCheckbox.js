@@ -6,7 +6,7 @@ import common from "./Common";
 import Icon from "./Icon";
 import './css/CCheck.less';
 
-class CCheckbox extends React.Component {
+export class CCheckbox extends React.Component {
     constructor(props) {
         super(props);
 

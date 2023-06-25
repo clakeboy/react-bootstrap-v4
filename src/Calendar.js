@@ -72,7 +72,7 @@ const i18n = {
     }
 };
 
-class Calendar extends React.PureComponent {
+export class Calendar extends React.PureComponent {
     constructor(props) {
         super(props);
 

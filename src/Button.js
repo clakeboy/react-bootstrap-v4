@@ -5,7 +5,7 @@ import Icon from './Icon';
 import './css/Button.less';
 import common from "./Common";
 
-class Button extends React.PureComponent {
+export class Button extends React.PureComponent {
     constructor(props) {
         super(props);
         this.domId = 'btn-'+common.RandomString(16);

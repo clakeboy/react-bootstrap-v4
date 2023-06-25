@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Input from "./Input";
 
 
-class ComboBox extends React.Component {
+export class ComboBox extends React.Component {
     constructor(props) {
         super(props);
     }

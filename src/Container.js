@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 
-class Container extends React.Component {
+export class Container extends React.Component {
     constructor(props) {
         super(props);
         this.state = {

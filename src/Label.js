@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import './css/Label.less';
 
-class Label extends React.PureComponent {
+export class Label extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {

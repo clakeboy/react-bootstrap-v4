@@ -7,7 +7,7 @@ import ButtonGroup from "./ButtonGroup";
 import Button from "./Button";
 import Dropdown from "./Dropdown";
 import Drag from './components/Drag';
-class TextArea extends React.Component {
+export class TextArea extends React.Component {
     constructor(props) {
         super(props);
         this.state = {

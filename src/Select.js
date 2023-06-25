@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import common from "./Common";
 
-class Select extends React.PureComponent {
+export class Select extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {

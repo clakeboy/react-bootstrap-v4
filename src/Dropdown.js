@@ -5,7 +5,7 @@ import common from './Common';
 import Button from "./Button";
 import CDropdown from "./CDropdown";
 
-class Dropdown extends React.PureComponent {
+export class Dropdown extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {

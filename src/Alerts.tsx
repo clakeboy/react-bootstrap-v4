@@ -30,7 +30,7 @@ interface ShowOptions {
     isClose?: boolean
 }
 
-class Alerts extends React.Component<Props, State> {
+export class Alerts extends React.Component<Props, State> {
 
     timeout: number
 

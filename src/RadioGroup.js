@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Radio from './Radio';
 import {RandomString} from "./Common";
 
-class RadioGroup extends React.Component {
+export class RadioGroup extends React.Component {
     constructor(props) {
         super(props);
         this.state = {

@@ -4,7 +4,7 @@ import classNames from 'classnames/bind';
 import './css/Image.less';
 import Icon from './Icon';
 
-class RImage extends React.Component {
+export class RImage extends React.Component {
     constructor(props) {
         super(props);
         let is_load,src=null;

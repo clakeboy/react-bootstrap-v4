@@ -5,7 +5,7 @@ import './css/Complex.less'
 import Icon from './Icon';
 import Combo from "./Combo";
 
-class Complex extends React.Component {
+export class Complex extends React.Component {
     constructor(props) {
         super(props);
         this.state = {

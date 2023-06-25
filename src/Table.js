@@ -14,7 +14,7 @@ import Scroll from "./Scroll";
 import HScroll from "./HScroll";
 import Menu from "./Menu";
 
-class Table extends React.Component {
+export class Table extends React.Component {
     constructor(props) {
         super(props);
 

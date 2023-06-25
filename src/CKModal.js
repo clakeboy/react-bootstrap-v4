@@ -19,7 +19,7 @@ const defBtns = {
     cancel:'取消',
 };
 
-class CKModal extends React.Component {
+export class CKModal extends React.Component {
     constructor(props) {
         super(props);
         this.state = {

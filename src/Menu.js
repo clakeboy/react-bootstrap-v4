@@ -7,7 +7,7 @@ import Icon from './Icon';
 import './css/Menu.less';
 import common from "./Common";
 
-class Menu extends React.PureComponent {
+export class Menu extends React.PureComponent {
     constructor(props) {
         super(props);
         this.childMenus = [];

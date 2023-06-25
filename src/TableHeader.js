@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-class TableHeader extends React.PureComponent {
+export class TableHeader extends React.PureComponent {
     constructor(props) {
         super(props);
     }

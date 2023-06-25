@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Input from "./Input";
 
-class CDropdown extends React.Component {
+export class CDropdown extends React.Component {
     constructor(props) {
         super(props);
 

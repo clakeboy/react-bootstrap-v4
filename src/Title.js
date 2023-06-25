@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import './css/Title.less';
 
-class Title extends React.PureComponent {
+export class Title extends React.PureComponent {
     constructor(props) {
         super(props);
     }

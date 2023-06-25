@@ -5,7 +5,7 @@ import classNames from 'classnames/bind';
 import {GetDomXY} from "./Common";
 import './css/Scroll.less';
 
-class Scroll extends React.PureComponent {
+export class Scroll extends React.PureComponent {
     constructor(props) {
         super(props);
         this.parent = this.props.parent || null;

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 
-class Box extends React.PureComponent {
+export class Box extends React.PureComponent {
     constructor(props) {
         super(props);
     }
@@ -74,4 +74,4 @@ Box.propTypes = {
 
 Box.defaultProps = {};
 
-export default Box;
+// export default Box;

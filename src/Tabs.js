@@ -5,7 +5,7 @@ import common from "./Common";
 import './css/Tabs.less';
 import Icon from "./Icon";
 
-class Tabs extends React.PureComponent {
+export class Tabs extends React.PureComponent {
     constructor(props) {
         super(props);
 

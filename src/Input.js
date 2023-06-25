@@ -12,7 +12,7 @@ const stopEvent  = function (e) {
     e.stopPropagation();
 };
 
-class Input extends React.Component {
+export class Input extends React.Component {
     constructor(props) {
         super(props);
         this.state = {

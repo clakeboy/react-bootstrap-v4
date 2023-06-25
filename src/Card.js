@@ -7,7 +7,7 @@ import Scroll from "./Scroll";
 import common from "./Common";
 import HScroll from "./HScroll";
 
-class Card extends React.PureComponent {
+export class Card extends React.PureComponent {
     constructor(props) {
         super(props);
 

@@ -12,7 +12,7 @@ const stopEvent  = function (e) {
     e.stopPropagation();
 };
 
-class CalendarRange extends React.PureComponent {
+export class CalendarRange extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {

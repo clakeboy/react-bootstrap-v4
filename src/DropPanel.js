@@ -6,7 +6,7 @@ import './css/DropPanel.less';
 import './css/TriangleTarget.less';
 import common from "./Common";
 
-class DropPanel extends React.Component {
+export class DropPanel extends React.Component {
     constructor(props) {
         super(props);
     }

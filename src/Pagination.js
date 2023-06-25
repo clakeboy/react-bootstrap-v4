@@ -4,7 +4,7 @@ import classNames from 'classnames/bind';
 import Icon from './Icon';
 import CDropdown from "./CDropdown";
 
-class Pagination extends React.PureComponent {
+export class Pagination extends React.PureComponent {
     constructor(props) {
         super(props);
 

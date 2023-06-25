@@ -4,7 +4,7 @@ import classNames from 'classnames/bind';
 import ReactDOM from "react-dom";
 import {GetDomXY,hasScrolledParent} from "./Common";
 
-class HScroll extends React.PureComponent {
+export class HScroll extends React.PureComponent {
     constructor(props) {
         super(props);
         this.parent = this.props.parent || null;

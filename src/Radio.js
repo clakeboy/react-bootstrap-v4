@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import common from "./Common";
 
-class Radio extends React.Component {
+export class Radio extends React.Component {
     constructor(props) {
         super(props);
         this.state = {

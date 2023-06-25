@@ -9,7 +9,7 @@ import "./css/Combo.less";
 import Load from "./Load";
 import common from "./Common";
 
-class Combo extends React.Component {
+export class Combo extends React.Component {
     constructor(props) {
         super(props);
         this.isRemote = !!this.props.onSearch;

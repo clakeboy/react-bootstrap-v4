@@ -4,6 +4,18 @@ import classNames from 'classnames/bind';
 import './css/Label.less';
 
 export class Label extends React.PureComponent {
+    static propTypes = {
+        text     : PropTypes.string,
+        absolute : PropTypes.bool,
+        x        : PropTypes.string,
+        y        : PropTypes.string,
+        width    : PropTypes.string,
+        height   : PropTypes.string,
+        color    : PropTypes.string,
+        backColor: PropTypes.string,
+        sm       : PropTypes.bool,
+        align: PropTypes.string
+    };
     constructor(props) {
         super(props);
         this.state = {
@@ -72,22 +84,5 @@ export class Label extends React.PureComponent {
         );
     }
 }
-
-Label.propTypes = {
-    text     : PropTypes.string,
-    absolute : PropTypes.bool,
-    x        : PropTypes.string,
-    y        : PropTypes.string,
-    width    : PropTypes.string,
-    height   : PropTypes.string,
-    color    : PropTypes.string,
-    backColor: PropTypes.string,
-    sm       : PropTypes.bool,
-    align: PropTypes.string
-};
-
-Label.defaultProps = {
-
-};
 
 export default Label;

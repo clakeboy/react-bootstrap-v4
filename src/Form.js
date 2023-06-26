@@ -13,6 +13,9 @@ import CalendarRange from "./CalendarRange";
 import RadioGroup from "./RadioGroup";
 
 export class Form extends React.PureComponent {
+    static propTypes = {
+        onChange: PropTypes.func,
+    };
     constructor(props) {
         super(props);
         this.vals = {};
@@ -275,13 +278,5 @@ export class Form extends React.PureComponent {
         );
     }
 }
-
-Form.propTypes = {
-    onChange: PropTypes.func,
-};
-
-Form.defaultProps = {
-
-};
 
 export default Form;

@@ -3,6 +3,22 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 
 export class InputGroup extends React.PureComponent {
+    static propTypes = {
+        label      : PropTypes.string,
+        data       : PropTypes.any,
+        size       : PropTypes.string,
+        summary    : PropTypes.string,
+        placeholder: PropTypes.string,
+        width: PropTypes.number,
+        disabled: PropTypes.bool,
+    };
+    static defaultProps = {
+        label      : "",
+        data       : null,
+        size       : "",
+        summary    : '',
+        disabled:false
+    };
     constructor(props) {
         super(props);
         this.state = {
@@ -105,23 +121,5 @@ export class InputGroup extends React.PureComponent {
         )
     }
 }
-
-InputGroup.propTypes = {
-    label      : PropTypes.string,
-    data       : PropTypes.any,
-    size       : PropTypes.string,
-    summary    : PropTypes.string,
-    placeholder: PropTypes.string,
-    width: PropTypes.number,
-    disabled: PropTypes.bool,
-};
-
-InputGroup.defaultProps = {
-    label      : "",
-    data       : null,
-    size       : "",
-    summary    : '',
-    disabled:false
-};
 
 export default InputGroup;

@@ -13,6 +13,47 @@ const stopEvent  = function (e) {
 };
 
 export class Input extends React.Component {
+    static propTypes = {
+        id            : PropTypes.string,
+        size          : PropTypes.oneOf(['df', 'sm', 'lg', 'xs']),
+        label         : PropTypes.string,
+        data          : PropTypes.any,
+        summary       : PropTypes.string,
+        readOnly      : PropTypes.bool,
+        width         : PropTypes.string,
+        height        : PropTypes.string,
+        placeholder   : PropTypes.string,
+        calendar      : PropTypes.object,
+        onChange      : PropTypes.func,
+        onEnter       : PropTypes.func,
+        onDblClick    : PropTypes.func,
+        plaintext     : PropTypes.bool,
+        calendarFormat: PropTypes.string,
+        calendarTime  : PropTypes.bool,
+        validate      : PropTypes.object,  //{text:'',rule:/asdf/}
+        disabled      : PropTypes.bool,
+        combo         : PropTypes.object,
+        comboData     : PropTypes.object,
+        absolute      : PropTypes.bool,
+        x             : PropTypes.string,
+        y             : PropTypes.string,
+        align         : PropTypes.string,
+        textClass     : PropTypes.string,
+        textStyle     : PropTypes.object,
+        labelClass    : PropTypes.string,
+        disableClear  : PropTypes.bool,
+        multi         : PropTypes.object, //多行文本输入
+    };
+    static defaultProps = {
+        id      : '',
+        size    : 'df',
+        label   : '',
+        data    : null,
+        summary : '',
+        readOnly: false,
+        disabled: false,
+        disableClear: false,
+    };
     constructor(props) {
         super(props);
         this.state = {
@@ -524,48 +565,5 @@ export class Input extends React.Component {
         );
     }
 }
-
-Input.propTypes = {
-    id            : PropTypes.string,
-    size          : PropTypes.oneOf(['df', 'sm', 'lg', 'xs']),
-    label         : PropTypes.string,
-    data          : PropTypes.any,
-    summary       : PropTypes.string,
-    readOnly      : PropTypes.bool,
-    width         : PropTypes.string,
-    height        : PropTypes.string,
-    placeholder   : PropTypes.string,
-    calendar      : PropTypes.object,
-    onChange      : PropTypes.func,
-    onEnter       : PropTypes.func,
-    onDblClick    : PropTypes.func,
-    plaintext     : PropTypes.bool,
-    calendarFormat: PropTypes.string,
-    calendarTime  : PropTypes.bool,
-    validate      : PropTypes.object,  //{text:'',rule:/asdf/}
-    disabled      : PropTypes.bool,
-    combo         : PropTypes.object,
-    comboData     : PropTypes.object,
-    absolute      : PropTypes.bool,
-    x             : PropTypes.string,
-    y             : PropTypes.string,
-    align         : PropTypes.string,
-    textClass     : PropTypes.string,
-    textStyle     : PropTypes.object,
-    labelClass    : PropTypes.string,
-    disableClear  : PropTypes.bool,
-    multi         : PropTypes.object, //多行文本输入
-};
-
-Input.defaultProps = {
-    id      : '',
-    size    : 'df',
-    label   : '',
-    data    : null,
-    summary : '',
-    readOnly: false,
-    disabled: false,
-    disableClear: false,
-};
 
 export default Input;

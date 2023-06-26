@@ -3,6 +3,14 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 
 export class Container extends React.Component {
+    static propTypes = {
+        fluid : PropTypes.bool,
+        inline: PropTypes.bool,
+    };
+    static defaultProps = {
+        fluid : false,
+        inline: false,
+    };
     constructor(props) {
         super(props);
         this.state = {
@@ -36,15 +44,5 @@ export class Container extends React.Component {
         )
     }
 }
-
-Container.propTypes = {
-    fluid : PropTypes.bool,
-    inline: PropTypes.bool,
-};
-
-Container.defaultProps = {
-    fluid : false,
-    inline: false,
-};
 
 export default Container;

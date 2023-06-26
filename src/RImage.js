@@ -5,6 +5,19 @@ import './css/Image.less';
 import Icon from './Icon';
 
 export class RImage extends React.Component {
+    static propTypes = {
+        src: PropTypes.any,
+        height: PropTypes.string,
+        width: PropTypes.string,
+        border: PropTypes.bool,
+        circle: PropTypes.bool,
+        onClick: PropTypes.func,
+        display: PropTypes.oneOf(['center','full'])
+    };
+
+    static defaultProps = {
+        display:'center'
+    };
     constructor(props) {
         super(props);
         let is_load,src=null;
@@ -135,19 +148,5 @@ export class RImage extends React.Component {
         );
     }
 }
-
-RImage.propTypes = {
-    src: PropTypes.any,
-    height: PropTypes.string,
-    width: PropTypes.string,
-    border: PropTypes.bool,
-    circle: PropTypes.bool,
-    onClick: PropTypes.func,
-    display: PropTypes.oneOf(['center','full'])
-};
-
-RImage.defaultProps = {
-    display:'center'
-};
 
 export default RImage;

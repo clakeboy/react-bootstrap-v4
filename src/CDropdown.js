@@ -2,7 +2,33 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Input from "./Input";
 
+export class CDropdownValue extends React.Component {
+    static propTypes = {
+        text: PropTypes.string,
+        value: PropTypes.string,
+        active: PropTypes.bool
+    };
+}
+
 export class CDropdown extends React.Component {
+    static Value = CDropdownValue
+    static propTypes = {
+        data: PropTypes.array,
+        text: PropTypes.string,
+        label: PropTypes.string,
+        value: PropTypes.string,
+        onChange: PropTypes.func,
+        showRows: PropTypes.number,
+        size: PropTypes.string,
+        dropWidth: PropTypes.string,
+        width: PropTypes.string,
+    };
+    static defaultProps = {
+        data: '',
+        text: '',
+        showRows: 5,
+        dropWidth: '100%',
+    };
     constructor(props) {
         super(props);
 
@@ -45,33 +71,5 @@ export class CDropdown extends React.Component {
         );
     }
 }
-
-CDropdown.propTypes = {
-    data: PropTypes.array,
-    text: PropTypes.string,
-    label: PropTypes.string,
-    value: PropTypes.string,
-    onChange: PropTypes.func,
-    showRows: PropTypes.number,
-    size: PropTypes.string,
-    dropWidth: PropTypes.string,
-    width: PropTypes.string,
-};
-
-CDropdown.defaultProps = {
-    data: '',
-    text: '',
-    showRows: 5,
-    dropWidth: '100%',
-};
-
-class CDropdownValue extends React.Component {}
-CDropdownValue.propTypes = {
-    text: PropTypes.string,
-    value: PropTypes.string,
-    active: PropTypes.bool
-};
-
-CDropdown.Value = CDropdownValue;
 
 export default CDropdown;

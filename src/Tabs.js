@@ -6,6 +6,29 @@ import './css/Tabs.less';
 import Icon from "./Icon";
 
 export class Tabs extends React.PureComponent {
+    static propTypes = {
+        pills   : PropTypes.bool,
+        border  : PropTypes.bool,
+        content : PropTypes.bool,
+        onSelect: PropTypes.func,
+        absolute: PropTypes.bool,
+        x       : PropTypes.string,
+        y       : PropTypes.string,
+        width   : PropTypes.string,
+        height  : PropTypes.string,
+        sm      : PropTypes.bool,
+        showTab : PropTypes.string,
+        position: PropTypes.object,
+        disabled: PropTypes.bool,
+        onClose: PropTypes.func
+    };
+
+    static defaultProps = {
+        border  : true,
+        content : true,
+        showTab : '',
+        disabled: false
+    };
     constructor(props) {
         super(props);
 
@@ -200,28 +223,5 @@ export class Tabs extends React.PureComponent {
     }
 }
 
-Tabs.propTypes = {
-    pills   : PropTypes.bool,
-    border  : PropTypes.bool,
-    content : PropTypes.bool,
-    onSelect: PropTypes.func,
-    absolute: PropTypes.bool,
-    x       : PropTypes.string,
-    y       : PropTypes.string,
-    width   : PropTypes.string,
-    height  : PropTypes.string,
-    sm      : PropTypes.bool,
-    showTab : PropTypes.string,
-    position: PropTypes.object,
-    disabled: PropTypes.bool,
-    onClose: PropTypes.func
-};
-
-Tabs.defaultProps = {
-    border  : true,
-    content : true,
-    showTab : '',
-    disabled: false
-};
 
 export default Tabs;

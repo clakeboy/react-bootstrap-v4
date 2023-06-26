@@ -4,6 +4,12 @@ import Radio from './Radio';
 import {RandomString} from "./Common";
 
 export class RadioGroup extends React.Component {
+    static propTypes = {
+        onChange: PropTypes.func,
+        data : PropTypes.any,
+        disabled: PropTypes.bool,
+        name: PropTypes.string,
+    };
     constructor(props) {
         super(props);
         this.state = {
@@ -51,15 +57,5 @@ export class RadioGroup extends React.Component {
         );
     }
 }
-
-RadioGroup.propTypes = {
-    onChange: PropTypes.func,
-    data : PropTypes.any,
-    disabled: PropTypes.bool,
-    name: PropTypes.string,
-};
-
-RadioGroup.defaultProps = {
-};
 
 export default RadioGroup;

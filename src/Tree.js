@@ -8,6 +8,15 @@ import common from "./Common";
 import {SvgElm} from "./components/Svg";
 
 export class Tree extends React.PureComponent {
+    static propTypes = {
+        data: PropTypes.object,
+        onClick: PropTypes.func,
+        onDbClick: PropTypes.func,
+        onMenu: PropTypes.func,
+        showSelected: PropTypes.bool,
+        check: PropTypes.bool,
+        onSelect: PropTypes.func,
+    };
     constructor(props) {
         super(props);
         this.state = {
@@ -237,19 +246,5 @@ export class Tree extends React.PureComponent {
         );
     }
 }
-
-Tree.propTypes = {
-    data: PropTypes.object,
-    onClick: PropTypes.func,
-    onDbClick: PropTypes.func,
-    onMenu: PropTypes.func,
-    showSelected: PropTypes.bool,
-    check: PropTypes.bool,
-    onSelect: PropTypes.func,
-};
-
-Tree.defaultProps = {
-
-};
 
 export default Tree;

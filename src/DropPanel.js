@@ -7,6 +7,19 @@ import './css/TriangleTarget.less';
 import common from "./Common";
 
 export class DropPanel extends React.Component {
+    static propTypes = {
+        border: PropTypes.bool,
+        borderTheme: PropTypes.string,
+        round: PropTypes.bool,
+        shadow: PropTypes.bool,
+        selector: PropTypes.string,
+        position: PropTypes.string,
+    };
+    static defaultProps = {
+        border: true,
+        round: true,
+        shadow: true,
+    };
     constructor(props) {
         super(props);
     }
@@ -107,20 +120,5 @@ export class DropPanel extends React.Component {
         );
     }
 }
-
-DropPanel.propTypes = {
-    border: PropTypes.bool,
-    borderTheme: PropTypes.string,
-    round: PropTypes.bool,
-    shadow: PropTypes.bool,
-    selector: PropTypes.string,
-    position: PropTypes.string,
-};
-
-DropPanel.defaultProps = {
-    border: true,
-    round: true,
-    shadow: true,
-};
 
 export default DropPanel;

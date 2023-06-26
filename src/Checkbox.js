@@ -4,6 +4,21 @@ import classNames from 'classnames/bind';
 import common from "./Common";
 
 export class Checkbox extends React.PureComponent {
+    static propTypes = {
+        id      : PropTypes.string,
+        label   : PropTypes.string,
+        inline  : PropTypes.bool,
+        data    : PropTypes.any,
+        checked : PropTypes.bool,
+        onChange: PropTypes.func,
+        absolute: PropTypes.bool,
+        x       : PropTypes.string,
+        y       : PropTypes.string
+    };
+    static defaultProps = {
+        inline: false,
+        label : '',
+    };
     constructor(props) {
         super(props);
 
@@ -103,22 +118,5 @@ export class Checkbox extends React.PureComponent {
         );
     }
 }
-
-Checkbox.propTypes = {
-    id      : PropTypes.string,
-    label   : PropTypes.string,
-    inline  : PropTypes.bool,
-    data    : PropTypes.any,
-    checked : PropTypes.bool,
-    onChange: PropTypes.func,
-    absolute: PropTypes.bool,
-    x       : PropTypes.string,
-    y       : PropTypes.string
-};
-
-Checkbox.defaultProps = {
-    inline: false,
-    label : '',
-};
 
 export default Checkbox;

@@ -6,6 +6,21 @@ import './css/Switch.less'
 import common from "./Common";
 
 export class Switch extends React.PureComponent {
+    static propTypes = {
+        theme: PropTypes.oneOf(['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark']),
+        checked: PropTypes.bool,
+        size: PropTypes.oneOf(['sm','lg']),
+        disabled: PropTypes.bool,
+        onChange: PropTypes.func,
+        absolute   : PropTypes.bool,
+        x          : PropTypes.string,
+        y          : PropTypes.string
+    };
+
+    static defaultProps = {
+        theme: 'primary',
+        checked: false
+    };
     constructor(props) {
         super(props);
         this.checked = this.props.checked;
@@ -121,21 +136,5 @@ export class Switch extends React.PureComponent {
         );
     }
 }
-
-Switch.propTypes = {
-    theme: PropTypes.oneOf(['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark']),
-    checked: PropTypes.bool,
-    size: PropTypes.oneOf(['sm','lg']),
-    disabled: PropTypes.bool,
-    onChange: PropTypes.func,
-    absolute   : PropTypes.bool,
-    x          : PropTypes.string,
-    y          : PropTypes.string
-};
-
-Switch.defaultProps = {
-    theme: 'primary',
-    checked: false
-};
 
 export default Switch;

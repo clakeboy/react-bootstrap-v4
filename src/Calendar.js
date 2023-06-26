@@ -73,6 +73,24 @@ const i18n = {
 };
 
 export class Calendar extends React.PureComponent {
+    static propTypes = {
+        none    : PropTypes.bool,
+        shadow  : PropTypes.bool,
+        value   : PropTypes.string,
+        lang    : PropTypes.string,
+        absolute: PropTypes.bool,
+        onSelect: PropTypes.func,
+        triangular: PropTypes.oneOf(['up','left','bottom','right']),
+        format:   PropTypes.string,
+        sm: PropTypes.bool,
+        timeBar: PropTypes.bool,
+        target: PropTypes.element,
+    }
+    static defaultProps = {
+        lang: 'zh',
+        format: 'YYYY-MM-DD'//unix,
+    }
+
     constructor(props) {
         super(props);
 
@@ -677,24 +695,5 @@ export class Calendar extends React.PureComponent {
         }
     }
 }
-
-Calendar.propTypes = {
-    none    : PropTypes.bool,
-    shadow  : PropTypes.bool,
-    value   : PropTypes.string,
-    lang    : PropTypes.string,
-    absolute: PropTypes.bool,
-    onSelect: PropTypes.func,
-    triangular: PropTypes.oneOf(['up','left','bottom','right']),
-    format:   PropTypes.string,
-    sm: PropTypes.bool,
-    timeBar: PropTypes.bool,
-    target: PropTypes.element,
-};
-
-Calendar.defaultProps = {
-    lang: 'zh',
-    format: 'YYYY-MM-DD'//unix,
-};
 
 export default Calendar;

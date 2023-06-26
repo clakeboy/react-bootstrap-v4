@@ -5,6 +5,19 @@ import ReactDOM from "react-dom";
 import {GetDomXY,hasScrolledParent} from "./Common";
 
 export class HScroll extends React.PureComponent {
+    static propTypes = {
+        parent: PropTypes.any,
+        selector: PropTypes.string,
+        showSelector: PropTypes.string,
+        speed: PropTypes.number,
+        align: PropTypes.oneOf(['top','bottom']),
+        alignParent: PropTypes.bool,
+    };
+    static defaultProps = {
+        speed: 5,
+        align: 'bottom',
+        alignParent: false,
+    };
     constructor(props) {
         super(props);
         this.parent = this.props.parent || null;
@@ -220,20 +233,5 @@ export class HScroll extends React.PureComponent {
         );
     }
 }
-
-HScroll.propTypes = {
-    parent: PropTypes.any,
-    selector: PropTypes.string,
-    showSelector: PropTypes.string,
-    speed: PropTypes.number,
-    align: PropTypes.oneOf(['top','bottom']),
-    alignParent: PropTypes.bool,
-};
-
-HScroll.defaultProps = {
-    speed: 5,
-    align: 'bottom',
-    alignParent: false,
-};
 
 export default HScroll;

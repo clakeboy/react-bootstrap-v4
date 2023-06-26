@@ -2,7 +2,7 @@
 import ReactDOM from 'react-dom';
 import Common from '../Common';
 let fileDom;
-export default class Upload {
+export class Upload {
     //change event handler
     changeEvent;
     //progress event handler
@@ -147,3 +147,4 @@ export default class Upload {
     }
 }
 
+export default Upload;

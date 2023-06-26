@@ -4,6 +4,22 @@ import classNames from 'classnames/bind';
 import common from "./Common";
 
 export class Radio extends React.Component {
+    static propTypes = {
+        id          : PropTypes.string,
+        checked     : PropTypes.bool,
+        name        : PropTypes.string,
+        label       : PropTypes.string,
+        onChange    : PropTypes.func,
+        absolute    : PropTypes.bool,
+        data        : PropTypes.any,
+        x           : PropTypes.string,
+        y           : PropTypes.string,
+        inputClass  : PropTypes.string,
+    };
+    static defaultProps = {
+        inline: false,
+        label : '',
+    };
     constructor(props) {
         super(props);
         this.state = {
@@ -84,23 +100,5 @@ export class Radio extends React.Component {
         );
     }
 }
-
-Radio.propTypes = {
-    id          : PropTypes.string,
-    checked     : PropTypes.bool,
-    name        : PropTypes.string,
-    label       : PropTypes.string,
-    onChange    : PropTypes.func,
-    absolute    : PropTypes.bool,
-    data        : PropTypes.any,
-    x           : PropTypes.string,
-    y           : PropTypes.string,
-    inputClass  : PropTypes.string,
-};
-
-Radio.defaultProps = {
-    inline: false,
-    label : '',
-};
 
 export default Radio;

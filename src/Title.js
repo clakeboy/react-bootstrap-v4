@@ -4,6 +4,10 @@ import classNames from 'classnames/bind';
 import './css/Title.less';
 
 export class Title extends React.PureComponent {
+    static propTypes = {
+        text: PropTypes.string,
+        sm: PropTypes.bool
+    };
     constructor(props) {
         super(props);
     }
@@ -30,14 +34,5 @@ export class Title extends React.PureComponent {
         );
     }
 }
-
-Title.propTypes = {
-    text: PropTypes.string,
-    sm: PropTypes.bool
-};
-
-Title.defaultProps = {
-
-};
 
 export default Title;

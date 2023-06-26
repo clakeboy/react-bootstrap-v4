@@ -7,7 +7,106 @@ import Icon from './Icon';
 import './css/Menu.less';
 import common from "./Common";
 
+
+export class MenuItem extends React.PureComponent {
+    static propTypes = {
+        step: PropTypes.bool,
+        field: PropTypes.string,
+        onClick: PropTypes.func,
+        child: PropTypes.bool,
+        text: PropTypes.string,
+        icon: PropTypes.string,
+    };
+    constructor(props) {
+        super(props);
+        this.parent = this.props.parent;
+    }
+
+    componentDidMount() {
+
+    }
+
+    clickHandler = (e)=>{
+        if (typeof this.props.onClick === "function") {
+            this.props.onClick(e,this.props.field,this.parent.data);
+            this.parent.hide(e);
+        }
+        this.parent.clickHandler(e,this.props.field);
+    };
+
+    showChildHandler = (e)=>{
+        this.parent.closeChild(e);
+        this.childMenu.show({evt:e,type:'dom',data:this.parent.data});
+    };
+
+    closeChildHandler = (e)=>{
+        this.parent.closeChild(e);
+    };
+
+    getClasses() {
+        let base = 'ck-menu-item d-flex align-items-center';
+
+        return classNames(base,this.props.className);
+    }
+
+    render() {
+        if (this.props.step) {
+            return <hr/>
+        }
+
+        if (this.props.child) {
+            return this.renderChildMenu();
+        }
+
+        return <div className={this.getClasses()}
+                    onMouseDown={this.clickHandler}
+                    onMouseOver={this.closeChildHandler}>
+            {this.props.icon&&this.renderIcon()}
+            {this.props.children}
+        </div>
+    }
+
+    renderIcon() {
+        return (
+            <span className='text-center' style={{width:'20px'}}>
+                <Icon icon={this.props.icon}/>
+            </span>
+        )
+    }
+
+    renderChildMenu() {
+        return (
+            <React.Fragment>
+                <div className={this.getClasses()}
+                     onMouseDown={this.showChildHandler}
+                     onMouseOver={this.showChildHandler}>
+                    <span>{this.props.text}</span>
+                    <span className='ml-auto'>
+                        &nbsp;&nbsp;<Icon icon='caret-right'/>
+                    </span>
+                </div>
+                <Menu ref={c=>{this.childMenu=c;this.parent.childMenus.push(c)}} zIndex={this.parent.props.zIndex+1} onClick={(key)=>{
+                    this.parent.clickHandler(key);
+                }}>
+                    {this.props.children}
+                </Menu>
+            </React.Fragment>
+        )
+    }
+}
+
 export class Menu extends React.PureComponent {
+    static Item = MenuItem;
+    static propTypes = {
+        onClick: PropTypes.func,
+        onClose: PropTypes.func,
+        onShow: PropTypes.func,
+        zIndex: PropTypes.number,
+        width: PropTypes.string
+    };
+    static defaultProps = {
+        zIndex:1200
+    };
     constructor(props) {
         super(props);
         this.childMenus = [];
@@ -154,111 +253,5 @@ export class Menu extends React.PureComponent {
         );
     }
 }
-
-Menu.propTypes = {
-    onClick: PropTypes.func,
-    onClose: PropTypes.func,
-    onShow: PropTypes.func,
-    zIndex: PropTypes.number,
-    width: PropTypes.string
-};
-
-Menu.defaultProps = {
-    zIndex:1200
-};
-
-class MenuItem extends React.PureComponent {
-    constructor(props) {
-        super(props);
-        this.parent = this.props.parent;
-    }
-
-    componentDidMount() {
-
-    }
-
-    clickHandler = (e)=>{
-        if (typeof this.props.onClick === "function") {
-            this.props.onClick(e,this.props.field,this.parent.data);
-            this.parent.hide(e);
-        }
-        this.parent.clickHandler(e,this.props.field);
-    };
-
-    showChildHandler = (e)=>{
-        this.parent.closeChild(e);
-        this.childMenu.show({evt:e,type:'dom',data:this.parent.data});
-    };
-
-    closeChildHandler = (e)=>{
-        this.parent.closeChild(e);
-    };
-
-    getClasses() {
-        let base = 'ck-menu-item d-flex align-items-center';
-
-        return classNames(base,this.props.className);
-    }
-
-    render() {
-        if (this.props.step) {
-            return <hr/>
-        }
-
-        if (this.props.child) {
-            return this.renderChildMenu();
-        }
-
-        return <div className={this.getClasses()}
-                    onMouseDown={this.clickHandler}
-                    onMouseOver={this.closeChildHandler}>
-            {this.props.icon&&this.renderIcon()}
-            {this.props.children}
-        </div>
-    }
-
-    renderIcon() {
-        return (
-            <span className='text-center' style={{width:'20px'}}>
-                <Icon icon={this.props.icon}/>
-            </span>
-        )
-    }
-
-    renderChildMenu() {
-        return (
-            <React.Fragment>
-                <div className={this.getClasses()}
-                     onMouseDown={this.showChildHandler}
-                     onMouseOver={this.showChildHandler}>
-                    <span>{this.props.text}</span>
-                    <span className='ml-auto'>
-                        &nbsp;&nbsp;<Icon icon='caret-right'/>
-                    </span>
-                </div>
-                <Menu ref={c=>{this.childMenu=c;this.parent.childMenus.push(c)}} zIndex={this.parent.props.zIndex+1} onClick={(key)=>{
-                    this.parent.clickHandler(key);
-                }}>
-                    {this.props.children}
-                </Menu>
-            </React.Fragment>
-        )
-    }
-}
-
-MenuItem.propTypes = {
-    step: PropTypes.bool,
-    field: PropTypes.string,
-    onClick: PropTypes.func,
-    child: PropTypes.bool,
-    text: PropTypes.string,
-    icon: PropTypes.string,
-};
-
-MenuItem.defaultProps = {
-
-};
-
-Menu.Item = MenuItem;
 
 export default Menu;

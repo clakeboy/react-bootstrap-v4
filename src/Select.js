@@ -4,6 +4,27 @@ import classNames from 'classnames/bind';
 import common from "./Common";
 
 export class Select extends React.PureComponent {
+    static propTypes = {
+        id         : PropTypes.string,
+        size       : PropTypes.oneOf(['df', 'sm', 'lg']),
+        label      : PropTypes.string,
+        data       : PropTypes.array,
+        summary    : PropTypes.string,
+        readOnly   : PropTypes.bool,
+        width      : PropTypes.string,
+        height     : PropTypes.string,
+        placeholder: PropTypes.string,
+        onSelect   : PropTypes.func,
+        value      : PropTypes.any,
+        absolute   : PropTypes.bool,
+        x          : PropTypes.string,
+        y          : PropTypes.string
+    };
+
+    static defaultProps = {
+        data: [],
+        label: ''
+    };
     constructor(props) {
         super(props);
         this.state = {
@@ -153,26 +174,5 @@ export class Select extends React.PureComponent {
     }
 }
 
-Select.propTypes = {
-    id         : PropTypes.string,
-    size       : PropTypes.oneOf(['df', 'sm', 'lg']),
-    label      : PropTypes.string,
-    data       : PropTypes.array,
-    summary    : PropTypes.string,
-    readOnly   : PropTypes.bool,
-    width      : PropTypes.string,
-    height     : PropTypes.string,
-    placeholder: PropTypes.string,
-    onSelect   : PropTypes.func,
-    value      : PropTypes.any,
-    absolute   : PropTypes.bool,
-    x          : PropTypes.string,
-    y          : PropTypes.string
-};
-
-Select.defaultProps = {
-    data: [],
-    label: ''
-};
 
 export default Select;

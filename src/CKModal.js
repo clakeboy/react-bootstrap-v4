@@ -431,5 +431,5 @@ CKModal.defaultProps = {
     isCloseBtn:true,
     shadowClose: false,
 };
-
-export default CKModal;
+let Modal = CKModal
+export default Modal;

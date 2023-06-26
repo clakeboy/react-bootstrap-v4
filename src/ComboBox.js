@@ -2,8 +2,50 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Input from "./Input";
 
+class ComboBoxColumn extends React.Component {
+    static propTypes = {
+        field: PropTypes.string,
+        text: PropTypes.string,
+        format: PropTypes.func, //func (val,row)=>{return val;}
+        width: PropTypes.string, //100px 100pt...
+    };
+}
 
 export class ComboBox extends React.Component {
+    static Column = ComboBoxColumn;
+    static propTypes = {
+        label: PropTypes.string,
+        searchColumn: PropTypes.string,
+        data: PropTypes.array,
+        height: PropTypes.string,
+        width: PropTypes.string,
+        showRows: PropTypes.number,
+        search: PropTypes.string,
+        onSearch: PropTypes.func,
+        onSelect: PropTypes.func,
+        onClose: PropTypes.func,
+        onShow: PropTypes.func,
+        onChange: PropTypes.func,
+        sm: PropTypes.bool,
+        multi: PropTypes.bool,
+        multiDef: PropTypes.object,
+        //filter column exp: ['name','age'] or [{field:'name',width:'100px'},{field:'age',width:'100px'}]
+        filterColumns: PropTypes.array,
+        noSearch: PropTypes.bool,
+        header: PropTypes.bool,
+        size: PropTypes.string,
+        value: PropTypes.string,
+        text: PropTypes.string,
+    };
+    static defaultProps = {
+        label:null,
+        showRows:5,
+        data:[],
+        search:"",
+        multi:false,
+        multiDef:null,
+        header:false,
+    };
     constructor(props) {
         super(props);
     }
@@ -30,51 +72,5 @@ export class ComboBox extends React.Component {
         );
     }
 }
-
-ComboBox.propTypes = {
-    label: PropTypes.string,
-    searchColumn: PropTypes.string,
-    data: PropTypes.array,
-    height: PropTypes.string,
-    width: PropTypes.string,
-    showRows: PropTypes.number,
-    search: PropTypes.string,
-    onSearch: PropTypes.func,
-    onSelect: PropTypes.func,
-    onClose: PropTypes.func,
-    onShow: PropTypes.func,
-    onChange: PropTypes.func,
-    sm: PropTypes.bool,
-    multi: PropTypes.bool,
-    multiDef: PropTypes.object,
-    //filter column exp: ['name','age'] or [{field:'name',width:'100px'},{field:'age',width:'100px'}]
-    filterColumns: PropTypes.array,
-    noSearch: PropTypes.bool,
-    header: PropTypes.bool,
-    size: PropTypes.string,
-    value: PropTypes.string,
-    text: PropTypes.string,
-};
-
-ComboBox.defaultProps = {
-    label:null,
-    showRows:5,
-    data:[],
-    search:"",
-    multi:false,
-    multiDef:null,
-    header:false,
-};
-
-class ComboBoxColumn extends React.Component {}
-
-ComboBoxColumn.propTypes = {
-    field: PropTypes.string,
-    text: PropTypes.string,
-    format: PropTypes.func, //func (val,row)=>{return val;}
-    width: PropTypes.string, //100px 100pt...
-};
-
-ComboBox.Column = ComboBoxColumn;
 
 export default ComboBox;

@@ -2,10 +2,9 @@
  * Created by clakeboy on 2018/8/16.
  */
 import React from 'react';
-import ReactBootstrap4,{
+import {
     Container,
     Input,
-    InputGroup,
     Button,
     Card,
     Label,
@@ -101,7 +100,6 @@ class Window extends React.Component {
     }
 
     render() {
-
         return (
             <Container>
                 <h1>Window Manage Demo</h1>
@@ -117,6 +115,7 @@ class Window extends React.Component {
                                 console.log("close dom-left");
                             }});
                     }}>点击打开菜单</Button>
+                    <Input/>
                 </Card>
                 <Card header='SVG 测试'>
                     <div id='svg_con'></div>
@@ -168,7 +167,7 @@ class Window extends React.Component {
                         <Menu.Item>Child Menu 3</Menu.Item>
                     </Menu.Item>
                 </Menu>
-                <Alerts ref={c=>this.alert=c}/>
+                <Alerts ref={c=>this.alert=c} />
             </Container>
         );
     }

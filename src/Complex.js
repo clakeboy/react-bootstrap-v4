@@ -6,6 +6,27 @@ import Icon from './Icon';
 import Combo from "./Combo";
 
 export class Complex extends React.Component {
+    static propTypes = {
+        inputWidth: PropTypes.string,
+        onChange: PropTypes.func,
+        onSelect: PropTypes.func,
+        list: PropTypes.array,
+        dataType: PropTypes.oneOf(['string','object']),
+        dataField: PropTypes.string,
+        data: PropTypes.array,
+        placeholder: PropTypes.string,
+        combo: PropTypes.object,
+        comboData: PropTypes.object,
+        duplicate: PropTypes.bool
+    };
+    static defaultProps = {
+        inputWidth: "200px",
+        dataType: "string",
+        dataField: "",
+        data: [],
+        duplicate: false
+    };
+
     constructor(props) {
         super(props);
         this.state = {
@@ -203,27 +224,5 @@ export class Complex extends React.Component {
         )
     }
 }
-
-Complex.propTypes = {
-    inputWidth: PropTypes.string,
-    onChange: PropTypes.func,
-    onSelect: PropTypes.func,
-    list: PropTypes.array,
-    dataType: PropTypes.oneOf(['string','object']),
-    dataField: PropTypes.string,
-    data: PropTypes.array,
-    placeholder: PropTypes.string,
-    combo: PropTypes.object,
-    comboData: PropTypes.object,
-    duplicate: PropTypes.bool
-};
-
-Complex.defaultProps = {
-    inputWidth: "200px",
-    dataType: "string",
-    dataField: "",
-    data: [],
-    duplicate: false
-};
 
 export default Complex;

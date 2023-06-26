@@ -7,6 +7,12 @@ import common from "./Common";
 import RImage from "./RImage";
 
 export class ImageView extends React.Component {
+    static propTypes = {
+        src: PropTypes.array,
+    };
+    static defaultProps = {
+        src: [],
+    };
     constructor(props) {
         super(props);
         this.state = {
@@ -135,13 +141,5 @@ export class ImageView extends React.Component {
         </>
     }
 }
-
-ImageView.propTypes = {
-    src: PropTypes.array,
-};
-
-ImageView.defaultProps = {
-    src: [],
-};
 
 export default ImageView;

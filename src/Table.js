@@ -15,6 +15,59 @@ import HScroll from "./HScroll";
 import Menu from "./Menu";
 
 export class Table extends React.Component {
+    static Header = TableHeader;
+    static HeaderRow = TableHeaderRow;
+    static propTypes = {
+        theme      : PropTypes.oneOf(['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark']),
+        headerTheme: PropTypes.oneOf(['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark']),
+        headClass  : PropTypes.string,
+        data       : PropTypes.array,
+        dataCount  : PropTypes.number,
+        select     : PropTypes.bool,
+        header     : PropTypes.bool,
+        center     : PropTypes.bool,
+        currentPage: PropTypes.number,
+        striped    : PropTypes.bool,
+        bordered   : PropTypes.bool,
+        hover      : PropTypes.bool,
+        sm         : PropTypes.bool,
+        fontSm     : PropTypes.bool,
+        responsive : PropTypes.bool,
+        align      : PropTypes.string,
+        tree       : PropTypes.bool,
+        onClickTree: PropTypes.func,
+        onClick    : PropTypes.func,
+        onCheck    : PropTypes.func,
+        move       : PropTypes.bool,
+        onRefresh  : PropTypes.func,
+        refreshText: PropTypes.string,
+        absolute   : PropTypes.bool,
+        x          : PropTypes.string,
+        y          : PropTypes.string,
+        width      : PropTypes.string,
+        height     : PropTypes.string,
+        scroll     : PropTypes.bool,
+        emptyText  : PropTypes.string,
+        fixed: PropTypes.bool,
+        serialNumber: PropTypes.bool, //是否显示序列号
+        truncate: PropTypes.bool,//文字是否截断
+        menu :PropTypes.element,
+    };
+
+    static defaultProps = {
+        data       : [],
+        dataCount  : 1,
+        select     : true,
+        header     : true,
+        currentPage: 1,
+        hover      : true,
+        striped    : true,
+        fixed:     false,
+        align      : 'left',
+        emptyText  : 'Not data',
+        serialNumber: true,
+        truncate: false,
+    };
     constructor(props) {
         super(props);
 
@@ -745,60 +798,5 @@ export class Table extends React.Component {
         )
     }
 }
-
-Table.propTypes = {
-    theme      : PropTypes.oneOf(['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark']),
-    headerTheme: PropTypes.oneOf(['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark']),
-    headClass  : PropTypes.string,
-    data       : PropTypes.array,
-    dataCount  : PropTypes.number,
-    select     : PropTypes.bool,
-    header     : PropTypes.bool,
-    center     : PropTypes.bool,
-    currentPage: PropTypes.number,
-    striped    : PropTypes.bool,
-    bordered   : PropTypes.bool,
-    hover      : PropTypes.bool,
-    sm         : PropTypes.bool,
-    fontSm     : PropTypes.bool,
-    responsive : PropTypes.bool,
-    align      : PropTypes.string,
-    tree       : PropTypes.bool,
-    onClickTree: PropTypes.func,
-    onClick    : PropTypes.func,
-    onCheck    : PropTypes.func,
-    move       : PropTypes.bool,
-    onRefresh  : PropTypes.func,
-    refreshText: PropTypes.string,
-    absolute   : PropTypes.bool,
-    x          : PropTypes.string,
-    y          : PropTypes.string,
-    width      : PropTypes.string,
-    height     : PropTypes.string,
-    scroll     : PropTypes.bool,
-    emptyText  : PropTypes.string,
-    fixed: PropTypes.bool,
-    serialNumber: PropTypes.bool, //是否显示序列号
-    truncate: PropTypes.bool,//文字是否截断
-    menu :PropTypes.element,
-};
-
-Table.defaultProps = {
-    data       : [],
-    dataCount  : 1,
-    select     : true,
-    header     : true,
-    currentPage: 1,
-    hover      : true,
-    striped    : true,
-    fixed:     false,
-    align      : 'left',
-    emptyText  : 'Not data',
-    serialNumber: true,
-    truncate: false,
-};
-
-Table.Header = TableHeader;
-Table.HeaderRow = TableHeaderRow;
 
 export default Table;

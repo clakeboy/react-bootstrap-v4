@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 
 export class ButtonGroup extends React.PureComponent {
+    static propTypes = {}
+    static defaultProps = {}
     constructor(props) {
         super(props);
     }
@@ -25,13 +27,5 @@ export class ButtonGroup extends React.PureComponent {
         );
     }
 }
-
-ButtonGroup.propTypes = {
-
-};
-
-ButtonGroup.defaultProps = {
-
-};
 
 export default ButtonGroup;

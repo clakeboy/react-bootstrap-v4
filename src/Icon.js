@@ -3,6 +3,16 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 
 export class Icon extends React.PureComponent {
+    static propTypes = {
+        iconType: PropTypes.oneOf(['solid','regular','light','brands']),
+        icon: PropTypes.string,
+        //icon to rotate
+        spin: PropTypes.bool,
+    };
+    static defaultProps = {
+        iconType: 'solid',
+        icon: '',
+    };
     constructor(props) {
         super(props);
         this.state = {
@@ -54,17 +64,5 @@ export class Icon extends React.PureComponent {
         );
     }
 }
-
-Icon.propTypes = {
-    iconType: PropTypes.oneOf(['solid','regular','light','brands']),
-    icon: PropTypes.string,
-    //icon to rotate
-    spin: PropTypes.bool,
-};
-
-Icon.defaultProps = {
-    iconType: 'solid',
-    icon: '',
-};
 
 export default Icon;

@@ -6,6 +6,17 @@ import {GetDomXY} from "./Common";
 import './css/Scroll.less';
 
 export class Scroll extends React.PureComponent {
+    static propTypes = {
+        parent: PropTypes.any,
+        selector: PropTypes.string,
+        speed: PropTypes.number,
+        align: PropTypes.oneOf(['right','left']),
+    };
+
+    static defaultProps = {
+        speed: 5,
+        align: 'right',
+    };
     constructor(props) {
         super(props);
         this.parent = this.props.parent || null;
@@ -156,16 +167,6 @@ export class Scroll extends React.PureComponent {
     }
 }
 
-Scroll.propTypes = {
-    parent: PropTypes.any,
-    selector: PropTypes.string,
-    speed: PropTypes.number,
-    align: PropTypes.oneOf(['right','left']),
-};
 
-Scroll.defaultProps = {
-    speed: 5,
-    align: 'right',
-};
 
 export default Scroll;

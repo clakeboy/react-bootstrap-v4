@@ -5,6 +5,30 @@ import Icon from './Icon';
 import CDropdown from "./CDropdown";
 
 export class Pagination extends React.PureComponent {
+    static propTypes = {
+        current: PropTypes.number,
+        count: PropTypes.number,
+        number: PropTypes.number,
+        showPage: PropTypes.number,
+        onSelect: PropTypes.func,
+        align: PropTypes.oneOf(['left','center','right']),
+        size: PropTypes.oneOf(['sm','lg']),
+        info: PropTypes.any,//任意显示
+        numberList: PropTypes.array,
+    };
+    static defaultProps = {
+        current : 1,
+        count   : 1,
+        number  : 50,
+        showPages : 10,
+        align: 'right',
+        numberList: [
+            // {text:'显示50条',value:50},
+            // {text:'显示100条',value:100},
+            // {text:'显示150条',value:150}
+        ],
+        info:null,
+    };
     constructor(props) {
         super(props);
 
@@ -175,31 +199,5 @@ function calculatePages(count,number) {
     }
     return pages;
 }
-
-Pagination.propTypes = {
-    current: PropTypes.number,
-    count: PropTypes.number,
-    number: PropTypes.number,
-    showPage: PropTypes.number,
-    onSelect: PropTypes.func,
-    align: PropTypes.oneOf(['left','center','right']),
-    size: PropTypes.oneOf(['sm','lg']),
-    info: PropTypes.any,//任意显示
-    numberList: PropTypes.array,
-};
-
-Pagination.defaultProps = {
-    current : 1,
-    count   : 1,
-    number  : 50,
-    showPages : 10,
-    align: 'right',
-    numberList: [
-        // {text:'显示50条',value:50},
-        // {text:'显示100条',value:100},
-        // {text:'显示150条',value:150}
-    ],
-    info:null,
-};
 
 export default Pagination;

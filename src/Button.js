@@ -6,6 +6,30 @@ import './css/Button.less';
 import common from "./Common";
 
 export class Button extends React.PureComponent {
+    static propTypes = {
+        theme: PropTypes.oneOf(['primary','secondary','success','danger','warning','info','light','dark','link']),
+        outline: PropTypes.bool,
+        size: PropTypes.oneOf(['df','sm','lg','xs']),
+        onClick: PropTypes.func,
+        icon: PropTypes.string,
+        loading: PropTypes.bool,
+        disabled: PropTypes.bool,
+        block: PropTypes.bool,
+        absolute   : PropTypes.bool,
+        x          : PropTypes.string,
+        y          : PropTypes.string,
+        width      : PropTypes.string,
+        height     : PropTypes.string,
+        tip: PropTypes.string,
+    }
+
+    static defaultProps = {
+        theme: 'primary',
+        outline: false,
+        size: 'df',
+        loading: false,
+    }
+
     constructor(props) {
         super(props);
         this.domId = 'btn-'+common.RandomString(16);
@@ -113,29 +137,4 @@ export class Button extends React.PureComponent {
         return null;
     }
 }
-
-Button.propTypes = {
-    theme: PropTypes.oneOf(['primary','secondary','success','danger','warning','info','light','dark','link']),
-    outline: PropTypes.bool,
-    size: PropTypes.oneOf(['df','sm','lg','xs']),
-    onClick: PropTypes.func,
-    icon: PropTypes.string,
-    loading: PropTypes.bool,
-    disabled: PropTypes.bool,
-    block: PropTypes.bool,
-    absolute   : PropTypes.bool,
-    x          : PropTypes.string,
-    y          : PropTypes.string,
-    width      : PropTypes.string,
-    height     : PropTypes.string,
-    tip: PropTypes.string,
-};
-
-Button.defaultProps = {
-    theme: 'primary',
-    outline: false,
-    size: 'df',
-    loading: false,
-};
-
 export default Button;

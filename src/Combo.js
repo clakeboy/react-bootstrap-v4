@@ -10,6 +10,35 @@ import Load from "./Load";
 import common from "./Common";
 
 export class Combo extends React.Component {
+    static propTypes = {
+        searchColumn: PropTypes.string,
+        data: PropTypes.array,
+        height: PropTypes.string,
+        width: PropTypes.string,
+        showRows: PropTypes.number,
+        search: PropTypes.string,
+        onSearch: PropTypes.func,
+        onSelect: PropTypes.func,
+        onClose: PropTypes.func,
+        onShow: PropTypes.func,
+        sm: PropTypes.bool,
+        multi: PropTypes.bool,
+        multiDef: PropTypes.object,
+        //filter column exp: ['name','age'] or [{field:'name',width:'100px'},{field:'age',width:'100px'}]
+        filterColumns: PropTypes.array,
+        noSearch: PropTypes.bool,
+        header: PropTypes.bool,
+        searchType: PropTypes.string // 'start','include'
+    };
+    static defaultProps = {
+        showRows:5,
+        data:[],
+        search:"",
+        multi:false,
+        multiDef:null,
+        header:false,
+        searchType: 'start'
+    };
     constructor(props) {
         super(props);
         this.isRemote = !!this.props.onSearch;
@@ -442,36 +471,5 @@ export class Combo extends React.Component {
         </React.Fragment>;
     }
 }
-
-Combo.propTypes = {
-    searchColumn: PropTypes.string,
-    data: PropTypes.array,
-    height: PropTypes.string,
-    width: PropTypes.string,
-    showRows: PropTypes.number,
-    search: PropTypes.string,
-    onSearch: PropTypes.func,
-    onSelect: PropTypes.func,
-    onClose: PropTypes.func,
-    onShow: PropTypes.func,
-    sm: PropTypes.bool,
-    multi: PropTypes.bool,
-    multiDef: PropTypes.object,
-    //filter column exp: ['name','age'] or [{field:'name',width:'100px'},{field:'age',width:'100px'}]
-    filterColumns: PropTypes.array,
-    noSearch: PropTypes.bool,
-    header: PropTypes.bool,
-    searchType: PropTypes.string // 'start','include'
-};
-
-Combo.defaultProps = {
-    showRows:5,
-    data:[],
-    search:"",
-    multi:false,
-    multiDef:null,
-    header:false,
-    searchType: 'start'
-};
 
 export default Combo;

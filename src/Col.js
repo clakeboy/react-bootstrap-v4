@@ -3,6 +3,13 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 
 export class Col extends React.PureComponent {
+    static propTypes = {
+        at: PropTypes.number,
+        sm: PropTypes.number,
+        md: PropTypes.number,
+        lg: PropTypes.number,
+        xl: PropTypes.number,
+    };
     constructor(props) {
         super(props);
     }
@@ -41,17 +48,5 @@ export class Col extends React.PureComponent {
         );
     }
 }
-
-Col.propTypes = {
-    at: PropTypes.number,
-    sm: PropTypes.number,
-    md: PropTypes.number,
-    lg: PropTypes.number,
-    xl: PropTypes.number,
-};
-
-Col.defaultProps = {
-
-};
 
 export default Col;

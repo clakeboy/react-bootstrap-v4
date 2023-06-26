@@ -13,6 +13,38 @@ const stopEvent  = function (e) {
 };
 
 export class CalendarRange extends React.PureComponent {
+    static propTypes = {
+        id            : PropTypes.string,
+        label         : PropTypes.string,
+        minData       : PropTypes.string,
+        maxData       : PropTypes.string,
+        days          : PropTypes.number,  //时间跨度 单位天
+        readOnly      : PropTypes.bool,
+        placeholderMin: PropTypes.string,
+        placeholderMax: PropTypes.string,
+        onChange      : PropTypes.func,
+        format        : PropTypes.string,
+        time          : PropTypes.bool,
+        disabled      : PropTypes.bool,
+        disableClear  : PropTypes.bool,
+        labelClass    : PropTypes.string,
+        className     : PropTypes.string,
+        width         : PropTypes.string,
+    };
+    static defaultProps = {
+        id          : '',
+        size        : 'df',
+        label       : '',
+        minData     : '',
+        maxData     : '',
+        days        : 30,
+        summary     : '',
+        readOnly    : false,
+        disabled    : false,
+        disableClear: false,
+        format: 'YYYY-MM-DD'
+    };
+
     constructor(props) {
         super(props);
         this.state = {
@@ -205,38 +237,5 @@ export class CalendarRange extends React.PureComponent {
         </div>
     }
 }
-
-CalendarRange.propTypes = {
-    id            : PropTypes.string,
-    label         : PropTypes.string,
-    minData       : PropTypes.string,
-    maxData       : PropTypes.string,
-    days          : PropTypes.number,  //时间跨度 单位天
-    readOnly      : PropTypes.bool,
-    placeholderMin: PropTypes.string,
-    placeholderMax: PropTypes.string,
-    onChange      : PropTypes.func,
-    format        : PropTypes.string,
-    time          : PropTypes.bool,
-    disabled      : PropTypes.bool,
-    disableClear  : PropTypes.bool,
-    labelClass    : PropTypes.string,
-    className     : PropTypes.string,
-    width         : PropTypes.string,
-};
-
-CalendarRange.defaultProps = {
-    id          : '',
-    size        : 'df',
-    label       : '',
-    minData     : '',
-    maxData     : '',
-    days        : 30,
-    summary     : '',
-    readOnly    : false,
-    disabled    : false,
-    disableClear: false,
-    format: 'YYYY-MM-DD'
-};
 
 export default CalendarRange;

@@ -3,6 +3,17 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 
 export class Box extends React.PureComponent {
+    static propTypes = {
+        absolute   : PropTypes.bool,
+        x          : PropTypes.string,
+        y          : PropTypes.string,
+        width      : PropTypes.string,
+        height     : PropTypes.string,
+        borderWidth: PropTypes.string,
+        borderColor: PropTypes.string,
+        backColor: PropTypes.string
+    }
+
     constructor(props) {
         super(props);
     }
@@ -61,17 +72,17 @@ export class Box extends React.PureComponent {
     }
 }
 
-Box.propTypes = {
-    absolute   : PropTypes.bool,
-    x          : PropTypes.string,
-    y          : PropTypes.string,
-    width      : PropTypes.string,
-    height     : PropTypes.string,
-    borderWidth: PropTypes.string,
-    borderColor: PropTypes.string,
-    backColor: PropTypes.string
-};
+// Box.propTypes = {
+//     absolute   : PropTypes.bool,
+//     x          : PropTypes.string,
+//     y          : PropTypes.string,
+//     width      : PropTypes.string,
+//     height     : PropTypes.string,
+//     borderWidth: PropTypes.string,
+//     borderColor: PropTypes.string,
+//     backColor: PropTypes.string
+// };
+//
+// Box.defaultProps = {};
 
-Box.defaultProps = {};
-
-// export default Box;
+export default Box;

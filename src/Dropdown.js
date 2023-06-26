@@ -3,9 +3,35 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import common from './Common';
 import Button from "./Button";
-import CDropdown from "./CDropdown";
+
+export class DropdownValue extends React.Component {
+    static propTypes = {
+        text: PropTypes.string,
+        value: PropTypes.string,
+        active: PropTypes.bool
+    };
+}
 
 export class Dropdown extends React.PureComponent {
+    static Value = DropdownValue;
+    static propTypes = {
+        data: PropTypes.array,
+        width: PropTypes.number,
+        text: PropTypes.string,
+        onChange: PropTypes.func,
+        outline: PropTypes.bool,
+        theme: PropTypes.string,
+        size: PropTypes.string,
+        icon: PropTypes.string,
+        grid: PropTypes.bool,
+    };
+    static defaultProps = {
+        data: [],
+        text: '',
+        theme: 'secondary',
+        outline: false,
+    };
+
     constructor(props) {
         super(props);
         this.state = {
@@ -149,33 +175,5 @@ export class Dropdown extends React.PureComponent {
         );
     }
 }
-
-Dropdown.propTypes = {
-    data: PropTypes.array,
-    width: PropTypes.number,
-    text: PropTypes.string,
-    onChange: PropTypes.func,
-    outline: PropTypes.bool,
-    theme: PropTypes.string,
-    size: PropTypes.string,
-    icon: PropTypes.string,
-    grid: PropTypes.bool,
-};
-
-Dropdown.defaultProps = {
-    data: [],
-    text: '',
-    theme: 'secondary',
-    outline: false,
-};
-
-class DropdownValue extends React.Component {}
-DropdownValue.propTypes = {
-    text: PropTypes.string,
-    value: PropTypes.string,
-    active: PropTypes.bool
-};
-
-Dropdown.Value = DropdownValue;
 
 export default Dropdown;

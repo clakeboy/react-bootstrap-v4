@@ -47,6 +47,12 @@ export * from './ImageView';
 export * from './Row';
 export * from './Alerts';
 
+import Modal from "./CKModal";
+import Common from "./Common";
+
+export {
+    Modal,Common
+}
 // import Dropdown from "./Dropdown";
 // import Pagination from "./Pagination";
 // import Container from "./Container";

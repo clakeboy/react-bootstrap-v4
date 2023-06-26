@@ -8,6 +8,35 @@ import Button from "./Button";
 import Dropdown from "./Dropdown";
 import Drag from './components/Drag';
 export class TextArea extends React.Component {
+    static propTypes = {
+        id         : PropTypes.string,
+        label      : PropTypes.string,
+        data       : PropTypes.any,
+        summary    : PropTypes.string,
+        readOnly   : PropTypes.bool,
+        size       : PropTypes.string,
+        width      : PropTypes.string,
+        height     : PropTypes.string,
+        placeholder: PropTypes.string,
+        calendar   : PropTypes.bool,
+        onChange   : PropTypes.func,
+        plaintext  : PropTypes.bool,
+        row        : PropTypes.number,
+        absolute: PropTypes.bool,
+        x       : PropTypes.string,
+        y       : PropTypes.string,
+        htmlMode: PropTypes.bool,
+        htmlBar: PropTypes.bool,
+    };
+
+    static defaultProps = {
+        label   : '',
+        data    : null,
+        summary : '',
+        readOnly: false,
+        htmlMode: false,
+        htmlBar: true,
+    };
     constructor(props) {
         super(props);
         this.state = {
@@ -423,34 +452,5 @@ export class TextArea extends React.Component {
     }
 }
 
-TextArea.propTypes = {
-    id         : PropTypes.string,
-    label      : PropTypes.string,
-    data       : PropTypes.any,
-    summary    : PropTypes.string,
-    readOnly   : PropTypes.bool,
-    size       : PropTypes.string,
-    width      : PropTypes.string,
-    height     : PropTypes.string,
-    placeholder: PropTypes.string,
-    calendar   : PropTypes.bool,
-    onChange   : PropTypes.func,
-    plaintext  : PropTypes.bool,
-    row        : PropTypes.number,
-    absolute: PropTypes.bool,
-    x       : PropTypes.string,
-    y       : PropTypes.string,
-    htmlMode: PropTypes.bool,
-    htmlBar: PropTypes.bool,
-};
-
-TextArea.defaultProps = {
-    label   : '',
-    data    : null,
-    summary : '',
-    readOnly: false,
-    htmlMode: false,
-    htmlBar: true,
-};
 
 export default TextArea;

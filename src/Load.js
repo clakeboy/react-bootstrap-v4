@@ -34,12 +34,4 @@ export class Load extends React.Component {
     }
 }
 
-Load.propTypes = {
-
-};
-
-Load.defaultProps = {
-
-};
-
 export default Load;

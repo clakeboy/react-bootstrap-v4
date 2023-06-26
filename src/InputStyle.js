@@ -3,6 +3,13 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 
 export class InputStyle extends React.PureComponent {
+    static propTypes = {
+        label: PropTypes.string,
+    };
+    static defaultProps = {
+        label: '',
+    };
+
     constructor(props) {
         super(props);
     }
@@ -26,13 +33,5 @@ export class InputStyle extends React.PureComponent {
         );
     }
 }
-
-InputStyle.propTypes = {
-    label: PropTypes.string,
-};
-
-InputStyle.defaultProps = {
-    label: '',
-};
 
 export default InputStyle;

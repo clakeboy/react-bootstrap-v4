@@ -227,8 +227,8 @@ export var Clone = (obj) => {
 export function hasScrolledParent(el, direction = "vertical") {
     while ((el = el.offsetParent) && el !== undefined) {
         if(direction === "vertical") {
-            let overflow = window.getComputedStyle(el).overflowY;
-            let isScroll = overflow === 'scroll' || overflow === 'auto';
+            let style = window.getComputedStyle(el);
+            let isScroll = style.overflowY === 'scroll' || style.overflowY === 'auto';
             if (el.scrollHeight > el.clientHeight && isScroll) return el;
         } else if(direction === "horizontal") {
             if (el.scrollWidth > el.clientWidth) return el;

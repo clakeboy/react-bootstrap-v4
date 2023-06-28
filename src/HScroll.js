@@ -131,7 +131,7 @@ export class HScroll extends React.PureComponent {
         if (bottom < 0 || bottom >= this.parentDom.clientHeight) {
             this.dom.style.bottom = '0';
         } else {
-            this.dom.style.bottom = bottom + 2 + 'px';
+            this.dom.style.bottom = `${bottom + 2}px`;
         }
     };
 

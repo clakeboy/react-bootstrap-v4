@@ -320,28 +320,30 @@ class TestModal extends React.PureComponent {
                                 onSelect={page => this.loadTask(page)}/>
                 </Card>
                 <Card header='测试静态数据'>
-                    <Table select={false} striped={false} height='500px' width='100%' tree headerTheme='light' data={this.state.treeData}>
-                        <Table.Header text='任务ID' field='id' width='80px' beforeHold/>
-                        <Table.Header text='任务名称' field='task_name' width='150px' beforeHold tree/>
-                        <Table.Header text='时间规则' field='time_rule' width='150px'/>
-                        <Table.Header text='执行一次' field='once' width='150px' onFormat={val => {
-                            return val ? <span className="badge badge-success">是</span> : '否';
-                        }}/>
-                        <Table.Header text='通知次数' field='notify_number' width='150px'/>
-                        <Table.Header text='已通知次数' field='notified_number' width='150px'/>
-                        <Table.Header text='创建时间' field='created_date' width='250px' onFormat={value => {
-                            return moment.unix(value).format("YYYY-MM-DD hh:mm:ss");
-                        }}/>
-                        <Table.Header text='操作' align='center' width='150px' onFormat={() => {
-                            return <ButtonGroup>
-                                <Button size='sm' icon='edit' theme='success'>修改</Button>
-                                <Button size='sm' icon='trash-alt' theme='danger'>册除</Button>
-                            </ButtonGroup>
-                        }}/>
-                    </Table>
-                    <Pagination className='mt-2' count={this.state.count} current={this.state.currentPage}
-                                number={this.pageNumber} showPage={10}
-                                onSelect={page => this.loadTask(page)}/>
+                    <div id='main-table' className='position-relative' style={{overflow:'auto'}}>
+                        <Table select={false} className='border border-success' striped={false} height='500px' width='100%' tree headerTheme='light' data={this.state.treeData}>
+                            <Table.Header text='任务ID' field='id' width='80px' beforeHold/>
+                            <Table.Header text='任务名称' field='task_name' width='150px' beforeHold tree/>
+                            <Table.Header text='时间规则' field='time_rule' width='150px'/>
+                            <Table.Header text='执行一次' field='once' width='150px' onFormat={val => {
+                                return val ? <span className="badge badge-success">是</span> : '否';
+                            }}/>
+                            <Table.Header text='通知次数' field='notify_number' width='150px'/>
+                            <Table.Header text='已通知次数' field='notified_number' width='150px'/>
+                            <Table.Header text='创建时间' field='created_date' width='250px' onFormat={value => {
+                                return moment.unix(value).format("YYYY-MM-DD hh:mm:ss");
+                            }}/>
+                            <Table.Header text='操作' align='center' width='200px' onFormat={() => {
+                                return <ButtonGroup>
+                                    <Button size='sm' icon='edit' theme='success'>修改</Button>
+                                    <Button size='sm' icon='trash-alt' theme='danger'>册除</Button>
+                                </ButtonGroup>
+                            }}/>
+                        </Table>
+                        <Pagination className='mt-2' count={this.state.count} current={this.state.currentPage}
+                                    number={this.pageNumber} showPage={10}
+                                    onSelect={page => this.loadTask(page)}/>
+                    </div>
                 </Card>
                 <Title className='mb-2'>
                     Tabs 组件 不使用内容

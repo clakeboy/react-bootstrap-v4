@@ -45,11 +45,15 @@ export class Form extends React.PureComponent {
     }
 
     check() {
+        let valid = true
         map(this.components,(item,key)=>{
             if (typeof item.check === 'function') {
-                item.check();
+                if (!item.check()) {
+                    valid = false
+                }
             }
         })
+        return valid;
     }
 
     setValues(vals) {
@@ -170,10 +174,12 @@ export class Form extends React.PureComponent {
         };
     }
 
-    refComponent(field) {
+    refComponent(field,orgRef) {
         return (c)=>{
             this.components[field] = c;
-            // console.log(this.components);
+            if (typeof orgRef === 'function') {
+                orgRef(c)
+            }
         }
     }
 
@@ -262,7 +268,7 @@ export class Form extends React.PureComponent {
                 props.onChange = this.radioChangeHandler(field);
             }
             // return React.cloneElement(item,Object.assign({},item.props,props))
-            props.ref = this.refComponent(field);
+            props.ref = this.refComponent(field,item.ref);
             return React.cloneElement(item,{...item.props,...props})
         }
     }

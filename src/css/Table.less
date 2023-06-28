@@ -86,6 +86,7 @@
 }
 
 .ck-table-hold-after {
+  max-height: 100%;
   position: absolute;
   top: 0;
   right: 0;
@@ -97,11 +98,22 @@
 }
 
 .ck-table-hold-before {
+  max-height: 100%;
   position: absolute;
   top: 0;
   left: 0;
   background-color: #ffffff;
   .shadow {
     box-shadow: 3px 0 8px -4px #999 !important;
+  }
+}
+
+.ck-table-fixed-h {
+  table {
+    border-spacing: 0;
+    border-collapse: separate;
+    thead th {
+      border-bottom-width: 1px!important;
+    }
   }
 }

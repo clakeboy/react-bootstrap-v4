@@ -11,6 +11,7 @@ export class Scroll extends React.PureComponent {
         selector: PropTypes.string,
         speed: PropTypes.number,
         align: PropTypes.oneOf(['right','left']),
+        onScroll: PropTypes.func
     };
 
     static defaultProps = {
@@ -110,7 +111,12 @@ export class Scroll extends React.PureComponent {
         if (!this.isShow) {
             this.showHandler();
         }
-        this.setScrollTop(this.parentDom.scrollTop+(e.deltaY * this.wheelSpeed));
+        let scrollTop = this.parentDom.scrollTop+(e.deltaY * this.wheelSpeed);
+
+        this.setScrollTop(scrollTop);
+        if (typeof this.props.onScroll === 'function') {
+            this.props.onScroll(scrollTop)
+        }
     };
 
     scrollClickHandler = (e)=>{

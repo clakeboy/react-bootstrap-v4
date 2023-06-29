@@ -1,3 +1,4 @@
+import './css/Common.less';
 export * from "./Dropdown";
 export * from "./Pagination";
 export * from "./Container";

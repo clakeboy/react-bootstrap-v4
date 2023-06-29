@@ -9,9 +9,15 @@ import {
     Card,
     Label,
     Menu,
-    Alerts
+    Alerts,
+    Switch,
+    CDropdown,
+    CCheckbox, Complex
 } from '../../src/index';
 import {Svg} from "../../src/components/Svg";
+import GroupStyle from "../../src/GroupStyle";
+import ComboBox from "../../src/ComboBox";
+import taskData from '../data/task.json';
 
 class Window extends React.Component {
     constructor(props) {
@@ -115,7 +121,53 @@ class Window extends React.Component {
                                 console.log("close dom-left");
                             }});
                     }}>点击打开菜单</Button>
-                    <Input/>
+                    <div className="mt-2 form-inline comm-form">
+                        <GroupStyle left='测试组'>
+                            <Input placeholder='一般输入框'/>
+                        </GroupStyle>
+                        <GroupStyle left='测试组'>
+                            <ComboBox searchColumn='task_name'
+                                      placeholder='ComboBox'
+                                      header
+                                      showRows={10}
+                                      data={taskData}
+                                      onChange={(val,row)=>{
+                                          console.log(val,row);
+                                      }}
+                            >
+                                <ComboBox.Column field='task_name' text='任务名称'/>
+                                <ComboBox.Column field='time_rule' text='时间规则'/>
+                                <ComboBox.Column field='notify_method' text='通知方法'/>
+                                <ComboBox.Column field='source' text='数据源'/>
+                                <ComboBox.Column field='created_date' text='创建时间' format={(val,row)=>{
+                                    return new Date(val*1000).toLocaleString();
+                                }}/>
+                            </ComboBox>
+                        </GroupStyle>
+                        <GroupStyle left='下拉'>
+                            <CDropdown text='下拉选择'>
+                                <CDropdown.Value text='选项1' value={11111} />
+                                <CDropdown.Value text='选项2' value={222222} />
+                            </CDropdown>
+                        </GroupStyle>
+                        <GroupStyle left='加Switch' right={<Switch/>} rightClass='bg-white'>
+
+                        </GroupStyle>
+                        <GroupStyle left='金额' right='元' leftClass='bg-white'>
+                            <Input width='150px' align='right' type='number' disableClear placeholder='左右组合'/>
+                        </GroupStyle>
+                        <GroupStyle className='mr-2' left='测试组'>
+                            <Input width='200px' placeholder='宽度定义200px'/>
+                        </GroupStyle>
+                        <GroupStyle left='加Check' right={<>
+                            <CCheckbox/> <CCheckbox/>
+                        </>} rightClass='bg-white'/>
+                        <GroupStyle left='复杂组件'>
+                            <Complex placeholder="输入添加项" onChange={(val,list)=>{
+                                console.log(val,list);
+                            }}/>
+                        </GroupStyle>
+                    </div>
                 </Card>
                 <Card header='SVG 测试'>
                     <div id='svg_con'></div>

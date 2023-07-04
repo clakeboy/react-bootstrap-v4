@@ -122,13 +122,7 @@ export class Table extends React.Component {
 
     componentWillUnmount() {
         window.removeEventListener('resize',this.holdShow,false);
-        if (this.props.sticky) {
-            if (this.stickyDom === document.documentElement) {
-                document.removeEventListener('scroll',this.stickyHeader)
-            } else {
-                this.stickyDom.removeEventListener('scroll',this.stickyHeader)
-            }
-        }
+        this.unSticky();
     }
 
     sticky() {
@@ -140,6 +134,16 @@ export class Table extends React.Component {
         } else {
             parentScroll.addEventListener('scroll',this.stickyHeader,false)
             this.stickyDom = parentScroll
+        }
+    }
+
+    unSticky() {
+        if (this.props.sticky && this.stickyDom) {
+            if (this.stickyDom === document.documentElement) {
+                document.removeEventListener('scroll',this.stickyHeader)
+            } else {
+                this.stickyDom.removeEventListener('scroll',this.stickyHeader)
+            }
         }
     }
 
@@ -230,6 +234,8 @@ export class Table extends React.Component {
     componentDidUpdate(prevProps, prevState, snapshot) {
         this.syncRowsHeight();
         this.holdShow();
+        this.unSticky();
+        this.sticky()
     }
 
     componentWillReceiveProps(nextProps) {

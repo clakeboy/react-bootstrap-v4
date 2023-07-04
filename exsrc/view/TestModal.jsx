@@ -294,7 +294,7 @@ class TestModal extends React.PureComponent {
                     this.props.history.goBack();
                 }}>返回主页</Button>
                 <Card header='测试加载'>
-                    <Table striped={false} tree headerTheme='light' data={this.state.data} onClickTree={(row,callback)=>{
+                    <Table striped={false} tree headerTheme='light' sticky data={this.state.data} onClickTree={(row,callback)=>{
                         this.loadChild(row,callback);
                     }}>
                         <Table.Header text='任务ID' field='id'/>

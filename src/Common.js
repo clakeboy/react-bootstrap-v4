@@ -89,9 +89,10 @@ export var LoadScript = {
 /**
  * get html dom element position
  * @param e
+ * @param parent
  * @returns {{}}
  */
-export var GetDomXY = (e,parent) => {
+export var GetDomXY = (e,parent=null) => {
     let t = {
         top:e.offsetTop,
         left:e.offsetLeft,

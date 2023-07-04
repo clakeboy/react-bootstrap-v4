@@ -116,7 +116,7 @@ class TestTable extends React.PureComponent {
                 }}>返回主页</Button>
                 <h3>测试编辑</h3>
                 <Card className='mt-2' header='测试 Table Scroll'>
-                    <Table hover={true} select={true} data={this.state.editData} headerTheme='light' width='100%'>
+                    <Table hover={true} select={true} data={this.state.editData} sticky headerTheme='light' width='100%'>
                         <Table.HeaderRow>
                             <Table.Header text='User' cols={2} align='center'/>
                             <Table.Header text='Content' cols={4} align='center'/>
@@ -166,7 +166,7 @@ class TestTable extends React.PureComponent {
                     position:'relative',
                 }}>
                     <Card className='mt-2' header='测试 Table Scroll'>
-                        <Table hover={true} select={true} sm data={this.dataTable} fontSm width='100%'>
+                        <Table hover={true} select={true} sm data={this.dataTable} sticky fontSm width='100%'>
                             <Table.Header text='Name' field='name' width='100px' onSort={(sort)=>{alert(sort)}}/>
                             <Table.Header text='Age' field='age' width='250px' hide/>
                             <Table.Header text='Birthday' field='birthday' width='350px'/>
@@ -180,7 +180,7 @@ class TestTable extends React.PureComponent {
                     </Card>
                 </div>
                 <Card className='mt-2' header='测试 Table Scroll'>
-                    <Table hover={true} select={true} sm data={this.dataTable} fontSm width='100%'>
+                    <Table hover={true} select={true} sm data={this.dataTable} fontSm width='100%' sticky>
                         <Table.Header text='Name' field='name' width='100px' onSort={(sort)=>{alert(sort)}}/>
                         <Table.Header text='Age' field='age' width='250px' hide/>
                         <Table.Header text='Birthday' field='birthday' width='350px'/>

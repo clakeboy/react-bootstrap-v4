@@ -4,7 +4,7 @@
     "noEmitOnError": true,
     "removeComments": false,
     "sourceMap": false,
-    "target": "es2020",
+    "target": "ES2022",
     "module": "umd",
     "jsx": "react",
     "allowJs": true,

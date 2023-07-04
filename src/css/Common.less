@@ -2,5 +2,18 @@
   & > div {
     margin-bottom: .5rem;
     margin-right: .5rem;
+    width: auto;
+  }
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  .form-control {
+    display: inline-block;
+  }
+}
+
+.comm-box-hover {
+  &:hover {
+    box-shadow: 0 .2rem .5rem rgba(0,0,0,.10)!important;
   }
 }

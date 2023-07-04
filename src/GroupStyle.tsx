@@ -14,7 +14,17 @@ interface Props extends React.ComponentProps<any>{
 //     value: string
 // }
 
-class GroupStyle extends React.Component<Props, null> {
+class GroupStyleContent extends React.Component<any, any> {
+    render() {
+        return <div className="input-group-append">
+                <div className={'custom custom-right bg-white'}>
+                    {this.props.children}
+                </div>
+        </div>;
+    }
+}
+
+export class GroupStyle extends React.Component<Props, null> {
 
     public static defaultProps:any = {
         className: '',
@@ -23,6 +33,8 @@ class GroupStyle extends React.Component<Props, null> {
         right: null,
         size: 'df'
     };
+
+    static Content = GroupStyleContent
 
     constructor(props?: any) {
         super(props);

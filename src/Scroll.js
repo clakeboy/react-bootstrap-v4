@@ -61,8 +61,10 @@ export class Scroll extends React.PureComponent {
     initParentEvent() {
         if (this.parent) {
             this.parentDom = ReactDOM.findDOMNode(this.parent);
-        } else {
+        } else if (this.props.selector) {
             this.parentDom = document.querySelector(this.props.selector);
+        } else {
+            this.parentDom = this.dom.parentNode
         }
 
         if (this.parentDom) {

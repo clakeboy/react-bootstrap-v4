@@ -30,7 +30,7 @@ export class Input extends React.Component {
         plaintext     : PropTypes.bool,
         calendarFormat: PropTypes.string,
         calendarTime  : PropTypes.bool,
-        validate      : PropTypes.object,  //{text:'',rule:/asdf/}
+        validate      : PropTypes.object,  //{text:'',rule:/asdf/,tip:false}
         disabled      : PropTypes.bool,
         combo         : PropTypes.object,
         comboData     : PropTypes.object,
@@ -248,8 +248,16 @@ export class Input extends React.Component {
 
     validate(val) {
         if (this.props.validate) {
-            let valid = this.props.validate.rule.test(val);
+            const vali = this.props.validate
+            let valid;
+            if (typeof vali.rule === 'function') {
+                valid = vali.rule(val)
+            } else {
+                valid = vali.rule.test(val);
+            }
+            if (vali.tip) {
                 $('#'+this.domId).tooltip(valid?'hide':'show');
+            }
             return valid;
         }
         return true;
@@ -396,9 +404,9 @@ export class Input extends React.Component {
     }
 
     renderSummary() {
-        if (!this.state.validate) {
+        if (!this.state.validate && !this.props.validate.tip) {
             return (
-                <div className='invalid-feedback'>
+                <div className='invalid-feedback' style={{display:'block'}}>
                     {this.props.validate.text}
                 </div>
             )

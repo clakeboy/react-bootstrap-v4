@@ -47,7 +47,7 @@ export * from './CalendarRange';
 export * from './ImageView';
 export * from './Row';
 export * from './Alerts';
-
+export * from './GroupStyle';
 import Modal from "./CKModal";
 import Common from "./Common";
 

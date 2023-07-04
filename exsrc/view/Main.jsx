@@ -279,7 +279,7 @@ class Main extends React.Component {
                     }}/>
                 </Card>
                 <Card header='Calendar'>
-                    <Calendar value={this.state.chose_date} lang='en'/>
+                    <Calendar value={this.state.chose_date} lang='en' timeBar/>
                     <Calendar value={this.state.chose_date} onSelect={(value)=>{
                         this.setState({chose_date:value})
                     }}/>

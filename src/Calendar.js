@@ -5,6 +5,7 @@ import './css/Calender.less';
 import Icon from './Icon';
 import common, {str_pad} from './Common';
 import Button from "./Button";
+import Scroll from "./Scroll";
 const i18n = {
     'zh': {
         'week' : [
@@ -125,6 +126,7 @@ export class Calendar extends React.PureComponent {
         //     start: null,
         //     end: null
         // };
+        this.domId = 'cale-'+common.RandomString(8);
     }
 
     componentDidMount() {
@@ -627,55 +629,64 @@ export class Calendar extends React.PureComponent {
         return (
             <tr>
                 <td colSpan={7}>
-                    <div className='d-flex bd-highlight'>
-                        <div className='flex-fill bd-highlight'>
+                    <div className='row no-gutters bd-highlight'>
+                        <div className='col bd-highlight'>
                             {lang['time']['hour']}
                         </div>
-                        <div className='flex-fill bd-highlight'>
+                        <div className='col bd-highlight'>
                             {lang['time']['min']}
                         </div>
-                        <div className='flex-fill bd-highlight'>
+                        <div className='col bd-highlight'>
                             {lang['time']['sec']}
                         </div>
                     </div>
-                    <div className='d-flex bd-highlight' style={{
+                    <div className='row no-gutters bd-highlight' style={{
                         'height':'150px'
                     }}>
-                        <div className='flex-fill bd-highlight overflow-auto border'>
-                            {this.hours.map((item)=>{
-                                if (item === this.state.hour) {
-                                    return <div className='ck-calendar-time-item active'>{item}</div>
-                                }
-                                return <div className='ck-calendar-time-item' onClick={()=>{
-                                    this.setState({
-                                        hour:item
-                                    });
-                                }}>{item}</div>
-                            })}
+                        <div className='col h-100 bd-highlight border position-relative'>
+                            <div id={this.domId+'-h'} className='h-100'>
+                                {this.hours.map((item)=>{
+                                    if (item === this.state.hour) {
+                                        return <div className='ck-calendar-time-item active'>{item}</div>
+                                    }
+                                    return <div className='ck-calendar-time-item' onClick={()=>{
+                                        this.setState({
+                                            hour:item
+                                        });
+                                    }}>{item}</div>
+                                })}
+                            </div>
+                            <Scroll selector={'#'+this.domId+'-h'}/>
                         </div>
-                        <div className='flex-fill bd-highlight overflow-auto border'>
-                            {this.minute.map((item)=>{
-                                if (item === this.state.minute) {
-                                    return <div className='ck-calendar-time-item active'>{item}</div>
-                                }
-                                return <div className='ck-calendar-time-item' onClick={()=>{
-                                    this.setState({
-                                        minute:item
-                                    });
-                                }}>{item}</div>
-                            })}
+                        <div className='col h-100 bd-highlight border position-relative'>
+                            <div id={this.domId+'-m'} className='h-100'>
+                                {this.minute.map((item)=>{
+                                    if (item === this.state.minute) {
+                                        return <div className='ck-calendar-time-item active'>{item}</div>
+                                    }
+                                    return <div className='ck-calendar-time-item' onClick={()=>{
+                                        this.setState({
+                                            minute:item
+                                        });
+                                    }}>{item}</div>
+                                })}
+                            </div>
+                            <Scroll selector={'#'+this.domId+'-m'}/>
                         </div>
-                        <div className='flex-fill bd-highlight overflow-auto border'>
-                            {this.sec.map((item)=>{
-                                if (item === this.state.second) {
-                                    return <div className='ck-calendar-time-item active'>{item}</div>
-                                }
-                                return <div className='ck-calendar-time-item' onClick={()=>{
-                                    this.setState({
-                                        second:item
-                                    });
-                                }}>{item}</div>
-                            })}
+                        <div className='col h-100 bd-highlight border position-relative'>
+                            <div id={this.domId+'-s'} className='h-100'>
+                                {this.sec.map((item)=>{
+                                    if (item === this.state.second) {
+                                        return <div className='ck-calendar-time-item active'>{item}</div>
+                                    }
+                                    return <div className='ck-calendar-time-item' onClick={()=>{
+                                        this.setState({
+                                            second:item
+                                        });
+                                    }}>{item}</div>
+                                })}
+                            </div>
+                            <Scroll selector={'#'+this.domId+'-s'}/>
                         </div>
                     </div>
                 </td>

@@ -1,11 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, {object} from 'prop-types';
 import classNames from 'classnames/bind';
 import TableHeader from './TableHeader';
 import TableHeaderRow from "./TableHeaderRow";
 import CCheckbox from "./CCheckbox";
 import Button from './Button';
-import common from "./Common";
+import common, {GetDomXY, hasScrolledParent} from "./Common";
 import Icon from './Icon';
 
 import './css/Table.less';
@@ -18,40 +18,41 @@ export class Table extends React.Component {
     static Header = TableHeader;
     static HeaderRow = TableHeaderRow;
     static propTypes = {
-        theme      : PropTypes.oneOf(['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark']),
-        headerTheme: PropTypes.oneOf(['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark']),
-        headClass  : PropTypes.string,
-        data       : PropTypes.array,
-        dataCount  : PropTypes.number,
-        select     : PropTypes.bool,
-        header     : PropTypes.bool,
-        center     : PropTypes.bool,
-        currentPage: PropTypes.number,
-        striped    : PropTypes.bool,
-        bordered   : PropTypes.bool,
-        hover      : PropTypes.bool,
-        sm         : PropTypes.bool,
-        fontSm     : PropTypes.bool,
-        responsive : PropTypes.bool,
-        align      : PropTypes.string,
-        tree       : PropTypes.bool,
-        onClickTree: PropTypes.func,
-        onClick    : PropTypes.func,
-        onCheck    : PropTypes.func,
-        move       : PropTypes.bool,
-        onRefresh  : PropTypes.func,
-        refreshText: PropTypes.string,
-        absolute   : PropTypes.bool,
-        x          : PropTypes.string,
-        y          : PropTypes.string,
-        width      : PropTypes.string,
-        height     : PropTypes.string,
-        scroll     : PropTypes.bool,
-        emptyText  : PropTypes.string,
-        fixed: PropTypes.bool,
+        theme       : PropTypes.oneOf(['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark']),
+        headerTheme : PropTypes.oneOf(['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark']),
+        headClass   : PropTypes.string,
+        data        : PropTypes.array,
+        dataCount   : PropTypes.number,
+        select      : PropTypes.bool,
+        header      : PropTypes.bool,
+        center      : PropTypes.bool,
+        currentPage : PropTypes.number,
+        striped     : PropTypes.bool,
+        bordered    : PropTypes.bool,
+        hover       : PropTypes.bool,
+        sm          : PropTypes.bool,
+        fontSm      : PropTypes.bool,
+        responsive  : PropTypes.bool,
+        align       : PropTypes.string,
+        tree        : PropTypes.bool,
+        onClickTree : PropTypes.func,
+        onClick     : PropTypes.func,
+        onCheck     : PropTypes.func,
+        move        : PropTypes.bool,
+        onRefresh   : PropTypes.func,
+        refreshText : PropTypes.string,
+        absolute    : PropTypes.bool,
+        x           : PropTypes.string,
+        y           : PropTypes.string,
+        width       : PropTypes.string,
+        height      : PropTypes.string,
+        scroll      : PropTypes.bool,
+        emptyText   : PropTypes.string,
+        fixed       : PropTypes.bool,
         serialNumber: PropTypes.bool, //是否显示序列号
-        truncate: PropTypes.bool,//文字是否截断
-        menu :PropTypes.element,
+        truncate    : PropTypes.bool,//文字是否截断
+        menu        : PropTypes.element,
+        sticky      : PropTypes.bool
     };
 
     static defaultProps = {
@@ -75,7 +76,10 @@ export class Table extends React.Component {
             data   : this.props.data,
             select : this.props.select,
             tree   : {},
-            refresh: typeof this.props.onRefresh === 'function'
+            refresh: typeof this.props.onRefresh === 'function',
+            selectRows: {},
+            selectAll: false,
+            selectHalf: false,
         };
 
         this.treeOpens = {};
@@ -113,10 +117,57 @@ export class Table extends React.Component {
         window.addEventListener('resize',this.holdShow,false);
         this.syncRowsHeight();
         this.holdShow();
+        this.sticky();
     }
 
     componentWillUnmount() {
         window.removeEventListener('resize',this.holdShow,false);
+        if (this.props.sticky) {
+            if (this.stickyDom === document.documentElement) {
+                document.removeEventListener('scroll',this.stickyHeader)
+            } else {
+                this.stickyDom.removeEventListener('scroll',this.stickyHeader)
+            }
+        }
+    }
+
+    sticky() {
+        if (!this.props.sticky) return
+        let parentScroll = hasScrolledParent(this.mainDom)
+        if (parentScroll === undefined) {
+            document.addEventListener('scroll',this.stickyHeader,false)
+            this.stickyDom = document.documentElement
+        } else {
+            parentScroll.addEventListener('scroll',this.stickyHeader,false)
+            this.stickyDom = parentScroll
+        }
+    }
+
+    stickyHeader = (e) => {
+        let hxy;
+        if (this.stickyDom === document.documentElement) {
+            hxy = GetDomXY(this.mainDom)
+        } else {
+            hxy = GetDomXY(this.mainDom,this.stickyDom)
+        }
+
+        if (hxy.top < this.stickyDom.scrollTop) {
+            this.tableHeader.style.transform = `translate3d(0,${this.stickyDom.scrollTop-hxy.top}px,10px)`;
+            if (this.afterHeader) {
+                this.afterHeader.style.transform = `translate3d(0,${this.stickyDom.scrollTop-hxy.top}px,10px)`;
+            }
+            if (this.beforeHeader) {
+                this.beforeHeader.style.transform = `translate3d(0,${this.stickyDom.scrollTop-hxy.top}px,10px)`;
+            }
+        } else {
+            this.tableHeader.style.transform = `translate3d(0,0,10px)`;
+            if (this.afterHeader) {
+                this.afterHeader.style.transform = `translate3d(0,0,10px)`;
+            }
+            if (this.beforeHeader) {
+                this.beforeHeader.style.transform = `translate3d(0,0,10px)`;
+            }
+        }
     }
 
     syncRowsHeight() {
@@ -153,7 +204,7 @@ export class Table extends React.Component {
 
         if (this.tableHeader) {
             // this.tableHeader.style.transform = `translateY(${e.currentTarget.scrollTop}px)`;
-            this.tableHeader.style.transform = `translate3d(0,0,10px)`;
+            // this.tableHeader.style.transform = `translate3d(0,0,10px)`;
         }
     }
 
@@ -183,14 +234,17 @@ export class Table extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         if (this.props.data !== nextProps.data) {
-            this.select_all = false;
-            this.selectRows = [];
-            if (this.allchk) {
-                this.allchk.setChecked(false);
-                this.allchk.setHalf(false);
-            }
+            // this.select_all = false;
+            // this.selectRows = [];
+            // if (this.allchk) {
+            //     this.allchk.setChecked(false);
+            //     this.allchk.setHalf(false);
+            // }
             this.setState({
-                data: nextProps.data
+                data: nextProps.data,
+                selectAll: false,
+                selectHalf: false,
+                selectRows: {}
             },()=>{
                 if (this.hScroll) {
                     this.hScroll.initAlignParent();
@@ -200,7 +254,13 @@ export class Table extends React.Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        return nextState.data !== this.state.data || nextState.tree !== this.state.tree;
+        if (nextState.selectRows !== this.state.selectRows) {
+            return true
+        }
+        if (nextState.data !== this.state.data) {
+            return true
+        }
+        return nextState.tree !== this.state.tree;
     }
 
     initTableWidth() {
@@ -270,29 +330,43 @@ export class Table extends React.Component {
     changeHandler(row, i) {
         return (checked,e) => {
             this.setRowCheck(checked,i,e);
-            this.checkAllCheckHalf();
+            const [allChecked,half] = this.checkAllCheckHalf();
+            let selectRows = Object.assign({},this.state.selectRows)
+            selectRows[i] = checked
+            this.setState({
+                selectRows:selectRows,
+                selectAll: allChecked,
+                selectHalf: half
+            })
             if (typeof this.props.onCheck === "function") {
-                this.props.onCheck(e.target.checked, row);
+                this.props.onCheck(checked, row);
             }
         };
     }
     checkAllCheckHalf() {
         if (!this.allchk) {
-            return;
+            return [false,false];
         }
 
-        if (this.selectRows.length > 0 && this.selectRows.length !== this.state.data.length) {
-            this.allchk.setHalf(true);
+        if (this.selectRows.length > 0 && this.selectRows.length !== this.renderCheckes.length) {
+            // this.allchk.setHalf(true);
+            return [false,true]
         }
         if (this.selectRows.length === 0) {
-            this.allchk.setHalf(false);
-            this.allchk.setChecked(false);
-        } else if (this.selectRows.length === this.state.data.length) {
-            this.allchk.setHalf(false);
-            this.allchk.setChecked(true);
+            return [false,false]
+            // this.allchk.setHalf(false);
+            // this.allchk.setChecked(false);
+        } else if (this.selectRows.length === this.renderCheckes.length) {
+            return [true,false]
+            // this.allchk.setHalf(false);
+            // this.allchk.setChecked(true);
         }
     }
     setRowCheck(checked,rowIdx) {
+        // let selectedIdx;
+        // let chkRow = this.renderCheckes.find((item,idx)=>{
+        //     return item.idx === rowIdx
+        // })
         if (checked) {
             if (!this.selectRows.includes(rowIdx)) {
                 this.selectRows.push(rowIdx);
@@ -303,11 +377,24 @@ export class Table extends React.Component {
                 this.selectRows.splice(this.selectRows.indexOf(rowIdx),1);
             }
         }
-        let row = this.refs['row_'+rowIdx];
-        if (checked) {
-            ReactDOM.findDOMNode(row).parentNode.parentNode.classList.add('ck-table-selected');
-        } else {
-            ReactDOM.findDOMNode(row).parentNode.parentNode.classList.remove('ck-table-selected');
+
+        // if (checked) {
+        //     ReactDOM.findDOMNode(chkRow.ref).parentNode.parentNode.classList.add('ck-table-selected');
+        // } else {
+        //     ReactDOM.findDOMNode(chkRow.ref).parentNode.parentNode.classList.remove('ck-table-selected');
+        // }
+        // console.log(this.selectRows)
+    }
+
+    refCheck(row,rowIdx) {
+        return (c)=>{
+            if (!c) return
+            this.renderCheckes.push({
+                ref:c,
+                idx:rowIdx,
+                data:row
+            })
+            // this.renderRows.push(row)
         }
     }
 
@@ -335,11 +422,18 @@ export class Table extends React.Component {
 
     selectAll = (checked) => {
         this.select_all = checked;
-        common.map(this.refs, (item,key,idx) => {
-            item.setChecked(this.select_all);
-            this.setRowCheck(this.select_all,idx);
+        let selectRows = {}
+        this.renderCheckes.forEach((item,idx) => {
+            item.ref.setChecked(this.select_all);
+            this.setRowCheck(this.select_all,item.idx);
+            selectRows[item.idx] = checked
         });
-        this.checkAllCheckHalf();
+        const [allChecked,half] = this.checkAllCheckHalf();
+        this.setState({
+            selectRows:selectRows,
+            selectAll: checked,
+            selectHalf: half
+        })
     };
 
     /**
@@ -348,7 +442,10 @@ export class Table extends React.Component {
      */
     getSelectRows() {
         return this.selectRows.map((item)=>{
-            return this.state.data[item];
+            let chkItem = this.renderCheckes.find((chk,idx)=>{
+                return chk.idx === item
+            })
+            return chkItem.data
         });
     }
 
@@ -358,16 +455,19 @@ export class Table extends React.Component {
      * @param list 要选中的数据值
      */
     setSelectRows(key, list) {
-        this.state.data.forEach((row, i) => {
-            if (list.indexOf(row[key]) !== -1) {
-                this.refs['row_' + i].setChecked(true);
-                this.setRowCheck(true,i);
-            } else {
-                this.refs['row_' + i].setChecked(false);
-                this.setRowCheck(false,i);
-            }
+        let selectRows = {}
+        this.renderCheckes.forEach((chk, idx) => {
+            let checked = list.includes(chk.data[key])
+            chk.ref.setChecked(checked);
+            this.setRowCheck(checked,chk.idx);
+            selectRows[chk.idx] = checked
         });
-        this.checkAllCheckHalf();
+        const [allChecked,half] = this.checkAllCheckHalf();
+        this.setState({
+            selectRows:selectRows,
+            selectAll: allChecked,
+            selectHalf: half
+        })
     }
 
     getClasses(css) {
@@ -404,6 +504,9 @@ export class Table extends React.Component {
             base = classNames(base, 'fixed');
         }
 
+        if (this.props.height) {
+            base = classNames(base,'sticky-thead')
+        }
 
         return classNames(base,css);
     }
@@ -459,7 +562,7 @@ export class Table extends React.Component {
         if (width) {
             base.width = width;
         }
-        if (this.props.height) {
+        if (this.props.height || this.props.sticky) {
             base.transformStyle = 'preserve-3d';
         }
         return base;
@@ -470,23 +573,22 @@ export class Table extends React.Component {
         if (this.props.headerTheme) {
             base = 'thead-' + this.props.headerTheme;
         }
+        if (this.props.sticky) {
+            base = classNames(base,'sticky-thead-row')
+        }
         return classNames(base, this.props.headClass);
     }
 
     scrollHandler = (e) => {
-        if (this.tableHeader && e.currentTarget.scrollHeight > e.currentTarget.clientHeight) {
-            // this.tableHeader.style.transform = `translateY(${e.currentTarget.scrollTop}px)`;
-            this.tableHeader.style.transform = `translate3d(0,${e.currentTarget.scrollTop}px,10px)`;
-        }
         if (this.beforeBody) {
             document.querySelector('.ck-table-hold-before').scrollTop = e.currentTarget.scrollTop
-            let head = this.beforeBody.querySelector('thead')
-            if (head) head.style.transform = `translate3d(0,${e.currentTarget.scrollTop}px,10px)`;
+            // let head = this.beforeBody.querySelector('thead')
+            // if (head) head.style.transform = `translate3d(0,${e.currentTarget.scrollTop}px,10px)`;
         }
         if (this.afterBody) {
             document.querySelector('.ck-table-hold-after').scrollTop = e.currentTarget.scrollTop
-            let head = this.afterBody.querySelector('thead')
-            if (head) head.style.transform = `translate3d(0,${e.currentTarget.scrollTop}px,10px)`;
+            // let head = this.afterBody.querySelector('thead')
+            // if (head) head.style.transform = `translate3d(0,${e.currentTarget.scrollTop}px,10px)`;
         }
         this.holdShadow();
     };
@@ -522,6 +624,7 @@ export class Table extends React.Component {
             divClass += ' ck-table-fixed-h'
         }
         divClass = classNames(divClass,this.props.className)
+        this.renderCheckes = [];
         return (
             <div className={divClass} id={this.domId+'_main'} style={this.getMainStyle()}>
                 <div ref={c => this.mainDom = c} id={this.domId}  className={this.getMainClass()} style={this.getStyles()}>
@@ -597,13 +700,19 @@ export class Table extends React.Component {
 
     renderHeader(filter,filter_type) {
         return (
-            <thead ref={c => {if (!filter) this.tableHeader = c}} className={this.getHeaderClasses()}>
+            <thead ref={c => {
+                if (!filter) {
+                    this.tableHeader = c
+                } else {
+                    this[filter_type+'Header'] = c
+                }
+            }} className={this.getHeaderClasses()}>
             {this.renderHeaderRow(filter,filter_type)}
             <tr>
                 {this.props.serialNumber&&filter_type !== 'after'?<th style={{width:'30px',textAlign:'center'}}/>:null}
                 {this.state.select &&filter_type !== 'after'?
                     <th className='chk' style={{textAlign:'center',width:'30px'}}>
-                        <CCheckbox ref={c=>{this.allchk=c}} onChange={this.selectAll}/>
+                        <CCheckbox ref={c=>{this.allchk=c}} onChange={this.selectAll} checked={this.state.selectAll} half={this.state.selectHalf}/>
                     </th> : null}
                 {this.headers.map((item, key) => {
                     if (!item || item.props.hide) {
@@ -697,20 +806,22 @@ export class Table extends React.Component {
             }
         }
         let dynamic_tree = typeof this.props.onClickTree === 'function';
+        let classString = this.props.onClick ? 'click-row' : this.getHeaderClasses()
+        classString += this.state.selectRows[i] ? ' ck-table-selected' : '';
         return (
-            <React.Fragment>
+            <>
                 <tr onContextMenu={(e)=>{
                     if (!this.mainMenu) return;
                     e.preventDefault();
                     this.mainMenu.show({evt:e,type:'mouse',data:row});
-                }} onMouseOver={this.hoverAuthorRow} onMouseOut={this.hoverAuthorRow} className={this.props.onClick ? 'click-row' : this.getHeaderClasses()} onClick={this.clickHandler(row, i)}>
+                }} onMouseOver={this.hoverAuthorRow} onMouseOut={this.hoverAuthorRow} className={classString} onClick={this.clickHandler(row, i)}>
                     {this.props.serialNumber && filter_type !== 'after' ?
                         <th className='sn text-nowrap' style={{textAlign:'center',width:'30px'}}>
                             {this.formatSn(i)}
                         </th> : null}
                     {this.state.select && filter_type !== 'after' ?
                         <td className='chk' style={{textAlign:'center',width:'30px'}}>
-                            {filter_type === 'main' && this.beforeFields.length > 0?null:<CCheckbox ref={'row_' + i} onChange={this.changeHandler(row, i)}/>}
+                            {filter_type === 'main' && this.beforeFields.length > 0?null:<CCheckbox ref={this.refCheck(row,i)} onChange={this.changeHandler(row, i)} checked={!!this.state.selectRows[i]}/>}
                         </td> : null}
                     {this.headers.map((item, key) => {
                         if (!item || item.props.hide) {
@@ -801,7 +912,7 @@ export class Table extends React.Component {
                     })}
                 </tr>
                 {this.props.tree ? this.renderTreeRow(row, i,indent+1,filter,filter_type) : null}
-            </React.Fragment>
+            </>
         );
     }
 
@@ -828,7 +939,7 @@ export class Table extends React.Component {
             <div className='ck-table-hold-before' style={style}>
                 <table ref={c=>this.beforeBody=c} id={this.domId+'_before_body'} className={this.getClasses()} style={this.getTableStyles(this.beforeHoldWidth)}>
                     {this.renderCol(this.beforeFields)}
-                    {this.props.header ? this.renderHeader(this.beforeFields) : null}
+                    {this.props.header ? this.renderHeader(this.beforeFields,'before') : null}
                     <tbody>
                     {this.renderBody(this.beforeFields)}
                     </tbody>

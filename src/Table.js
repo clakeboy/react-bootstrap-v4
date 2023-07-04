@@ -156,12 +156,13 @@ export class Table extends React.Component {
         }
 
         if (hxy.top < this.stickyDom.scrollTop) {
-            this.tableHeader.style.transform = `translate3d(0,${this.stickyDom.scrollTop-hxy.top}px,10px)`;
+            let y = this.stickyDom.scrollTop-hxy.top-2
+            this.tableHeader.style.transform = `translate3d(0,${y}px,10px)`;
             if (this.afterHeader) {
-                this.afterHeader.style.transform = `translate3d(0,${this.stickyDom.scrollTop-hxy.top}px,10px)`;
+                this.afterHeader.style.transform = `translate3d(0,${y}px,10px)`;
             }
             if (this.beforeHeader) {
-                this.beforeHeader.style.transform = `translate3d(0,${this.stickyDom.scrollTop-hxy.top}px,10px)`;
+                this.beforeHeader.style.transform = `translate3d(0,${y}px,10px)`;
             }
         } else {
             this.tableHeader.style.transform = `translate3d(0,0,10px)`;

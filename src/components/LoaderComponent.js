@@ -5,7 +5,16 @@ import React from 'react';
 import PropTypes from "prop-types";
 import Load from '../Load';
 
-export default class Loader extends React.Component {
+export class Loader extends React.Component {
+    static propTypes = {
+        loadPath: PropTypes.string,
+        import: PropTypes.func,
+    }
+
+    static defaultProps = {
+        loadPath:""
+    };
+
     constructor(prop) {
         super(prop);
         this.state = {
@@ -62,11 +71,4 @@ export default class Loader extends React.Component {
     }
 }
 
-Loader.propTypes = {
-    loadPath: PropTypes.string,
-    import: PropTypes.func,
-};
-
-Loader.defaultProps = {
-    loadPath:""
-};
+export default Loader;

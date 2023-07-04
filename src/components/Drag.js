@@ -9,7 +9,7 @@ let move = {
     y:0
 };
 
-export default class Drag {
+export class Drag {
     /**
      * 初始化方法
      * @param dragDom  DOMElement|string   拖动对像,可以传入DOM对像或selector字符串
@@ -111,3 +111,5 @@ export default class Drag {
 function defaultEvent() {
     return true;
 }
+
+export default Drag

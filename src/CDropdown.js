@@ -22,6 +22,7 @@ export class CDropdown extends React.Component {
         size: PropTypes.string,
         dropWidth: PropTypes.string,
         width: PropTypes.string,
+        validate: PropTypes.object,
     };
     static defaultProps = {
         data: '',
@@ -67,6 +68,7 @@ export class CDropdown extends React.Component {
                    placeholder={this.props.text}
                    data={active??this.props.data}
                    size={this.props.size}
+                   validate={this.props.validate}
             />
         );
     }

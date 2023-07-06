@@ -190,12 +190,12 @@ class Coupon extends React.Component {
                 <Button onClick={()=>{
                     this.props.history.goBack();
                 }}>返回主页</Button>
-                <Card className='mt-2' custom header="Load 动画组件">
+                <Card className='mt-2 comm-box-hover' custom header="Load 动画组件">
                     <div>
                         <Load>内容加载中</Load>
                     </div>
                 </Card>
-                <Card divider border={'info'} className='mt-2' header="优惠券添加">
+                <Card divider border={'info'} className='mt-2 comm-box-hover' header="优惠券添加">
                     <Container inline>
                         <Input field='name' width='200px' data={this.state.data.name} multi={{height:'100px'}}/>
                         <Input field='name_s' data={this.state.data.name_s}/>
@@ -213,16 +213,17 @@ class Coupon extends React.Component {
                             console.log(this.state.data);
                         })
                     }}>
-                        <div className='form-row'>
-                            <Input className='col-6' field='name' label='Name' data={this.state.data.name} multi={{height:'100px'}}/>
-                            <ComboBox className='col-6' field='task_combo' label='Task' width='100%' searchColumn='task_name_eng' data={this.child} value={this.state.data.task_combo}>
+                        <div className='form-row comm-box-hover'>
+                            <Input className='col-6' field='name' label='Name' data={this.state.data.name} multi={{height:'100px'}} validate={{text:'请选择下拉选择',rule:/.+/}}/>
+                            <ComboBox className='col-6' field='task_combo' label='Task' width='100%' searchColumn='task_name_eng'
+                                      data={this.child} value={this.state.data.task_combo} validate={{text:'请选择Task',rule:/.+/}}>
                                 <ComboBox.Column text='任务名英文' field='task_name_eng'/>
                                 <ComboBox.Column text='任务名' field='task_name'/>
                                 <ComboBox.Column text='时间' field='time_rule'/>
                             </ComboBox>
                         </div>
                         <div className='form-row'>
-                            <CDropdown className='col-6' field='text_drop' label='asdf' text='下拉选择'>
+                            <CDropdown className='col-6' field='text_drop' label='asdf' text='下拉选择' validate={{text:'请选择下拉选择',rule:/.+/}}>
                                 <CDropdown.Value text='选项1' value={11111} active={this.state.data.text_drop==='选项1'}/>
                                 <CDropdown.Value text='选项2' value={222222} active={this.state.data.text_drop==='选项2'}/>
                             </CDropdown>
@@ -287,7 +288,7 @@ class Coupon extends React.Component {
                         {this.renderForm()}
                     </Form>
                 </Card>
-                <Card className='mt-2' header="模态窗口">
+                <Card className='mt-2 comm-box-hover' header="模态窗口">
                     <ButtonGroup>
                     <Button onClick={e=>this.modal.alert('测试效果',()=>{
                         console.log('asdfsadf');
@@ -330,7 +331,7 @@ class Coupon extends React.Component {
                         })
                     }}>Button Block</Button>
                 </Card>
-                <Card className='mt-2' header='树组件 Card 自定义头' custom border='light'>
+                <Card className='mt-2 comm-box-hover' header='树组件 Card 自定义头' custom border='light'>
                     <Tree data={this.state.tree} showSelected onClick={(item,id)=>{
                         // this.modal.alert(item.text+id);
                         console.log(item);

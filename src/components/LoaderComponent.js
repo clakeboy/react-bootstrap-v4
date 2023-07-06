@@ -4,6 +4,7 @@
 import React from 'react';
 import PropTypes from "prop-types";
 import Load from '../Load';
+import {under2hump} from "../Common";
 
 export class Loader extends React.Component {
     static propTypes = {
@@ -38,8 +39,18 @@ export class Loader extends React.Component {
         }
     }
 
+    explainUrl(path) {
+        let arr = path.split('/');
+        arr.shift();
+        let module = arr.pop();
+        module = under2hump(module)
+        let ext_path = arr.length > 0 ? '/' : '';
+        return ext_path + arr.join('/') + "/" + module;
+    }
+
     loadComponent(loadPath) {
-        this.props.import(loadPath).then(component=>{
+        let filePath = this.explainUrl(loadPath);
+        this.props.import(filePath).then(component=>{
             if (typeof component === "string") {
                 this.setState({
                     noFound:true

@@ -3,7 +3,9 @@
  */
 import React from 'react';
 import {GetComponent} from "../common/Funcs";
-import Loader from './Loader';
+import {
+    Loader
+} from "../../src/index";
 
 export default class App extends React.Component {
     constructor(props) {

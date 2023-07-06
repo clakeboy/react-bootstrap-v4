@@ -86,6 +86,7 @@ export class Calendar extends React.PureComponent {
         sm: PropTypes.bool,
         timeBar: PropTypes.bool,
         target: PropTypes.element,
+        limit: PropTypes.object //{lt:'',gt:''}
     }
     static defaultProps = {
         lang: 'zh',
@@ -96,16 +97,6 @@ export class Calendar extends React.PureComponent {
         super(props);
 
         this.setCurrentDate(this.props.value);
-
-        this.state = {
-            days: this.fillDateList(),
-            month: false,
-            year: false,
-            time: false,
-            hour: '00',
-            minute:'00',
-            second:'00'
-        };
 
         this.year = {};
 
@@ -121,12 +112,22 @@ export class Calendar extends React.PureComponent {
 
         this.parentDom = this.props.target;
 
-        this.failRange = null;
+        this.failRange = this.initFailRange(this.props.limit);
         // this.failRange = {
         //     start: null,
         //     end: null
         // };
         this.domId = 'cale-'+common.RandomString(8);
+
+        this.state = {
+            days: this.fillDateList(),
+            month: false,
+            year: false,
+            time: false,
+            hour: '00',
+            minute:'00',
+            second:'00'
+        };
     }
 
     componentDidMount() {
@@ -154,6 +155,21 @@ export class Calendar extends React.PureComponent {
 
     isTimeBar() {
 
+    }
+
+    initFailRange (limit) {
+        if (!limit) return null
+        let fail = {
+            start:null,
+            end:null
+        }
+        if (limit?.lt) {
+            fail.end = new Date(limit.lt)
+        }
+        if (limit?.gt) {
+            fail.start = new Date(limit.gt)
+        }
+        return fail
     }
 
     keyPressHandler = (e) => {
@@ -198,10 +214,20 @@ export class Calendar extends React.PureComponent {
             }
 
             if (!week[first.getDay()].disabled && this.failRange) {
-                if (first < this.failRange.start ||
-                    first > this.failRange.end) {
+                if (this.failRange.start && first < this.failRange.start) {
                     week[first.getDay()].disabled = true;
                 }
+
+                if (this.failRange.end && first > this.failRange.end) {
+                    week[first.getDay()].disabled = true;
+                }
+
+                // if (this.failRange.start && this.failRange.end) {
+                //     if (first < this.failRange.start ||
+                //         first > this.failRange.end) {
+                //         week[first.getDay()].disabled = true;
+                //     }
+                // }
             }
 
             if (first.getDay() === 6) {

@@ -39,6 +39,10 @@ export class CDropdown extends React.Component {
         };
     }
 
+    check() {
+        return this.main.check()
+    }
+
     render() {
         let active;
         if (React.Children.count(this.props.children)) {
@@ -57,7 +61,7 @@ export class CDropdown extends React.Component {
             this.listData = list;
         }
         return (
-            <Input className={this.props.className} width={this.props.width} combo={{
+            <Input ref={c=>this.main=c} className={this.props.className} width={this.props.width} combo={{
                 searchColumn:'text',
                 noSearch:true,
                 width: this.props.dropWidth,

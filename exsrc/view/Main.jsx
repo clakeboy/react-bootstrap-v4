@@ -280,9 +280,15 @@ class Main extends React.Component {
                 </Card>
                 <Card header='Calendar'>
                     <Calendar value={this.state.chose_date} lang='en' timeBar/>
-                    <Calendar value={this.state.chose_date} onSelect={(value)=>{
+                    <Calendar onSelect={(value)=>{
                         this.setState({chose_date:value})
-                    }}/>
+                    }} limit={{lt:'2023-8-21',gt:'2023-6-1'}}/>
+                    <Calendar onSelect={(value)=>{
+                        this.setState({chose_date:value})
+                    }} limit={{lt:'2023-6-1'}}/>
+                    <Calendar onSelect={(value)=>{
+                        this.setState({chose_date:value})
+                    }} limit={{gt:'2023-7-1'}}/>
                 </Card>
                 <Row>
                     clake

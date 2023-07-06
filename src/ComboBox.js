@@ -51,6 +51,10 @@ export class ComboBox extends React.Component {
         super(props);
     }
 
+    check() {
+        return this.main.check()
+    }
+
     render() {
 
         if (React.Children.count(this.props.children)) {
@@ -69,7 +73,8 @@ export class ComboBox extends React.Component {
         }
 
         return (
-            <Input className={this.props.className}
+            <Input ref={c=>this.main=c}
+                   className={this.props.className}
                    placeholder={this.props.text??this.props.placeholder}
                    label={this.props.label}
                    data={this.props.value}

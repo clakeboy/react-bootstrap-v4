@@ -119,6 +119,17 @@ class Window extends React.Component {
                                 console.log("close dom-left");
                             }});
                     }}>点击打开菜单</Button>
+                    <Button className='ml-3' theme='success' icon='plus' onClick={(e)=>{
+                        this.dicMenu.show({
+                            menu_list:[
+                                {field:'asc',children:'这是动态菜单1'},
+                                {field:'asc2',children:'这是动态菜单2'},
+                            ],
+                            evt:e,
+                            type:'dom-right',
+                            data:''
+                        })
+                    }}>动态菜单项</Button>
                     <Form onChange={(field,val,row,combo)=>{
                         console.log(field,val,row,combo)
                     }}>
@@ -226,6 +237,7 @@ class Window extends React.Component {
                         <Menu.Item>Child Menu 3</Menu.Item>
                     </Menu.Item>
                 </Menu>
+                <Menu ref={c=>this.dicMenu=c}></Menu>
                 <Alerts ref={c=>this.alert=c} />
             </Container>
         );

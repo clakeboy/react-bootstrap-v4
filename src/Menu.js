@@ -113,6 +113,20 @@ export class Menu extends React.PureComponent {
         this.domId = 'menu-' + common.RandomString(16);
 
         this.evt_close = this.props.onClose;
+        this.state = {
+            menu_list:this.initMenuData()
+        }
+    }
+
+    initMenuData() {
+        let data = []
+        React.Children.map(this.props.children,(item)=>{
+            if (item && item.type === MenuItem) {
+                item.props.parent = this;
+                data.push({...item.props})
+            }
+        })
+        return data
     }
 
     componentDidMount() {
@@ -131,9 +145,22 @@ export class Menu extends React.PureComponent {
     };
 
     show(option) {
-        this.data = option.data || '';
+        if (option?.menu_list) {
+            option.evt = Object.assign({},option.evt)
+            this.setState({
+                menu_list:option.menu_list
+            },()=>{
+                this.showHandler(option)
+            })
+        } else {
+            this.showHandler(option)
+        }
+    }
+
+    showHandler(option) {
+        this.data = option.data ?? '';
+        this.evt_close = option.close ?? null;
         this.mainDom.classList.remove('d-none');
-        this.evt_close = option.close || null;
         this.position(option);
         window.addEventListener("mousedown",this.hide,false);
     }
@@ -143,7 +170,6 @@ export class Menu extends React.PureComponent {
         this.width = this.mainDom.clientWidth;
         if (option.type === 'mouse') {
             let fixPosition = this.fixPositionScreen(option.evt.pageX,option.evt.pageY);
-
             this.mainDom.style.top = fixPosition.y + 'px';
             this.mainDom.style.left = fixPosition.x + 'px';
         } else {
@@ -238,13 +264,15 @@ export class Menu extends React.PureComponent {
             <div onContextMenu={(e)=>{
                 e.stopPropagation()
             }} id={this.domId} ref={c=>this.mainDom = c} onMouseDown={(e)=>{e.preventDefault();e.stopPropagation();}} className={this.getClasses()} style={this.getStyles()}>
-                {React.Children.map(this.props.children,(item)=>{
-                    if (item) {
-                        item.props.parent = this;
-                        return React.cloneElement(item,item.props)
-                    }
+                {/*{React.Children.map(this.props.children,(item)=>{*/}
+                {/*    if (item) {*/}
+                {/*        item.props.parent = this;*/}
+                {/*        return React.cloneElement(item,item.props)*/}
+                {/*    }*/}
+                {/*})}*/}
+                {this.state.menu_list.map((item)=>{
+                    return <MenuItem parent={this} {...item}/>
                 })}
-                {/*{this.props.children}*/}
             </div>
         );
 

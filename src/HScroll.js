@@ -82,7 +82,7 @@ export class HScroll extends React.PureComponent {
 
         if (this.props.showSelector) {
             this.showDom = document.querySelector(this.props.showSelector);
-            this.showDom.addEventListener('wheel',this.scrollHandler,false);
+            this.showDom.addEventListener('wheel',this.scrollHandler);
             this.showDom.addEventListener('mouseenter',this.showHandler,false);
             this.showDom.addEventListener('mouseleave',this.hideHandler,false);
         }
@@ -90,14 +90,14 @@ export class HScroll extends React.PureComponent {
         if (this.parentDom) {
             this.parentDom.classList.add('ck-scroll-over');
             if (!this.showDom) {
-                this.parentDom.addEventListener('wheel',this.scrollHandler,false);
+                this.parentDom.addEventListener('wheel',this.scrollHandler);
                 this.parentDom.addEventListener('mouseenter',this.showHandler,false);
                 this.parentDom.addEventListener('mouseleave',this.hideHandler,false);
             }
         }
 
         // this.dom.addEventListener("mousedown",this.beginDragHandler,false);
-        this.dom.addEventListener("wheel",this.scrollHandler,false);
+        this.dom.addEventListener("wheel",this.scrollHandler);
 
         if (this.props.alignParent) {
             this.initAlignParent();

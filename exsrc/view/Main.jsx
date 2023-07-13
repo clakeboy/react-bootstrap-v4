@@ -279,19 +279,33 @@ class Main extends React.Component {
                     }}/>
                 </Card>
                 <Card header='Calendar'>
-                    <Calendar value={this.state.chose_date} lang='en' timeBar/>
-                    <Calendar onSelect={(value)=>{
-                        this.setState({chose_date:value})
-                    }} limit={{lt:'2023-8-21',gt:'2023-6-1'}}/>
-                    <Calendar onSelect={(value)=>{
-                        this.setState({chose_date:value})
-                    }} limit={{lt:'2023-6-1'}}/>
-                    <Calendar onSelect={(value)=>{
-                        this.setState({chose_date:value})
-                    }} limit={{gt:'2023-7-1'}}/>
+                    <div className='d-flex'>
+                        <div>
+                            <div className='mb-1'>英文和时间</div>
+                            <Calendar value={this.state.chose_date} lang='en' timeBar/>
+                        </div>
+                        <div>
+                            <div className='mb-1'>2023-6-1 => 2023-8-21</div>
+                            <Calendar onSelect={(value)=>{
+                                this.setState({chose_date:value})
+                            }} limit={{lt:'2023-8-21',gt:'2023-6-1'}}/>
+                        </div>
+                        <div>
+                            <div className='mb-1'>小于 2023-6-1 可选</div>
+                            <Calendar onSelect={(value)=>{
+                                this.setState({chose_date:value})
+                            }} limit={{lt:'2023-6-1'}}/>
+                        </div>
+                        <div>
+                            <div className='mb-1'>大于 2023-7-1 可选</div>
+                            <Calendar onSelect={(value)=>{
+                                this.setState({chose_date:value})
+                            }} limit={{gt:'2023-7-1'}}/>
+                        </div>
+                    </div>
                 </Card>
                 <Row>
-                    clake
+                    Row 测试
                 </Row>
             </Container>
         );

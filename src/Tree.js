@@ -33,6 +33,8 @@ export class Tree extends React.PureComponent {
         this.checkItems = {};
         //this svg list
         this.svgList = [];
+        //checkedList
+        this.checkedList = [];
     }
 
     componentDidMount() {
@@ -105,14 +107,28 @@ export class Tree extends React.PureComponent {
     }
 
     setCheckObj(check,item,id,parent) {
+        item.id = id
         if (typeof this.props.onSelect === 'function') {
             this.props.onSelect(check,item);
         }
+
         if (check) {
             this.checkSelectList[parent].push(item);
+            let idx = this.checkedList.findIndex((val,idx)=>{
+                return val.id === id
+            })
+            if (idx === -1) {
+                this.checkedList.push(item)
+            }
         } else {
             let idx = this.checkSelectList[parent].indexOf(item);
             this.checkSelectList[parent].splice(idx,1);
+            let chk_idx = this.checkedList.findIndex((val,idx)=>{
+                return val.id === id
+            })
+            if (chk_idx !== -1) {
+                this.checkedList.splice(chk_idx,1)
+            }
         }
 
         if (this.checkItems[id] && this.checkItems[id].length > 0) {
@@ -141,7 +157,7 @@ export class Tree extends React.PureComponent {
                 parent.dataset.show = '1';
                 parent.classList.remove('d-none');
                 parent.previousElementSibling.querySelector('i').classList.add('ck-tree-icon-down');
-                this.drawLines(parent.querySelector('.ck-tree-svg'))
+                // this.drawLines(parent.querySelector('.ck-tree-svg'))
             } else {
                 parent.dataset.show = '0';
                 parent.classList.add('d-none');
@@ -151,7 +167,7 @@ export class Tree extends React.PureComponent {
     }
 
     getSelected() {
-        return this.checkSelectList;
+        return this.checkedList;
     }
 
     /**
@@ -208,6 +224,8 @@ export class Tree extends React.PureComponent {
             this.checkItems[parent_key].push({id:id,data:val});
             if (val?.checked) {
                 this.checkSelectList[parent_key].push(val);
+                val.id = id
+                this.checkedList.push(val)
             }
             return (
                 <div className='ck-tree-item' style={style}>

@@ -1,3 +1,6 @@
+// @ts-ignore
+// @ts-ignore
+// @ts-ignore
 /**
  * extend object
  * @param org
@@ -28,6 +31,17 @@ export var RandomString = (str_length,tab="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZa
 
     return out_str;
 };
+/**
+ * rand start to end number
+ * @param start
+ * @param end
+ * @returns {number}
+ */
+export var RandNum = (start,end) => {
+    let choice = end - start + 1;
+
+    return Math.floor(Math.random() * choice + start)
+}
 
 /**
  * dynamic loading script or css file
@@ -238,17 +252,18 @@ export function hasScrolledParent(el, direction = "vertical") {
 }
 
 export default {
-    extend:extend,
-    GetDomXY:GetDomXY,
-    InArray:InArray,
-    GetDPI:GetDPI,
-    LoadScript:LoadScript,
+    extend,
+    GetDomXY,
+    InArray,
+    GetDPI,
+    LoadScript,
     RandomString:RandomString,
-    map:map,
+    map,
     strpad:str_pad,
-    ucFirst:ucFirst,
-    under2hump:under2hump,
-    explainUrl:explainUrl,
-    Clone:Clone,
+    ucFirst,
+    under2hump,
+    explainUrl,
+    Clone,
     hasScrolledParent,
+    RandNum,
 };

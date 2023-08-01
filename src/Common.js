@@ -249,6 +249,27 @@ export function hasScrolledParent(el, direction = "vertical") {
     }
 }
 
+export class Runtime {
+    start;
+    constructor() {
+        this.start = new Date();
+    }
+
+    static Start() {
+        return new Runtime();
+    }
+
+    end(print) {
+        let cur_date = new Date();
+        let diff = cur_date - this.start;
+        let res = Math.floor(diff.valueOf()/1000)
+        if (print) {
+            console.log(res)
+        }
+        return res
+    }
+}
+
 export default {
     extend,
     GetDomXY,
@@ -264,4 +285,5 @@ export default {
     Clone,
     hasScrolledParent,
     RandNum,
+    Runtime
 };

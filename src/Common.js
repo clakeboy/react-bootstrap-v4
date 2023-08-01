@@ -1,6 +1,4 @@
 // @ts-ignore
-// @ts-ignore
-// @ts-ignore
 /**
  * extend object
  * @param org

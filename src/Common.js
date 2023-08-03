@@ -259,6 +259,10 @@ export class Runtime {
         return new Runtime();
     }
 
+    begin() {
+        this.start = new Date();
+    }
+
     end(print) {
         let cur_date = new Date();
         let diff = cur_date - this.start;

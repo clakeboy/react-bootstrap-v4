@@ -93,13 +93,11 @@ export class Input extends React.Component {
         this.input.addEventListener('focus', this.focusClearHandler, false);
         this.input.addEventListener('blur', this.blurClearHandler, false);
         this.input.addEventListener('mousedown',stopEvent, false);
-        if (this.props.validate) {
-            if (this.props.validate.tip) {
-                $('#'+this.domId).tooltip({
-                    'trigger':'manual',
-                    'template':'<div class="tooltip ck-input-tip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner bg-danger"></div></div>',
-                });
-            }
+        if (this.props.validate && this.props.validate?.tip) {
+            $('#'+this.domId).tooltip({
+                'trigger':'manual',
+                'template':'<div class="tooltip ck-input-tip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner bg-danger"></div></div>',
+            });
         }
 
         if (this.props.multi) {
@@ -109,7 +107,7 @@ export class Input extends React.Component {
     }
 
     componentWillUnmount() {
-        if (this.props.validate) {
+        if (this.props.validate && this.props.validate?.tip) {
             $('#'+this.domId).tooltip('dispose');
         }
     }

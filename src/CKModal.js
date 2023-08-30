@@ -381,10 +381,10 @@ export class CKModal extends React.Component {
                 <div ref={c=>this._modal=c} className={this.getClasses()} style={modalIndex} tabIndex="-1" id={this.domId} role="dialog" onMouseUp={this.state.shadowClose ? (e)=>{
                     this.close()
                 }:null}>
-                    <div className={this.getDialogClasses()} style={this.getDialogStyles()} role="document" onMouseUp={(e)=>{
+                    <div className={this.getDialogClasses()} style={this.getDialogStyles()} role="document" onMouseUp={this.state.shadowClose ? (e)=>{
                         e.stopPropagation()
                         e.preventDefault()
-                    }}>
+                    }:null}>
                         <div className="modal-content">
                             {this.state.header?<div className="modal-header">
                                 <h5 className="modal-title">{this.state.title}</h5>
@@ -421,7 +421,9 @@ CKModal.propTypes = {
     header: PropTypes.bool,
     blurSelector: PropTypes.string,
     isCloseBtn: PropTypes.bool,
-    shadowClose: PropTypes.bool
+    shadowClose: PropTypes.bool,
+    id: PropTypes.string,
+    className: PropTypes.string,
 };
 
 CKModal.defaultProps = {

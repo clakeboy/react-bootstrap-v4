@@ -21,6 +21,9 @@ module.exports = {
         'plugin:react-hooks/recommended',
     ],
     rules: {
+        "no-undef":"off",
+        "no-empty-function": "off",
+        "@typescript-eslint/no-empty-function": "off",
         "@typescript-eslint/no-explicit-any": ["off"]
     }
 };

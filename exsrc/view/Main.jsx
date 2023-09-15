@@ -285,7 +285,7 @@ class Main extends React.Component {
                             <Calendar value={this.state.chose_date} lang='en' timeBar/>
                         </div>
                         <div>
-                            <div className='mb-1'>2023-6-1 => 2023-8-21</div>
+                            <div className='mb-1'>2023-6-1 {'=>'} 2023-8-21</div>
                             <Calendar onSelect={(value)=>{
                                 this.setState({chose_date:value})
                             }} limit={{lt:'2023-8-21',gt:'2023-6-1'}}/>

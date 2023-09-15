@@ -24,6 +24,8 @@ module.exports = {
         "no-undef":"off",
         "no-empty-function": "off",
         "@typescript-eslint/no-empty-function": "off",
-        "@typescript-eslint/no-explicit-any": ["off"]
+        "@typescript-eslint/no-explicit-any": ["off"],
+        "react/prop-types":[0],
+        "react/no-direct-mutation-state":'off'
     }
 };

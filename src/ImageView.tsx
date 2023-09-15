@@ -115,7 +115,7 @@ export class ImageView extends React.Component<Props,State> {
                         </button>
                     </div>
                     <figure>
-                        <RImage display='full' className="img" width='100vw' height='100vw' sizes="100vw" src={is_obj?data.src:data}/>
+                        <RImage display='full' className="img" width='100vw' height='100vw' src={is_obj?data.src:data}/>
                     </figure>
                     <div className='foot'>
                         <figcaption className="title"></figcaption>

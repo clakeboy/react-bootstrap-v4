@@ -5,8 +5,8 @@ import './css/Title.less';
 import { ComponentProps } from './components/common';
 
 interface Props extends ComponentProps {
-    text:string
-    sm: boolean
+    text?:string
+    sm?: boolean
 }
 
 export class Title extends React.PureComponent<Props,any> {

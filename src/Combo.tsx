@@ -315,9 +315,9 @@ export class Combo extends React.Component<ComboProps,State> {
         this.isClose = true;
     };
 
-    selectHandler = (row:any,i:number)=>{
+    selectHandler = (row:any,i:string)=>{
         if (this.props.multi && this.nodeList) {
-            const node = this.nodeList[i];
+            const node = this.nodeList[parseInt(i)];
             (node?.firstChild?.firstChild as HTMLElement).click()
             return
         }
@@ -484,7 +484,7 @@ export class Combo extends React.Component<ComboProps,State> {
                        serialNumber={false}
                        data={this.state.data}
                        fixed={!!this.props.width}
-                       onCheck={this.props.multi?this.multiSelectHandler:null}
+                       onCheck={this.props.multi?this.multiSelectHandler:undefined}
                        onClick={this.selectHandler}>
                     {map(columns,(item:any)=>{
                         return <TableHeader field={item.field} width={item.width} text={item.text}

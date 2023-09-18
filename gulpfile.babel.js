@@ -77,7 +77,7 @@ gulp.task('publish:css',()=>{
 });
 
 gulp.task('publish:pack',()=>{
-    return gulp.src(['src/**/*.js','src/**/*.tsx'])
+    return gulp.src(['src/**/*.js','src/**/*.ts','src/**/*.tsx'])
         .pipe(sourcemaps.init())
         .pipe(plumber())
         .pipe(babel({

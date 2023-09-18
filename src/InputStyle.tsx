@@ -4,7 +4,7 @@ import classNames from 'classnames/bind';
 import { ComponentProps } from './components/common';
 
 interface Props extends ComponentProps {
-    label:string
+    label?:string
 }
 
 export class InputStyle extends React.PureComponent<Props,any> {

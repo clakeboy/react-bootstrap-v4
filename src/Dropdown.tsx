@@ -6,9 +6,9 @@ import Button from "./Button";
 import { ComponentProps } from './components/common';
 
 interface ValueProps {
-    text:string
-    value:any
-    active:boolean
+    text?:string
+    value?:any
+    active?:boolean
 }
 
 export class DropdownValue extends React.Component<ValueProps,any> {

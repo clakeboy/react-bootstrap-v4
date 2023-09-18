@@ -9,12 +9,12 @@ import HScroll from "./HScroll";
 import { ComponentProps, StrObject } from './components/common';
 
 interface Props extends ComponentProps {
-    header: string
-    border: string
-    custom: boolean
-    sm: boolean
-    scroll: boolean
-    divider: boolean
+    header?: string
+    border?: string
+    custom?: boolean
+    sm?: boolean
+    scroll?: boolean
+    divider?: boolean
 }
 
 export class Card extends React.PureComponent<Props,any> {

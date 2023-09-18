@@ -8,7 +8,7 @@ import RImage from "./RImage";
 import { ComponentProps } from './components/common';
 
 interface Props extends ComponentProps {
-    src:any[]
+    src?:any[]
 }
 
 interface State {
@@ -29,7 +29,7 @@ export class ImageView extends React.Component<Props,State> {
     constructor(props:any) {
         super(props);
         this.state = {
-            src: this.props.src,
+            src: this.props.src??[],
             currIdx: 0,
         }
 
@@ -46,7 +46,7 @@ export class ImageView extends React.Component<Props,State> {
     UNSAFE_componentWillReceiveProps(nextProps:Props) {
         if (nextProps.src !== this.state.src) {
             this.setState({
-                src:nextProps.src,
+                src:nextProps.src??[],
                 currIdx:0,
             })
         }

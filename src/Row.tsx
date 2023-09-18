@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from "classnames/bind";
 
 interface Props extends React.HTMLProps<any>{
-    noGutters: boolean
+    noGutters?: boolean
 }
 
 interface State {

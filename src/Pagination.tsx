@@ -6,10 +6,10 @@ import CDropdown from "./CDropdown";
 import { ComponentProps } from './components/common';
 
 interface Props extends ComponentProps {
-    current: number
-    count: number
-    number: number
-    showPages: number
+    current?: number
+    count?: number
+    number?: number
+    showPages?: number
     onSelect?: (page:any,showNumber:number,txt?:any)=>void
     align?: string
     info?: any //任意显示
@@ -55,15 +55,15 @@ export class Pagination extends React.PureComponent<Props,State> {
     constructor(props:any) {
         super(props);
 
-        this.show_pages = this.props.showPages;
-        this.current = this.props.current;
-        this.count = calculatePages(this.props.count,this.props.number);
+        this.show_pages = this.props.showPages??Pagination.defaultProps.showPages;
+        this.current = this.props.current??1;
+        this.count = calculatePages(this.props.count??1,this.props.number??1);
         this.is_more = false;
         this.is_after = false;
 
         this.state = {
             data: this.showPages(),
-            showNumber:this.props.number
+            showNumber:this.props.number??1
         };
     }
 
@@ -71,11 +71,11 @@ export class Pagination extends React.PureComponent<Props,State> {
         if (this.props.count !== nextProps.count ||
             this.props.current !== nextProps.current ||
             this.props.number !== nextProps.number) {
-            this.current = nextProps.current;
-            this.count = calculatePages(nextProps.count,nextProps.number);
+            this.current = nextProps.current??1;
+            this.count = calculatePages(nextProps.count??1,nextProps.number??1);
             this.setState({
                 data:this.showPages(),
-                showNumber:nextProps.number
+                showNumber:nextProps.number??1
             });
         }
     }

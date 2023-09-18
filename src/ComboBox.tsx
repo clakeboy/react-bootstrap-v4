@@ -6,8 +6,8 @@ import { ComponentProps } from './components/common';
 interface ColumnProps extends ComponentProps {
     field: string
     text: string
-    format: (val:any,row?:any)=>any //func (val,row)=>{return val;}
-    width: string
+    format?: (val:any,row?:any)=>any //func (val,row)=>{return val;}
+    width?: string
 }
 
 class ComboBoxColumn extends React.Component<ColumnProps,any> {
@@ -22,16 +22,16 @@ class ComboBoxColumn extends React.Component<ColumnProps,any> {
 interface Props extends ComponentProps {
     label?: string
     searchColumn?: string
-    data: any
-    showRows: number
-    search: string
+    data?: any
+    showRows?: number
+    search?: string
     onSearch?: (search:string,callback:(data:any)=>void)=>void
     onSelect?: (val:any,row:any)=>void
     onClose?: ()=>void
     onShow?: ()=>void
     sm?: boolean
-    multi: boolean
-    multiDef: any
+    multi?: boolean
+    multiDef?: any
     onChange?: ()=>void
     //filter column exp: ['name','age'] or [{field:'name',width:'100px'},{field:'age',width:'100px'}]
     filterColumns?: any

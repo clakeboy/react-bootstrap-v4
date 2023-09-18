@@ -5,11 +5,11 @@ import './css/Label.less';
 import { ComponentProps, StrObject } from './components/common';
 
 interface Props extends ComponentProps {
-    text     : string
-    color    : string
-    backColor: string
-    sm       : boolean
-    align: string
+    text     ?: string
+    color    ?: string
+    backColor?: string
+    sm       ?: boolean
+    align?: string
 }
 
 interface State {
@@ -32,7 +32,7 @@ export class Label extends React.PureComponent<Props,State> {
     constructor(props:any) {
         super(props);
         this.state = {
-            text: this.props.text
+            text: this.props.text??''
         };
     }
 
@@ -43,7 +43,7 @@ export class Label extends React.PureComponent<Props,State> {
     static getDerivedStateFromProps(nextProps:Props, prevState:State):State|null {
         if (prevState.text !== nextProps.text) {
             return {
-                text: nextProps.text
+                text: nextProps.text??''
             };
         }
 

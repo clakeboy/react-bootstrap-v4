@@ -7,12 +7,12 @@ import common from "./Common";
 import { ComponentProps } from './components/common';
 
 interface Props extends ComponentProps {
-    border: boolean
-    borderTheme: string
-    round: boolean
-    shadow: boolean
-    selector: string
-    position: string
+    border?: boolean
+    borderTheme?: string
+    round?: boolean
+    shadow?: boolean
+    selector?: string
+    position?: string
 }
 
 
@@ -37,7 +37,7 @@ export class DropPanel extends React.Component<Props,any> {
     targetDom?:HTMLElement
     mainDom:HTMLDivElement
     componentDidMount() {
-        this.targetDom = document.querySelector(this.props.selector)??undefined;
+        this.targetDom = document.querySelector(this.props.selector??'')??undefined;
         this.iniTarget();
     }
 

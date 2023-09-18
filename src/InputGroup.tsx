@@ -4,12 +4,12 @@ import classNames from 'classnames/bind';
 import { ComponentProps } from './components/common';
 
 interface Props extends ComponentProps {
-    label      : string
-    data       : any
-    summary    : string
-    placeholder: string
-    disabled: boolean
-    onChange: (val:any,obj?:any)=>void
+    label      ?: string
+    data       ?: any
+    summary    ?: string
+    placeholder?: string
+    disabled?: boolean
+    onChange?: (val:any,obj?:any)=>void
 }
 
 interface State {
@@ -37,9 +37,9 @@ export class InputGroup extends React.PureComponent<Props,State> {
     constructor(props:any) {
         super(props);
         this.state = {
-            label: this.props.label,
+            label: this.props.label??'',
             value: this.props.data,
-            disabled: this.props.disabled
+            disabled: this.props.disabled??false
         };
     }
 

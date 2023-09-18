@@ -14,7 +14,7 @@ import RadioGroup from "./RadioGroup";
 import { ComponentProps } from './components/common';
 
 interface Props extends ComponentProps {
-    onChange: (val:any,row?:any,obj?:any,combo?:any)=>void
+    onChange?: (val:any,row?:any,obj?:any,combo?:any)=>void
 }
 
 export class Form extends React.PureComponent<Props,any> {

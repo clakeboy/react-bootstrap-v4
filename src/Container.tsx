@@ -4,8 +4,8 @@ import classNames from 'classnames/bind';
 import { ComponentProps } from './components/common';
 
 interface Props extends ComponentProps {
-    fluid: boolean
-    inline: boolean
+    fluid?: boolean
+    inline?: boolean
 }
 
 export class Container extends React.Component<Props,any> {

@@ -2,12 +2,11 @@ import React from 'react';
 import classNames from 'classnames/bind';
 import './css/GroupStyle.less';
 interface Props extends React.ComponentProps<any>{
-    right: string | JSX.Element | undefined //组右边内容
-    left: string | JSX.Element | undefined //组左边内容
-    leftClass: string
-    rightClass: string
+    right?: string | JSX.Element | undefined //组右边内容
+    left?: string | JSX.Element | undefined //组左边内容
+    leftClass?: string
+    rightClass?: string
     size?: string
-    className: string
 }
 
 // interface State {

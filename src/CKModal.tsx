@@ -48,7 +48,7 @@ interface Props extends ComponentProps {
     isCloseBtn?: boolean
     shadowClose?: boolean
     id?: string
-    btns: {[propsName:string]:string}
+    btns?: {[propsName:string]:string}
 }
 
 interface State {
@@ -265,11 +265,14 @@ export class CKModal extends React.Component<Props,State> {
      * modal loading method
      * @param opt
      */
-    loading(opts:Options) {
+    loading(opt:Options|string) {
+        const opts:Options = typeof opt === 'object'? opt:{
+            content: opt
+        }
         this.modalType = ModalLoading;
         this.setState({
             title:opts.title??'',
-            content:opts.content||opts||'',
+            content:opts.content||opt||'',
             isCloseBtn:opts.close??true,
             header:!opts.title?false:opts.header??this.props.header,
             type:ModalLoading,

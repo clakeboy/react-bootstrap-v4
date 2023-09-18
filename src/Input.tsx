@@ -9,112 +9,113 @@ import i18n from './components/i18n';
 
 import './css/Input.less';
 import { ComponentProps, StrObject } from './components/common';
-const stopEvent  = function (e:Event) {
+const stopEvent = function (e: Event) {
     e.stopPropagation();
 };
 
 interface CalendarProps {
     format?: string
     time?: boolean
-    limit?: {lt?:string,gt?:string}
+    limit?: { lt?: string, gt?: string }
 }
 
 export interface ValidateProps {
-    text?:''
-    rule?: RegExp | ((val:string)=>boolean)
+    text?: ''
+    rule?: RegExp | ((val: string) => boolean)
     tip?: boolean
 }
 
 interface Props extends ComponentProps {
-        label         ?: string
-        data          ?: any
-        summary       ?: string
-        readOnly      ?: boolean
-        placeholder   ?: string
-        calendar      ?: CalendarProps //{format:'',time:false,limit:{lt:'',gt:''}}
-        onChange      ?: (val:any,row:any,obj?:any)=>void
-        onEnter       ?: (val:any)=>void
-        onDblClick    ?: ()=>void
-        plaintext     ?: boolean
-        calendarFormat?: string
-        calendarTime  ?: boolean
-        validate      ?: ValidateProps  //{text:'',rule:/asdf/,tip:false}
-        disabled      ?: boolean
-        combo         ?: ComboProps
-        comboData     ?: any
-        align         ?: string
-        textClass     ?: string
-        textStyle     ?: StrObject
-        labelClass    ?: string
-        disableClear  ?: boolean
-        multi         ?: {height?:string} //
+    label?: string
+    type?: string
+    data?: any
+    summary?: string
+    readOnly?: boolean
+    placeholder?: string
+    calendar?: CalendarProps //{format:'',time:false,limit:{lt:'',gt:''}}
+    onChange?: (val: any, row: any, obj?: any) => void
+    onEnter?: (val: any) => void
+    onDblClick?: () => void
+    plaintext?: boolean
+    calendarFormat?: string
+    calendarTime?: boolean
+    validate?: ValidateProps  //{text:'',rule:/asdf/,tip:false}
+    disabled?: boolean
+    combo?: ComboProps
+    comboData?: any
+    align?: string
+    textClass?: string
+    textStyle?: StrObject
+    labelClass?: string
+    disableClear?: boolean
+    multi?: { height?: string } //
 }
 
 interface State {
-    value    : any
-    validate : boolean
-    disabled : boolean
+    value: any
+    validate: boolean
+    disabled: boolean
     comboData: any
     icon: string
 }
 
-export class Input extends React.Component<Props,State> {
+export class Input extends React.Component<Props, State> {
     static propTypes = {
-        id            : PropTypes.string,
-        size          : PropTypes.oneOf(['df', 'sm', 'lg', 'xs']),
-        label         : PropTypes.string,
-        data          : PropTypes.any,
-        summary       : PropTypes.string,
-        readOnly      : PropTypes.bool,
-        width         : PropTypes.string,
-        height        : PropTypes.string,
-        placeholder   : PropTypes.string,
-        calendar      : PropTypes.object, //{format:'',time:false,limit:{lt:'',gt:''}}
-        onChange      : PropTypes.func,
-        onEnter       : PropTypes.func,
-        onDblClick    : PropTypes.func,
-        plaintext     : PropTypes.bool,
+        id: PropTypes.string,
+        size: PropTypes.oneOf(['df', 'sm', 'lg', 'xs']),
+        label: PropTypes.string,
+        data: PropTypes.any,
+        summary: PropTypes.string,
+        readOnly: PropTypes.bool,
+        width: PropTypes.string,
+        height: PropTypes.string,
+        placeholder: PropTypes.string,
+        calendar: PropTypes.object, //{format:'',time:false,limit:{lt:'',gt:''}}
+        onChange: PropTypes.func,
+        onEnter: PropTypes.func,
+        onDblClick: PropTypes.func,
+        plaintext: PropTypes.bool,
         calendarFormat: PropTypes.string,
-        calendarTime  : PropTypes.bool,
-        validate      : PropTypes.object,  //{text:'',rule:/asdf/,tip:false}
-        disabled      : PropTypes.bool,
-        combo         : PropTypes.object,
-        comboData     : PropTypes.object,
-        absolute      : PropTypes.bool,
-        x             : PropTypes.string,
-        y             : PropTypes.string,
-        align         : PropTypes.string,
-        textClass     : PropTypes.string,
-        textStyle     : PropTypes.object,
-        labelClass    : PropTypes.string,
-        disableClear  : PropTypes.bool,
-        multi         : PropTypes.object, //多行文本输入
+        calendarTime: PropTypes.bool,
+        validate: PropTypes.object,  //{text:'',rule:/asdf/,tip:false}
+        disabled: PropTypes.bool,
+        combo: PropTypes.object,
+        comboData: PropTypes.object,
+        absolute: PropTypes.bool,
+        x: PropTypes.string,
+        y: PropTypes.string,
+        align: PropTypes.string,
+        textClass: PropTypes.string,
+        textStyle: PropTypes.object,
+        labelClass: PropTypes.string,
+        disableClear: PropTypes.bool,
+        multi: PropTypes.object, //多行文本输入
     };
     static defaultProps = {
-        id      : '',
-        size    : 'df',
-        label   : '',
-        data    : null,
-        summary : '',
+        id: '',
+        size: 'df',
+        label: '',
+        data: null,
+        summary: '',
         readOnly: false,
         disabled: false,
         disableClear: false,
     };
 
-    domId:string
+    domId: string
     isFocus: boolean
     input: HTMLInputElement
     calendar: Calendar
     combo: Combo
     clearIcon: Icon
-    constructor(props:any) {
+    constructor(props: any) {
         super(props);
         this.state = {
-            value    : this.props.data,
-            validate : true,
-            disabled : this.props.disabled??false,
+            value: this.props.data,
+            validate: true,
+            disabled: this.props.disabled ?? false,
             comboData: this.props.comboData,
-            icon: this.props.combo?'angle-down':this.props.calendar?'calendar-alt':'',
+            icon: this.props.combo ? 'angle-down' : this.props.calendar ? 'calendar-alt' : '',
         };
 
         this.domId = 'input-' + common.RandomString(16);
@@ -140,16 +141,16 @@ export class Input extends React.Component<Props,State> {
         }
         if (this.props.combo) {
             this.input.addEventListener('focus', (e) => {
-                this.combo.show(this.state.value,e.currentTarget as HTMLElement);
+                this.combo.show(this.state.value, e.currentTarget as HTMLElement);
             }, false);
         }
         this.input.addEventListener('focus', this.focusClearHandler, false);
         this.input.addEventListener('blur', this.blurClearHandler, false);
-        this.input.addEventListener('mousedown',stopEvent, false);
+        this.input.addEventListener('mousedown', stopEvent, false);
         if (this.props.validate && this.props.validate?.tip) {
-            $('#'+this.domId).tooltip({
-                'trigger':'manual',
-                'template':'<div class="tooltip ck-input-tip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner bg-danger"></div></div>',
+            $('#' + this.domId).tooltip({
+                'trigger': 'manual',
+                'template': '<div class="tooltip ck-input-tip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner bg-danger"></div></div>',
             });
         }
 
@@ -161,18 +162,18 @@ export class Input extends React.Component<Props,State> {
 
     componentWillUnmount() {
         if (this.props.validate && this.props.validate?.tip) {
-            $('#'+this.domId).tooltip('dispose');
+            $('#' + this.domId).tooltip('dispose');
         }
     }
 
-    UNSAFE_componentWillReceiveProps(nextProps:Props) {
+    UNSAFE_componentWillReceiveProps(nextProps: Props) {
         this.setState({
-            value    : nextProps.data,
+            value: nextProps.data,
             comboData: nextProps.comboData
         });
     }
 
-    shouldComponentUpdate(nextProps:Props, nextState:State) {
+    shouldComponentUpdate(nextProps: Props, nextState: State) {
         if (nextProps.comboData !== this.props.comboData) {
             return true;
         }
@@ -195,8 +196,8 @@ export class Input extends React.Component<Props,State> {
         return this.state.value;
     }
 
-    setValue(val:any) {
-        this.setState({value: val});
+    setValue(val: any) {
+        this.setState({ value: val });
     }
 
     getMainClasses() {
@@ -206,7 +207,7 @@ export class Input extends React.Component<Props,State> {
 
     getMainStyles() {
         //default style
-        const base:StrObject = {"position": "relative"};
+        const base: StrObject = { "position": "relative" };
         if (this.props.width) {
             base.width = this.props.width;
         }
@@ -229,11 +230,11 @@ export class Input extends React.Component<Props,State> {
         return common.extend(base, this.props.style)
     }
 
-    getInputClasses(append:string) {
+    getInputClasses(append: string) {
         let base = 'form-control ck-input';
         //readonly
         if (this.props.plaintext) {
-            base                = 'form-control-plaintext';
+            base = 'form-control-plaintext';
             // this.props.readOnly = true;
         }
         //size
@@ -278,7 +279,7 @@ export class Input extends React.Component<Props,State> {
     }
 
     getInputStyle() {
-        const base:StrObject = {};
+        const base: StrObject = {};
         if (this.props.width) {
             base.width = this.props.width;
         }
@@ -298,7 +299,7 @@ export class Input extends React.Component<Props,State> {
         return validate
     }
 
-    validate(val:string) {
+    validate(val: string) {
         if (this.props.validate) {
             const vali = this.props.validate
             let valid;
@@ -308,7 +309,7 @@ export class Input extends React.Component<Props,State> {
                 valid = (vali.rule as RegExp).test(val);
             }
             if (vali.tip) {
-                $('#'+this.domId).tooltip(valid?'hide':'show');
+                $('#' + this.domId).tooltip(valid ? 'hide' : 'show');
             }
             return valid;
         }
@@ -318,9 +319,9 @@ export class Input extends React.Component<Props,State> {
     /*********************
      * Event
      *********************/
-    changeHandler = (e:any) => {
+    changeHandler = (e: any) => {
         const state = {
-            value: e.target?e.target.value:e,
+            value: e.target ? e.target.value : e,
         };
 
         this.setState(state, () => {
@@ -333,7 +334,7 @@ export class Input extends React.Component<Props,State> {
         });
     };
 
-    blurHandler = (e:React.FocusEvent) => {
+    blurHandler = (e: React.FocusEvent) => {
         this.setState({
             validate: this.validate((e.target as HTMLInputElement).value)
         })
@@ -344,21 +345,21 @@ export class Input extends React.Component<Props,State> {
      * @param text stringminimist
      * @param row object
      */
-    selectHandler = (text:string, row:any) => {
-        this.setState({value: text}, () => {
+    selectHandler = (text: string, row: any) => {
+        this.setState({ value: text }, () => {
             if (typeof this.props.onChange === 'function') {
                 this.props.onChange(text, row, this);
             }
         });
     };
 
-    setSelectRows(key:any,val:any) {
+    setSelectRows(key: any, val: any) {
         if (this.props.combo) {
-            this.combo.setSelectRows(key,val);
+            this.combo.setSelectRows(key, val);
         }
     }
 
-    keyUpHandler = (e:KeyboardEvent) => {
+    keyUpHandler = (e: KeyboardEvent) => {
         if (e.key === 'Enter') {
             if (typeof this.props.onEnter === 'function') {
                 this.props.onEnter((e.target as HTMLInputElement).value);
@@ -366,7 +367,7 @@ export class Input extends React.Component<Props,State> {
         }
     };
 
-    focusClearHandler = ()=>{
+    focusClearHandler = () => {
         this.isFocus = true;
         if (this.clearIcon) {
             this.setState({
@@ -387,19 +388,19 @@ export class Input extends React.Component<Props,State> {
         // this.multi.style.width = width+'px';
         // this.multi.style.height = this.props.multi.height ?? '100px';
         // this.input.style.height = this.props.multi.height ?? '100px';
-        this.input.classList.add('ck-input-multi-show','shadow');
+        this.input.classList.add('ck-input-multi-show', 'shadow');
         this.input.style.height = this.props?.multi?.height ?? '100px';
     };
 
     //is multi hide
     hideMulti = () => {
         this.input.style.height = 'calc(1.5em + .75rem + 2px)';
-        setTimeout(()=>{
-            this.input.classList.remove('ck-input-multi-show','shadow');
-        },210)
+        setTimeout(() => {
+            this.input.classList.remove('ck-input-multi-show', 'shadow');
+        }, 210)
     };
 
-    blurClearHandler = ()=>{
+    blurClearHandler = () => {
         this.isFocus = false;
         if (this.clearIcon) {
             if (this.props.combo) {
@@ -423,10 +424,10 @@ export class Input extends React.Component<Props,State> {
      * input dblclick event
      * @param e
      */
-    dblHandler = ()=> {
+    dblHandler = () => {
         if (this.calendar && !this.state.value) {
             this.calendar.setCurrentDate(new Date());
-            this.setState({value:this.calendar.format()},
+            this.setState({ value: this.calendar.format() },
                 () => {
                     if (typeof this.props.onChange === 'function') {
                         this.props.onChange(this.state.value, null, this);
@@ -437,7 +438,7 @@ export class Input extends React.Component<Props,State> {
         }
     };
 
-    mainDblHandler = ()=>{
+    mainDblHandler = () => {
         if (typeof this.props.onDblClick === 'function') {
             this.props.onDblClick()
         }
@@ -458,7 +459,7 @@ export class Input extends React.Component<Props,State> {
     renderSummary() {
         if (!this.state.validate && !this.props?.validate?.tip) {
             return (
-                <div className='invalid-feedback' style={{display:'block'}}>
+                <div className='invalid-feedback' style={{ display: 'block' }}>
                     {this.props?.validate?.text}
                 </div>
             )
@@ -483,13 +484,13 @@ export class Input extends React.Component<Props,State> {
         }
         const lang = i18n.getLang();
         const props = {
-            format:this.props.calendar?.format ?? this.props.calendarFormat,
+            format: this.props.calendar?.format ?? this.props.calendarFormat,
             timeBar: this.props.calendar?.time ?? this.props.calendarTime,
             limit: this.props.calendar?.limit
         };
         return (
             <div className='ck-input-calendar'>
-                <Calendar ref={(c:any) => this.calendar = c} onSelect={(val:any) => {
+                <Calendar ref={(c: any) => this.calendar = c} onSelect={(val: any) => {
                     this.setState({
                         value: val,
                     });
@@ -497,10 +498,10 @@ export class Input extends React.Component<Props,State> {
                         this.props.onChange(val, this);
                     }
                 }} value={this.state.value} format={props.format} timeBar={props.timeBar} limit={props.limit}
-                          lang={lang.short} none shadow absolute
-                          sm={this.props.size==='xs'}
-                          triangular='up'/>
-                {!this.props.disabled?<div className={input_icon} onMouseDown={(e) => {
+                    lang={lang.short} none shadow absolute
+                    sm={this.props.size === 'xs'}
+                    triangular='up' />
+                {!this.props.disabled ? <div className={input_icon} onMouseDown={(e) => {
                     e.stopPropagation();
                     e.preventDefault();
                     if (this.isFocus) {
@@ -508,7 +509,7 @@ export class Input extends React.Component<Props,State> {
                     } else {
                         this.input.focus();
                     }
-                }}><Icon ref={(c:any)=>this.clearIcon=c} icon={this.state.icon}/></div>:null}
+                }}><Icon ref={(c: any) => this.clearIcon = c} icon={this.state.icon} /></div> : null}
             </div>
         )
     }
@@ -523,9 +524,9 @@ export class Input extends React.Component<Props,State> {
         }
         return (
             <div className='ck-input-calendar'>
-                <Combo ref={(c:any) => this.combo = c} {...this.props.combo} sm={this.props.size === 'sm' || this.props.size === 'xs'}
-                       data={this.state.comboData} noSearch={this.props.readOnly} onShow={()=>{}}
-                       onSelect={this.selectHandler}/>
+                <Combo ref={(c: any) => this.combo = c} {...this.props.combo} sm={this.props.size === 'sm' || this.props.size === 'xs'}
+                    data={this.state.comboData} noSearch={this.props.readOnly} onShow={() => { }}
+                    onSelect={this.selectHandler} />
                 <div className={input_icon} onMouseDown={(e) => {
                     e.stopPropagation();
                     e.preventDefault();
@@ -537,7 +538,7 @@ export class Input extends React.Component<Props,State> {
                     } else {
                         this.input.focus();
                     }
-                }}><Icon ref={(c:any)=>this.clearIcon=c} icon={this.state.icon}/></div>
+                }}><Icon ref={(c: any) => this.clearIcon = c} icon={this.state.icon} /></div>
             </div>
         )
     }
@@ -562,7 +563,7 @@ export class Input extends React.Component<Props,State> {
                     } else {
                         this.input.focus();
                     }
-                }}><Icon ref={(c:any)=>this.clearIcon=c} icon={this.state.icon}/></div>
+                }}><Icon ref={(c: any) => this.clearIcon = c} icon={this.state.icon} /></div>
             </div>
         )
     }
@@ -571,9 +572,9 @@ export class Input extends React.Component<Props,State> {
     renderValidateTip() {
         if (this.props.validate) {
             return {
-                'data-toggle':'tooltip',
-                'data-placement':'right',
-                'title':this.props.validate.text,
+                'data-toggle': 'tooltip',
+                'data-placement': 'right',
+                'title': this.props.validate.text,
             };
         }
         return {}
@@ -581,25 +582,25 @@ export class Input extends React.Component<Props,State> {
 
     renderDisableMask() {
         if (!this.props.disabled) return null
-        return <div className='position-absolute w-100 h-100' style={{top:0,left:0}}></div>
+        return <div className='position-absolute w-100 h-100' style={{ top: 0, left: 0 }}></div>
     }
-    
+
     render() {
         if (this.props.multi) {
             return this.renderMulti();
         }
         return (
-            <div id={this.domId+'-main'} className={this.getMainClasses()} style={this.getMainStyles()} onDoubleClick={this.mainDblHandler}>
+            <div id={this.domId + '-main'} className={this.getMainClasses()} style={this.getMainStyles()} onDoubleClick={this.mainDblHandler}>
                 {this.renderLabel()}
                 {this.renderDisableMask()}
-                <input type='text' {...this.props} size={undefined} ref={(c:any) => this.input = c} onBlur={this.blurHandler}
-                       onChange={this.changeHandler}
-                       onKeyUp={this.keyUpHandler}
-                       onDoubleClick={this.dblHandler}
-                       value={this.state.value??""}
-                       className={this.getInputClasses('')}
-                       style={this.getInputStyle()}
-                       id={this.domId} {...this.renderValidateTip()}/>
+                <input type='text' {...this.props} size={undefined} ref={(c: any) => this.input = c} onBlur={this.blurHandler}
+                    onChange={this.changeHandler}
+                    onKeyUp={this.keyUpHandler}
+                    onDoubleClick={this.dblHandler}
+                    value={this.state.value ?? ""}
+                    className={this.getInputClasses('')}
+                    style={this.getInputStyle()}
+                    id={this.domId} {...this.renderValidateTip()} />
                 {this.renderCalendar()}
                 {this.renderCombo()}
                 {this.renderClear()}
@@ -610,16 +611,16 @@ export class Input extends React.Component<Props,State> {
 
     renderMulti() {
         return (
-            <div id={this.domId+'-main'} className={this.getMainClasses()} style={this.getMainStyles()} >
+            <div id={this.domId + '-main'} className={this.getMainClasses()} style={this.getMainStyles()} >
                 {this.renderLabel()}
-                <textarea {...this.props} ref={(c:any) => this.input = c} onBlur={this.blurHandler}
+                <textarea {...this.props} ref={(c: any) => this.input = c} onBlur={this.blurHandler}
                     onChange={this.changeHandler}
                     onKeyUp={this.keyUpHandler}
                     onDoubleClick={this.dblHandler}
-                    value={this.state.value??""}
+                    value={this.state.value ?? ""}
                     className={this.getInputClasses('')}
                     style={this.getInputStyle()}
-                    id={this.domId} {...this.renderValidateTip()}/>
+                    id={this.domId} {...this.renderValidateTip()} />
                 {this.renderClear()}
                 {this.renderSummary()}
             </div>

@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Radio from './Radio';
 import {RandomString} from "./Common";
 import { ComponentProps } from './components/common';

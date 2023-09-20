@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import { ComponentProps } from './components/common';
 
@@ -67,7 +66,7 @@ export class Icon extends React.PureComponent<Props,State> {
 
     render() {
         return (
-            <i {...this.props} className={this.getClasses()}/>
+            <i className={this.getClasses()} onClick={this.props.onClick}/>
         );
     }
 }

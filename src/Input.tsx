@@ -1,5 +1,4 @@
 import React, { KeyboardEvent } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import common from './Common';
 import Calendar from './Calendar';
@@ -20,7 +19,7 @@ interface CalendarProps {
 }
 
 export interface ValidateProps {
-  text?: '';
+  text?: string;
   rule?: RegExp | ((val: string) => boolean);
   tip?: boolean;
 }

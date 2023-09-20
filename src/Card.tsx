@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import Title from './Title';
 import './css/Card.less'
@@ -87,7 +86,7 @@ export class Card extends React.PureComponent<Props,any> {
 
     render() {
         return (
-            <div {...this.props} className={this.getClasses()} style={this.getStyle()}>
+            <div className={this.getClasses()} style={this.getStyle()}>
                 {this.renderHeader()}
                 <div id={this.domId} className="card-body">
                     {this.props.children}

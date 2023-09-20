@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 interface Props {
     onFormat?: (val: any, row: any) => void

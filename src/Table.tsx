@@ -62,41 +62,6 @@ interface State {
 export class Table extends React.Component<Props, State> {
     static Header = TableHeader;
     static HeaderRow = TableHeaderRow;
-    static propTypes = {
-        headClass: PropTypes.string,
-        data: PropTypes.array,
-        dataCount: PropTypes.number,
-        select: PropTypes.bool,
-        header: PropTypes.bool,
-        center: PropTypes.bool,
-        currentPage: PropTypes.number,
-        striped: PropTypes.bool,
-        bordered: PropTypes.bool,
-        hover: PropTypes.bool,
-        sm: PropTypes.bool,
-        fontSm: PropTypes.bool,
-        responsive: PropTypes.bool,
-        align: PropTypes.string,
-        tree: PropTypes.bool,
-        onClickTree: PropTypes.func,
-        onClick: PropTypes.func,
-        onCheck: PropTypes.func,
-        move: PropTypes.bool,
-        onRefresh: PropTypes.func,
-        refreshText: PropTypes.string,
-        absolute: PropTypes.bool,
-        x: PropTypes.string,
-        y: PropTypes.string,
-        width: PropTypes.string,
-        height: PropTypes.string,
-        scroll: PropTypes.bool,
-        emptyText: PropTypes.string,
-        fixed: PropTypes.bool,
-        serialNumber: PropTypes.bool, //是否显示序列号
-        truncate: PropTypes.bool,//文字是否截断
-        menu: PropTypes.element,
-        sticky: PropTypes.bool
-    };
 
     static defaultProps = {
         data: [],

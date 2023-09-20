@@ -18,14 +18,6 @@ interface State {
 }
 
 export class Scroll extends React.PureComponent<Props,State> {
-    static propTypes = {
-        parent: PropTypes.any,
-        selector: PropTypes.string,
-        speed: PropTypes.number,
-        align: PropTypes.oneOf(['right','left']),
-        onScroll: PropTypes.func
-    };
-
     static defaultProps = {
         speed: 5,
         align: 'right',

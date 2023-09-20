@@ -28,19 +28,7 @@ interface State {
 }
 
 export class Complex extends React.Component<Props,State> {
-    static propTypes = {
-        inputWidth: PropTypes.string,
-        onChange: PropTypes.func,
-        onSelect: PropTypes.func,
-        list: PropTypes.array,
-        dataType: PropTypes.oneOf(['string','object']),
-        dataField: PropTypes.string,
-        data: PropTypes.array,
-        placeholder: PropTypes.string,
-        combo: PropTypes.object,
-        comboData: PropTypes.object,
-        duplicate: PropTypes.bool
-    };
+
     static defaultProps = {
         inputWidth: "200px",
         dataType: "string",

@@ -17,14 +17,7 @@ interface Props extends ComponentProps {
 
 
 export class DropPanel extends React.Component<Props,any> {
-    static propTypes = {
-        border: PropTypes.bool,
-        borderTheme: PropTypes.string,
-        round: PropTypes.bool,
-        shadow: PropTypes.bool,
-        selector: PropTypes.string,
-        position: PropTypes.string,
-    };
+
     static defaultProps = {
         border: true,
         round: true,

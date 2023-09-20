@@ -19,14 +19,6 @@ interface MenuItemProps extends ComponentProps {
 }
 
 export class MenuItem extends React.PureComponent<MenuItemProps, any> {
-    static propTypes = {
-        step: PropTypes.bool,
-        field: PropTypes.string,
-        onClick: PropTypes.func,
-        child: PropTypes.bool,
-        text: PropTypes.string,
-        icon: PropTypes.string,
-    };
     parent: Menu
     childMenu: Menu
     constructor(props: any) {
@@ -124,13 +116,6 @@ interface State {
 
 export class Menu extends React.PureComponent<MenuProps, State> {
     static Item = MenuItem;
-    static propTypes = {
-        onClick: PropTypes.func,
-        onClose: PropTypes.func,
-        onShow: PropTypes.func,
-        zIndex: PropTypes.number,
-        width: PropTypes.string
-    };
     static defaultProps = {
         zIndex: 1200
     };

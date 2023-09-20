@@ -11,12 +11,7 @@ interface ColumnProps extends ComponentProps {
 }
 
 class ComboBoxColumn extends React.Component<ColumnProps,any> {
-    static propTypes = {
-        field: PropTypes.string,
-        text: PropTypes.string,
-        format: PropTypes.func, //func (val,row)=>{return val;}
-        width: PropTypes.string, //100px 100pt...
-    };
+
 }
 
 interface Props extends ComponentProps {
@@ -47,31 +42,7 @@ interface Props extends ComponentProps {
 
 export class ComboBox extends React.Component<Props,any> {
     static Column = ComboBoxColumn;
-    static propTypes = {
-        label: PropTypes.string,
-        searchColumn: PropTypes.string,
-        data: PropTypes.array,
-        height: PropTypes.string,
-        width: PropTypes.string,
-        showRows: PropTypes.number,
-        search: PropTypes.string,
-        onSearch: PropTypes.func,
-        onSelect: PropTypes.func,
-        onClose: PropTypes.func,
-        onShow: PropTypes.func,
-        onChange: PropTypes.func,
-        sm: PropTypes.bool,
-        multi: PropTypes.bool,
-        multiDef: PropTypes.object,
-        //filter column exp: ['name','age'] or [{field:'name',width:'100px'},{field:'age',width:'100px'}]
-        filterColumns: PropTypes.array,
-        noSearch: PropTypes.bool,
-        header: PropTypes.bool,
-        size: PropTypes.string,
-        value: PropTypes.string,
-        text: PropTypes.string,
-        validate: PropTypes.object
-    };
+
     static defaultProps = {
         label:null,
         showRows:5,

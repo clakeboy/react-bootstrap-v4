@@ -44,24 +44,6 @@ interface State {
 }
 
 export class CalendarRange extends React.PureComponent<Props,State> {
-    static propTypes = {
-        id: PropTypes.string,
-        label: PropTypes.string,
-        minData: PropTypes.string,
-        maxData: PropTypes.string,
-        days: PropTypes.number,  //时间跨度 单位天
-        readOnly: PropTypes.bool,
-        placeholderMin: PropTypes.string,
-        placeholderMax: PropTypes.string,
-        onChange: PropTypes.func,
-        format: PropTypes.string,
-        time: PropTypes.bool,
-        disabled: PropTypes.bool,
-        disableClear: PropTypes.bool,
-        labelClass: PropTypes.string,
-        className: PropTypes.string,
-        width: PropTypes.string,
-    };
     static defaultProps = {
         id: '',
         size: 'df',

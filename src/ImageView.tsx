@@ -17,9 +17,6 @@ interface State {
 }
 
 export class ImageView extends React.Component<Props,State> {
-    static propTypes = {
-        src: PropTypes.array,
-    };
     static defaultProps = {
         src: [],
     };

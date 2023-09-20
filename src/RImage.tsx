@@ -20,15 +20,7 @@ interface State {
 }
 
 export class RImage extends React.Component<Props,State> {
-    static propTypes = {
-        src: PropTypes.any,
-        height: PropTypes.string,
-        width: PropTypes.string,
-        border: PropTypes.bool,
-        circle: PropTypes.bool,
-        onClick: PropTypes.func,
-        display: PropTypes.oneOf(['center','full'])
-    };
+
 
     static defaultProps = {
         display:'center'

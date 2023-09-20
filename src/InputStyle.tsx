@@ -8,9 +8,7 @@ interface Props extends ComponentProps {
 }
 
 export class InputStyle extends React.PureComponent<Props,any> {
-    static propTypes = {
-        label: PropTypes.string,
-    };
+
     static defaultProps = {
         label: '',
     };

@@ -20,18 +20,7 @@ interface State {
 }
 
 export class Radio extends React.Component<Props,State> {
-    static propTypes = {
-        id: PropTypes.string,
-        checked: PropTypes.bool,
-        name: PropTypes.string,
-        label: PropTypes.string,
-        onChange: PropTypes.func,
-        absolute: PropTypes.bool,
-        data: PropTypes.any,
-        x: PropTypes.string,
-        y: PropTypes.string,
-        inputClass: PropTypes.string,
-    };
+
     static defaultProps = {
         inline: false,
         label: '',

@@ -14,14 +14,7 @@ interface Props extends ComponentProps {
 }
 
 export class HScroll extends React.PureComponent<Props,any> {
-    static propTypes = {
-        parent: PropTypes.any,
-        selector: PropTypes.string,
-        showSelector: PropTypes.string,
-        speed: PropTypes.number,
-        align: PropTypes.oneOf(['top','bottom']),
-        alignParent: PropTypes.bool,
-    };
+
     static defaultProps = {
         speed: 5,
         align: 'bottom',

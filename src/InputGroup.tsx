@@ -19,14 +19,7 @@ interface State {
 }
 
 export class InputGroup extends React.PureComponent<Props,State> {
-    static propTypes = {
-        label      : PropTypes.string,
-        data       : PropTypes.any,
-        size       : PropTypes.string,
-        summary    : PropTypes.string,
-        placeholder: PropTypes.string,
-        disabled: PropTypes.bool,
-    };
+
     static defaultProps = {
         label      : "",
         data       : null,

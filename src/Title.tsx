@@ -10,10 +10,6 @@ interface Props extends ComponentProps {
 }
 
 export class Title extends React.PureComponent<Props,any> {
-    static propTypes = {
-        text: PropTypes.string,
-        sm: PropTypes.bool
-    };
     constructor(props:any) {
         super(props);
     }

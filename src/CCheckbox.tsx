@@ -20,19 +20,6 @@ interface State {
 }
 
 export class CCheckbox extends React.Component<Props, State> {
-    static propTypes = {
-        inline: PropTypes.bool,
-        id: PropTypes.string,
-        label: PropTypes.string,
-        checked: PropTypes.bool,
-        onChange: PropTypes.func,
-        disabled: PropTypes.bool,
-        half: PropTypes.bool,
-        absolute: PropTypes.bool,
-        x: PropTypes.string,
-        y: PropTypes.string,
-    };
-
     static defaultProps = {
         label: '',
         checked: false,

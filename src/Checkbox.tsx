@@ -18,17 +18,7 @@ interface State {
 }
 
 export class Checkbox extends React.PureComponent<Props, State> {
-  static propTypes = {
-    id: PropTypes.string,
-    label: PropTypes.string,
-    inline: PropTypes.bool,
-    data: PropTypes.any,
-    checked: PropTypes.bool,
-    onChange: PropTypes.func,
-    absolute: PropTypes.bool,
-    x: PropTypes.string,
-    y: PropTypes.string,
-  };
+
   static defaultProps = {
     inline: false,
     label: '',

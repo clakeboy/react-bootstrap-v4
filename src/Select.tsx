@@ -19,23 +19,6 @@ interface State {
     data: any[]
 }
 export class Select extends React.PureComponent<Props,State> {
-    static propTypes = {
-        id         : PropTypes.string,
-        size       : PropTypes.oneOf(['df', 'sm', 'lg']),
-        label      : PropTypes.string,
-        data       : PropTypes.array,
-        summary    : PropTypes.string,
-        readOnly   : PropTypes.bool,
-        width      : PropTypes.string,
-        height     : PropTypes.string,
-        placeholder: PropTypes.string,
-        onSelect   : PropTypes.func,
-        value      : PropTypes.any,
-        absolute   : PropTypes.bool,
-        x          : PropTypes.string,
-        y          : PropTypes.string
-    };
-
     static defaultProps = {
         data: [],
         label: ''

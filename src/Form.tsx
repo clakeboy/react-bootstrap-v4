@@ -18,9 +18,7 @@ interface Props extends ComponentProps {
 }
 
 export class Form extends React.PureComponent<Props,any> {
-    static propTypes = {
-        onChange: PropTypes.func,
-    };
+
     vals:any
     components:any
     events:any

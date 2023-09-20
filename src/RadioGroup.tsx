@@ -16,12 +16,7 @@ interface State {
 
 
 export class RadioGroup extends React.Component<Props,State> {
-    static propTypes = {
-        onChange: PropTypes.func,
-        data : PropTypes.any,
-        disabled: PropTypes.bool,
-        name: PropTypes.string,
-    };
+
     domId:string
     name:string
     constructor(props:any) {

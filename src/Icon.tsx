@@ -16,12 +16,6 @@ interface State {
 }
 
 export class Icon extends React.PureComponent<Props,State> {
-    static propTypes = {
-        iconType: PropTypes.oneOf(['solid','regular','light','brands']),
-        icon: PropTypes.string,
-        //icon to rotate
-        spin: PropTypes.bool,
-    };
     static defaultProps = {
         iconType: 'solid',
         icon: '',

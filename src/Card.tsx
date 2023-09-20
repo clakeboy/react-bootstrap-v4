@@ -18,20 +18,6 @@ interface Props extends ComponentProps {
 }
 
 export class Card extends React.PureComponent<Props,any> {
-    static propTypes = {
-        header: PropTypes.string,
-        border: PropTypes.oneOf(['primary','secondary','success','danger','warning','info','light','dark','transparent']),
-        custom: PropTypes.bool,
-        absolute: PropTypes.bool,
-        x: PropTypes.string,
-        y: PropTypes.string,
-        width: PropTypes.string,
-        height: PropTypes.string,
-        sm: PropTypes.bool,
-        scroll: PropTypes.bool,
-        divider: PropTypes.bool
-    };
-
     static defaultProps = {
         border: 'transparent',
         scroll:false,

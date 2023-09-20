@@ -8,11 +8,6 @@ interface Props {
 }
 
 export class TableHeaderRow extends React.PureComponent<Props> {
-    static propTypes = {
-        cols: PropTypes.number,
-        text: PropTypes.string,
-        align: PropTypes.string
-    };
 
     static defaultProps = {
         align: 'center'

@@ -23,23 +23,6 @@ interface State {
 }
 
 export class Tabs extends React.PureComponent<Props,State> {
-    static propTypes = {
-        pills   : PropTypes.bool,
-        border  : PropTypes.bool,
-        content : PropTypes.bool,
-        onSelect: PropTypes.func,
-        absolute: PropTypes.bool,
-        x       : PropTypes.string,
-        y       : PropTypes.string,
-        width   : PropTypes.string,
-        height  : PropTypes.string,
-        sm      : PropTypes.bool,
-        showTab : PropTypes.string,
-        position: PropTypes.object,
-        disabled: PropTypes.bool,
-        onClose: PropTypes.func
-    };
-
     static defaultProps = {
         border  : true,
         content : true,

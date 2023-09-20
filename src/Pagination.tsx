@@ -22,17 +22,6 @@ interface State {
 }
 
 export class Pagination extends React.PureComponent<Props,State> {
-    static propTypes = {
-        current: PropTypes.number,
-        count: PropTypes.number,
-        number: PropTypes.number,
-        showPage: PropTypes.number,
-        onSelect: PropTypes.func,
-        align: PropTypes.oneOf(['left','center','right']),
-        size: PropTypes.oneOf(['sm','lg']),
-        info: PropTypes.any,//任意显示
-        numberList: PropTypes.array,
-    };
     static defaultProps = {
         current : 1,
         count   : 1,

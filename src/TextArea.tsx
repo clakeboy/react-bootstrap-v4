@@ -28,27 +28,6 @@ interface State {
 }
 
 export class TextArea extends React.Component<Props,State> {
-    static propTypes = {
-        id: PropTypes.string,
-        label: PropTypes.string,
-        data: PropTypes.any,
-        summary: PropTypes.string,
-        readOnly: PropTypes.bool,
-        size: PropTypes.string,
-        width: PropTypes.string,
-        height: PropTypes.string,
-        placeholder: PropTypes.string,
-        calendar: PropTypes.bool,
-        onChange: PropTypes.func,
-        plaintext: PropTypes.bool,
-        row: PropTypes.number,
-        absolute: PropTypes.bool,
-        x: PropTypes.string,
-        y: PropTypes.string,
-        htmlMode: PropTypes.bool,
-        htmlBar: PropTypes.bool,
-    };
-
     static defaultProps = {
         label: '',
         data: null,

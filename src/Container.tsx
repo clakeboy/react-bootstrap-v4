@@ -9,10 +9,7 @@ interface Props extends ComponentProps {
 }
 
 export class Container extends React.Component<Props,any> {
-    static propTypes = {
-        fluid : PropTypes.bool,
-        inline: PropTypes.bool,
-    };
+
     static defaultProps = {
         fluid : false,
         inline: false,

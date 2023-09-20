@@ -17,18 +17,7 @@ interface State {
 }
 
 export class Label extends React.PureComponent<Props,State> {
-    static propTypes = {
-        text     : PropTypes.string,
-        absolute : PropTypes.bool,
-        x        : PropTypes.string,
-        y        : PropTypes.string,
-        width    : PropTypes.string,
-        height   : PropTypes.string,
-        color    : PropTypes.string,
-        backColor: PropTypes.string,
-        sm       : PropTypes.bool,
-        align: PropTypes.string
-    };
+
     constructor(props:any) {
         super(props);
         this.state = {

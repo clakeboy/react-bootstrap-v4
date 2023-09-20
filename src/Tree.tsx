@@ -23,16 +23,6 @@ interface State {
 }
 
 export class Tree extends React.PureComponent<Props,State> {
-    static propTypes = {
-        data: PropTypes.object,
-        onClick: PropTypes.func,
-        onDbClick: PropTypes.func,
-        onMenu: PropTypes.func,
-        showSelected: PropTypes.bool,
-        check: PropTypes.bool,
-        onSelect: PropTypes.func,
-    };
-
     domId:string
     parents:any
     currentSelected:any

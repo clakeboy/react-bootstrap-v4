@@ -25,27 +25,12 @@ interface ValueProps {
 }
 
 export class CDropdownValue extends React.Component<ValueProps,any> {
-    static propTypes = {
-        text: PropTypes.string,
-        value: PropTypes.string,
-        active: PropTypes.bool
-    };
+
 }
 
 export class CDropdown extends React.Component<Props,State> {
     static Value = CDropdownValue
-    static propTypes = {
-        data: PropTypes.array,
-        text: PropTypes.string,
-        label: PropTypes.string,
-        value: PropTypes.string,
-        onChange: PropTypes.func,
-        showRows: PropTypes.number,
-        size: PropTypes.string,
-        dropWidth: PropTypes.string,
-        width: PropTypes.string,
-        validate: PropTypes.object,
-    };
+
     static defaultProps = {
         data: '',
         text: '',

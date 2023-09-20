@@ -11,14 +11,6 @@ interface Props {
 }
 
 export class TabsContent extends React.PureComponent<Props> {
-    static propTypes = {
-        id      : PropTypes.string,
-        text    : PropTypes.string,
-        active  : PropTypes.bool,
-        fade    : PropTypes.bool,
-        disabled: PropTypes.bool,
-        onClick : PropTypes.func,
-    };
 
     static defaultProps = {
         fade: false,

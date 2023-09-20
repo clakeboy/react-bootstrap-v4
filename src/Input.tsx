@@ -60,37 +60,6 @@ interface State {
 }
 
 export class Input extends React.Component<Props, State> {
-  static propTypes = {
-    id: PropTypes.string,
-    size: PropTypes.oneOf(['df', 'sm', 'lg', 'xs']),
-    label: PropTypes.string,
-    data: PropTypes.any,
-    summary: PropTypes.string,
-    readOnly: PropTypes.bool,
-    width: PropTypes.string,
-    height: PropTypes.string,
-    placeholder: PropTypes.string,
-    calendar: PropTypes.object, //{format:'',time:false,limit:{lt:'',gt:''}}
-    onChange: PropTypes.func,
-    onEnter: PropTypes.func,
-    onDblClick: PropTypes.func,
-    plaintext: PropTypes.bool,
-    calendarFormat: PropTypes.string,
-    calendarTime: PropTypes.bool,
-    validate: PropTypes.object, //{text:'',rule:/asdf/,tip:false}
-    disabled: PropTypes.bool,
-    combo: PropTypes.object,
-    comboData: PropTypes.object,
-    absolute: PropTypes.bool,
-    x: PropTypes.string,
-    y: PropTypes.string,
-    align: PropTypes.string,
-    textClass: PropTypes.string,
-    textStyle: PropTypes.object,
-    labelClass: PropTypes.string,
-    disableClear: PropTypes.bool,
-    multi: PropTypes.object, //多行文本输入
-  };
   static defaultProps = {
     id: '',
     size: 'df',

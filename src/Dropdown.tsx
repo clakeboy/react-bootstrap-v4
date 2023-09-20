@@ -12,11 +12,7 @@ interface ValueProps {
 }
 
 export class DropdownValue extends React.Component<ValueProps,any> {
-    static propTypes = {
-        text: PropTypes.string,
-        value: PropTypes.string,
-        active: PropTypes.bool
-    };
+
 }
 
 interface Props extends ComponentProps {
@@ -37,17 +33,7 @@ interface State {
 
 export class Dropdown extends React.PureComponent<Props,State> {
     static Value = DropdownValue;
-    static propTypes = {
-        data: PropTypes.array,
-        width: PropTypes.number,
-        text: PropTypes.string,
-        onChange: PropTypes.func,
-        outline: PropTypes.bool,
-        theme: PropTypes.string,
-        size: PropTypes.string,
-        icon: PropTypes.string,
-        grid: PropTypes.bool,
-    };
+
     static defaultProps = {
         data: [],
         text: '',

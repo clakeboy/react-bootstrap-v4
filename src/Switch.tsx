@@ -21,16 +21,6 @@ interface State {
 }
 
 export class Switch extends React.PureComponent<Props,State> {
-    static propTypes = {
-        checked: PropTypes.bool,
-        size: PropTypes.oneOf(['sm','lg']),
-        disabled: PropTypes.bool,
-        onChange: PropTypes.func,
-        absolute   : PropTypes.bool,
-        x          : PropTypes.string,
-        y          : PropTypes.string
-    };
-
     static defaultProps = {
         theme: Theme.primary,
         checked: false

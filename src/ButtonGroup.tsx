@@ -2,7 +2,6 @@ import React from 'react';
 import classNames from 'classnames/bind';
 
 export class ButtonGroup extends React.PureComponent<any,any> {
-    static propTypes = {}
     static defaultProps = {}
     constructor(props:any) {
         super(props);

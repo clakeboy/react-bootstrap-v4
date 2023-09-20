@@ -10,6 +10,8 @@ export interface ComponentProps extends React.ClassAttributes<any> {
     disabled?: boolean
     children?: any
     style?:any
+    theme?: Theme
+    field?: string
 }
 
 export interface StrObject {
@@ -18,4 +20,15 @@ export interface StrObject {
 
 export interface AnyObject {
     [propName:string]:any
+}
+
+export enum Theme {
+    primary, 
+    secondary, 
+    success, 
+    danger, 
+    warning, 
+    info, 
+    light, 
+    dark
 }

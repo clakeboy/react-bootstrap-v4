@@ -3,10 +3,10 @@ import classNames from 'classnames/bind';
 import Icon from './Icon';
 import './css/Button.less';
 import common from "./Common";
-import {ComponentProps} from './components/common';
+import {ComponentProps, Theme} from './components/common';
 
 interface Props extends ComponentProps {
-    theme?: string
+    theme?: Theme
     outline?: boolean
     icon?: string
     tip?: string
@@ -29,7 +29,7 @@ export class Button extends React.PureComponent<Props,State> {
     domId:string
 
     static defaultProps = {
-        theme: 'primary',
+        theme: Theme.primary,
         outline: false,
         size: 'df',
         loading: false,
@@ -60,8 +60,10 @@ export class Button extends React.PureComponent<Props,State> {
             base_style.push('outline');
         }
         //apply style
-        if (this.props.theme)
-            base_style.push(this.props.theme);
+        if (this.props.theme !== undefined) {
+            base_style.push(Theme[this.props.theme]);
+        }
+            
         //merge class
         base = classNames(base,base_style.join('-'));
 

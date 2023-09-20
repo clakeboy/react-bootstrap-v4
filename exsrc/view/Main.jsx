@@ -16,7 +16,7 @@ import ReactBootstrap4, {
     TextArea,
     Switch,
     RadioGroup,
-    Radio, Menu, Icon
+    Radio, Menu, Icon, Theme
 } from '../../src/index';
 import CalendarRange from "../../src/CalendarRange";
 import Row from '../../src/Row';
@@ -81,7 +81,7 @@ class Main extends React.Component {
             <Container>
                 <h1>React Bootstrap v4 Demo</h1>
                 <Container fluid className='mb-1 p-0'>
-                    <Button className='mr-1' onClick={e=>{
+                    <Button theme={Theme.danger} className='mr-1' onClick={e=>{
                         this.props.history.push('/skill/jump',this.state);
                     }} tip="转到内联">转到内联</Button>
                     <Button className='mr-1' onClick={e=>{

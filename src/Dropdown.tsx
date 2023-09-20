@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import common from './Common';
 import Button from "./Button";
-import { ComponentProps } from './components/common';
+import { ComponentProps, Theme } from './components/common';
 
 interface ValueProps {
     text?:string
@@ -24,7 +24,7 @@ interface Props extends ComponentProps {
     text?: string
     onChange?: (txt:any,val:any)=>void
     outline?: boolean
-    theme?: string
+    theme?: Theme
     icon?: string
     grid?: boolean
 }
@@ -51,7 +51,7 @@ export class Dropdown extends React.PureComponent<Props,State> {
     static defaultProps = {
         data: [],
         text: '',
-        theme: 'secondary',
+        theme: Theme.secondary,
         outline: false,
     };
 

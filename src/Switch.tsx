@@ -4,10 +4,9 @@ import classNames from 'classnames/bind';
 
 import './css/Switch.less'
 import common from "./Common";
-import { ComponentProps, StrObject } from './components/common';
+import { ComponentProps, StrObject, Theme } from './components/common';
 
 interface Props extends ComponentProps {
-    theme?: string
     checked?: boolean
     onChange?: (chk:boolean)=>void
 }
@@ -23,7 +22,6 @@ interface State {
 
 export class Switch extends React.PureComponent<Props,State> {
     static propTypes = {
-        theme: PropTypes.oneOf(['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark']),
         checked: PropTypes.bool,
         size: PropTypes.oneOf(['sm','lg']),
         disabled: PropTypes.bool,
@@ -34,7 +32,7 @@ export class Switch extends React.PureComponent<Props,State> {
     };
 
     static defaultProps = {
-        theme: 'primary',
+        theme: Theme.primary,
         checked: false
     };
     checked:boolean
@@ -45,7 +43,7 @@ export class Switch extends React.PureComponent<Props,State> {
     constructor(props:any) {
         super(props);
         this.checked = this.props.checked??false;
-        this.bg_color = `bg-${this.props.theme}`;
+        this.bg_color = `bg-${Theme[this.props.theme??0]}`;
         this.move_class = `ck-switch-circle-right`;
         if (this.props.size) {
             this.move_class += `-${this.props.size}`;

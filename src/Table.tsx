@@ -11,11 +11,12 @@ import './css/Table.less';
 import Scroll from "./Scroll";
 import HScroll from "./HScroll";
 import Menu from "./Menu";
-import { AnyObject, ComponentProps, StrObject } from './components/common';
+import { AnyObject, ComponentProps, StrObject, Theme } from './components/common';
+import Load from './Load';
 
 interface Props extends ComponentProps {
-    theme?: string
-    headerTheme?: string
+    theme?: Theme
+    headerTheme?: Theme
     headClass?: string
     data?: any[]
     dataCount?: number
@@ -45,6 +46,7 @@ interface Props extends ComponentProps {
     menu?: any
     sticky?: boolean
     columnStyle?: StrObject
+    loading?: boolean
 }
 
 interface State {
@@ -61,8 +63,6 @@ export class Table extends React.Component<Props, State> {
     static Header = TableHeader;
     static HeaderRow = TableHeaderRow;
     static propTypes = {
-        theme: PropTypes.oneOf(['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark']),
-        headerTheme: PropTypes.oneOf(['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark']),
         headClass: PropTypes.string,
         data: PropTypes.array,
         dataCount: PropTypes.number,
@@ -569,8 +569,8 @@ export class Table extends React.Component<Props, State> {
             base = classNames(base, 'table-striped');
         }
         //theme
-        if (this.props.theme) {
-            base = classNames(base, 'table-' + this.props.theme);
+        if (this.props.theme !== undefined) {
+            base = classNames(base, 'table-' + Theme[this.props.theme]);
         }
         //bordered
         if (this.props.bordered) {
@@ -662,8 +662,8 @@ export class Table extends React.Component<Props, State> {
 
     getHeaderClasses() {
         let base = '';
-        if (this.props.headerTheme) {
-            base = 'thead-' + this.props.headerTheme;
+        if (this.props.headerTheme !== undefined) {
+            base = 'thead-' + Theme[this.props.headerTheme];
         }
         if (this.props.sticky) {
             base = classNames(base, 'sticky-thead-row')
@@ -723,7 +723,7 @@ export class Table extends React.Component<Props, State> {
             <div className={divClass} id={this.domId + '_main'} style={this.getMainStyle()}>
                 <div ref={(c: any) => this.mainDom = c} id={this.domId} className={this.getMainClass()} style={this.getStyles()}>
                     {this.state.refresh ? (
-                        <Button className='ck-table-refresh-btn' icon='sync-alt' onClick={this.props.onRefresh} size="sm" theme='dark'>
+                        <Button className='ck-table-refresh-btn' icon='sync-alt' onClick={this.props.onRefresh} size="sm" theme={Theme.dark}>
                             {this.props.refreshText}
                         </Button>) : null}
                     <table ref={(c: any) => this.tableBody = c} id={this.domId + '_body'} className={this.getClasses()} style={this.getTableStyles()}>
@@ -739,6 +739,11 @@ export class Table extends React.Component<Props, State> {
                 {this.props.height ? <Scroll selector={`#${this.domId}`} /> : null}
                 {this.props.width ? <HScroll ref={(c: any) => this.hScroll = c} showSelector={`#${this.domId}_main`} selector={`#${this.domId}`} alignParent /> : null}
                 {this.menu}
+                <div className={'ck-table-loading '+(this.props.loading?'':'d-none')}>
+                    <div className='text-center mt-5'>
+                        <Load/>
+                    </div>
+                </div>
             </div>
         );
     }

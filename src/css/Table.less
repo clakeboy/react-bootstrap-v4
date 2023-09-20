@@ -1,133 +1,143 @@
 .ck-table {
-  margin-bottom: 0 !important;
-  th,td {
-    vertical-align: middle!important;
-    font-size: .9rem;
-  }
-
-  .table-tree-row {
-    td {
-      padding:0
+    margin-bottom: 0 !important;
+    th,td {
+        vertical-align: middle !important;
+        font-size: 0.9rem;
     }
-  }
 
-  .column-split {
-    float: right;
-    display: inline-block;
-    width: 5px;
-    height: 20px;
-    cursor: pointer;
-    background-color: red;
-  }
-
-  .click-row {
-    cursor: pointer;
-    user-select: none;
-    &:first-child td {
-      border-top: none;
+    .table-tree-row {
+        td {
+            padding: 0;
+        }
     }
-  }
 
-  .header {
-
-  }
-
-  .sn {
-    text-align: left;
-    padding-left: .2rem!important;
-    padding-right: .2rem!important;
-  }
-
-  .chk {
-    text-align: center;
-    padding-left: .2rem!important;
-    padding-right: .2rem!important;
-  }
-
-  .colspan {
-    border-right: 2px solid;
-    &:last-child{
-      border-right: none;
+    .column-split {
+        float: right;
+        display: inline-block;
+        width: 5px;
+        height: 20px;
+        cursor: pointer;
+        background-color: red;
     }
-  }
+
+    .click-row {
+        cursor: pointer;
+        user-select: none;
+        &:first-child td {
+            border-top: none;
+        }
+    }
+
+    .header {
+    }
+
+    .sn {
+        text-align: left;
+        padding-left: 0.2rem !important;
+        padding-right: 0.2rem !important;
+    }
+
+    .chk {
+        text-align: center;
+        padding-left: 0.2rem !important;
+        padding-right: 0.2rem !important;
+    }
+
+    .colspan {
+        border-right: 2px solid;
+        &:last-child {
+            border-right: none;
+        }
+    }
 }
 
 .sticky-thead {
-  thead {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-  }
+    thead {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
 }
 
 .sticky-thead-row {
-  position: relative;
-  background-color: #FFFFFF;
-  z-index: 10000;
+    position: relative;
+    background-color: #ffffff;
+    z-index: 10000;
 }
 
 .ck-table-main {
-  .fixed {
-    table-layout: fixed;
-  }
+    .fixed {
+        table-layout: fixed;
+    }
 }
 
 .table-font-sm {
-  td,th {
-    font-size: .85rem!important;
-  }
+    td,
+    th {
+        font-size: 0.85rem !important;
+    }
 }
 
 .ck-table-scroll {
-  overflow: hidden;
+    overflow: hidden;
 }
 
 .ck-table-scroll-width {
-  overflow-x: hidden;
+    overflow-x: hidden;
 }
 
 .ck-table-scroll-height {
-  overflow-y: hidden;
+    overflow-y: hidden;
 }
 
 .ck-table-refresh-btn {
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
 }
 
 .ck-table-selected {
-  background-color: #e5f0ff!important;
+    background-color: #e5f0ff !important;
 }
 
 .ck-table-hold-after {
-  max-height: 100%;
-  position: absolute;
-  top: 0;
-  right: 0;
-  background-color: #ffffff;
+    max-height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #ffffff;
 
-  .shadow {
-    box-shadow: -3px 0 8px -4px #999 !important;
-  }
+    .shadow {
+        box-shadow: -3px 0 8px -4px #999 !important;
+    }
 }
 
 .ck-table-hold-before {
-  max-height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: #ffffff;
-  .shadow {
-    box-shadow: 3px 0 8px -4px #999 !important;
-  }
+    max-height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #ffffff;
+    .shadow {
+        box-shadow: 3px 0 8px -4px #999 !important;
+    }
 }
 
 .ck-table-fixed-h {
-  table {
-    border-spacing: 0;
-    border-collapse: separate;
-    thead th {
-      border-bottom-width: 1px!important;
+    table {
+        border-spacing: 0;
+        border-collapse: separate;
+        thead th {
+            border-bottom-width: 1px !important;
+        }
     }
-  }
+}
+
+.ck-table-loading {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2000;
+    background-color: rgba(0, 0, 0, .1);
 }

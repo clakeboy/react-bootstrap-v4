@@ -6,7 +6,7 @@ import Button from './Button';
 import Load from "./Load";
 import './css/Modal.less';
 import ButtonGroup from "./ButtonGroup";
-import { ComponentProps } from './components/common';
+import { ComponentProps, Theme } from './components/common';
 
 const ModalAlert = 0;
 const ModalConfirm = 1;
@@ -395,7 +395,7 @@ export class CKModal extends React.Component<Props,State> {
                                 if (typeof this.callback === 'function') {
                                     this.callback(0);
                                 }
-                            }} theme='secondary'>{this.state.btns['cancel']}</Button>
+                            }} theme={Theme.secondary}>{this.state.btns['cancel']}</Button>
                         </ButtonGroup>
                 );
                 break;

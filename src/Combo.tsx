@@ -7,7 +7,7 @@ import {map} from './Common';
 import "./css/Combo.less";
 import Load from "./Load";
 import common from "./Common";
-import { ComponentProps, StrObject } from './components/common';
+import { ComponentProps, StrObject, Theme } from './components/common';
 
 export interface ComboProps extends ComponentProps {
     searchColumn?: string
@@ -477,7 +477,7 @@ export class Combo extends React.Component<ComboProps,State> {
             <div ref={c=>this.conDom=c as HTMLDivElement} className='ck-combo-content'>
                 <Table ref={(c:any)=>this.table=c} height='100px' select={this.props.multi}
                        header={this.props.header}
-                       headerTheme='light'
+                       headerTheme={Theme.light}
                        truncate={true}
                        striped={false}
                        sm={this.props.sm}

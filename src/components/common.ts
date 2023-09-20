@@ -30,5 +30,6 @@ export enum Theme {
     warning, 
     info, 
     light, 
-    dark
+    dark,
+    link
 }

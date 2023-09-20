@@ -7,7 +7,7 @@ import ButtonGroup from "./ButtonGroup";
 import Button from "./Button";
 import Dropdown from "./Dropdown";
 import Drag from './components/Drag';
-import { AnyObject, ComponentProps, StrObject } from './components/common';
+import { AnyObject, ComponentProps, StrObject, Theme } from './components/common';
 
 interface Props extends ComponentProps {
     label?: string
@@ -422,19 +422,19 @@ export class TextArea extends React.Component<Props,State> {
         const iconClass = 'icon-' + size;
         return <div className='header-bar'>
             <ButtonGroup className='bg-white'>
-                <Button className={iconClass} size={size} icon='bold' outline theme='secondary' tip='Bold' onClick={() => {
+                <Button className={iconClass} size={size} icon='bold' outline theme={Theme.secondary} tip='Bold' onClick={() => {
                     this.execCommand('bold');
                 }} />
-                <Button className={iconClass} size={size} icon='italic' outline theme='secondary' tip='Italic' onClick={() => {
+                <Button className={iconClass} size={size} icon='italic' outline theme={Theme.secondary} tip='Italic' onClick={() => {
                     this.execCommand('italic');
                 }} />
-                <Button className={iconClass} size={size} icon='underline' outline theme='secondary' tip='Underline' onClick={() => {
+                <Button className={iconClass} size={size} icon='underline' outline theme={Theme.secondary} tip='Underline' onClick={() => {
                     this.execCommand('underline');
                 }} />
-                <Button className={iconClass} size={size} icon='undo' outline theme='secondary' tip='Undo' onClick={() => {
+                <Button className={iconClass} size={size} icon='undo' outline theme={Theme.secondary} tip='Undo' onClick={() => {
                     this.execCommand('undo');
                 }} />
-                <Button className={iconClass} size={size} icon='redo' outline theme='secondary' tip='Redo' onClick={() => {
+                <Button className={iconClass} size={size} icon='redo' outline theme={Theme.secondary} tip='Redo' onClick={() => {
                     this.execCommand('redo', '');
                 }} />
                 <Dropdown size={size} outline icon='text-height' data={[
@@ -455,7 +455,7 @@ export class TextArea extends React.Component<Props,State> {
                     this.execCommand('foreColor', val);
                 }} />
 
-                <Button className={iconClass} size={size} icon='eraser' outline theme='secondary' tip='Clean' onClick={() => {
+                <Button className={iconClass} size={size} icon='eraser' outline theme={Theme.secondary} tip='Clean' onClick={() => {
                     this.execCommand('removeFormat');
                 }} />
                 {/*<Button className='icon' size='sm' icon='wrench' outline theme='secondary' tip='Clean' onClick={()=>{*/}
@@ -463,7 +463,7 @@ export class TextArea extends React.Component<Props,State> {
                 {/*    console.log(document.queryCommandValue('fontSize'));*/}
                 {/*}}/>*/}
             </ButtonGroup>
-            <Button className={iconClass + ' float-right'} id={this.domId + '-btn-full'} size={size} icon='expand-arrows-alt' outline theme='secondary' tip='Full Screen' onClick={(e) => {
+            <Button className={iconClass + ' float-right'} id={this.domId + '-btn-full'} size={size} icon='expand-arrows-alt' outline theme={Theme.secondary} tip='Full Screen' onClick={(e) => {
                 if (this.isFull) {
                     this.isFull = false;
                     document.body.classList.remove('full-none-scroll');

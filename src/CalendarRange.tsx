@@ -7,7 +7,7 @@ import './css/CalendarRange.less';
 import common from "./Common";
 import { Calendar } from "./index";
 import Button from "./Button";
-import { ComponentProps, StrObject } from './components/common';
+import { ComponentProps, StrObject, Theme } from './components/common';
 
 const stopEvent = function (e: Event) {
     e.stopPropagation();
@@ -271,8 +271,8 @@ export class CalendarRange extends React.PureComponent<Props,State> {
                 })
             }} />
             <div className='d-flex flex-column'>
-                <Button className='ml-1 mt-1' size='sm' theme='danger' icon='trash-alt' tip='清除选择' onClick={this.clearHandler} />
-                <Button className='ml-1 mt-auto' size='sm' theme='secondary' icon='times-circle' tip='关闭' onClick={this.hide} />
+                <Button className='ml-1 mt-1' size='sm' theme={Theme.danger} icon='trash-alt' tip='清除选择' onClick={this.clearHandler} />
+                <Button className='ml-1 mt-auto' size='sm' theme={Theme.secondary} icon='times-circle' tip='关闭' onClick={this.hide} />
             </div>
         </div>
     }

@@ -5,7 +5,7 @@ import Icon from './Icon';
 import common, { strpad } from './Common';
 import Button from "./Button";
 import Scroll from "./Scroll";
-import { ComponentProps } from './components/common';
+import { ComponentProps, Theme } from './components/common';
 const i18n:{[propName:string]:any} = {
     'zh': {
         'week': [
@@ -625,7 +625,7 @@ export class Calendar extends React.PureComponent<Props, State, any> {
                             <span>{this.state.hour}:{this.state.minute}:{this.state.second}</span>
                         </div>
                         <div className='col'>
-                            <Button onClick={this.selectTimeHandler} theme='link' size={this.props.sm ? 'sm' : undefined} block>
+                            <Button onClick={this.selectTimeHandler} theme={Theme.link} size={this.props.sm ? 'sm' : undefined} block>
                                 {this.state.time ? lang['time']['confirm'] : lang['time']['time']}
                             </Button>
                         </div>

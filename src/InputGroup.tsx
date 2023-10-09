@@ -119,9 +119,7 @@ export class InputGroup extends React.PureComponent<Props,State> {
 
         return (
             <div className={cls_name} style={def_style}>
-                <div className="input-group-prepend">
-                    <div className="input-group-text">{this.state.label}</div>
-                </div>
+                <div className="input-group-text">{this.state.label}</div>
                 <input type="text" {...this.props} size={undefined} onChange={this.changeHandler} value={this.state.value} className="form-control"/>
                 {this.renderSummary()}
             </div>

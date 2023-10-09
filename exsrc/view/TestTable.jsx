@@ -3,26 +3,12 @@
  */
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import {
     Button,
-    ButtonGroup,
     Card,
-    CKModal,
-    Container,
-    Input,
-    Load,
     Table,
-    Tabs,
-    TabsContent,
-    Title,
-    Tree
 } from "../../src";
-import Form from "../../src/Form";
-import CDropdown from "../../src/CDropdown";
-import Loader from "../components/Loader";
-import {GetComponent} from "../common/Funcs";
 
 class TestTable extends React.PureComponent {
     constructor(props) {
@@ -110,13 +96,13 @@ class TestTable extends React.PureComponent {
     render() {
         return (
             <div>
-                <h1>React Bootstrap v4 Test Table Scroll</h1>
+                <h1>React Bootstrap v5 Test Table Scroll</h1>
                 <Button onClick={()=>{
                     this.props.history.goBack();
                 }}>返回主页</Button>
                 <h3>测试编辑</h3>
                 <Card className='mt-2' header='测试 Table Scroll'>
-                    <Table hover={true} select={true} data={this.state.editData} sticky headerTheme='light' width='100%'>
+                    <Table hover={true} select={true} data={this.state.editData} sticky width='100%'>
                         <Table.HeaderRow>
                             <Table.Header text='User' cols={2} align='center'/>
                             <Table.Header text='Content' cols={4} align='center'/>

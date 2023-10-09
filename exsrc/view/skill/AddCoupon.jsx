@@ -70,20 +70,20 @@ class AddCoupon extends React.PureComponent {
             <div className={this.getClasses()}>
                 <Form ref={c=>this.form=c} onChange={this.changeHandler}>
                     <Container className='p-0 mb-1' inline fluid>
-                        <Input field='username' className='mr-1' disabled width='100' placeholder='用户名'/>
-                        <Input field='password' className='mr-1' placeholder='密码' type='password'/>
-                        <div className='mr-2'>日期:</div>
-                        <Input field='date' className='mr-1' placeholder='日期' calendar/>
+                        <Input field='username' className='me-1' disabled width='100' placeholder='用户名'/>
+                        <Input field='password' className='me-1' placeholder='密码' type='password'/>
+                        <div className='me-2'>日期:</div>
+                        <Input field='date' className='me-1' placeholder='日期' calendar/>
                     </Container>
-                    <div className='form-row'>
+                    <div className='row'>
                         <Input className='col-6' label='Name' plaintext />
                         <Input field='name' className='col-6' label='Last Name' data='Lee'/>
                     </div>
-                    <div className='form-row'>
+                    <div className='row'>
                         <Select field='city1' className='col-6' label='City Object' data={this.dataList} defaultValue='3'/>
                         <Select field='city2' className='col-6' label='City Text' data={this.dataArrList} defaultValue='Dropdown Text2' summary='下载文本'/>
                     </div>
-                    <div className='form-row'>
+                    <div className='row'>
                         <Input field='birthday' className='col-6' label='Calendar' data='1518427253' calendar readOnly/>
                         <Input className='col-6' label='Calendar' data='Lee' calendar disabled/>
                     </div>
@@ -91,13 +91,13 @@ class AddCoupon extends React.PureComponent {
                     <CCheckbox label='是否完成' field='is_done'/>
                 </Form>
                 <div>
-                    <Button className='float-right' icon='plus' onClick={()=>{
+                    <Button className='float-end' icon='plus' onClick={()=>{
                         this.modal.alert({
                             title:'试试',
                             content:'试试 Modal 内再调用 Modal',
                         })
                     }}>添加</Button>
-                    <Button className='float-right' onClick={()=>{
+                    <Button className='float-end' onClick={()=>{
                         console.log(this.form.getValues());
                         console.log(this.props);
                     }}>显示数据</Button>
@@ -113,11 +113,11 @@ class AddCoupon extends React.PureComponent {
                             console.log(this.state.data);
                         })
                     }}>
-                        <div className='form-row'>
+                        <div className='row'>
                             <Input className='col-6' field='name' label='Name' plaintext data='Clake'/>
                             <Input className='col-6' field='name_s' label='Last Name' data='Lee' calendar/>
                         </div>
-                        <div className='form-row'>
+                        <div className='row'>
                             <CDropdown className='col-6' field='text_drop' label='Name' text='下拉选择'>
                                 <CDropdown.Value text='选项1' value={11111} active/>
                                 <CDropdown.Value text='选项2' value={222222} />
@@ -127,19 +127,19 @@ class AddCoupon extends React.PureComponent {
                                 <CDropdown.Value text='选项2' value={222222} active/>
                             </CDropdown>
                         </div>
-                        <div className='form-row'>
+                        <div className='row'>
                             <div className='col-2 form-group pt-2'><label>middle垂直居中</label></div>
                             <Input className='col-10' data='Lee'/>
                         </div>
-                        <div className='form-row'>
+                        <div className='row'>
                             <Input className='col-6' field='name' label='Name' plaintext data='Clake'/>
                             <Input field='birthday' className='col-6' label='Calendar' data='1518427253' calendar readOnly/>
                         </div>
-                        <div className='form-row'>
+                        <div className='row'>
                             <Input className='col-6' field='name' label='Name' plaintext data='Clake'/>
                             <Input field='birthday' className='col-6' label='Calendar' data='1518427253' calendar readOnly/>
                         </div>
-                        <div className='form-row'>
+                        <div className='row'>
                             <Input className='col-6' field='name' label='Name' plaintext data='Clake'/>
                             <Input className='col-6' field='name_s' label='Last Name' data='Lee'/>
                         </div>

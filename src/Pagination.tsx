@@ -141,7 +141,7 @@ export class Pagination extends React.PureComponent<Props,State> {
             <nav >
                 <ul className={this.getClasses()}>
                     {this.props.numberList && this.props.numberList.length > 0 ? <li>
-                        <CDropdown className='mr-1' size={this.props.size??''} text='下拉选择' onChange={(val,row)=>{
+                        <CDropdown className='me-1' size={this.props.size??''} text='下拉选择' onChange={(val,row)=>{
                             if (this.props.onSelect)
                                 this.props.onSelect(1,row.value,val);
                         }}>
@@ -172,8 +172,8 @@ export class Pagination extends React.PureComponent<Props,State> {
         }
         return (
             <span className="page-link text-nowrap">
-                总记录<span className='text-info'>{this.props.count}</span> 条,
-                共有 <span className='text-info'>{this.count}</span> 页
+                总记录 {this.props.count} 条,
+                共有 {this.count} 页
             </span>
         )
     }

@@ -108,7 +108,7 @@ class Window extends React.Component {
             <Container>
                 <h1>Window Manage Demo</h1>
                 <Container fluid className='mb-1 p-0'>
-                    <Button className='mr-1' onClick={e=>{
+                    <Button className='me-1' onClick={e=>{
                         this.props.history.replace('/',this.state);
                     }}>回到首页</Button>
                 </Container>
@@ -119,7 +119,7 @@ class Window extends React.Component {
                                 console.log("close dom-left");
                             }});
                     }}>点击打开菜单</Button>
-                    <Button className='ml-3' theme='success' icon='plus' onClick={(e)=>{
+                    <Button className='ms-3' theme='success' icon='plus' onClick={(e)=>{
                         this.dicMenu.show({
                             menu_list:[
                                 {field:'asc',children:'这是动态菜单1'},
@@ -171,7 +171,7 @@ class Window extends React.Component {
                         <GroupStyle left='金额' right='元' leftClass='bg-white'>
                             <Input width='150px' field='test-price' align='right' type='number' disableClear placeholder='左右组合'/>
                         </GroupStyle>
-                        <GroupStyle className='mr-2' left='测试组'>
+                        <GroupStyle className='me-2' left='测试组'>
                             <Input width='200px' field='test-input' placeholder='宽度定义200px'/>
                         </GroupStyle>
                         <GroupStyle left='加Check' >
@@ -213,7 +213,7 @@ class Window extends React.Component {
                         console.log(select.toString());
                     }}>Filter Selection</Menu.Item>
                     <Menu.Item field="filter">
-                        <span className='mr-1'>Filter</span>
+                        <span className='me-1'>Filter</span>
                         <Input size='xs' onMouseDown={(e)=>{e.stopPropagation();}}/>
                     </Menu.Item>
                     <Menu.Item field="filter" text='More...' child>

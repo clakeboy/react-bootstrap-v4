@@ -48,15 +48,15 @@ class Jump extends React.PureComponent {
 
                 <Card>
                     <Container className='p-0 mb-1' inline fluid>
-                        <Input className='mr-1' disabled placeholder='用户名'/>
-                        <Switch className='mr-1' theme='success' size='lg' checked={this.state.checked} onChange={(checked) => {
+                        <Input className='me-1' disabled placeholder='用户名'/>
+                        <Switch className='me-1' theme='success' size='lg' checked={this.state.checked} onChange={(checked) => {
                             this.setState({
                                 checked: checked
                             }, () => {
                                 console.log(this.state.checked);
                             })
                         }}/>
-                        <Switch disabled className='mr-1' theme='success' size='lg' checked={this.state.checked} onChange={(checked) => {
+                        <Switch disabled className='me-1' theme='success' size='lg' checked={this.state.checked} onChange={(checked) => {
                             this.setState({
                                 checked: checked
                             }, () => {
@@ -65,8 +65,8 @@ class Jump extends React.PureComponent {
                         }}/>
                     </Container>
                     <Container className='p-0 mb-1' inline fluid>
-                        <Input className='mr-1' disabled placeholder='用户名'/>
-                        <Switch className='mr-1' theme='dark' checked={this.state.checked} onChange={(checked) => {
+                        <Input className='me-1' disabled placeholder='用户名'/>
+                        <Switch className='me-1' theme='dark' checked={this.state.checked} onChange={(checked) => {
                             this.setState({
                                 checked: checked
                             }, () => {
@@ -82,13 +82,13 @@ class Jump extends React.PureComponent {
                         }}/>
                     </Container>
                     <Container className='p-0 mb-1' inline fluid>
-                        <Input className='mr-1' size='sm' disabled placeholder='用户名'/>
-                        <Switch className='mr-1' ref={c=>this.switch=c} size='sm' theme='warning'/>
+                        <Input className='me-1' size='sm' disabled placeholder='用户名'/>
+                        <Switch className='me-1' ref={c=>this.switch=c} size='sm' theme='warning'/>
                         <Switch disabled ref={c=>this.switch=c} size='sm' theme='warning'/>
                     </Container>
                     {this.state.checked ? <div>是</div> : <div>否</div>}
                     <Button disabled>禁用</Button>
-                    <Input className='mr-1' width={'200px'} placeholder='日期' calendar data={this.state.date} onChange={(e)=>{
+                    <Input className='me-1' width={'200px'} placeholder='日期' calendar data={this.state.date} onChange={(e)=>{
                         this.setState({
                             date:e
                         })

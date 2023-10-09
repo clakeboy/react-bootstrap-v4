@@ -79,37 +79,37 @@ class Main extends React.Component {
     render() {
         return (
             <Container>
-                <h1>React Bootstrap v4 Demo</h1>
+                <h1>React Bootstrap v5 Demo</h1>
                 <Container fluid className='mb-1 p-0'>
-                    <Button theme={Theme.danger} className='mr-1' onClick={e=>{
+                    <Button theme={Theme.danger} outline className='me-1' onClick={e=>{
                         this.props.history.push('/skill/jump',this.state);
                     }} tip="转到内联">转到内联</Button>
-                    <Button className='mr-1' onClick={e=>{
+                    <Button className='me-1' onClick={e=>{
                         this.props.history.push('/coupon',this.state);
                     }}>转到 Demo2</Button>
-                    <Button className='mr-1' onClick={e=>{
+                    <Button className='me-1' onClick={e=>{
                         this.props.history.push('/test_modal',this.state);
                     }}>转到 Table Modal</Button>
-                    <Button className='mr-1' onClick={e=>{
+                    <Button className='me-1' onClick={e=>{
                         this.props.history.push('/window',this.state);
                     }}>转到 Window</Button>
-                    <Button className='mr-1' onClick={e=>{
+                    <Button className='me-1' onClick={e=>{
                         this.props.history.push('/test_table',this.state);
                     }}>转到 Table Scroll</Button>
-                    <Button className='mr-1' onClick={e=>{
+                    <Button className='me-1' onClick={e=>{
                         this.props.history.push('/test_triangle',this.state);
                     }}>转到 Triangle</Button>
-                    <Button className='mr-1' onClick={e=>{
+                    <Button className='me-1' onClick={e=>{
                         this.props.history.push('/test_edit',this.state);
                     }}>转到 HTML Edit &gt;&lt;</Button>
                 </Container>
-                <Container className='p-0 mb-1' inline fluid>
-                    <Input className='mr-1' disabled size='sm' absolute x='50px' y='150px' width='100px' placeholder='用户名' onChange={this.changeHandler('user_name')} data={this.state.pageData.user_name}/>
-                    <Input className='mr-1' placeholder='密码' type='password'/>
-                    <Input className='mr-1' placeholder='日期' calendar/>
-                    <InputGroup className='mr-1' ref={c=>this.ing=c} width={200} label="测试" data="11111"/>
-                    <Dropdown className='mr-1' text={this.state.dropdown.drop1} data={this.dataList}/>
-                    <Dropdown className='mr-1' text={this.state.dropdown.drop2} data={this.dataArrList}/>
+                <Container className='p-0 mb-1 comm-form' inline fluid>
+                    <Input className='me-1' disabled size='sm' absolute x='50px' y='150px' width='100px' placeholder='用户名' onChange={this.changeHandler('user_name')} data={this.state.pageData.user_name}/>
+                    <Input className='me-1' placeholder='密码' type='password'/>
+                    <Input className='me-1' placeholder='日期' calendar/>
+                    <InputGroup className='me-1' ref={c=>this.ing=c} width={200} label="测试" data="11111"/>
+                    <Dropdown className='me-1' text={this.state.dropdown.drop1} data={this.dataList}/>
+                    <Dropdown className='me-1' text={this.state.dropdown.drop2} data={this.dataArrList}/>
                     <Button onClick={()=>{
                         this.setState({
                             dropdown:{
@@ -119,17 +119,17 @@ class Main extends React.Component {
                         })
                     }} loading>搜索</Button>
                 </Container>
-                <Container className='p-0 mb-1' inline fluid>
+                <Container className='p-0 mb-1 comm-form' inline fluid>
                     <CalendarRange placeholderMin='开始时间' placeholderMax='结束时间' onChange={(min,max)=>{
                         console.log(min,max)
                     }}/>
                 </Container>
                 <Card className='mb-2' header='User Info'>
-                    <div className='form-row'>
+                    <div className='row'>
                         <Input className='col-6' label='Name' plaintext data='Clake'/>
                         <Input className='col-6' label='Last Name' readOnly data={this.state.pageData.last_name} onChange={this.changeHandler('last_name')} validate={{rule:/.+/,text:'请填写用户名'}}/>
                     </div>
-                    <div className='form-row'>
+                    <div className='row'>
                         <Select className='col-6' label='City Object' data={this.dataList} defaultValue='3'/>
                         <Select className='col-6' label='City Text' onSelect={(e)=>{
                             console.log(e.target.value);
@@ -140,17 +140,17 @@ class Main extends React.Component {
                             })
                         }} data={this.dataArrList} value={this.state.pageData.city} defaultValue='Dropdown Text2' summary='下载文本'/>
                     </div>
-                    <div className='form-row'>
+                    <div className='row'>
                         <Input className='col-6' label='Calendar Unix Timestamp' data='1518427253' calendarFormat='unix' calendar disabled onDblClick={()=>{
                             alert('双击');
                         }}/>
                         <Input className='col-6' size='sm' label='Calendar' calendarTime={true} calendarFormat='YYYY-MM-DD H:I:S' data={this.state.pageData.chose_date} onChange={this.changeHandler('chose_date')} calendar readOnly/>
                     </div>
-                    <div className='form-row'>
+                    <div className='row'>
                         <Input className='col-6' size='lg' label='Calendar' data={this.state.pageData.chose_date} onChange={this.changeHandler('chose_date')} calendar readOnly/>
                         <Input className='col-6' size='xs' label='Calendar' data={this.state.pageData.chose_date} onChange={this.changeHandler('chose_date')} calendar readOnly/>
                     </div>
-                    <div className='form-row'>
+                    <div className='row'>
                         <CalendarRange className='col-6' label='Calendar Range'/>
                     </div>
                     <TextArea label='Summary' htmlMode height='500px' data={this.state.pageData.text_area}/>
@@ -162,37 +162,37 @@ class Main extends React.Component {
                 </Card>
                 <Card className='bg-light mb-3' header='Small size'>
                     <Container className='p-0 mb-1' inline>
-                        <InputGroup className='mr-1' ref={c=>this.ing=c} disabled={this.state.testChecked} width={200} label="测试" size='sm' placeholder='测试数据填写' df="11111"/>
-                        <Button className='mr-1' theme='dark' size='sm' icon='user' onClick={e=>console.log(this.ing.getValue())}>
+                        <InputGroup className='me-1' ref={c=>this.ing=c} disabled={this.state.testChecked} width={200} label="测试" size='sm' placeholder='测试数据填写' df="11111"/>
+                        <Button className='me-1' theme='dark' size='sm' icon='user' onClick={e=>console.log(this.ing.getValue())}>
                             点击
                         </Button>
                     </Container>
                     <Container inline>
-                        <CCheckbox label='clake' disabled className='mr-2'/>
-                        <CCheckbox label='clake' disabled checked className='mr-2'/>
+                        <CCheckbox label='clake' disabled className='me-2'/>
+                        <CCheckbox label='clake' disabled checked className='me-2'/>
                     </Container>
                     <Container inline>
-                        <Checkbox ref={c=>this.chk = c} className='mr-1' onChange={e=>{
+                        <Checkbox ref={c=>this.chk = c} className='me-1' onChange={e=>{
                             this.setState({
                                 testChecked:!e.target.checked
                             })
                         }} checked={this.state.pageData.testChecked} label='ddd'/>
-                        <CCheckbox label='clake' className='mr-2'/>
-                        <Button className='mr-1' size='sm' onClick={e=>{
+                        <CCheckbox label='clake' className='me-2'/>
+                        <Button className='me-1' size='sm' onClick={e=>{
                             let data = this.state.pageData;
                             data['testChecked'] = !data['testChecked'];
                             this.setState({pageData:data})
                         }}>
                             State 方式测试
                         </Button>
-                        <Button className='mr-1' size='sm' onClick={e=>{
+                        <Button className='me-1' size='sm' onClick={e=>{
                             this.chk.setChecked(!this.chk.getChecked());
                         }}>
                             setValue 方式测试
                         </Button>
                     </Container>
                     <Input label='Email' disabled={this.state.testChecked} placeholder='Please enter your email address' size='sm'/>
-                    <Button className='mr-1' size='sm' onClick={e=>{
+                    <Button className='me-1' size='sm' onClick={e=>{
                         this.setState({
                             radioDisabled:!this.state.radioDisabled
                         });
@@ -202,16 +202,16 @@ class Main extends React.Component {
                     <RadioGroup onChange={(val)=>{
                         console.log(val);
                     }} data='2' disabled={this.state.radioDisabled}>
-                        <Radio label='Check1' className='mr-2' name='ccc' data='1'/>
-                        <Radio label='Check2' className='mr-2' name='ccc' data='2'/>
-                        <Radio label='Check3' className='mr-2' name='ccc' data='3'/>
+                        <Radio label='Check1' className='me-2' name='ccc' data='1'/>
+                        <Radio label='Check2' className='me-2' name='ccc' data='2'/>
+                        <Radio label='Check3' className='me-2' name='ccc' data='3'/>
                     </RadioGroup>
                 </Card>
                 <Card className='mb-2' header='Table'>
                     <Button onClick={()=>{
                         console.log(this.mainTable.getSelectRows());
                     }}>得到选中数据</Button>
-                    <Table ref={c=>this.mainTable = c} onRefresh={()=>{}} refreshText='刷新列表' hover={true} select={true} headerTheme='light' data={this.dataTable}>
+                    <Table ref={c=>this.mainTable = c} onRefresh={()=>{}} refreshText='刷新列表' hover={true} select={true} headerTheme={Theme.light} data={this.dataTable}>
                         <Table.Header text='Name' field='name' onSort={(field,sort)=>{
                             alert(field+'-'+sort);
 
@@ -243,7 +243,7 @@ class Main extends React.Component {
                         console.log('select',page,showNumber)
                         console.log(page.target)
                     }}/>
-                    <Table hover={true} select={true} headerTheme='light'>
+                    <Table hover={true} select={true} headerTheme={Theme.light}>
                         <Table.Header text='Name' field='name' onSort={(field,sort)=>{
                             alert(field+'-'+sort);
 

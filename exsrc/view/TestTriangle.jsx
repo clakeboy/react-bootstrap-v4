@@ -55,7 +55,7 @@ class TestTriangle extends React.Component {
             <Container>
                 <h1>Triangle Demo</h1>
                 <Container fluid className='mb-1 p-0'>
-                    <Button className='mr-1' onClick={e=>{
+                    <Button className='me-1' onClick={e=>{
                         this.props.history.replace('/',this.state);
                     }}>回到首页</Button>
                 </Container>
@@ -65,7 +65,7 @@ class TestTriangle extends React.Component {
                     }}>点击上传文件</Button>
                     <Input ref={c=>this.dragDom=c} label='文件' data={this.state?.filename}/>
                     <div className='cleafix'>
-                        <div className='position-relative d-inline border p-2 float-right' id='test_drop_panel_left'>
+                        <div className='position-relative d-inline border p-2 float-end' id='test_drop_panel_left'>
                             <span>点击测试</span>
                             <DropPanel className='bg-white' borderTheme='danger' selector='#test_drop_panel_left'>
                                 <div className='p-1' style={{width:'300px'}}>
@@ -76,7 +76,7 @@ class TestTriangle extends React.Component {
                                 </div>
                             </DropPanel>
                         </div>
-                        <div className='position-relative d-inline border p-2 float-left' id='test_drop_panel_right'>
+                        <div className='position-relative d-inline border p-2 float-start' id='test_drop_panel_right'>
                             <span>点击测试</span>
                             <DropPanel className='bg-white' selector='#test_drop_panel_right'>
                                 <div className='p-1'>

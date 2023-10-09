@@ -28,7 +28,7 @@ class TestEdit extends React.Component {
     render() {
         return (
             <Container>
-                <h1>React Bootstrap v4 HTML Editor Demo</h1>
+                <h1>React Bootstrap v5 HTML Editor Demo</h1>
                 <Container fluid className='mb-1 p-0'>
                     <Button onClick={() => {
                         this.props.history.goBack();

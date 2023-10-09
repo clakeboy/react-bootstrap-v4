@@ -180,14 +180,14 @@ export class CalendarRange extends React.PureComponent<Props,State> {
     }
 
     show = () => {
-        this.calendar_panel.classList.add('d-flex')
+        this.calendar_panel.classList.remove('d-none')
         this.calendar_panel.style.top = this.mainDom.offsetHeight + 'px'
         this.minCalendar.refreshWidth();
         this.maxCalendar.refreshWidth();
     }
 
     hide = () => {
-        this.calendar_panel.classList.remove('d-flex')
+        this.calendar_panel.classList.add('d-none')
 
     }
 
@@ -225,12 +225,12 @@ export class CalendarRange extends React.PureComponent<Props,State> {
             return null;
         }
         return (
-            <label htmlFor={this.domId} className={this.props.labelClass}>{this.props.label}</label>
+            <label htmlFor={this.domId} className={'form-label '+this.props.labelClass}>{this.props.label}</label>
         )
     }
 
     renderCalendar() {
-        return <div ref={c => this.calendar_panel = c as HTMLDivElement} className='c-panel d-none p-1 shadow rounded'>
+        return <div ref={c => this.calendar_panel = c as HTMLDivElement} className='c-panel d-flex p-1 shadow rounded d-none'>
             <Calendar ref={(c:any) => this.minCalendar = c} target={this.inputMin} value={this.state.min} onSelect={(val:any) => {
                 let max = this.state.max;
                 const flag = this.maxCalendar.setFailRange(new Date(val), this.props.days as number);
@@ -252,8 +252,8 @@ export class CalendarRange extends React.PureComponent<Props,State> {
                 })
             }} />
             <div className='d-flex flex-column'>
-                <Button className='ml-1 mt-1' size='sm' theme={Theme.danger} icon='trash-alt' tip='清除选择' onClick={this.clearHandler} />
-                <Button className='ml-1 mt-auto' size='sm' theme={Theme.secondary} icon='times-circle' tip='关闭' onClick={this.hide} />
+                <Button className='ms-1 mt-1' size='sm' theme={Theme.danger} icon='trash-alt' tip='清除选择' onClick={this.clearHandler} />
+                <Button className='ms-1 mt-auto' size='sm' theme={Theme.secondary} icon='times-circle' tip='关闭' onClick={this.hide} />
             </div>
         </div>
     }

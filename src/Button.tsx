@@ -4,6 +4,7 @@ import Icon from './Icon';
 import './css/Button.less';
 import common from "./Common";
 import {ComponentProps, Theme} from './components/common';
+import {Tooltip} from 'bootstrap'
 
 interface Props extends ComponentProps {
     theme?: Theme
@@ -27,7 +28,7 @@ interface State {
 
 export class Button extends React.PureComponent<Props,State> {
     domId:string
-
+    tip: Tooltip
     static defaultProps = {
         theme: Theme.primary,
         outline: false,
@@ -37,18 +38,23 @@ export class Button extends React.PureComponent<Props,State> {
 
     constructor(props:any) {
         super(props);
-        this.domId = 'btn-'+common.RandomString(16);
+        this.domId = this.props.id ?? 'btn-'+common.RandomString(16);
     }
 
     componentDidMount() {
         if (this.props.tip) {
-            $('#'+this.domId).tooltip({'trigger':'hover'});
+            // console.log(Tooltip);
+            this.tip = new Tooltip(document.getElementById(this.domId) as HTMLElement,{'trigger':'hover'})
+            // $('#'+this.domId).tooltip({'trigger':'hover'});
+            // this.tip.toggle('hover')
+            
         }
     }
 
     componentWillUnmount() {
         if (this.props.tip) {
-            $('#'+this.domId).tooltip('dispose');
+            // $('#'+this.domId).tooltip('dispose');
+            this.tip.dispose()
         }
     }
 
@@ -78,7 +84,7 @@ export class Button extends React.PureComponent<Props,State> {
 
         //block
         if (this.props.block) {
-            base = classNames(base,'btn-block');
+            base = classNames(base,'w-100');
         }
 
         return classNames(base,this.props.className);

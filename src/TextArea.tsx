@@ -441,7 +441,7 @@ export class TextArea extends React.Component<Props,State> {
                 {/*    console.log(document.queryCommandValue('fontSize'));*/}
                 {/*}}/>*/}
             </ButtonGroup>
-            <Button className={iconClass + ' float-right'} id={this.domId + '-btn-full'} size={size} icon='expand-arrows-alt' outline theme={Theme.secondary} tip='Full Screen' onClick={(e) => {
+            <Button className={iconClass + ' float-end'} id={this.domId + '-btn-full'} size={size} icon='expand-arrows-alt' outline theme={Theme.secondary} tip='Full Screen' onClick={(e) => {
                 if (this.isFull) {
                     this.isFull = false;
                     document.body.classList.remove('full-none-scroll');

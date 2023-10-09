@@ -163,7 +163,7 @@ export class Tabs extends React.PureComponent<Props,State> {
                     return (
                         <li className="nav-item">
                             <a className={class_name} data-tabid={item.props.id} onClick={clickEvt}>
-                                {is_close?<Icon className='mr-2' icon='times-circle' onClick={(e)=>{
+                                {is_close?<Icon className='me-2' icon='times-circle' onClick={(e)=>{
                                     e.stopPropagation();
                                     if (this.state.currentShow === item.props.id) {
                                         this.setState({

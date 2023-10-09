@@ -250,7 +250,7 @@ export class Tree extends React.PureComponent<Props,State> {
                         {val.children?<span className='ck-tree-icon' onClick={this.iconHandler(val,id)}>
                             <Icon className={val.show?'ck-tree-icon-down':''} icon={val.children?'angle-right':val.icon}/>
                         </span>:<span className='ck-tree-icon'/>}
-                        {this.props.check ? <CCheckbox ref={(c:any)=>this.checkObjList[id]=c} checked={val?.checked} className='chk mr-1' inline onChange={this.changeHandler(val,id,parent_key)}/>:null}
+                        {this.props.check ? <CCheckbox ref={(c:any)=>this.checkObjList[id]=c} checked={val?.checked} className='chk me-1' inline onChange={this.changeHandler(val,id,parent_key)}/>:null}
                         <span className='ck-tree-item-text'
                               onDoubleClick={this.dbClickHandler(val,id)}
                               onClick={this.selectHandler(val,id)}>

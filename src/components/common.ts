@@ -31,5 +31,5 @@ export enum Theme {
     info, 
     light, 
     dark,
-    link
+    link,
 }

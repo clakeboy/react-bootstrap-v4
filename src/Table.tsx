@@ -16,6 +16,7 @@ import Load from './Load';
 interface Props extends ComponentProps {
     theme?: Theme
     headerTheme?: Theme
+    headerAlign?: string
     headClass?: string
     data?: any[]
     dataCount?: number
@@ -75,6 +76,7 @@ export class Table extends React.Component<Props, State> {
         emptyText: 'Not data',
         serialNumber: true,
         truncate: false,
+        headerTheme: Theme.light
     };
     treeOpens: AnyObject
     select_all: boolean
@@ -303,6 +305,9 @@ export class Table extends React.Component<Props, State> {
             return true
         }
         if (nextState.data !== this.state.data) {
+            return true
+        }
+        if (nextProps.loading !== this.props.loading) {
             return true
         }
         return nextState.tree !== this.state.tree;
@@ -627,7 +632,7 @@ export class Table extends React.Component<Props, State> {
     getHeaderClasses() {
         let base = '';
         if (this.props.headerTheme !== undefined) {
-            base = 'thead-' + Theme[this.props.headerTheme];
+            base = 'table-' + Theme[this.props.headerTheme];
         }
         if (this.props.sticky) {
             base = classNames(base, 'sticky-thead-row')
@@ -792,7 +797,7 @@ export class Table extends React.Component<Props, State> {
                         if (filter && filter.indexOf(item.props.field) === -1) {
                             return null;
                         }
-                        const align = item.props.align || this.props.align;
+                        const align = this.props.headerAlign || item.props.align || this.props.align;
                         const style: StrObject = {
                             'textAlign': align
                         };
@@ -849,18 +854,18 @@ export class Table extends React.Component<Props, State> {
         const row = e.currentTarget as HTMLTableRowElement;
         const id = (row?.parentNode?.parentNode as HTMLElement).id;
         if (id.includes('after') || id.includes('before')) {
-            this.tableBody.tBodies[0].rows[row.sectionRowIndex].style.backgroundColor = (e.type === "mouseover" ? window.getComputedStyle(row).backgroundColor : '')
+            this.tableBody.tBodies[0].rows[row.sectionRowIndex].style.backgroundColor = (e.type === "mouseover" ? 'var(--bs-table-hover-bg)' : '')
             if (id.includes('after') && this.beforeBody) {
-                this.beforeBody.tBodies[0].rows[row.sectionRowIndex].style.backgroundColor = (e.type === "mouseover" ? window.getComputedStyle(row).backgroundColor : '')
+                this.beforeBody.tBodies[0].rows[row.sectionRowIndex].style.backgroundColor = (e.type === "mouseover" ? 'var(--bs-table-hover-bg)' : '')
             } else if (id.includes('before') && this.afterBody) {
-                this.afterBody.tBodies[0].rows[row.sectionRowIndex].style.backgroundColor = (e.type === "mouseover" ? window.getComputedStyle(row).backgroundColor : '')
+                this.afterBody.tBodies[0].rows[row.sectionRowIndex].style.backgroundColor = (e.type === "mouseover" ? 'var(--bs-table-hover-bg)' : '')
             }
         } else {
             if (this.beforeBody) {
-                this.beforeBody.tBodies[0].rows[row.sectionRowIndex].style.backgroundColor = (e.type === "mouseover" ? window.getComputedStyle(row).backgroundColor : '')
+                this.beforeBody.tBodies[0].rows[row.sectionRowIndex].style.backgroundColor = (e.type === "mouseover" ? 'var(--bs-table-hover-bg)' : '')
             }
             if (this.afterBody) {
-                this.afterBody.tBodies[0].rows[row.sectionRowIndex].style.backgroundColor = (e.type === "mouseover" ? window.getComputedStyle(row).backgroundColor : '')
+                this.afterBody.tBodies[0].rows[row.sectionRowIndex].style.backgroundColor = (e.type === "mouseover" ? 'var(--bs-table-hover-bg)' : '')
             }
         }
     }
@@ -877,7 +882,10 @@ export class Table extends React.Component<Props, State> {
             }
         }
         const dynamic_tree = typeof this.props.onClickTree === 'function';
-        let classString = this.props.onClick ? 'click-row' : this.getHeaderClasses()
+        let classString = this.props.onClick ? 'click-row' : ''
+        if (this.props.sticky) {
+            classString += ' sticky-thead-row'    
+        }
         classString += this.state.selectRows[i] ? ' ck-table-selected' : '';
         return (
             <>
@@ -887,7 +895,7 @@ export class Table extends React.Component<Props, State> {
                     this.mainMenu.show({ evt: e, type: 'mouse', data: row });
                 }} onMouseOver={this.hoverAuthorRow} onMouseOut={this.hoverAuthorRow} className={classString} onClick={this.clickHandler(row, i)}>
                     {this.props.serialNumber && filter_type !== 'after' ?
-                        <th className='sn text-nowrap' style={{ textAlign: 'center', width: '30px' }}>
+                        <th className={'sn text-nowrap' + (this.props.headerTheme?' table-' + Theme[this.props.headerTheme]:'')} style={{ textAlign: 'center', width: '30px' }}>
                             {this.formatSn(i)}
                         </th> : null}
                     {this.state.select && filter_type !== 'after' ?
@@ -924,7 +932,7 @@ export class Table extends React.Component<Props, State> {
                             if (parentRow) {
                                 parent = [];
                                 for (let i = 0; i < indent; i++) {
-                                    parent.push(<span className='mr-4' />)
+                                    parent.push(<span className='me-4' />)
                                 }
                             }
                             tree = <Icon data-open={tree_status} onClick={(e: React.MouseEvent) => {
@@ -966,7 +974,7 @@ export class Table extends React.Component<Props, State> {
                                         tree: tree
                                     })
                                 }
-                            }} className='mr-1 text-primary' icon={tree_status === 'open' ? 'minus-square' : 'plus-square'} iconType='regular' />
+                            }} className='me-1 text-primary' icon={tree_status === 'open' ? 'minus-square' : 'plus-square'} iconType='regular' />
                         }
 
                         if (item.props.children) {

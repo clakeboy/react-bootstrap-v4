@@ -123,7 +123,7 @@ class Main extends React.Component {
             <div className='d-flex h-100 w-100'>
                 <div className='doc-left'>
                     <div className='p-2 bg-dark text-light'>
-                        React Bootstrap v4 UI
+                        React Bootstrap v5 UI
                     </div>
                     <TreeMenu data={this.state.menu} onClick={this.menuClickHandler}/>
                 </div>

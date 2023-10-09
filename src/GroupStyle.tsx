@@ -15,7 +15,7 @@ interface Props extends React.ComponentProps<any>{
 
 class GroupStyleContent extends React.Component<any, any> {
     render() {
-        return <div className="input-group-append">
+        return <div className="input-group">
                 <div className={'custom custom-right bg-white'}>
                     {this.props.children}
                 </div>
@@ -72,7 +72,7 @@ export class GroupStyle extends React.Component<Props, null> {
         if (this.props.left === null) return null
         const isStr = typeof this.props.left === 'string'
         return (
-            <div className="input-group-prepend">
+            <>
                 {isStr ?
                     <div className={classNames('input-group-text',this.props.leftClass)}>
                         {this.props.left}
@@ -80,7 +80,7 @@ export class GroupStyle extends React.Component<Props, null> {
                     <div className={classNames('custom custom-left',this.props.leftClass)}>
                         {this.props.left}
                     </div>}
-            </div>
+            </>
         )
     }
 
@@ -88,7 +88,7 @@ export class GroupStyle extends React.Component<Props, null> {
         if (!this.props.right) return null
         const isStr = typeof this.props.right === 'string'
         return (
-            <div className="input-group-append">
+            <>
                 {isStr ?
                     <div className={classNames('input-group-text',this.props.rightClass)}>
                         {this.props.right}
@@ -96,7 +96,7 @@ export class GroupStyle extends React.Component<Props, null> {
                     <div className={classNames('custom custom-right',this.props.rightClass)}>
                         {this.props.right}
                     </div>}
-            </div>
+            </>
         )
     }
 }

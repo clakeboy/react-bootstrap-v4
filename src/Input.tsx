@@ -8,6 +8,7 @@ import i18n from './components/i18n';
 
 import './css/Input.less';
 import { ComponentProps, StrObject } from './components/common';
+import { Tooltip } from 'bootstrap';
 const stopEvent = function (e: Event) {
   e.stopPropagation();
 };
@@ -60,7 +61,6 @@ interface State {
 
 export class Input extends React.Component<Props, State> {
   static defaultProps = {
-    id: '',
     size: 'df',
     label: '',
     data: null,
@@ -76,6 +76,8 @@ export class Input extends React.Component<Props, State> {
   calendar: Calendar;
   combo: Combo;
   clearIcon: Icon;
+  tip: Tooltip;
+  mainDom: HTMLElement;
   constructor(props: any) {
     super(props);
     this.state = {
@@ -86,10 +88,7 @@ export class Input extends React.Component<Props, State> {
       icon: this.props.combo ? 'angle-down' : this.props.calendar ? 'calendar-alt' : '',
     };
 
-    this.domId = 'input-' + common.RandomString(16);
-    if (this.props.id) {
-      this.domId = this.props.id;
-    }
+    this.domId = this.props.id ?? 'input-' + common.RandomString(16);
 
     this.isFocus = false;
   }
@@ -124,11 +123,12 @@ export class Input extends React.Component<Props, State> {
     this.input.addEventListener('blur', this.blurClearHandler, false);
     this.input.addEventListener('mousedown', stopEvent, false);
     if (this.props.validate && this.props.validate?.tip) {
-      $('#' + this.domId).tooltip({
+      
+      this.tip = new Tooltip(document.getElementById(this.domId) as HTMLElement,{
         trigger: 'manual',
         template:
           '<div class="tooltip ck-input-tip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner bg-danger"></div></div>',
-      });
+      })
     }
 
     if (this.props.multi) {
@@ -139,7 +139,7 @@ export class Input extends React.Component<Props, State> {
 
   componentWillUnmount() {
     if (this.props.validate && this.props.validate?.tip) {
-      $('#' + this.domId).tooltip('dispose');
+      this.tip.dispose()
     }
   }
 
@@ -178,7 +178,7 @@ export class Input extends React.Component<Props, State> {
   }
 
   getMainClasses() {
-    const base = 'form-group';
+    const base = this.props.label ? 'mb-3' : '';
     return classNames(base, this.props.className);
   }
 
@@ -202,6 +202,9 @@ export class Input extends React.Component<Props, State> {
     }
     if (!this.props.label) {
       base.marginBottom = '0';
+      if (this.props.multi) {
+        base.height = 'calc(1.5em + .75rem + 2px)'
+      }
     }
 
     return common.extend(base, this.props.style);
@@ -365,7 +368,10 @@ export class Input extends React.Component<Props, State> {
     // this.multi.style.width = width+'px';
     // this.multi.style.height = this.props.multi.height ?? '100px';
     // this.input.style.height = this.props.multi.height ?? '100px';
+    
+    this.input.style.width = window.getComputedStyle(this.input).width;
     this.input.classList.add('ck-input-multi-show', 'shadow');
+    
     this.input.style.height = this.props?.multi?.height ?? '100px';
   };
 
@@ -374,6 +380,7 @@ export class Input extends React.Component<Props, State> {
     this.input.style.height = 'calc(1.5em + .75rem + 2px)';
     setTimeout(() => {
       this.input.classList.remove('ck-input-multi-show', 'shadow');
+      this.input.style.width = '100%'
     }, 210);
   };
 
@@ -427,7 +434,7 @@ export class Input extends React.Component<Props, State> {
       return null;
     }
     return (
-      <label htmlFor={this.domId} className={this.props.labelClass}>
+      <label htmlFor={this.domId} className={'form-label '+this.props.labelClass}>
         {this.props.label}
       </label>
     );
@@ -598,7 +605,7 @@ export class Input extends React.Component<Props, State> {
       return this.renderMulti();
     }
     return (
-      <div
+      <div ref={(c:any)=>{this.mainDom=c}}
         id={this.domId + '-main'}
         className={this.getMainClasses()}
         style={this.getMainStyles()}
@@ -630,7 +637,7 @@ export class Input extends React.Component<Props, State> {
 
   renderMulti() {
     return (
-      <div id={this.domId + '-main'} className={this.getMainClasses()} style={this.getMainStyles()}>
+      <div id={this.domId + '-main'} ref={(c:any)=>{this.mainDom=c}} className={this.getMainClasses()} style={this.getMainStyles()}>
         {this.renderLabel()}
         <textarea
           {...this.props}
@@ -645,7 +652,7 @@ export class Input extends React.Component<Props, State> {
           id={this.domId}
           {...this.renderValidateTip()}
         />
-        {this.renderClear()}
+        {/* {this.renderClear()} */}
         {this.renderSummary()}
       </div>
     );

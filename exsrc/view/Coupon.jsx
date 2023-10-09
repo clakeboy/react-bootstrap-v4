@@ -186,7 +186,7 @@ class Coupon extends React.Component {
         };
         return (
             <Container>
-                <h1>React Bootstrap v4 Demo 2</h1>
+                <h1>React Bootstrap v5 Demo 2</h1>
                 <Button onClick={()=>{
                     this.props.history.goBack();
                 }}>返回主页</Button>
@@ -196,7 +196,7 @@ class Coupon extends React.Component {
                     </div>
                 </Card>
                 <Card divider border={'info'} className='mt-2 comm-box-hover' header="优惠券添加">
-                    <Container inline>
+                    <Container className='comm-form' inline>
                         <Input field='name' width='200px' data={this.state.data.name} multi={{height:'100px'}}/>
                         <Input field='name_s' data={this.state.data.name_s}/>
                         <Input calendar readOnly width='120px' data={'2023-10-21'} disabled onDblClick={()=>{
@@ -213,7 +213,7 @@ class Coupon extends React.Component {
                             console.log(this.state.data);
                         })
                     }}>
-                        <div className='form-row comm-box-hover'>
+                        <div className='row comm-box-hover'>
                             <Input className='col-6' field='name' label='Name' data={this.state.data.name} multi={{height:'100px'}} validate={{text:'请选择下拉选择',rule:/.+/}}/>
                             <ComboBox className='col-6' field='task_combo' label='Task' width='100%' searchColumn='task_name_eng'
                                       data={this.child} value={this.state.data.task_combo} validate={{text:'请选择Task',rule:/.+/}}>
@@ -222,7 +222,7 @@ class Coupon extends React.Component {
                                 <ComboBox.Column text='时间' field='time_rule'/>
                             </ComboBox>
                         </div>
-                        <div className='form-row'>
+                        <div className='row'>
                             <CDropdown className='col-6' field='text_drop' label='asdf' text='下拉选择' validate={{text:'请选择下拉选择',rule:/.+/}}>
                                 <CDropdown.Value text='选项1' value={11111} active={this.state.data.text_drop==='选项1'}/>
                                 <CDropdown.Value text='选项2' value={222222} active={this.state.data.text_drop==='选项2'}/>
@@ -232,11 +232,11 @@ class Coupon extends React.Component {
                                 <CDropdown.Value text='选项2' value={222222} active={this.state.data.text_drop==='选项2'}/>
                             </CDropdown>
                         </div>
-                        <div className='form-row'>
+                        <div className='row'>
                             <div className='col-2 form-group pt-2'><label>middle垂直居中</label></div>
                             <Input className='col-10' data='Lee'/>
                         </div>
-                        <div className='form-row'>
+                        <div className='row'>
                             <InputStyle className='col-6' label='Complex Combobox string 模式'>
                                 <Complex combo={{
                                     searchColumn: 'task_name_eng',
@@ -263,7 +263,7 @@ class Coupon extends React.Component {
                                 }}/>
                             </InputStyle>
                         </div>
-                        <div className='form-row'>
+                        <div className='row'>
                             <InputStyle className='col-6' label='Complex Combobox object 模式'>
                                 <Complex combo={{
                                     searchColumn: 'task_name_eng',
@@ -357,11 +357,11 @@ class Coupon extends React.Component {
                 }}>切换TAB</Button>
                 <Tabs>
                     <TabsContent id='label1' text='标题1' active>
-                        <div className='form-row'>
+                        <div className='row'>
                             <Input className='col-6' label='Name' plaintext data='Clake'/>
                             <Input className='col-6' label='Last Name' data='Lee'/>
                         </div>
-                        <div className='form-row'>
+                        <div className='row'>
                             <div className='col-2 form-group pt-2'><label>middle垂直居中</label></div>
                             <Input className='col-10' data='Lee'/>
                         </div>
@@ -381,15 +381,15 @@ class Coupon extends React.Component {
     renderForm() {
         return (
             <>
-                <div className='form-row'>
+                <div className='row'>
                     <div className='col-2 form-group pt-2'><label>middle垂直居中</label></div>
                     <Input className='col-10' data='Lee'/>
                 </div>
                 <div>
                     <RadioGroup field='radio_test' data={this.state.data.radio_test}>
-                        <Radio label='Check1' className='mr-2' name='ccc' data='1'/>
-                        <Radio label='Check2' className='mr-2' name='222' data='2'/>
-                        <Radio label='Check3' className='mr-2' name='cccccc' data='3'/>
+                        <Radio label='Check1' className='me-2' name='ccc' data='1'/>
+                        <Radio label='Check2' className='me-2' name='222' data='2'/>
+                        <Radio label='Check3' className='me-2' name='cccccc' data='3'/>
                     </RadioGroup>
                 </div>
             </>

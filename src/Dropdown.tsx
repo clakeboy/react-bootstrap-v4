@@ -3,6 +3,7 @@ import classNames from 'classnames/bind';
 import common from './Common';
 import Button from "./Button";
 import { ComponentProps, Theme } from './components/common';
+import * as bootstrap from 'bootstrap'
 
 interface ValueProps {
     text?:string
@@ -41,7 +42,7 @@ export class Dropdown extends React.PureComponent<Props,State> {
     };
 
     domId:string
-
+    dropdown: bootstrap.Dropdown
     constructor(props:any) {
         super(props);
         this.state = {
@@ -50,6 +51,14 @@ export class Dropdown extends React.PureComponent<Props,State> {
             list: this.props.data,
         };
         this.domId = this.props.id??'drop-'+common.RandomString(16);
+    }
+
+    componentDidMount(): void {
+        this.dropdown = new bootstrap.Dropdown(document.getElementById(this.domId) as HTMLElement)
+    }
+
+    componentWillUnmount(): void {
+        this.dropdown.dispose();
     }
 
     UNSAFE_componentWillReceiveProps(nextProp:Props) {
@@ -100,7 +109,7 @@ export class Dropdown extends React.PureComponent<Props,State> {
     }
 
     getClasses() {
-        const base = 'dropdown btn-group';
+        const base = 'dropdown';
         return classNames(base,this.props.className);
     }
 
@@ -137,9 +146,9 @@ export class Dropdown extends React.PureComponent<Props,State> {
                 classList += ' active';
             }
             if (typeof item === 'string') {
-                return <Button className={classList} size={this.props.size} onClick={this.selectHandler} data-value={item}>{item}</Button>
+                return <li key={i}><Button className={classList} size={this.props.size} onClick={this.selectHandler} data-value={item}>{item}</Button></li>
             }
-            return <Button key={i} className={classList} size={this.props.size} onClick={this.selectHandler} data-value={item.value}>{item.text}</Button>
+            return <li key={i}><Button className={classList} size={this.props.size} onClick={this.selectHandler} data-value={item.value}>{item.text}</Button></li>
         });
     }
 
@@ -168,16 +177,18 @@ export class Dropdown extends React.PureComponent<Props,State> {
     render() {
         return (
             <div className={this.getClasses()} style={this.getStyles()}>
-                <Button className='dropdown-toggle' theme={this.props.theme} size={this.props.size} icon={this.props.icon} outline={this.props.outline} style={this.getStyles()} role="button" id={this.props.id} data-toggle="dropdown">
+                <Button className='dropdown-toggle' onClick={()=>{
+                    this.dropdown.show();
+                }} theme={this.props.theme} size={this.props.size} icon={this.props.icon} outline={this.props.outline} style={this.getStyles()} role="button" id={this.domId} data-bs-toggle="dropdown">
                     {this.state.text}
                 </Button>
                 {/*<Button className="btn btn-secondary dropdown-toggle" style={this.getStyles()} role="button" id={this.props.id} data-toggle="dropdown">*/}
                 {/*    {this.state.text}*/}
                 {/*</Button>*/}
 
-                <div className="dropdown-menu">
+                <ul className="dropdown-menu" aria-labelledby={this.domId}>
                     {this.props.grid?this.renderGrid():this.renderList()}
-                </div>
+                </ul>
             </div>
         );
     }

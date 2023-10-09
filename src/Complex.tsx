@@ -3,7 +3,7 @@ import classNames from 'classnames/bind';
 import './css/Complex.less'
 import Icon from './Icon';
 import Combo, { ComboProps } from "./Combo";
-import { ComponentProps, StrObject } from './components/common';
+import { ComponentProps, StrObject, Theme } from './components/common';
 
 interface Props extends ComponentProps {
     inputWidth ?: string
@@ -188,12 +188,13 @@ export class Complex extends React.Component<Props,State> {
     }
 
     render() {
+        const bgClass = this.props.theme !== undefined ? ` bg-${Theme[this.props.theme]}`:' bg-primary';
         return (
             <div ref={(c:any)=>this.main=c} className={this.getClasses()} onClick={this.clickHandler}>
                 {this.state.list.map((item,idx)=>{
-                    return (<div key={undefined} className="val badge badge-primary">
+                    return (<div key={undefined} className={"val badge"+bgClass}>
                         <span>{this.props.dataType==='string'?item:item[this.props.dataField as string]}</span>
-                        <Icon className='ml-1' icon='times-circle' onClick={this.deleteHandler(idx)}/>
+                        <Icon className='ms-1' icon='times-circle' onClick={this.deleteHandler(idx)}/>
                     </div>)
                 })}
                 <div>

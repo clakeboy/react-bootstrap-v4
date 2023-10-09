@@ -57,7 +57,7 @@ export class Select extends React.PureComponent<Props,State> {
     }
 
     getClasses() {
-        let base = 'form-group';
+        let base = 'mb-3';
         if (this.props.absolute) {
             base = classNames(base, 'position-absolute');
         }
@@ -89,7 +89,7 @@ export class Select extends React.PureComponent<Props,State> {
     }
 
     getInputClasses() {
-        let base = 'form-control';
+        let base = 'form-select';
         //readonly
         if (this.props.readOnly) {
             base = 'form-control-plaintext';
@@ -132,7 +132,7 @@ export class Select extends React.PureComponent<Props,State> {
             return null;
         }
         return (
-            <label htmlFor={this.domId}>{this.props.label}</label>
+            <label htmlFor={this.domId} className='form-label'>{this.props.label}</label>
         )
     }
 

@@ -15,7 +15,12 @@
   .table {
     tbody>tr:first-child {
       td,th {
-        border-top: none;
+        border-top: unset;
+      }
+    }
+    tbody>tr:last-child {
+      td,th {
+        border-bottom: unset;
       }
     }
     tr,th {

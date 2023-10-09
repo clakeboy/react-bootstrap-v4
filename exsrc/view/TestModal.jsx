@@ -22,7 +22,8 @@ import {
     Title,
     Tabs,
     TabsContent,
-    Load
+    Load,
+    Theme
 } from '../../src/index';
 import Fetch from "../common/Fetch";
 import Icon from "../../src/Icon";
@@ -289,19 +290,19 @@ class TestModal extends React.PureComponent {
     render() {
         return (
             <Container className={'mb-5'}>
-                <h1>React Bootstrap v4 Test Table Tree Modal</h1>
+                <h1>React Bootstrap v5 Test Table Tree Modal</h1>
                 <Button onClick={() => {
                     this.props.history.goBack();
                 }}>返回主页</Button>
                 <Card header='测试加载'>
-                    <Table striped={false} tree headerTheme='light' sticky data={this.state.data} onClickTree={(row,callback)=>{
+                    <Table striped={true} tree headerTheme={Theme.light} bordered sm sticky data={this.state.data} onClickTree={(row,callback)=>{
                         this.loadChild(row,callback);
                     }}>
                         <Table.Header text='任务ID' field='id'/>
                         <Table.Header text='任务名称' field='task_name' tree/>
                         <Table.Header text='时间规则' field='time_rule'/>
                         <Table.Header text='执行一次' field='once' onFormat={val => {
-                            return val ? <span className="badge badge-success">是</span> : '否';
+                            return val ? <span className="badge bg-success">是</span> : '否';
                         }}/>
                         <Table.Header text='通知次数' field='notify_number'/>
                         <Table.Header text='已通知次数' field='notified_number'/>
@@ -310,8 +311,8 @@ class TestModal extends React.PureComponent {
                         }}/>
                         <Table.Header text='操作' align='center' onFormat={() => {
                             return <ButtonGroup>
-                                <Button size='sm' icon='edit' theme='success'>修改</Button>
-                                <Button size='sm' icon='trash-alt' theme='danger'>册除</Button>
+                                <Button size='sm' icon='edit' theme={Theme.success}>修改</Button>
+                                <Button size='sm' icon='trash-alt' theme={Theme.danger}>册除</Button>
                             </ButtonGroup>
                         }}/>
                     </Table>
@@ -321,7 +322,7 @@ class TestModal extends React.PureComponent {
                 </Card>
                 <Card header='测试静态数据'>
                     <div id='main-table' className='position-relative' style={{overflow:'auto'}}>
-                        <Table select={false} className='border border-success' striped={false} height='500px' width='100%' tree headerTheme='light' data={this.state.treeData}>
+                        <Table select={false} className='border border-success' striped={false} height='500px' width='100%' tree data={this.state.treeData}>
                             <Table.Header text='任务ID' field='id' width='80px' beforeHold/>
                             <Table.Header text='任务名称' field='task_name' width='150px' beforeHold tree/>
                             <Table.Header text='时间规则' field='time_rule' width='150px'/>
@@ -335,7 +336,7 @@ class TestModal extends React.PureComponent {
                             }}/>
                             <Table.Header text='操作' align='center' width='200px' onFormat={() => {
                                 return <ButtonGroup>
-                                    <Button size='sm' icon='edit' theme='success'>修改</Button>
+                                    <Button size='sm' icon='edit'>修改</Button>
                                     <Button size='sm' icon='trash-alt' theme='danger'>册除</Button>
                                 </ButtonGroup>
                             }}/>

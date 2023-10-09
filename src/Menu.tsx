@@ -85,7 +85,7 @@ export class MenuItem extends React.PureComponent<MenuItemProps, any> {
                     onMouseDown={this.showChildHandler}
                     onMouseOver={this.showChildHandler}>
                     <span>{this.props.text}</span>
-                    <span className='ml-auto'>
+                    <span className='ms-auto'>
                         &nbsp;&nbsp;<Icon icon='caret-right' />
                     </span>
                 </div>

@@ -21,7 +21,7 @@ export class InputStyle extends React.PureComponent<Props,any> {
     }
 
     getClasses() {
-        const base = 'form-group';
+        const base = 'mb-3';
 
         return classNames(base,this.props.className);
     }
@@ -29,7 +29,7 @@ export class InputStyle extends React.PureComponent<Props,any> {
     render() {
         return (
             <div className={this.getClasses()}>
-                <label>{this.props.label}</label>
+                <label className='form-label'>{this.props.label}</label>
                 {this.props.children}
             </div>
         );

@@ -621,7 +621,7 @@ export class Calendar extends React.PureComponent<Props, State, any> {
             <tr>
                 <td colSpan={7}>
                     <div className='row no-gutters border-top'>
-                        <div className='col p-1 d-flex align-items-center'>
+                        <div className='col p-1 d-flex align-items-center justify-content-center'>
                             <span>{this.state.hour}:{this.state.minute}:{this.state.second}</span>
                         </div>
                         <div className='col'>

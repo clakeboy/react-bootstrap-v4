@@ -68,7 +68,7 @@ class TestTriangle extends React.Component {
                         <div className='position-relative d-inline border p-2 float-end' id='test_drop_panel_left'>
                             <span>点击测试</span>
                             <DropPanel className='bg-white' borderTheme='danger' selector='#test_drop_panel_left'>
-                                <div className='p-1' style={{width:'300px'}}>
+                                <div className='p-2' style={{width:'300px'}}>
                                     <Input/>
                                     <Input/>
                                     <Input/>
@@ -77,8 +77,8 @@ class TestTriangle extends React.Component {
                             </DropPanel>
                         </div>
                         <div className='position-relative d-inline border p-2 float-start' id='test_drop_panel_right'>
-                            <span>点击测试</span>
-                            <DropPanel className='bg-white' selector='#test_drop_panel_right'>
+                            <span>点击测试2</span>
+                            <DropPanel className='bg-white' borderColor='#ff0000' selector='#test_drop_panel_right'>
                                 <div className='p-1'>
                                     <Input/>
                                     <Input/>

@@ -3,22 +3,21 @@ import classNames from 'classnames/bind';
 import './css/DropPanel.less';
 import './css/TriangleTarget.less';
 import common from "./Common";
-import { ComponentProps } from './components/common';
+import { ComponentProps,  Theme } from './components/common';
 
 interface Props extends ComponentProps {
     border?: boolean
     borderTheme?: string
+    borderColor?: string
     round?: boolean
     shadow?: boolean
     selector?: string
     position?: string
 }
 
-
 export class DropPanel extends React.Component<Props,any> {
-
     static defaultProps = {
-        border: true,
+        border: false,
         round: true,
         shadow: true,
     };
@@ -44,8 +43,8 @@ export class DropPanel extends React.Component<Props,any> {
             base = classNames(base,'border');
         }
 
-        if (this.props.borderTheme) {
-            base = classNames(base,'border-'+this.props.borderTheme);
+        if (this.props.theme) {
+            base = classNames(base,'border-'+Theme[this.props.theme]);
         }
 
         if (this.props.round) {
@@ -59,6 +58,14 @@ export class DropPanel extends React.Component<Props,any> {
         return classNames(base,this.props.className);
     }
 
+    getStyles() {
+        // const style:StrObject = {}
+        // if (this.props.borderTheme) {
+            
+        // }
+        // return style
+    }
+
     iniTarget() {
         if (!this.targetDom) {
             return
@@ -69,6 +76,9 @@ export class DropPanel extends React.Component<Props,any> {
         this.mainDom.addEventListener('mousedown',(e)=>{
               e.stopPropagation();
         },)
+        if (this.props.borderColor) {
+            this.targetDom.style.setProperty("--ck-triangle-cus",this.props.borderColor)
+        }
     }
 
     destroy() {

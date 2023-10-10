@@ -23,6 +23,7 @@ app.post('/upload',(req,res)=>{
         res.json({
             'status':!err,
             'msg':err?err:files,
+            'fields':fields,
         });
     });
 });

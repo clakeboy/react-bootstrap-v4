@@ -17,6 +17,7 @@ import {
     Select,
     Calendar,
     Modal,
+    Theme,
     Tree,
     Title,
     Tabs,
@@ -293,14 +294,14 @@ class Coupon extends React.Component {
                     <Button onClick={e=>this.modal.alert('测试效果',()=>{
                         console.log('asdfsadf');
                     })}>测试 alert 警告 Modal</Button>
-                    <Button theme='success' onClick={e=>this.modal.confirm({
+                    <Button theme={Theme.success} onClick={e=>this.modal.confirm({
                         content:'确定要按下这个按钮?',
                         callback:(flag)=>{
                             console.log(flag);
                         },
                         center:true
                     })}>测试 confirm 警告 Modal</Button>
-                    <Button theme='secondary' onClick={e=>{
+                    <Button theme={Theme.secondary} onClick={e=>{
                         let idx = 3;
                         let callLoad = ()=>{
                             if (idx === 0) {
@@ -316,8 +317,9 @@ class Coupon extends React.Component {
                         };
                         callLoad();
                     }}>测试 loading 加载 Modal</Button>
-                    <Button theme='info' onClick={e=>this.modal.view({
+                    <Button theme={Theme.info} onClick={e=>this.modal.view({
                         title:'添加优惠券',
+                        header:true,
                         content:<AddCoupon id={Common.RandomString(10)}/>,
                         fade:true,
                         shadowClose:true,

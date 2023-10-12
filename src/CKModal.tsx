@@ -425,10 +425,9 @@ export class CKModal extends React.Component<Props,State> {
                         <div className="modal-content">
                             {this.state.header?<div className="modal-header">
                                 <h5 className="modal-title">{this.state.title}</h5>
-                                {this.state.isCloseBtn?<button type="button" className="close" onClick={()=>{
+                                {this.state.isCloseBtn?<button type="button" className="btn-close" onClick={()=>{
                                     this.close();
                                 }}>
-                                    <span aria-hidden="true">&times;</span>
                                 </button>:null}
                             </div>:null}
                             <div className="modal-body">

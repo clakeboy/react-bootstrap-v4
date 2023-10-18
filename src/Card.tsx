@@ -8,7 +8,7 @@ import HScroll from "./HScroll";
 import { ComponentProps, StrObject } from './components/common';
 
 interface Props extends ComponentProps {
-    header?: string
+    header?: string | any
     border?: string
     custom?: boolean
     sm?: boolean

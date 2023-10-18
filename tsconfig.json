@@ -19,7 +19,8 @@
     "strictPropertyInitialization": false
   },
   "include": [
-    "./src/**/*"
+    "./src/**/*",
+    "./exsrc/**/*"
   ],
   "exclude": [
     "node_modules"

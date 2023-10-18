@@ -11,31 +11,33 @@ interface Props extends ComponentProps {
 }
 
 interface State {
-    content: any
-    show: boolean
-    autoHide: number
-    width: string
-    theme: string
-    isClose: boolean
+    checked: boolean
 }
 
-export class Switch extends React.PureComponent<Props,State> {
+export class Switch extends React.Component<Props,State> {
     static defaultProps = {
         theme: Theme.primary,
         checked: false
     };
     checked:boolean
     bg_color:string
+    text_color:string
     move_class:string
     circle:HTMLDivElement
     bg:HTMLDivElement
     constructor(props:any) {
         super(props);
+        
         this.checked = this.props.checked??false;
         this.bg_color = `bg-${Theme[this.props.theme??0]}`;
+        this.text_color = `text-${Theme[this.props.theme??0]}`;
         this.move_class = `ck-switch-circle-right`;
         if (this.props.size) {
             this.move_class += `-${this.props.size}`;
+        }
+
+        this.state = {
+            checked: this.props.checked??false
         }
     }
 
@@ -44,9 +46,12 @@ export class Switch extends React.PureComponent<Props,State> {
     }
 
     UNSAFE_componentWillReceiveProps(nextProps:Props) {
-        if (this.checked !== nextProps.checked) {
-            this.checked = nextProps.checked??false;
-            this.changeStatus(this.checked);
+        console.log(nextProps.checked);
+        
+        if (this.state.checked !== nextProps.checked) {
+            // this.checked = nextProps.checked??false;
+            // this.changeStatus(this.checked);
+            this.setState({checked:nextProps.checked??false})
         }
     }
 
@@ -55,15 +60,15 @@ export class Switch extends React.PureComponent<Props,State> {
     }
 
     setChecked(check:boolean) {
-        this.checked = check;
-        this.changeStatus(check);
+        this.setState({checked:check})
+        // this.changeStatus(check);
     }
 
     getClasses() {
         let base = 'ck-switch';
-
-        if (this.checked) {
-            base = classNames(base, this.bg_color);
+        
+        if (this.state.checked) {
+            base = classNames(base, this.bg_color,this.text_color);
         }
 
         if (this.props.size) {
@@ -102,9 +107,9 @@ export class Switch extends React.PureComponent<Props,State> {
     }
 
     getCircleClasses() {
-        let base = 'ck-switch-circle rounded-circle';
+        let base = 'ck-switch-circle rounded-circle d-flex align-items-center justify-content-center';
 
-        if (this.checked) {
+        if (this.state.checked) {
             base = classNames(base, this.move_class);
         }
 
@@ -119,11 +124,14 @@ export class Switch extends React.PureComponent<Props,State> {
         if (this.props.disabled) {
             return
         }
-        this.checked = !this.checked;
-        this.changeStatus(this.checked);
-        if (typeof this.props.onChange === 'function') {
-            this.props.onChange(this.checked);
-        }
+        this.setState({checked: !this.state.checked},()=>{
+            if (typeof this.props.onChange === 'function') {
+                this.props.onChange(this.state.checked);
+            }
+        })
+        // this.checked = !this.checked;
+        // this.changeStatus(this.checked);
+        
     };
 
     changeStatus(flag: boolean): void {
@@ -139,7 +147,11 @@ export class Switch extends React.PureComponent<Props,State> {
     render() {
         return (
             <div ref={(c:any) => this.bg = c} className={this.getClasses()} onClick={this.clickHandler} style={this.getStyles()}>
-                <div className={this.getCircleClasses()} ref={(c:any) => this.circle = c}/>
+                <div className={this.getCircleClasses()} ref={(c:any) => this.circle = c}>
+                    <div className='text-center'>
+                    {this.props.children}
+                    </div>
+                </div>
             </div>
         );
     }

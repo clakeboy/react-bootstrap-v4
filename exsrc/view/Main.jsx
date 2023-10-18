@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ReactBootstrap4, {
+import  {
     Container,
     Input,
     InputGroup,
@@ -16,7 +16,7 @@ import ReactBootstrap4, {
     TextArea,
     Switch,
     RadioGroup,
-    Radio, Menu, Icon, Theme
+    Radio, Menu,  Theme
 } from '../../src/index';
 import CalendarRange from "../../src/CalendarRange";
 import Row from '../../src/Row';

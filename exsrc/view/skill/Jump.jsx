@@ -1,19 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import {
     Container,
     Input,
-    InputGroup,
     Button,
     Card,
-    CCheckbox,
-    Checkbox,
     Table,
-    Pagination,
-    Dropdown,
-    Select,
-    Calendar,
+    Icon,
+    Theme,
     Switch,
     RImage,
     Modal,
@@ -26,6 +20,7 @@ class Jump extends React.PureComponent {
         this.state = {
             checked: false,
             date: "",
+            mini_chk:false
         };
     }
 
@@ -42,21 +37,26 @@ class Jump extends React.PureComponent {
     render() {
         return (
             <Container>
-                <Button onClick={e => {
+                <Button className='me-2' onClick={e => {
                     this.props.history.goBack();
                 }}>返回上页</Button>
-
+                <Button onClick={e => {
+                    this.props.history.push('/skill/calendar',this.state);
+                }}>测试样式</Button>
                 <Card>
                     <Container className='p-0 mb-1' inline fluid>
                         <Input className='me-1' disabled placeholder='用户名'/>
-                        <Switch className='me-1' theme='success' size='lg' checked={this.state.checked} onChange={(checked) => {
+                        <Switch className='me-1' theme={Theme.success} size='lg' checked={this.state.checked} onChange={(checked) => {
                             this.setState({
                                 checked: checked
                             }, () => {
                                 console.log(this.state.checked);
+                                setTimeout(() => {
+                                    this.setState({checked: !this.state.checked})
+                                }, 2000);
                             })
-                        }}/>
-                        <Switch disabled className='me-1' theme='success' size='lg' checked={this.state.checked} onChange={(checked) => {
+                        }}>{this.state.checked?<Icon icon='check'/>:null}</Switch>
+                        <Switch disabled className='me-1' theme={Theme.success} size='lg' checked={this.state.checked} onChange={(checked) => {
                             this.setState({
                                 checked: checked
                             }, () => {
@@ -66,14 +66,14 @@ class Jump extends React.PureComponent {
                     </Container>
                     <Container className='p-0 mb-1' inline fluid>
                         <Input className='me-1' disabled placeholder='用户名'/>
-                        <Switch className='me-1' theme='dark' checked={this.state.checked} onChange={(checked) => {
+                        <Switch className='me-1' theme={Theme.dark} checked={this.state.checked} onChange={(checked) => {
                             this.setState({
                                 checked: checked
                             }, () => {
                                 console.log(this.state.checked);
                             })
-                        }}/>
-                        <Switch disabled theme='dark' checked={this.state.checked} onChange={(checked) => {
+                        }}>{this.state.checked?'开':'关'}</Switch>
+                        <Switch disabled theme={Theme.dark} checked={this.state.checked} onChange={(checked) => {
                             this.setState({
                                 checked: checked
                             }, () => {
@@ -83,8 +83,14 @@ class Jump extends React.PureComponent {
                     </Container>
                     <Container className='p-0 mb-1' inline fluid>
                         <Input className='me-1' size='sm' disabled placeholder='用户名'/>
-                        <Switch className='me-1' ref={c=>this.switch=c} size='sm' theme='warning'/>
-                        <Switch disabled ref={c=>this.switch=c} size='sm' theme='warning'/>
+                        <Switch className='me-1' ref={c=>this.switch=c} checked={this.state.mini_chk} size='sm' theme={Theme.warning} onChange={(chk)=>{
+                            if (chk) {
+                                this.modal.alert('点击了打开',()=>{
+                                    this.switch.setChecked(false)
+                                })
+                            }
+                        }}/>
+                        <Switch disabled ref={c=>this.switch=c} size='sm' theme={Theme.warning}/>
                     </Container>
                     {this.state.checked ? <div>是</div> : <div>否</div>}
                     <Button disabled>禁用</Button>

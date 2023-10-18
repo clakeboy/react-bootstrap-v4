@@ -1,6 +1,12 @@
 module.exports = {
     root: true,
     parser: '@typescript-eslint/parser',
+    // files: ["*.ts","*.tsx"],
+    "overrides": [
+        {
+            "files": ["*.ts","*.tsx"],
+        }
+    ],
     parserOptions: {
         "ecmaFeatures": {
             "jsx": true

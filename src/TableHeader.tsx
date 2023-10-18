@@ -2,7 +2,7 @@ import React from 'react';
 
 interface Props {
     onFormat?: (val: any, row: any) => void
-    text?: string
+    text?: string | any
     field?: string
     value?: string
     row?: any

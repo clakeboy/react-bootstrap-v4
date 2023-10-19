@@ -154,26 +154,27 @@ export class Pagination extends React.PureComponent<Props,State> {
                     <li className="page-item disabled">
                         {this.renderInfo()}
                     </li>
-                    <li className="page-item"><a className="page-link" href="javascript://" onClick={this.clickHandler('first')}>首页</a></li>
+                    <li className="page-item"><a className="page-link" href="javascript://" onClick={this.clickHandler('first')}><Icon icon='step-backward'/></a></li>
                     <li className="page-item"><a className="page-link" href="javascript://" onClick={this.clickHandler('prev')}><Icon icon='angle-double-left'/></a></li>
                     {this.is_after?this.renderMore(this.is_after):null}
                     {this.renderPages()}
                     {this.is_more?this.renderMore(this.is_more):null}
                     <li className="page-item"><a className="page-link" href="javascript://" onClick={this.clickHandler('next')}><Icon icon='angle-double-right'/></a></li>
-                    <li className="page-item"><a className="page-link" href="javascript://" onClick={this.clickHandler('last')}>末页</a></li>
+                    <li className="page-item"><a className="page-link" href="javascript://" onClick={this.clickHandler('last')}><Icon icon='step-forward'/></a></li>
                 </ul>
             </nav>
         );
     }
 
     renderInfo() {
-        if (this.props.info) {
-            return this.props.info;
+        let content = `总记录 ${this.props.count} 条,共有 ${this.count} 页`
+        if (typeof this.props.info === 'string') {
+            content = this.props.info.replaceAll('${count}',this.props.count?.toString()??'')
+            content = content.replaceAll('${page}',this.count?.toString());
         }
         return (
             <span className="page-link text-nowrap">
-                总记录 {this.props.count} 条,
-                共有 {this.count} 页
+                {content}
             </span>
         )
     }
@@ -185,9 +186,9 @@ export class Pagination extends React.PureComponent<Props,State> {
     }
 
     renderPages() {
-        return this.state.data.map((v)=>{
+        return this.state.data.map((v,idx)=>{
             return (
-                <li key={undefined} className={this.current === v?"page-item active":"page-item"}>
+                <li key={idx} className={this.current === v?"page-item active":"page-item"}>
                     {this.current === v?<a className="page-link" href="javascript://" onClick={this.clickHandler('stop')}>{v}</a>:<a className="page-link" href="javascript://" onClick={this.clickHandler(v.toString())}>{v}</a>}
                 </li>
             )

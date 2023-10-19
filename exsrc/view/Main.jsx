@@ -237,7 +237,7 @@ class Main extends React.Component {
                             }}>自定义的菜单</Menu.Item>
                         </Menu>
                     </Table>
-                    <Pagination count={1000} current={1} number={100} showPage={10} numberList={[
+                    <Pagination count={1000} info={"这里${count}显示数量，这里${page}显示页数"} current={1} number={100} showPage={10} numberList={[
                         {text:'每页显示30条',value:30},{text:'每页显示50条',value:50}
                     ]} onSelect={(page,showNumber)=>{
                         console.log('select',page,showNumber)

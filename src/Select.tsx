@@ -152,7 +152,7 @@ export class Select extends React.PureComponent<Props,State> {
             <div className={this.getClasses()} style={this.getMainStyles()}>
                 {this.renderLabel()}
                 <select {...this.props} size={undefined} onChange={this.selectHandler} value={this.state.value} className={this.getInputClasses()} id={this.domId}>
-                    {this.state.data.map((item) => {
+                    {this.state.data.map((item,idx) => {
                         let list;
                         switch (typeof item) {
                             case 'string':
@@ -164,7 +164,7 @@ export class Select extends React.PureComponent<Props,State> {
                             default:
                                 list = {text: '', value: ''};
                         }
-                        return <option key={undefined} value={list.value} selected={this.state.value === list.value}>{list.text}</option>
+                        return <option key={idx} value={list.value} selected={this.state.value === list.value}>{list.text}</option>
                     })}
                 </select>
                 {this.renderSummary()}

@@ -721,7 +721,7 @@ export class Table extends React.Component<Props, State> {
         return <colgroup>
             {this.props.serialNumber && filter_type !== 'after' ? <col width='30px' /> : null}
             {this.state.select && filter_type !== 'after' ? <col width={'30px'} /> : null}
-            {this.headers.map((item) => {
+            {this.headers.map((item,idx) => {
                 //hold column
                 if (filter && filter.indexOf(item.props.field) === -1) {
                     return null;
@@ -729,7 +729,7 @@ export class Table extends React.Component<Props, State> {
                 if (item.props.hide) {
                     return null;
                 }
-                return <col key={undefined} width={item.props.width} />
+                return <col key={idx} width={item.props.width} />
             })}
         </colgroup>
     }
@@ -748,14 +748,14 @@ export class Table extends React.Component<Props, State> {
             headers.push(
                 <tr>
                     {offset > 0 && filter_type !== 'after' ? <th colSpan={offset} /> : null}
-                    {list.map((item: any) => {
+                    {list.map((item: any,idx:number) => {
                         let colsCount = item.props.cols;
                         if (filter && totalCols >= filter.length) return null;
                         if (filter && colsCount > filter.length) {
                             colsCount = filter.length;
                         }
                         totalCols += item.props.cols;
-                        return <th key={undefined} colSpan={colsCount} className='colspan' style={{ textAlign: item.props.align }}>
+                        return <th key={idx} colSpan={colsCount} className='colspan' style={{ textAlign: item.props.align }}>
                             {item.props.text}
                         </th>
                     })}
@@ -809,7 +809,7 @@ export class Table extends React.Component<Props, State> {
                             sort_icon = 'sort-alpha-' + (this.sortList[item.props.field] === 'asc' ? 'down' : 'up');
                         }
                         return (
-                            <th key={undefined} data-key={'head_' + key} style={style}>
+                            <th key={key} data-key={'head_' + key} style={style}>
                                 {item.props.onSort ? <a href='javascript://'
                                     onClick={this.sortHandler(item.props.field, item.props.onSort)}>
                                     {item.props.text}{'\u0020'}

@@ -245,7 +245,7 @@ export class Tree extends React.PureComponent<Props,State> {
                 this.checkedList.push(val)
             }
             return (
-                <div key={undefined} className='ck-tree-item' style={style}>
+                <div key={idx} className='ck-tree-item' style={style}>
                     <div className='ck-tree-content d-flex' onContextMenu={this.menuHandler(val,id)}>
                         {val.children?<span className='ck-tree-icon' onClick={this.iconHandler(val,id)}>
                             <Icon className={val.show?'ck-tree-icon-down':''} icon={val.children?'angle-right':val.icon}/>

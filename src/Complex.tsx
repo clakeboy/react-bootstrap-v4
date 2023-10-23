@@ -192,7 +192,7 @@ export class Complex extends React.Component<Props,State> {
         return (
             <div ref={(c:any)=>this.main=c} className={this.getClasses()} onClick={this.clickHandler}>
                 {this.state.list.map((item,idx)=>{
-                    return (<div key={undefined} className={"val badge"+bgClass}>
+                    return (<div key={idx} className={"val badge"+bgClass}>
                         <span>{this.props.dataType==='string'?item:item[this.props.dataField as string]}</span>
                         <Icon className='ms-1' icon='times-circle' onClick={this.deleteHandler(idx)}/>
                     </div>)

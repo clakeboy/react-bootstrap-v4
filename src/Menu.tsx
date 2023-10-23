@@ -289,8 +289,8 @@ export class Menu extends React.PureComponent<MenuProps, State> {
                 {/*        return React.cloneElement(item,item.props)*/}
                 {/*    }*/}
                 {/*})}*/}
-                {this.state.menu_list.map((item) => {
-                    return <MenuItem key={undefined} parent={this} {...item} />
+                {this.state.menu_list.map((item,idx) => {
+                    return <MenuItem key={idx} parent={this} {...item} />
                 })}
             </div>
         );

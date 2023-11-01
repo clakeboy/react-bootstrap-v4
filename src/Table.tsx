@@ -854,18 +854,23 @@ export class Table extends React.Component<Props, State> {
         const row = e.currentTarget as HTMLTableRowElement;
         const id = (row?.parentNode?.parentNode as HTMLElement).id;
         if (id.includes('after') || id.includes('before')) {
-            this.tableBody.tBodies[0].rows[row.sectionRowIndex].style.backgroundColor = (e.type === "mouseover" ? 'var(--bs-table-hover-bg)' : '')
+            // this.tableBody.tBodies[0].rows[row.sectionRowIndex].style.backgroundColor = (e.type === "mouseover" ? 'var(--bs-table-hover-bg)' : '')
+            this.tableBody.tBodies[0].rows[row.sectionRowIndex].classList.toggle('ck-table-hover')
             if (id.includes('after') && this.beforeBody) {
-                this.beforeBody.tBodies[0].rows[row.sectionRowIndex].style.backgroundColor = (e.type === "mouseover" ? 'var(--bs-table-hover-bg)' : '')
+                this.beforeBody.tBodies[0].rows[row.sectionRowIndex].classList.toggle('ck-table-hover')
+                // this.beforeBody.tBodies[0].rows[row.sectionRowIndex].style.backgroundColor = (e.type === "mouseover" ? 'var(--bs-table-hover-bg)' : '')
             } else if (id.includes('before') && this.afterBody) {
-                this.afterBody.tBodies[0].rows[row.sectionRowIndex].style.backgroundColor = (e.type === "mouseover" ? 'var(--bs-table-hover-bg)' : '')
+                this.afterBody.tBodies[0].rows[row.sectionRowIndex].classList.toggle('ck-table-hover')
+                // this.afterBody.tBodies[0].rows[row.sectionRowIndex].style.backgroundColor = (e.type === "mouseover" ? 'var(--bs-table-hover-bg)' : '')
             }
         } else {
             if (this.beforeBody) {
-                this.beforeBody.tBodies[0].rows[row.sectionRowIndex].style.backgroundColor = (e.type === "mouseover" ? 'var(--bs-table-hover-bg)' : '')
+                // this.beforeBody.tBodies[0].rows[row.sectionRowIndex].style.backgroundColor = (e.type === "mouseover" ? 'var(--bs-table-hover-bg)' : '')
+                this.beforeBody.tBodies[0].rows[row.sectionRowIndex].classList.toggle('ck-table-hover')
             }
             if (this.afterBody) {
-                this.afterBody.tBodies[0].rows[row.sectionRowIndex].style.backgroundColor = (e.type === "mouseover" ? 'var(--bs-table-hover-bg)' : '')
+                // this.afterBody.tBodies[0].rows[row.sectionRowIndex].style.backgroundColor = (e.type === "mouseover" ? 'var(--bs-table-hover-bg)' : '')
+                this.afterBody.tBodies[0].rows[row.sectionRowIndex].classList.toggle('ck-table-hover')
             }
         }
     }

@@ -7,6 +7,8 @@ interface Props extends ComponentProps {
     icon?: string
     //icon to rotate
     spin?: boolean
+    //bootstrap font icons
+    bs?: boolean
     onClick?: (event: React.MouseEvent) => void
 }
 
@@ -40,6 +42,9 @@ export class Icon extends React.PureComponent<Props,State> {
     }
 
     getClasses() {
+        if (this.props.bs) {
+            return this.getBsClasses();
+        }
         let base;
         switch(this.props.iconType) {
             case 'regular':
@@ -61,6 +66,14 @@ export class Icon extends React.PureComponent<Props,State> {
             base = classNames(base,'fa-spin');
         }
 
+        return classNames(base,this.props.className);
+    }
+
+    getBsClasses() {
+        let base;
+        if (this.state.icon) {
+            base = classNames(base, this.state.icon);
+        }
         return classNames(base,this.props.className);
     }
 

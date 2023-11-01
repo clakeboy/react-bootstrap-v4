@@ -20,7 +20,8 @@ class Jump extends React.PureComponent {
         this.state = {
             checked: false,
             date: "",
-            mini_chk:false
+            mini_chk:false,
+            dark: false,
         };
     }
 
@@ -63,6 +64,13 @@ class Jump extends React.PureComponent {
                                 console.log(this.state.checked);
                             })
                         }}/>
+                        <Switch className='me-1' theme={Theme.success} checked={this.state.dark} onChange={(checked) => {
+                            this.setState({
+                                dark: checked
+                            }, () => {
+                                console.log(this.state.dark);
+                            })
+                        }}><Icon/></Switch>
                     </Container>
                     <Container className='p-0 mb-1' inline fluid>
                         <Input className='me-1' disabled placeholder='用户名'/>

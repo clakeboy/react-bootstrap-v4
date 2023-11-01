@@ -5,9 +5,9 @@
         font-size: 0.9rem;
     }
 
-    tbody td {
-        background-color: unset
-    }
+    // tbody td {
+    //     // background-color: unset
+    // }
 
     .table-tree-row {
         td {
@@ -144,4 +144,9 @@
     bottom: 0;
     z-index: 2000;
     background-color: rgba(0, 0, 0, .1);
+}
+
+.ck-table-hover>* {
+    --bs-table-color-state: var(--bs-table-hover-color);
+    --bs-table-bg-state: var(--bs-table-hover-bg);
 }

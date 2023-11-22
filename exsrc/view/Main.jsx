@@ -261,7 +261,7 @@ class Main extends React.Component {
                         }} />
                     </Table>
                     <Table hover={true} select={true} sm data={this.dataTable} fontSm width='100%'>
-                        <Table.Header text='Name' field='name' width='100px' onSort={(sort)=>{alert(sort)}}/>
+                        <Table.Header text='Name' field='name' width='100px' onSort={(field,sort)=>{alert(sort)}} sort='asc'/>
                         <Table.Header text='Age' field='age' width='150px' hide/>
                         <Table.Header text='Birthday' field='birthday' width='150px'/>
                         <Table.Header text='Address' field='address' width='150px'/>

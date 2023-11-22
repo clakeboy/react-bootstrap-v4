@@ -3,9 +3,10 @@ import React from 'react';
 interface Props {
     onFormat?: (val: any, row: any) => void
     text?: string | any
-    field?: string
+    field: string
     value?: string
     row?: any
+    cols?: number
     onSort?: (field: string, sort: string) => void
     align?: string
     hide?: boolean
@@ -17,6 +18,9 @@ interface Props {
     beforeHold?: boolean
     //edit
     edit?: any
+    move?: boolean
+    sort?: string
+    textOver?: boolean
 }
 
 export class TableHeader extends React.PureComponent<Props> {

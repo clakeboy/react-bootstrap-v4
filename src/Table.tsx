@@ -471,9 +471,14 @@ export class Table extends React.Component<Props, State> {
     sortHandler(field: string, callback: (field: string, type: string) => void) {
         return (e: React.MouseEvent) => {
             const dom = e.currentTarget as HTMLElement;
-            const sort_type = dom.dataset.sort || 'asc';
+            let sort_type:string
+            if (dom.dataset.sort) {
+                sort_type = dom.dataset.sort === 'asc' ? 'desc' : 'asc';
+            } else {
+                sort_type = 'asc'
+            }
             callback(field, sort_type);
-            dom.dataset.sort = sort_type === 'asc' ? 'desc' : 'asc';
+            dom.dataset.sort = sort_type ;
             this.sortList[field] = sort_type;
             const child = dom.querySelector('i') as HTMLElement;
             child.classList.remove('fa-sort', 'fa-sort-alpha-up', 'fa-sort-alpha-down');
@@ -789,7 +794,7 @@ export class Table extends React.Component<Props, State> {
                         <th className='chk' style={{ textAlign: 'center', width: '30px' }}>
                             <CCheckbox ref={(c: any) => { this.allchk = c }} onChange={this.selectAll} checked={this.state.selectAll} half={this.state.selectHalf} />
                         </th> : null}
-                    {this.headers.map((item, key) => {
+                    {this.headers.map((item:TableHeader, key) => {
                         if (!item || item.props.hide) {
                             return null;
                         }
@@ -799,18 +804,24 @@ export class Table extends React.Component<Props, State> {
                         }
                         const align = this.props.headerAlign || item.props.align || this.props.align;
                         const style: StrObject = {
-                            'textAlign': align
+                            'textAlign': align??'',
                         };
                         if (item.props.width) {
                             style.width = item.props.width;
                         }
+                        if (item.props.textOver) {
+                            style.textOverflow = 'ellipsis'
+                        }
                         let sort_icon = 'sort';
+                        if (item.props.sort) {
+                            this.sortList[item.props.field] = item.props.sort
+                        }
                         if (this.sortList[item.props.field]) {
                             sort_icon = 'sort-alpha-' + (this.sortList[item.props.field] === 'asc' ? 'down' : 'up');
                         }
                         return (
                             <th key={key} data-key={'head_' + key} style={style}>
-                                {item.props.onSort ? <a href='javascript://'
+                                {item.props.onSort ? <a href='javascript://' data-sort={item.props.sort??undefined}
                                     onClick={this.sortHandler(item.props.field, item.props.onSort)}>
                                     {item.props.text}{'\u0020'}
                                     <Icon icon={sort_icon} /></a> : item.props.text}

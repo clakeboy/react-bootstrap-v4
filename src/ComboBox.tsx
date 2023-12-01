@@ -61,7 +61,7 @@ export class ComboBox extends React.Component<Props,any> {
     }
 
     render() {
-        const props:{[propName:string]:any} = Object.assign(this.props, {});
+        const props:{[propName:string]:any} = {...this.props};
         if (React.Children.count(this.props.children)) {
             const filterColumn:any[] = [];
             React.Children.forEach(this.props.children, (item) => {

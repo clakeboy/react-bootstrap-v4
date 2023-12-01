@@ -26,7 +26,7 @@ export interface ValidateProps {
 }
 
 interface Props extends ComponentProps {
-  label?: string;
+  label?: any;
   type?: string;
   data?: any;
   summary?: string;

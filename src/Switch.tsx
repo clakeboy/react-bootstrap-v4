@@ -46,11 +46,7 @@ export class Switch extends React.Component<Props,State> {
     }
 
     UNSAFE_componentWillReceiveProps(nextProps:Props) {
-        console.log(nextProps.checked);
-        
         if (this.state.checked !== nextProps.checked) {
-            // this.checked = nextProps.checked??false;
-            // this.changeStatus(this.checked);
             this.setState({checked:nextProps.checked??false})
         }
     }

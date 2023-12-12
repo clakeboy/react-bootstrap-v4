@@ -23,7 +23,7 @@ class GroupStyleContent extends React.Component<any, any> {
     }
 }
 
-export class GroupStyle extends React.Component<Props, null> {
+export class GroupStyle extends React.Component<Props, any> {
 
     public static defaultProps:any = {
         className: '',

@@ -9,7 +9,7 @@ interface Props {
     onClick ?: () => void
 }
 
-export class TabsContent extends React.PureComponent<Props> {
+export class TabsContent extends React.PureComponent<Props,any,any> {
 
     static defaultProps = {
         fade: false,

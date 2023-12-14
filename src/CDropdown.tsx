@@ -6,7 +6,7 @@ interface Props extends ComponentProps {
     data?: any
     text?: string
     label?: any
-    value?: string
+    value?: any
     onChange?: (val:string,row:any) => void
     showRows?: number
     dropWidth?: string

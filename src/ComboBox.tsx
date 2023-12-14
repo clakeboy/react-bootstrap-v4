@@ -14,7 +14,7 @@ class ComboBoxColumn extends React.Component<ColumnProps,any> {
 }
 
 interface Props extends ComponentProps {
-    label?: string
+    label?: any
     searchColumn?: string
     data?: any
     showRows?: number

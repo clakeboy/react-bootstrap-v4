@@ -5,7 +5,7 @@ import { ComponentProps } from './components/common';
 interface Props extends ComponentProps {
     data?: any
     text?: string
-    label?: string
+    label?: any
     value?: string
     onChange?: (val:string,row:any) => void
     showRows?: number
@@ -19,8 +19,8 @@ interface State {
 
 interface ValueProps {
     text: string
-    value: string
-    active: boolean
+    value: any
+    active?: boolean
 }
 
 export class CDropdownValue extends React.Component<ValueProps,any> {

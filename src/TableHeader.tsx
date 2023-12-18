@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface Props {
-    onFormat?: (val: any, row: any) => void
+    onFormat?: (val: any, row: any, idx:any) => void
     text?: string | any
     field: string
     value?: string
@@ -40,7 +40,7 @@ export class TableHeader extends React.PureComponent<Props> {
     }
 
     render() {
-        const value = typeof this.props.onFormat === 'function' ? this.props.onFormat(this.props.value, this.props.row) : this.props.value;
+        const value = typeof this.props.onFormat === 'function' ? this.props.onFormat(this.props.value, this.props.row, 0) : this.props.value;
 
         return <>{value}</>;
     }

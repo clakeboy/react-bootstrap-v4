@@ -905,7 +905,7 @@ export class Table extends React.Component<Props, State> {
         classString += this.state.selectRows[i] ? ' ck-table-selected' : '';
         return (
             <>
-                <tr onContextMenu={(e) => {
+                <tr key={i} onContextMenu={(e) => {
                     if (!this.mainMenu) return;
                     e.preventDefault();
                     this.mainMenu.show({ evt: e, type: 'mouse', data: row });

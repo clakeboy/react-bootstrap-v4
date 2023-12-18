@@ -465,8 +465,8 @@ export class Combo extends React.Component<ComboProps,State> {
                        fixed={!!this.props.width}
                        onCheck={this.props.multi?this.multiSelectHandler:undefined}
                        onClick={this.selectHandler}>
-                    {map(columns,(item:any)=>{
-                        return <TableHeader field={item.field} width={item.width} text={item.text}
+                    {map(columns,(item:any,idx:any)=>{
+                        return <TableHeader key={idx} field={item.field} width={item.width} text={item.text}
                                             onFormat={item.field === this.props.searchColumn?this.filterFormat:item.format}/>
                     })}
                 </Table>

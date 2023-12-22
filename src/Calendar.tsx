@@ -168,7 +168,10 @@ export class Calendar extends React.PureComponent<Props, State, any> {
         if (this.props.value !== nextProp.value) {
             this.setCurrentDate(nextProp.value);
             this.setState({
-                days: this.fillDateList()
+                days: this.fillDateList(),
+                hour: this.current_date.getHours().toString().padStart(2,'0'),
+                minute: this.current_date.getMinutes().toString().padStart(2,'0'),
+                second: this.current_date.getSeconds().toString().padStart(2,'0')
             });
         }
     }
@@ -332,7 +335,7 @@ export class Calendar extends React.PureComponent<Props, State, any> {
         });
     };
 
-    format() {
+    format(formatStr?:string) {
         const keys:{[propName:string]:any} = {
             "unix": Math.round(this.show_date.valueOf() / 1000),
             "YYYY": this.show_date.getFullYear().toString(),
@@ -354,7 +357,7 @@ export class Calendar extends React.PureComponent<Props, State, any> {
             // "s":this.show_date.getSeconds().toString(),
             "s": this.state.second,
         };
-        let time_str = this.props.format as string;
+        let time_str = formatStr ?? this.props.format as string;
         let regx;
         for (const s in keys) {
             regx = new RegExp(s, "g");

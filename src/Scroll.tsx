@@ -91,13 +91,13 @@ export class Scroll extends React.PureComponent<Props,State> {
 
         if (this.parentDom) {
             this.parentDom.classList.add('ck-scroll-over');
-            this.parentDom.addEventListener('wheel',this.scrollHandler);
+            this.parentDom.addEventListener('wheel',this.scrollHandler,{passive:false});
             this.parentDom.addEventListener('mouseover',this.showHandler,false);
             this.parentDom.addEventListener('mouseout',this.hideHandler,false);
         }
 
         // this.dom.addEventListener("mousedown",this.beginDragHandler,false);
-        this.dom.addEventListener("wheel",this.scrollHandler);
+        this.dom.addEventListener("wheel",this.scrollHandler,{passive:false});
     }
 
     getClasses() {

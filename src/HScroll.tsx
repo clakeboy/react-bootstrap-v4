@@ -95,22 +95,22 @@ export class HScroll extends React.PureComponent<Props,any> {
 
         if (this.props.showSelector) {
             this.showDom = document.querySelector(this.props.showSelector)??undefined;
-            this?.showDom?.addEventListener('wheel',this.scrollHandler);
-            this?.showDom?.addEventListener('mouseenter',this.showHandler,false);
-            this?.showDom?.addEventListener('mouseleave',this.hideHandler,false);
+            this?.showDom?.addEventListener('wheel',this.scrollHandler,{passive:false});
+            this?.showDom?.addEventListener('mouseenter',this.showHandler);
+            this?.showDom?.addEventListener('mouseleave',this.hideHandler);
         }
 
         if (this.parentDom) {
             this.parentDom.classList.add('ck-scroll-over');
             if (!this.showDom) {
-                this.parentDom.addEventListener('wheel',this.scrollHandler);
-                this.parentDom.addEventListener('mouseenter',this.showHandler,false);
-                this.parentDom.addEventListener('mouseleave',this.hideHandler,false);
+                this.parentDom.addEventListener('wheel',this.scrollHandler,{passive:false});
+                this.parentDom.addEventListener('mouseenter',this.showHandler);
+                this.parentDom.addEventListener('mouseleave',this.hideHandler);
             }
         }
 
         // this.dom.addEventListener("mousedown",this.beginDragHandler,false);
-        this.dom.addEventListener("wheel",this.scrollHandler);
+        this.dom.addEventListener("wheel",this.scrollHandler,{passive:false});
 
         if (this.props.alignParent) {
             this.initAlignParent();

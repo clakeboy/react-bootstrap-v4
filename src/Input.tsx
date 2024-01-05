@@ -49,6 +49,8 @@ interface Props extends ComponentProps {
   labelClass?: string;
   disableClear?: boolean;
   multi?: { height?: string }; //
+  max?:any;
+  min?: any;
 }
 
 interface State {

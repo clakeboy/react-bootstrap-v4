@@ -291,7 +291,8 @@ export class Input extends React.Component<Props, State> {
         valid = (vali.rule as RegExp).test(val);
       }
       if (vali.tip) {
-        $('#' + this.domId).tooltip(valid ? 'hide' : 'show');
+        valid?this.tip.hide():this.tip.show();
+        // $('#' + this.domId).tooltip(valid ? 'hide' : 'show');
       }
       return valid;
     }

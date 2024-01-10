@@ -1,6 +1,11 @@
-.calendar-v2 {
+.calendar-v2-main {
+    display: inline-block;
     border: 1px solid #ccc;
     border-radius: 5px;
+    overflow: hidden;
+}
+
+.calendar-v2 {
     display: inline-grid;
     grid-template-columns: repeat(7,1fr);
     justify-items: center;
@@ -20,21 +25,42 @@
             color: var(--bs-white);
         }
     }
+    .title {
+        width: 100%;
+        height: 100%;
+        padding: .2rem .3rem;
+        min-width: 30px;
+        min-height: 30px;
+        text-align: center;
+        user-select: none;
+        font-weight: 900;
+    }
     .header {
         grid-column: 2 / 7;
-        padding: 8px 0;
         width: 100%;
         text-align: center;
         border-bottom: 1px solid #ccc;
     }
+    .active {
+        background-color: var(--bs-primary);
+        color: var(--bs-white);
+        border-radius: 50%;
+    }
+    .head-btn {
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        &:hover {
+            background-color: var(--bs-primary);
+            color: var(--bs-white);
+        }
+    }
     .btn-pr {
         grid-column: 1;
-        width: 100%;
-        text-align: center;
     }
     .btn-nx {
         grid-column: 7/8;
-        width: 100%;
-        text-align: center;
     }
 }

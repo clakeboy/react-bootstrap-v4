@@ -58,12 +58,13 @@ export class RadioGroup extends React.Component<Props,State> {
             <>
                 {React.Children.map(this.props.children,(item)=>{
                     if (item.type === Radio) {
-                        item.props.onChange = this.changeHandler;
-                        item.props.checked = item.props.data === this.state.value;
-                        item.props.disabled = this.props.disabled;
-                        item.props.name = this.name;
+                        const props:any = {...item.props}
+                        props.onChange = this.changeHandler;
+                        props.checked = item.props.data === this.state.value;
+                        props.disabled = this.props.disabled;
+                        props.name = this.name;
+                        return React.cloneElement(item,props)
                     }
-                    return React.cloneElement(item,item.props)
                 })}
             </>
         );

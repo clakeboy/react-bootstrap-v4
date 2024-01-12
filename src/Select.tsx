@@ -57,9 +57,12 @@ export class Select extends React.PureComponent<Props,State> {
     }
 
     getClasses() {
-        let base = 'mb-3';
+        let base = '';
         if (this.props.absolute) {
             base = classNames(base, 'position-absolute');
+        }
+        if (this.props.label) {
+            base = classNames(base, 'mb-3');
         }
         return classNames(base, this.props.className);
     }
@@ -79,10 +82,6 @@ export class Select extends React.PureComponent<Props,State> {
         if (this.props.absolute) {
             base.top  = this.props.y??'';
             base.left = this.props.x??'';
-        }
-
-        if (!this.props.label) {
-            base.marginBottom = '0';
         }
 
         return common.extend(base, this.props.style)

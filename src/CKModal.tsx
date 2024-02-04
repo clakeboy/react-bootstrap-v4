@@ -142,6 +142,9 @@ export class CKModal extends React.Component<Props,State> {
         if (!this.is_open) {
             modals += 1;
         }
+        this.offsetIndex = parseInt(document.body.dataset.modals??'0') * 10
+        this._modal.style.zIndex = `${BaseModal+this.offsetIndex+2}`
+        this._shadow.style.zIndex = `${BaseModal+this.offsetIndex+1}`
         document.body.dataset.modals = modals+'';
         document.body.classList.add("modal-open");
         if (this.hasScrollbar()) {
@@ -411,11 +414,11 @@ export class CKModal extends React.Component<Props,State> {
     }
 
     render() {
-        const modalIndex = {zIndex:BaseModal+this.offsetIndex+2};
-        const shadowIndex = {zIndex:BaseModal+this.offsetIndex+1};
+        // const modalIndex = {zIndex:BaseModal+this.offsetIndex+2};
+        // const shadowIndex = {zIndex:BaseModal+this.offsetIndex+1};
         const content =  (
             <>
-                <div ref={c=>this._modal=c as HTMLDivElement} className={this.getClasses()} style={modalIndex} tabIndex={-1} id={this.domId} role="dialog" onMouseUp={this.state.shadowClose ? ()=>{
+                <div ref={c=>this._modal=c as HTMLDivElement} className={this.getClasses()}  tabIndex={-1} id={this.domId} role="dialog" onMouseUp={this.state.shadowClose ? ()=>{
                     this.close()
                 }:undefined}>
                     <div className={this.getDialogClasses()} style={this.getDialogStyles()} role="document" onMouseUp={this.state.shadowClose ? (e)=>{
@@ -439,7 +442,7 @@ export class CKModal extends React.Component<Props,State> {
                         </div>
                     </div>
                 </div>
-                <div ref={c=>this._shadow=c as HTMLDivElement} className={this.getShadowClasses()} style={shadowIndex} id={`${this.domId}-shadow`}/>
+                <div ref={c=>this._shadow=c as HTMLDivElement} className={this.getShadowClasses()} id={`${this.domId}-shadow`}/>
             </>
         );
 

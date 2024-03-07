@@ -67,7 +67,8 @@ export class Button extends React.PureComponent<Props,State> {
         }
         //apply style
         if (this.props.theme !== undefined) {
-            base_style.push(typeof this.props.theme === 'string'?this.props.theme: Theme[this.props.theme]);
+            const themeStr:string = typeof this.props.theme === 'string'?this.props.theme:Theme[this.props.theme??0]
+            base_style.push(themeStr);
         }
             
         //merge class

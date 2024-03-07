@@ -27,10 +27,10 @@ export class Switch extends React.Component<Props,State> {
     bg:HTMLDivElement
     constructor(props:any) {
         super(props);
-        
+        const themeStr:string = typeof this.props.theme === 'string'?this.props.theme:Theme[this.props.theme??0]
         this.checked = this.props.checked??false;
-        this.bg_color = `bg-${Theme[this.props.theme??0]}`;
-        this.text_color = `text-${Theme[this.props.theme??0]}`;
+        this.bg_color = `bg-${themeStr}`;
+        this.text_color = `text-${themeStr}`;
         this.move_class = `ck-switch-circle-right`;
         if (this.props.size) {
             this.move_class += `-${this.props.size}`;

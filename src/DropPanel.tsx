@@ -44,7 +44,8 @@ export class DropPanel extends React.Component<Props,any> {
         }
 
         if (this.props.theme) {
-            base = classNames(base,'border-'+Theme[this.props.theme]);
+            const themeStr:string = typeof this.props.theme === 'string'?this.props.theme:Theme[this.props.theme??0]
+            base = classNames(base,'border-'+themeStr);
         }
 
         if (this.props.round) {

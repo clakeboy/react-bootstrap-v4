@@ -33,7 +33,8 @@ export class Complex extends React.Component<Props,State> {
         dataType: "string",
         dataField: "",
         data: [],
-        duplicate: false
+        duplicate: false,
+        Theme: Theme.primary
     };
 
     combo: Combo
@@ -188,7 +189,8 @@ export class Complex extends React.Component<Props,State> {
     }
 
     render() {
-        const bgClass = this.props.theme !== undefined ? ` bg-${Theme[this.props.theme]}`:' bg-primary';
+        const themeStr:string = typeof this.props.theme === 'string'?this.props.theme:Theme[this.props.theme??0]
+        const bgClass = this.props.theme !== undefined ? ` bg-${themeStr}`:' bg-primary';
         return (
             <div ref={(c:any)=>this.main=c} className={this.getClasses()} onClick={this.clickHandler}>
                 {this.state.list.map((item,idx)=>{

@@ -71,6 +71,9 @@ export class TextArea extends React.Component<Props,State> {
             // return true;
             return nextState.value !== this.state.html;
         }
+        if (this.props.disabled !== nextProps.disabled) {
+            return true
+        }
         return nextState.value !== this.state.value;
     }
 

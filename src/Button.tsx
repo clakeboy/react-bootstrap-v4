@@ -7,7 +7,7 @@ import {ComponentProps, Theme} from './components/common';
 import {Tooltip} from 'bootstrap'
 
 interface Props extends ComponentProps {
-    theme?: Theme
+    theme?: Theme | string
     outline?: boolean
     icon?: string
     tip?: string
@@ -67,7 +67,7 @@ export class Button extends React.PureComponent<Props,State> {
         }
         //apply style
         if (this.props.theme !== undefined) {
-            base_style.push(Theme[this.props.theme]);
+            base_style.push(typeof this.props.theme === 'string'?this.props.theme: Theme[this.props.theme]);
         }
             
         //merge class

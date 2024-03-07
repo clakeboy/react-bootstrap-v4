@@ -51,9 +51,9 @@ export * from './GroupStyle';
 export * from './components/common'
 import Modal from "./CKModal";
 import Common from "./Common";
-
+import LoaderComponent from "./components/LoaderComponent";
 export {
-    Modal,Common
+    Modal,Common,LoaderComponent
 }
 // import Dropdown from "./Dropdown";
 // import Pagination from "./Pagination";

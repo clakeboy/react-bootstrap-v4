@@ -294,7 +294,7 @@ class Coupon extends React.Component {
                     <Button onClick={e=>this.modal.alert('测试效果',()=>{
                         console.log('asdfsadf');
                     })}>测试 alert 警告 Modal</Button>
-                    <Button theme={Theme.success} onClick={e=>this.modal.confirm({
+                    <Button theme={'success'} onClick={e=>this.modal.confirm({
                         content:'确定要按下这个按钮?',
                         callback:(flag)=>{
                             console.log(flag);

@@ -10,7 +10,7 @@ export interface ComponentProps extends React.ClassAttributes<any> {
     disabled?: boolean
     children?: any
     style?:any
-    theme?: Theme
+    theme?: Theme | string
     field?: string
 }
 

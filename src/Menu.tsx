@@ -141,8 +141,8 @@ export class Menu extends React.PureComponent<MenuProps, State> {
         const data: any[] = []
         React.Children.map(this.props.children, (item: any) => {
             if (item && item.type === MenuItem) {
-                const props = Object.assign(item.props, { parent: this })
-                data.push({ ...props })
+                // const props = Object.assign(item.props, { parent: this })
+                data.push({ ...item.props, parent: this})
             }
         })
         return data

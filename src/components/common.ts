@@ -3,6 +3,7 @@ export interface ComponentProps extends React.ClassAttributes<any> {
     absolute?: boolean
     x?: string
     y?: string
+    hidden?: boolean
     width?: string
     height?: string
     size?: string

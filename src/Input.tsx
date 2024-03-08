@@ -599,7 +599,7 @@ export class Input extends React.Component<Props, State> {
   }
 
   renderDisableMask() {
-    if (!this.props.disabled) return null;
+    if (!this.props.disabled || this.props.onDblClick) return null;
     return <div className="position-absolute w-100 h-100" style={{ top: 0, left: 0 }}></div>;
   }
 

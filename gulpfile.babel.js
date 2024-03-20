@@ -11,14 +11,10 @@ import gutil from 'gulp-util';
 import pkg from './package.json';
 import babel from 'gulp-babel';
 import plumber from 'gulp-plumber';
-import path from 'path';
 import sourcemaps from 'gulp-sourcemaps';
 import historyApiFallback from 'connect-history-api-fallback';
 import header from 'gulp-header';
 import gulpLoadPlugins from 'gulp-load-plugins';
-import through2 from 'through2';
-import * as rttyd from 'react-to-typescript-definitions';
-import fs from 'fs';
 let $ = gulpLoadPlugins();
 
 const banner = `/* ${pkg.name} v${pkg.version} | by Clake

@@ -53,7 +53,7 @@ export class Combo extends React.Component<ComboProps,State> {
     mainDom:HTMLElement
     conDom:HTMLElement
     currentSelect?:number
-    filterTime?:number
+    filterTime?:any
     constructor(props:any) {
         super(props);
         this.isRemote = !!this.props.onSearch;

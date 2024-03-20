@@ -32,7 +32,7 @@ interface ShowOptions {
 
 export class Alerts extends React.Component<Props, State> {
 
-    timeout: number
+    timeout: any
 
     public static defaultProps:any = {
         theme: 'danger',

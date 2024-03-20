@@ -20,7 +20,8 @@
   },
   "include": [
     "./src/**/*",
-    "./exsrc/**/*"
+    "./exsrc/**/*",
+    "./gulpfile.babel.js"
   ],
   "exclude": [
     "node_modules"

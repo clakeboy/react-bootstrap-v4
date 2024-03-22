@@ -1,3 +1,4 @@
+
 export interface ComponentProps extends React.ClassAttributes<any> {
     id?: string
     absolute?: boolean
@@ -13,6 +14,7 @@ export interface ComponentProps extends React.ClassAttributes<any> {
     style?:any
     theme?: Theme | string
     field?: string
+    [propName:string]:any
 }
 
 export interface StrObject {

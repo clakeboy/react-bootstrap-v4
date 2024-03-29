@@ -17,7 +17,7 @@ interface MenuItemProps extends ComponentProps {
     parent?: Menu
 }
 
-export class MenuItem extends React.PureComponent<MenuItemProps, any> {
+export class MenuItem extends React.Component<MenuItemProps, any> {
     parent: Menu
     childMenu: Menu
     constructor(props: any) {
@@ -113,7 +113,7 @@ interface State {
     menu_list: any[]
 }
 
-export class Menu extends React.PureComponent<MenuProps, State> {
+export class Menu extends React.Component<MenuProps, State> {
     static Item = MenuItem;
     static defaultProps = {
         zIndex: 1200

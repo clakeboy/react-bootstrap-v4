@@ -177,7 +177,10 @@ export class Calendar extends React.PureComponent<Props, State, any> {
     }
 
     isTimeBar() {
-
+        if (this.props.format?.includes("HH")) {
+            return true
+        }
+        return this.props.timeBar
     }
 
     initFailRange(limit?: { lt?: any, gt?: any }) {
@@ -345,15 +348,15 @@ export class Calendar extends React.PureComponent<Props, State, any> {
             "mm": (this.show_date.getMonth() + 1).toString(),
             "dd": this.show_date.getDate().toString(),
             // "H":common.strpad(this.show_date.getHours(),2,"0"),
-            "H": this.state.hour,
+            "HH": this.state.hour,
             // "h":this.show_date.getHours().toString(),
             "h": this.state.hour,
             // "I":common.strpad(this.show_date.getMinutes(),2,"0"),
-            "I": this.state.minute,
+            "II": this.state.minute,
             // "i":this.show_date.getMinutes().toString(),
             "i": this.state.minute,
             // "S":common.strpad(this.show_date.getSeconds(),2,"0"),
-            "S": this.state.second,
+            "SS": this.state.second,
             // "s":this.show_date.getSeconds().toString(),
             "s": this.state.second,
         };
@@ -609,7 +612,7 @@ export class Calendar extends React.PureComponent<Props, State, any> {
                     </thead>
                     <tbody>
                         {this.renderContent()}
-                        {this.props.timeBar ? this.renderTimeBar() : null}
+                        {this.isTimeBar() ? this.renderTimeBar() : null}
                     </tbody>
                 </table>
             </div>

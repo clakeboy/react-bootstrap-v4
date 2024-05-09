@@ -325,6 +325,15 @@ class Coupon extends React.Component {
                         shadowClose:true,
                         width:'1000px',
                     })}>测试 view 自定义内容 Modal</Button>
+                    <Button theme={Theme.warning} onClick={e=>this.modal.view({
+                        title:'添加优惠券',
+                        header:false,
+                        content:<AddCoupon id={Common.RandomString(10)}/>,
+                        fade:true,
+                        shadowClose:true,
+                        width:'1000px',
+                        empty:true
+                    })}>测试 view 空背景</Button>
                     </ButtonGroup>
                     <Button className='mt-4' block onClick={e=>{
                         this.modal.alert({

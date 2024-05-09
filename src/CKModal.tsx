@@ -26,6 +26,7 @@ interface Options {
     shadowClose?: boolean
     fade?: boolean
     callback?: any
+    empty?: boolean
 }
 
 interface ViewOptions extends Options {
@@ -64,6 +65,7 @@ interface State {
     size: string
     btns: {[propName:string]:string}
     shadowClose?: boolean
+    empty: boolean
 }
 
 export class CKModal extends React.Component<Props,State> {
@@ -72,7 +74,7 @@ export class CKModal extends React.Component<Props,State> {
         header: false,
         center: false,
         fade: false,
-        shadowClose:false
+        shadowClose:false,
     }
     domId = 'modal-'+common.RandomString(16);
     //modal type
@@ -88,6 +90,7 @@ export class CKModal extends React.Component<Props,State> {
     constructor(props:any) {
         super(props);
         this.state = {
+            empty:false,
             content:'',
             title:'',
             isCloseBtn:this.props.isCloseBtn??true,
@@ -226,6 +229,7 @@ export class CKModal extends React.Component<Props,State> {
             btns: opts.btns??defBtns,
             shadowClose:opts.shadowClose??this.props.shadowClose,
             fade:opts.fade??this.props.fade,
+            empty:opts.empty??false,
         },()=>{
             // this.open({
             //     backdrop:'static',
@@ -259,6 +263,7 @@ export class CKModal extends React.Component<Props,State> {
             btns: opts.btns??defBtns,
             shadowClose:opts.shadowClose??this.props.shadowClose,
             fade:opts.fade??this.props.fade,
+            empty:opts.empty??false,
         },()=>{
             this.open();
         });
@@ -283,6 +288,7 @@ export class CKModal extends React.Component<Props,State> {
             width:opts.width??null,
             shadowClose:opts.shadowClose??this.props.shadowClose,
             fade:opts.fade??this.props.fade,
+            empty:opts.empty??false,
         },()=>{
             this.open();
         });
@@ -312,6 +318,7 @@ export class CKModal extends React.Component<Props,State> {
             shadowClose:opts.shadowClose??this.props.shadowClose,
             fade:opts.fade??this.props.fade,
             size: opts.size??'lg',  // sm,lg(default),xl
+            empty:opts.empty??false,
         },()=>{
             this.open();
         });
@@ -330,6 +337,10 @@ export class CKModal extends React.Component<Props,State> {
             base = classNames(base,'visible');
         } else {
             base = classNames(base,'invisible');
+        }
+
+        if (this.state.empty) {
+            base = classNames(base,'ck-modal-empty');
         }
 
         return classNames(base,this.props.className);
@@ -416,35 +427,47 @@ export class CKModal extends React.Component<Props,State> {
     render() {
         // const modalIndex = {zIndex:BaseModal+this.offsetIndex+2};
         // const shadowIndex = {zIndex:BaseModal+this.offsetIndex+1};
+        // let content: JSX.Element
+        // if (this.state.empty) {
+        //     content = (
+        //         <>
+        //             <div ref={c=>this._modal=c as HTMLDivElement}>
+        //                 {this.state.content}
+        //             </div>
+        //             <div ref={c=>this._shadow=c as HTMLDivElement} className={this.getShadowClasses()} id={`${this.domId}-shadow`}/>
+        //         </>
+        //     )
+        // } else {
         const content =  (
-            <>
-                <div ref={c=>this._modal=c as HTMLDivElement} className={this.getClasses()}  tabIndex={-1} id={this.domId} role="dialog" onMouseUp={this.state.shadowClose ? ()=>{
-                    this.close()
-                }:undefined}>
-                    <div className={this.getDialogClasses()} style={this.getDialogStyles()} role="document" onMouseUp={this.state.shadowClose ? (e)=>{
-                        e.stopPropagation()
-                        e.preventDefault()
+                <>
+                    <div ref={c=>this._modal=c as HTMLDivElement} className={this.getClasses()}  tabIndex={-1} id={this.domId} role="dialog" onMouseUp={this.state.shadowClose ? ()=>{
+                        this.close()
                     }:undefined}>
-                        <div className="modal-content">
-                            {this.state.header?<div className="modal-header">
-                                <h5 className="modal-title">{this.state.title}</h5>
-                                {this.state.isCloseBtn?<button type="button" className="btn-close" onClick={()=>{
-                                    this.close();
-                                }}>
-                                </button>:null}
-                            </div>:null}
-                            <div className="modal-body">
-                                {this.state.type === ModalLoading?<React.Fragment>
-                                    <Load/>&nbsp;&nbsp;&nbsp;{this.state.content}
-                                </React.Fragment>:this.state.content}
+                        <div className={this.getDialogClasses()} style={this.getDialogStyles()} role="document" onMouseUp={this.state.shadowClose ? (e)=>{
+                            e.stopPropagation()
+                            e.preventDefault()
+                        }:undefined}>
+                            <div className="modal-content">
+                                {this.state.header?<div className="modal-header">
+                                    <h5 className="modal-title">{this.state.title}</h5>
+                                    {this.state.isCloseBtn?<button type="button" className="btn-close" onClick={()=>{
+                                        this.close();
+                                    }}>
+                                    </button>:null}
+                                </div>:null}
+                                <div className="modal-body">
+                                    {this.state.type === ModalLoading?<React.Fragment>
+                                        <Load/>&nbsp;&nbsp;&nbsp;{this.state.content}
+                                    </React.Fragment>:this.state.content}
+                                </div>
+                                {this.renderFooter()}
                             </div>
-                            {this.renderFooter()}
                         </div>
                     </div>
-                </div>
-                <div ref={c=>this._shadow=c as HTMLDivElement} className={this.getShadowClasses()} id={`${this.domId}-shadow`}/>
-            </>
-        );
+                    <div ref={c=>this._shadow=c as HTMLDivElement} className={this.getShadowClasses()} id={`${this.domId}-shadow`}/>
+                </>
+            );
+        // }
 
         return ReactDOM.createPortal(
             content,document.body

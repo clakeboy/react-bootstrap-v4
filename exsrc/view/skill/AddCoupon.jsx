@@ -56,7 +56,7 @@ class AddCoupon extends React.PureComponent {
     }
 
     getClasses() {
-        let base = '';
+        let base = 'bg-white p-2 rounded';
 
         return classNames(base,this.props.className);
     }

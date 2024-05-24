@@ -7,6 +7,7 @@ import Load from "./Load";
 import './css/Modal.less';
 import ButtonGroup from "./ButtonGroup";
 import { ComponentProps, Theme } from './components/common';
+import i18n from './components/i18n';
 
 const ModalAlert = 0;
 const ModalConfirm = 1;
@@ -34,10 +35,17 @@ interface ViewOptions extends Options {
     onClose?: ()=>void
 }
 
-const defBtns = {
+let defBtns = {
     ok:'确定',
     cancel:'取消',
 };
+
+if (i18n.getLang().short === "en") {
+    defBtns = {
+        ok:'Ok',
+        cancel:'Cancel',
+    }
+}
 
 interface Props extends ComponentProps {
     onOpen?: ()=>void

@@ -1,8 +1,29 @@
 .calendar-v2-main {
+    position: relative;
     display: inline-block;
     border: 1px solid #ccc;
     border-radius: 5px;
     overflow: hidden;
+    user-select: none;
+    padding: 5px;
+    min-width: 180px;
+    .lg {
+        font-size: 1.2rem;
+    }
+    .sm {
+        font-size: .8rem;
+    }
+    .year {
+        display: inline-grid;
+        grid-template-columns: repeat(3,1fr);
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        top: 60px;
+        background-color: chocolate;
+        overflow-y: auto;
+    }
 }
 
 .calendar-v2 {
@@ -10,15 +31,15 @@
     grid-template-columns: repeat(7,1fr);
     justify-items: center;
     overflow: hidden;
+    color: #333;
     .item {
         width: 100%;
         height: 100%;
         padding: .2rem .3rem;
-        min-width: 30px;
-        min-height: 30px;
+        // min-width: 30px;
+        // min-height: 30px;
         // border: 1px solid rgba(0, 0, 0, .1);
         text-align: center;
-        user-select: none;
         cursor: pointer;
         &:hover {
             background-color: var(--bs-primary);
@@ -26,11 +47,12 @@
         }
     }
     .title {
+        color: #666;
         width: 100%;
         height: 100%;
         padding: .2rem .3rem;
-        min-width: 30px;
-        min-height: 30px;
+        // min-width: 30px;
+        // min-height: 30px;
         text-align: center;
         user-select: none;
         font-weight: 900;

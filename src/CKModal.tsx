@@ -40,13 +40,6 @@ let defBtns = {
     cancel:'取消',
 };
 
-if (i18n.getLang().short === "en") {
-    defBtns = {
-        ok:'Ok',
-        cancel:'Cancel',
-    }
-}
-
 interface Props extends ComponentProps {
     onOpen?: ()=>void
     onClose?: ()=>void
@@ -126,7 +119,12 @@ export class CKModal extends React.Component<Props,State> {
     }
 
     componentDidMount() {
-
+        if (i18n.getLang().short === "en") {
+            defBtns = {
+                ok:'Ok',
+                cancel:'Cancel',
+            }
+        }
     }
 
     componentWillUnmount() {

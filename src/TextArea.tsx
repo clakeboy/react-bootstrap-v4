@@ -7,6 +7,7 @@ import Button from "./Button";
 import Dropdown from "./Dropdown";
 import Drag from './components/Drag';
 import { AnyObject, ComponentProps, StrObject, Theme } from './components/common';
+import Icon from './Icon';
 
 interface Props extends ComponentProps {
     label?: string
@@ -24,6 +25,7 @@ interface Props extends ComponentProps {
 interface State {
     html:any
     value:any
+    isFull:boolean
 }
 
 export class TextArea extends React.Component<Props,State> {
@@ -43,11 +45,13 @@ export class TextArea extends React.Component<Props,State> {
     currentResize:HTMLElement|null
     mainDom:HTMLElement
     isFull:boolean
+    fullBtn:HTMLElement
     constructor(props: any) {
         super(props);
         this.state = {
             html: this.props.data,
-            value: this.props.data
+            value: this.props.data,
+            isFull:false,
         };
 
         this.domId = 'text-area-' + common.RandomString(16);
@@ -67,12 +71,16 @@ export class TextArea extends React.Component<Props,State> {
     }
 
     shouldComponentUpdate(nextProps:Props, nextState:State) {
-        if (this.props.htmlMode) {
-            // return true;
-            return nextState.value !== this.state.html;
+        if (this.state.isFull !== nextState.isFull) {
+            return true
         }
         if (this.props.disabled !== nextProps.disabled) {
             return true
+        }
+
+        if (this.props.htmlMode) {
+            // return true;
+            return nextState.value !== this.state.html;
         }
         return nextState.value !== this.state.value;
     }
@@ -80,11 +88,18 @@ export class TextArea extends React.Component<Props,State> {
     componentDidUpdate() {
         if (this.props.htmlMode) {
             this.initImageResize();
+            this.resizeContent();
             this.input.querySelectorAll("img").forEach((elm) => {
                 elm.addEventListener('focus', this.bindingResize, false);
                 elm.addEventListener('blur', this.unBindingResize, false)
             })
         }
+    }
+    //resize content top
+    resizeContent() {
+        // if (this.props.htmlMode && this.props.htmlBar) {
+        //     this.input.style.top = -(this.mainDom.querySelector('.header-bar')?.clientHeight??0)+'px'
+        // }
     }
 
     getValue() {
@@ -111,6 +126,10 @@ export class TextArea extends React.Component<Props,State> {
         //html mode
         if (this.props.htmlMode) {
             base = classNames(base, 'ck-text-html');
+        }
+        //full
+        if (this.state.isFull) {
+            base = classNames(base, 'ck-text-area-full');
         }
         return classNames(base, this.props.className);
     }
@@ -233,6 +252,23 @@ export class TextArea extends React.Component<Props,State> {
             }
         }
     };
+
+    fullHandler = (e:React.MouseEvent) => {
+        if (this.isFull) {
+            this.isFull = false;
+            document.body.classList.remove('full-none-scroll');
+            this.mainDom.classList.remove('ck-text-area-full');
+            this.mainDom.querySelector('label')?.classList.remove('d-none');
+            this.input.classList.remove('full-input');
+        } else {
+            this.isFull = true;
+            document.body.classList.add('full-none-scroll');
+            this.mainDom.classList.add('ck-text-area-full');
+            this.mainDom.querySelector('label')?.classList.add('d-none');
+            this.input.classList.add('full-input');
+        }
+        this.setState({isFull:!this.state.isFull})
+    }
     /*********************
      * edit html process method
      *********************/
@@ -356,6 +392,7 @@ export class TextArea extends React.Component<Props,State> {
                 {this.renderLabel()}
                 {this.props.htmlMode ? this.renderHtmlEditIcon() : null}
                 {this.props.htmlMode ? this.renderHtmlEdit() : this.renderTextArea()}
+                {this.renderFullButton()}
                 {this.renderSummary()}
             </div>
         );
@@ -418,7 +455,7 @@ export class TextArea extends React.Component<Props,State> {
                 <Button className={iconClass} size={size} icon='redo' outline theme={Theme.secondary} tip='Redo' onClick={() => {
                     this.execCommand('redo', '');
                 }} />
-                <Dropdown size={size} outline icon='text-height' data={[
+                <Dropdown className='btn-group' size={size} outline icon='text-height' data={[
                     { text: 'x-Small', value: '1' },
                     { text: 'Small', value: '2' },
                     { text: 'Medium', value: '3' },
@@ -429,7 +466,7 @@ export class TextArea extends React.Component<Props,State> {
                 ]} onChange={(txt, val) => {
                     this.execCommand('fontSize', val);
                 }} />
-                <Dropdown size={size} outline icon='highlighter' data={[
+                <Dropdown className='btn-group' size={size} outline icon='highlighter' data={[
                     ['red', 'orange', 'yellow', 'green', 'blue', 'purple'],
                     ['white', 'gray', 'black', 'brown', 'silver', 'purple'],
                 ]} grid onChange={(txt, val) => {
@@ -444,22 +481,21 @@ export class TextArea extends React.Component<Props,State> {
                 {/*    console.log(document.queryCommandValue('fontSize'));*/}
                 {/*}}/>*/}
             </ButtonGroup>
-            <Button className={iconClass + ' float-end'} id={this.domId + '-btn-full'} size={size} icon='expand-arrows-alt' outline theme={Theme.secondary} tip='Full Screen' onClick={(e) => {
-                if (this.isFull) {
-                    this.isFull = false;
-                    document.body.classList.remove('full-none-scroll');
-                    this.mainDom.classList.remove('full');
-                    this.input.classList.remove('full-input');
-                    (e.currentTarget.querySelector('i') as HTMLElement).className = 'fas fa-expand-arrows-alt';
-                } else {
-                    this.isFull = true;
-                    document.body.classList.add('full-none-scroll');
-                    this.mainDom.classList.add('full');
-                    this.input.classList.add('full-input');
-                    (e.currentTarget.querySelector('i') as HTMLElement).className = 'fas fa-compress-arrows-alt';
-                }
-            }} />
         </div>
+    }
+
+    renderFullButton() {
+        const size = this.props.size ?? 'sm';
+        const iconClass = 'icon-' + size;
+        return this.props.htmlMode?(
+            <div ref={(c:any) => this.fullBtn = c} className={'full-btn' + (this.state.isFull?' full-status':'')}>
+                <Button  className={iconClass} id={this.domId + '-btn-full'} size={size} icon={this.state.isFull?'compress-arrows-alt':'expand-arrows-alt'} outline theme={Theme.secondary} tip='Full Screen' onClick={this.fullHandler} />
+            </div>
+        ):(
+            <div ref={(c:any) => this.fullBtn = c} className={'full-btn-normal'+(this.state.isFull?' full-normal-status':'')} onClick={this.fullHandler}>
+                <Icon icon={this.state.isFull?'times-circle':"search"}/>
+            </div>
+        )
     }
 }
 

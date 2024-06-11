@@ -58,6 +58,11 @@ class TestEdit extends React.Component {
                             html:val
                         })
                     }}/>
+                    <TextArea height='500px' size='xs' data={this.state.html} onChange={(val)=>{
+                        this.setState({
+                            html:val
+                        })
+                    }}/>
                 </Card>
             </Container>
         );

@@ -253,7 +253,7 @@ export class TextArea extends React.Component<Props,State> {
         }
     };
 
-    fullHandler = (e:React.MouseEvent) => {
+    fullHandler = () => {
         if (this.isFull) {
             this.isFull = false;
             document.body.classList.remove('full-none-scroll');

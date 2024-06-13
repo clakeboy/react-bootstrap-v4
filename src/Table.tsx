@@ -301,6 +301,10 @@ export class Table extends React.Component<Props, State> {
     }
 
     shouldComponentUpdate(nextProps: Props, nextState: State) {
+        if (nextProps.children !== this.props.children) {
+            this.headers = []
+            this.initTableWidth(nextProps.children)
+        }
         if (nextState.selectRows !== this.state.selectRows) {
             return true
         }
@@ -308,11 +312,6 @@ export class Table extends React.Component<Props, State> {
             return true
         }
         if (nextProps.loading !== this.props.loading) {
-            return true
-        }
-        if (nextProps.children !== this.props.children) {
-            this.headers = []
-            this.initTableWidth(nextProps.children)
             return true
         }
         return nextState.tree !== this.state.tree;

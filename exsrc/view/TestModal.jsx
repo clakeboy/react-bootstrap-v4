@@ -28,6 +28,7 @@ import {
 import Fetch from "../common/Fetch";
 import Icon from "../../src/Icon";
 import ComboBox from "../../src/ComboBox";
+import header from 'gulp-header';
 
 class TestModal extends React.PureComponent {
     constructor(props) {
@@ -38,7 +39,8 @@ class TestModal extends React.PureComponent {
             currentPage: 1,
             comboSelect: {'id':[1,3,5]},
             child : [],
-            inputData:{}
+            inputData:{},
+            headers:[],
         };
 
         this.child = [{
@@ -295,7 +297,7 @@ class TestModal extends React.PureComponent {
                     this.props.history.goBack();
                 }}>返回主页</Button>
                 <Card header='测试加载'>
-                    <Table striped={true} tree headerTheme={Theme.light} bordered sm sticky data={this.state.data} onClickTree={(row,callback)=>{
+                    <Table striped={true} tree headerTheme={Theme.primary} bordered sm data={this.state.data} onClickTree={(row,callback)=>{
                         this.loadChild(row,callback);
                     }}>
                         <Table.Header text='任务ID' field='id'/>
@@ -345,6 +347,18 @@ class TestModal extends React.PureComponent {
                                     number={this.pageNumber} showPage={10}
                                     onSelect={page => this.loadTask(page)}/>
                     </div>
+                </Card>
+                <Card header='测试动态表头'>
+                    <Button onClick={()=>{
+                        this.setState({headers:['task_name_eng','task_name','time_rule']})
+                    }}>测试加载</Button>
+                <Table striped={true} tree headerTheme={Theme.primary} bordered sm data={this.state.data} onClickTree={(row,callback)=>{
+                        this.loadChild(row,callback);
+                    }}>
+                        {this.state.headers.map((item,idx)=>{
+                            return <Table.Header key={idx} field='item' text={item}/>
+                        })}
+                    </Table>
                 </Card>
                 <Title className='mb-2'>
                     Tabs 组件 不使用内容

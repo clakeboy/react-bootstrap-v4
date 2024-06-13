@@ -139,7 +139,7 @@ export class Table extends React.Component<Props, State> {
         this.beforeHoldWidth = 0;
         this.afterHoldWidth = 0;
 
-        this.initTableWidth();
+        this.initTableWidth(this.props.children);
 
         this.domId = 'table-' + common.RandomString(16);
         if (this.props.id) {
@@ -310,6 +310,11 @@ export class Table extends React.Component<Props, State> {
         if (nextProps.loading !== this.props.loading) {
             return true
         }
+        if (nextProps.children !== this.props.children) {
+            this.headers = []
+            this.initTableWidth(nextProps.children)
+            return true
+        }
         return nextState.tree !== this.state.tree;
     }
 
@@ -323,14 +328,14 @@ export class Table extends React.Component<Props, State> {
         return treeData
     }
 
-    initTableWidth() {
+    initTableWidth(children:any) {
         // if (this.props.width) {
         this.width = 0;
         this.beforeHoldWidth = 0;
         this.afterHoldWidth = 0;
         const reg = /(\d+)(px|rem|cm|mm|pt)$/;
         let unit = 0;
-        React.Children.map(this.props.children, (item) => {
+        React.Children.map(children, (item) => {
             if (item.type === TableHeader) {
                 if (item.props.hide) {
                     return

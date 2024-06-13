@@ -155,7 +155,7 @@ class TestModal extends React.PureComponent {
             "id"             : 1,
             "task_name"      : "测试任务",
             "time_rule"      : "0 * * * * *",
-            "once"           : true,
+            "once"           : '{"birthday":"1992-01-08","gender":0,"ident_no":"412721199201083017","ident_type":0,"is_social_insurance":0,"name":"李京恒","phone":"17623094707","relationship":0}	1	0	0',
             "is_execute"     : true,
             "disable"        : false,
             "notify_url"     : "http://localhost:9803",
@@ -305,6 +305,7 @@ class TestModal extends React.PureComponent {
                         <Table.Header text='时间规则' field='time_rule'/>
                         <Table.Header text='执行一次' field='once' onFormat={val => {
                             return val ? <span className="badge bg-success">是</span> : '否';
+                            // return val
                         }}/>
                         <Table.Header text='通知次数' field='notify_number'/>
                         <Table.Header text='已通知次数' field='notified_number'/>
@@ -329,7 +330,8 @@ class TestModal extends React.PureComponent {
                             <Table.Header text='任务名称' field='task_name' width='150px' beforeHold tree/>
                             <Table.Header text='时间规则' field='time_rule' width='150px'/>
                             <Table.Header text='执行一次' field='once' width='150px' onFormat={val => {
-                                return val ? <span className="badge badge-success">是</span> : '否';
+                                // return val ? <span className="badge badge-success">是</span> : '否';
+                                return val
                             }}/>
                             <Table.Header text='通知次数' field='notify_number' width='150px'/>
                             <Table.Header text='已通知次数' field='notified_number' width='150px'/>
@@ -350,7 +352,7 @@ class TestModal extends React.PureComponent {
                 </Card>
                 <Card header='测试动态表头'>
                     <Button onClick={()=>{
-                        this.setState({headers:['task_name_eng','task_name','time_rule']})
+                        this.setState({headers:['task_name_eng','task_name','time_rule'],data:this.state.data})
                     }}>测试加载</Button>
                 <Table striped={true} tree headerTheme={Theme.primary} bordered sm data={this.state.data} onClickTree={(row,callback)=>{
                         this.loadChild(row,callback);

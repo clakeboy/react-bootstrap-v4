@@ -620,6 +620,7 @@ export class Table extends React.Component<Props, State> {
         }
         if (this.props.height) {
             base.overflow = 'hidden'
+            base.height = this.props.height;
         }
         return common.extend(base, this.props.style)
     }

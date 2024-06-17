@@ -195,6 +195,14 @@ export class Tree extends React.PureComponent<Props,State> {
         return classNames(base,this.props.className);
     }
 
+    getStyles() {
+        const base:any = {};
+        if (this.props.width) {
+            base.width = this.props.width;
+        }
+        return base;
+    }
+
     drawLines(item:any) {
         if (item.dataset?.done === 'true') return
         let path = "M 4 0 "
@@ -275,7 +283,7 @@ export class Tree extends React.PureComponent<Props,State> {
 
     render() {
         return (
-            <div ref={(c:any)=>this.mainDom = c} className={this.getClasses()}>
+            <div ref={(c:any)=>this.mainDom = c} className={this.getClasses()} style={this.getStyles()}>
                 {this.renderItem(this.state.data,null,0,0)}
             </div>
         );

@@ -92,6 +92,7 @@ export class Table extends React.Component<Props, State> {
     afterHoldWidth: number
     domId: string
     mainDom: HTMLDivElement
+    rootDom: HTMLDivElement
     stickyDom: HTMLElement
     tableHeader?: HTMLElement
     afterHeader?: HTMLElement
@@ -689,6 +690,7 @@ export class Table extends React.Component<Props, State> {
 
     setHeight(height: string) {
         this.mainDom.style.height = height;
+        this.rootDom.style.height = height;
     }
 
     render() {
@@ -699,7 +701,7 @@ export class Table extends React.Component<Props, State> {
         divClass = classNames(divClass, this.props.className)
         this.renderCheckes = [];
         return (
-            <div className={divClass} id={this.domId + '_main'} style={this.getMainStyle()}>
+            <div ref={(c: any) => this.rootDom = c} className={divClass} id={this.domId + '_main'} style={this.getMainStyle()}>
                 <div ref={(c: any) => this.mainDom = c} id={this.domId} className={this.getMainClass()} style={this.getStyles()}>
                     {this.state.refresh ? (
                         <Button className='ck-table-refresh-btn' icon='sync-alt' onClick={this.props.onRefresh} size="sm" theme={Theme.dark}>

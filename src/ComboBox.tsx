@@ -26,7 +26,7 @@ interface Props extends ComponentProps {
     sm?: boolean
     multi?: boolean
     multiDef?: any
-    onChange?: ()=>void
+    onChange?: (val:any,row:any,obj?:any)=>void
     //filter column exp: ['name','age'] or [{field:'name',width:'100px'},{field:'age',width:'100px'}]
     filterColumns?: any
     noSearch?: boolean

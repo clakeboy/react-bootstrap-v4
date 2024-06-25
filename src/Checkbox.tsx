@@ -16,7 +16,7 @@ interface State {
   checked: boolean;
 }
 
-export class Checkbox extends React.PureComponent<Props, State> {
+export class Checkbox extends React.Component<Props, State> {
 
   static defaultProps = {
     inline: false,
@@ -107,10 +107,14 @@ export class Checkbox extends React.PureComponent<Props, State> {
    *********************/
   render() {
     // console.log('render Checkbox');
+    const inProps:Props = {...this.props}
+    delete inProps.absolute
+    delete inProps.inline
+    delete inProps.half
     return (
       <div className={this.getClasses()} style={this.getStyles()}>
         <input
-          {...(this.props as any)}
+          {...(inProps as any)}
           onChange={this.changeHandler}
           checked={this.state.checked}
           className="form-check-input"

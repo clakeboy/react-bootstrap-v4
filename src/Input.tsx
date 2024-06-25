@@ -610,6 +610,15 @@ export class Input extends React.Component<Props, State> {
     if (this.props.multi) {
       return this.renderMulti();
     }
+    const inputProps:Props = {...this.props}
+    delete inputProps.absolute
+    delete inputProps.disableClear
+    delete inputProps.calendar
+    delete inputProps.plaintext
+    delete inputProps.onDblClick
+    delete inputProps.calendarTime
+    delete inputProps.calendarFormat
+    delete inputProps.comboData
     return (
       <div ref={(c:any)=>{this.mainDom=c}}
         id={this.domId + '-main'}
@@ -620,7 +629,7 @@ export class Input extends React.Component<Props, State> {
         {this.renderDisableMask()}
         <input
           type="text"
-          {...this.props}
+          {...inputProps}
           size={undefined}
           ref={(c: any) => (this.input = c)}
           onBlur={this.blurHandler}

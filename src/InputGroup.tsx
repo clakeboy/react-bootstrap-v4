@@ -17,11 +17,11 @@ interface State {
     disabled: boolean
 }
 
-export class InputGroup extends React.PureComponent<Props,State> {
+export class InputGroup extends React.Component<Props,State> {
 
     static defaultProps = {
         label      : "",
-        data       : null,
+        data       : undefined,
         size       : "",
         summary    : '',
         disabled:false
@@ -116,11 +116,14 @@ export class InputGroup extends React.PureComponent<Props,State> {
         //merge class name
         let cls_name = "input-group";
         cls_name     = classNames(cls_name, size.main, this.props.className);
-
+        const inProps:Props = {...this.props}
+        delete inProps.absolute
+        delete inProps.inline
+        delete inProps.half
         return (
             <div className={cls_name} style={def_style}>
                 <div className="input-group-text">{this.state.label}</div>
-                <input type="text" {...this.props} size={undefined} onChange={this.changeHandler} value={this.state.value} className="form-control"/>
+                <input type="text" {...inProps} size={undefined} onChange={this.changeHandler} value={this.state.value} className="form-control"/>
                 {this.renderSummary()}
             </div>
         )

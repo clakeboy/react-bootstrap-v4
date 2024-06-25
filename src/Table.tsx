@@ -710,7 +710,7 @@ export class Table extends React.Component<Props, State> {
                     <table ref={(c: any) => this.tableBody = c} id={this.domId + '_body'} className={this.getClasses()} style={this.getTableStyles()}>
                         {this.props.width ? this.renderCol() : null}
                         {this.props.header ? this.renderHeader() : null}
-                        <tbody>
+                        <tbody key={"main"}>
                             {this.renderBody(this.beforeFields.concat(this.afterFields), 'main')}
                         </tbody>
                     </table>
@@ -846,8 +846,8 @@ export class Table extends React.Component<Props, State> {
             let columnCount = React.Children.count(this.props.children);
             if (this.props.select) columnCount += 1;
             if (this.props.serialNumber) columnCount += 1;
-            return <tr>
-                <td align="center" colSpan={columnCount}>{this.props.emptyText}</td>
+            return <tr key={0}>
+                <td key={0} align="center" colSpan={columnCount}>{this.props.emptyText}</td>
             </tr>;
         }
 
@@ -911,7 +911,7 @@ export class Table extends React.Component<Props, State> {
         }
         classString += this.state.selectRows[i] ? ' ck-table-selected' : '';
         return (
-            <>
+            <React.Fragment key={i}>
                 <tr key={i} onContextMenu={(e) => {
                     if (!this.mainMenu) return;
                     e.preventDefault();
@@ -955,7 +955,7 @@ export class Table extends React.Component<Props, State> {
                             if (parentRow) {
                                 parent = [];
                                 for (let i = 0; i < indent; i++) {
-                                    parent.push(<span className='me-4' />)
+                                    parent.push(<span key={i} className='me-4' />)
                                 }
                             }
                             tree = <Icon data-open={tree_status} onClick={(e: React.MouseEvent) => {
@@ -1014,7 +1014,7 @@ export class Table extends React.Component<Props, State> {
                     })}
                 </tr>
                 {this.props.tree ? this.renderTreeRow(row, i, indent + 1, filter, filter_type) : null}
-            </>
+            </React.Fragment>
         );
     }
 

@@ -89,9 +89,12 @@ export class Radio extends React.Component<Props,State> {
     };
 
     render() {
+        const inProps:Props = {...this.props}
+        delete inProps.absolute
+        delete inProps.inline
         return (
             <div className={this.getClasses()} style={this.getStyles()}>
-                <input {...this.props} size={undefined}
+                <input {...inProps} size={undefined}
                     onChange={this.changeHandler}
                     className={this.inputClasses()}
                     type="radio"

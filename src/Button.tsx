@@ -117,8 +117,12 @@ export class Button extends React.PureComponent<Props,State> {
     };
 
     render() {
+        const btnProps = {...this.props}
+        delete btnProps.outline
+        delete btnProps.block
+        delete btnProps.loading
         return (
-            <button {...this.props} {...this.renderTip()} id={this.domId} disabled={this.props.disabled} onClick={this.clickHandler} className={this.getClasses()} style={this.getStyles()} title={this.props.tip}>
+            <button {...btnProps} {...this.renderTip()} id={this.domId} disabled={this.props.disabled} onClick={this.clickHandler} className={this.getClasses()} style={this.getStyles()} title={this.props.tip}>
                 {this.renderIcon()}{this.props.children}
             </button>
         );

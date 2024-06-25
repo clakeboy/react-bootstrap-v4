@@ -17,7 +17,7 @@ interface State {
     value: any
     data: any[]
 }
-export class Select extends React.PureComponent<Props,State> {
+export class Select extends React.Component<Props,State> {
     static defaultProps = {
         data: [],
         label: ''

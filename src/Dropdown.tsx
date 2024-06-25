@@ -163,7 +163,7 @@ export class Dropdown extends React.PureComponent<Props,State> {
             if (!rowList || !(rowList instanceof Array)) {
                 continue
             }
-            const rowDom = <div className='px-2 d-flex d-inline mt-1'>
+            const rowDom = <div key={row} className='px-2 d-flex d-inline mt-1'>
                 {rowList.map((item,i)=>{
                     return <button key={i} className='flex-fill bd-highlight border' style={{backgroundColor:item,height:'24px'}} data-value={item} onClick={this.selectHandler}/>
                 })}

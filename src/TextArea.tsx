@@ -403,7 +403,12 @@ export class TextArea extends React.Component<Props,State> {
         if (this.props.height) {
             style.height = this.props.height;
         }
-        return <textarea ref={(c:any) => this.input = c} {...this.props} style={style} onChange={this.changeHandler} value={this.state.value ?? ''} className={this.getInputClasses()} id={this.domId} />
+        const inputProps:Props = {...this.props}
+        delete inputProps.absolute
+        delete inputProps.htmlBar
+        delete inputProps.plaintext
+        delete inputProps.htmlMode
+        return <textarea ref={(c:any) => this.input = c} {...inputProps} style={style} onChange={this.changeHandler} value={this.state.value ?? ''} className={this.getInputClasses()} id={this.domId} />
     }
 
     renderHtmlEdit() {
@@ -480,6 +485,7 @@ export class TextArea extends React.Component<Props,State> {
                 {/*    console.log(document.queryCommandState('fontSize'));*/}
                 {/*    console.log(document.queryCommandValue('fontSize'));*/}
                 {/*}}/>*/}
+                
             </ButtonGroup>
         </div>
     }

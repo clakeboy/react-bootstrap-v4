@@ -143,9 +143,13 @@ export class CCheckbox extends React.Component<Props, State> {
     };
 
     render() {
+        const inProps:Props = {...this.props}
+        delete inProps.absolute
+        delete inProps.inline
+        delete inProps.half
         return (
             <div
-                {...(this.props as any)}
+                {...(inProps as any)}
                 className={this.getClasses()}
                 style={this.getStyles()}
                 onKeyUp={this.keyUpHandler}

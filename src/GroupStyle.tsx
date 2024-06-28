@@ -16,7 +16,7 @@ interface Props extends React.ComponentProps<any>{
 class GroupStyleContent extends React.Component<any, any> {
     render() {
         return <div className="input-group">
-                <div className={'custom custom-right bg-white'}>
+                <div className='custom custom-right bg-body'>
                     {this.props.children}
                 </div>
         </div>;

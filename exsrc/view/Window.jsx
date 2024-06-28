@@ -83,8 +83,8 @@ class Window extends React.Component {
         document.oncontextmenu=(e)=>{
             e.preventDefault();
             this.mainMenu.show({evt:e,type:'mouse',data:'',close:()=>{
-                    console.log("close");
-                }});
+                console.log("close");
+            }});
         }
         this.testSvg()
     }

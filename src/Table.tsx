@@ -336,6 +336,9 @@ export class Table extends React.Component<Props, State> {
         const reg = /(\d+)(px|rem|cm|mm|pt)$/;
         let unit = 0;
         React.Children.map(children, (item) => {
+            if(!item) {
+                return
+            }
             if (item.type === TableHeader) {
                 if (item.props.hide) {
                     return
@@ -384,6 +387,9 @@ export class Table extends React.Component<Props, State> {
     initTableHeaderRow(row: any) {
         const headerRow: any[] = [];
         React.Children.map(row.props.children, (item) => {
+            if(!item) {
+                return
+            }
             if (item.type === TableHeader) {
                 headerRow.push(item)
             }

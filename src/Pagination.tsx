@@ -3,7 +3,7 @@ import classNames from 'classnames/bind';
 import Icon from './Icon';
 import CDropdown from "./CDropdown";
 import { ComponentProps } from './components/common';
-
+import './css/Pagination.less';
 interface Props extends ComponentProps {
     current?: number
     count?: number
@@ -154,13 +154,13 @@ export class Pagination extends React.PureComponent<Props,State> {
                     <li className="page-item disabled">
                         {this.renderInfo()}
                     </li>
-                    <li className="page-item"><a className="page-link" href="javascript://" onClick={this.clickHandler('first')}><Icon icon='step-backward'/></a></li>
-                    <li className="page-item"><a className="page-link" href="javascript://" onClick={this.clickHandler('prev')}><Icon icon='angle-double-left'/></a></li>
+                    <li className="page-item"><a className="page-link" onClick={this.clickHandler('first')}><Icon icon='step-backward'/></a></li>
+                    <li className="page-item"><a className="page-link" onClick={this.clickHandler('prev')}><Icon icon='angle-double-left'/></a></li>
                     {this.is_after?this.renderMore(this.is_after):null}
                     {this.renderPages()}
                     {this.is_more?this.renderMore(this.is_more):null}
-                    <li className="page-item"><a className="page-link" href="javascript://" onClick={this.clickHandler('next')}><Icon icon='angle-double-right'/></a></li>
-                    <li className="page-item"><a className="page-link" href="javascript://" onClick={this.clickHandler('last')}><Icon icon='step-forward'/></a></li>
+                    <li className="page-item"><a className="page-link" onClick={this.clickHandler('next')}><Icon icon='angle-double-right'/></a></li>
+                    <li className="page-item"><a className="page-link" onClick={this.clickHandler('last')}><Icon icon='step-forward'/></a></li>
                 </ul>
             </nav>
         );
@@ -181,7 +181,7 @@ export class Pagination extends React.PureComponent<Props,State> {
 
     renderMore(page:any) {
         return (
-            <li className="page-item"><a className="page-link" href="javascript://" onClick={this.clickHandler(page)}>...</a></li>
+            <li className="page-item"><a className="page-link" onClick={this.clickHandler(page)}>...</a></li>
         )
     }
 
@@ -189,7 +189,7 @@ export class Pagination extends React.PureComponent<Props,State> {
         return this.state.data.map((v,idx)=>{
             return (
                 <li key={idx} className={this.current === v?"page-item active":"page-item"}>
-                    {this.current === v?<a className="page-link" href="javascript://" onClick={this.clickHandler('stop')}>{v}</a>:<a className="page-link" href="javascript://" onClick={this.clickHandler(v.toString())}>{v}</a>}
+                    {this.current === v?<a className="page-link" onClick={this.clickHandler('stop')}>{v}</a>:<a className="page-link" onClick={this.clickHandler(v.toString())}>{v}</a>}
                 </li>
             )
         });

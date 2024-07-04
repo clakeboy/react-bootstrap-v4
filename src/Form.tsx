@@ -53,7 +53,7 @@ export class Form extends React.PureComponent<Props,any> {
     check() {
         let valid = true
         map(this.components,(item:any)=>{
-            if (typeof item.check === 'function') {
+            if (item && typeof item.check === 'function') {
                 if (!item.check()) {
                     valid = false
                 }

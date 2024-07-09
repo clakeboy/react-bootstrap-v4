@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames/bind';
 import Table from './Table';
 import TableHeader from './TableHeader';
-import {map} from './Common';
+import Common, {map} from './Common';
 import "./css/Combo.less";
 import Load from "./Load";
 import common from "./Common";
@@ -54,6 +54,7 @@ export class Combo extends React.Component<ComboProps,State> {
     conDom:HTMLElement
     currentSelect?:number
     filterTime?:any
+    isMobile:boolean
     constructor(props:any) {
         super(props);
         this.isRemote = !!this.props.onSearch;
@@ -64,6 +65,7 @@ export class Combo extends React.Component<ComboProps,State> {
 
         this.search = this.props.search??'';
         this.isClose = true;
+        this.isMobile = Common.Version().mobile;
     }
 
     componentDidMount() {
@@ -72,10 +74,13 @@ export class Combo extends React.Component<ComboProps,State> {
         //         this.table.setSelectRows(key,val);
         //     });
         // }
+        if (this.isMobile) {
+            this.mainDom.addEventListener("click",this.hide)
+        }
+        
     }
 
     componentWillUnmount() {
-
         window.removeEventListener('mousedown',this.hide,false);
         if (this.parentDom) {
             this.parentDom.removeEventListener('keydown',this.keyDownHandler,false);
@@ -139,6 +144,7 @@ export class Combo extends React.Component<ComboProps,State> {
             this.props.onShow();
         }
         this.isClose = false;
+        
     }
 
     checkShow = ()=> {
@@ -253,6 +259,9 @@ export class Combo extends React.Component<ComboProps,State> {
     }
 
     fixPosition() {
+        if (this.isMobile) {
+            return
+        }
         const scrollParent = common.hasScrolledParent(this.parentDom) ?? document.documentElement;
         const position = common.GetDomXY(this.parentDom,null);
         if (position.top + this.parentDom.clientHeight + this.mainDom.offsetHeight >
@@ -408,6 +417,11 @@ export class Combo extends React.Component<ComboProps,State> {
             base = classNames(base,'ck-combo-sm','ck-combo-up ck-combo-up-sm');
         } else {
             base = classNames(base,'ck-combo-up');
+        }
+
+        //mobile show
+        if (this.isMobile) {
+            base = classNames(base,'ck-combo-mobile');
         }
 
         return classNames(base,this.props.className);

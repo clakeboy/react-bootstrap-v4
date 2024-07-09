@@ -12,6 +12,7 @@ import HScroll from "./HScroll";
 import Menu from "./Menu";
 import { AnyObject, ComponentProps, StrObject, Theme } from './components/common';
 import Load from './Load';
+import Common from './Common';
 
 interface Props extends ComponentProps {
     theme?: Theme
@@ -154,13 +155,15 @@ export class Table extends React.Component<Props, State> {
         this.syncRowsHeight();
         this.holdShow();
         this.sticky();
+        this.touchScrollHandler();
     }
 
     componentWillUnmount() {
         window.removeEventListener('resize', this.holdShow, false);
         this.unSticky();
+        this.unTouchScrollHandler();
     }
-
+    //表头随页面滚动自动浮动到顶部
     sticky() {
         if (!this.props.sticky) return
         const parentScroll = hasScrolledParent(this.mainDom)
@@ -672,6 +675,52 @@ export class Table extends React.Component<Props, State> {
         }
         this.holdShadow();
     };
+
+    touchStartX: number;
+    touchStartY: number;
+    touchScrollX: number;
+    touchScrollY: number;
+
+    touchStartHandler = (e: TouchEvent) => {
+        if (e.touches.length === 1) {
+            const touch = e.touches[0];
+            this.touchStartX = touch.pageX;
+            this.touchStartY = touch.pageY;
+            this.touchScrollX = this.mainDom.scrollLeft
+            this.touchScrollY = this.mainDom.scrollTop
+        }
+    }
+
+    touchMoveHandler = (e: TouchEvent) => {
+        if (e.touches.length === 1) {
+            e.preventDefault();
+            const touch = e.touches[0];
+            const diffX = this.touchStartX - touch.pageX;
+            const diffY = this.touchStartY - touch.pageY;
+            this.mainDom.scrollTo({
+                left: this.touchScrollX + diffX,
+                top: this.touchScrollY + diffY,
+                behavior: 'auto'
+            })
+            // this.mainDom.scrollLeft = this.touchScrollX + diffX;
+            // this.mainDom.scrollTop = this.touchScrollY + diffY;
+        }
+    }
+    //touch scroll event
+    touchScrollHandler() {
+        if (Common.Version().mobile) {
+            console.log(Common.Version().mobile);
+            this.mainDom.addEventListener('touchstart', this.touchStartHandler);
+            this.mainDom.addEventListener('touchmove', this.touchMoveHandler)
+        }
+    }
+
+    unTouchScrollHandler() {
+        if (Common.Version().mobile) {
+            this.mainDom.removeEventListener('touchstart', this.touchStartHandler);
+            this.mainDom.removeEventListener('touchmove', this.touchMoveHandler);
+        }
+    }
 
     holdShadow() {
         if (this.beforeBody) {

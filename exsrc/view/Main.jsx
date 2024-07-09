@@ -101,7 +101,10 @@ class Main extends React.Component {
                     }}>转到 Triangle</Button>
                     <Button className='me-1' onClick={e=>{
                         this.props.history.push('/test_edit',this.state);
-                    }}>转到 HTML Edit &gt;&lt;</Button>
+                    }}>转到 HTML Edit &gt;</Button>
+                    <Button className='me-1' onClick={e=>{
+                        this.props.history.push('/mobile',this.state);
+                    }}>转到移动端测试 &gt;</Button>
                 </Container>
                 <Container className='p-0 mb-1 comm-form' inline fluid>
                     <Input className='me-1' disabled size='sm' absolute x='50px' y='150px' width='100px' placeholder='用户名' onChange={this.changeHandler('user_name')} data={this.state.pageData.user_name}/>

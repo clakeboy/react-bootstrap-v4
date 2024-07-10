@@ -47,14 +47,13 @@ export class Button extends React.PureComponent<Props,State> {
             this.tip = new Tooltip(document.getElementById(this.domId) as HTMLElement,{'trigger':'hover'})
             // $('#'+this.domId).tooltip({'trigger':'hover'});
             // this.tip.toggle('hover')
-            
         }
     }
 
     componentWillUnmount() {
         if (this.props.tip) {
             // $('#'+this.domId).tooltip('dispose');
-            this.tip.dispose()
+            this.tip.hide()
         }
     }
 

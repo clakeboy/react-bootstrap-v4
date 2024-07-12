@@ -6,9 +6,10 @@ import Icon from './Icon';
 import classNames from 'classnames/bind';
 import './css/Alerts.less';
 import Load from "./Load";
+import { Theme } from './components/common';
 
 interface Props extends React.HTMLProps<any>{
-    theme: string
+    theme?: Theme | string
     autoHide: number
     width: string
 }
@@ -26,7 +27,7 @@ interface ShowOptions {
     content: string | JSX.Element
     autoHide?: number
     width?: string
-    theme?: string
+    theme?: Theme | string
     isClose?: boolean
 }
 
@@ -34,7 +35,7 @@ export class Alerts extends React.Component<Props, State> {
 
     timeout: any
 
-    public static defaultProps:any = {
+    public static defaultProps:Props = {
         theme: 'danger',
         autoHide: 3000,
         width: '50%'
@@ -48,7 +49,7 @@ export class Alerts extends React.Component<Props, State> {
             show:false,
             autoHide: this.props.autoHide,
             width: this.props.width,
-            theme: this.props.theme,
+            theme: typeof this.props.theme === 'string'?this.props.theme:Theme[this.props.theme??0],
             isClose: true
         }
 
@@ -68,11 +69,18 @@ export class Alerts extends React.Component<Props, State> {
     }
 
     show(opt:ShowOptions|JSX.Element|string) {
+        let theme:string|undefined
+        if ((opt as ShowOptions)?.theme) {
+            const opts = (opt as ShowOptions)
+            theme = typeof opts.theme === 'string'?opts.theme:Theme[opts.theme??0]
+        }
+        console.log(theme);
+        
         this.setState({
             content: (opt as ShowOptions)?.content ?? opt,
             autoHide: (opt as ShowOptions)?.autoHide ?? this.props.autoHide,
             width: (opt as ShowOptions)?.width ?? this.props.width,
-            theme: (opt as ShowOptions)?.theme ?? this.props.theme,
+            theme: theme ?? (typeof this.props.theme === 'string'?this.props.theme:Theme[this.props.theme??0]),
             isClose: (opt as ShowOptions)?.isClose ?? true,
             show: true
         },()=>{
@@ -109,7 +117,7 @@ export class Alerts extends React.Component<Props, State> {
     }
 
     getContentClasses(): string {
-        let base = 'main shadow d-flex';
+        let base = 'main shadow d-flex alert';
         base = classNames(base,`alert-${this.state.theme}`)
         if (this.state.show) {
             base = classNames(base, 'show')

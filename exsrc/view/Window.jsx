@@ -12,7 +12,8 @@ import {
     Alerts,
     Switch,
     CDropdown,
-    CCheckbox, Complex,Form,GroupStyle,ComboBox
+    CCheckbox, Complex,Form,GroupStyle,ComboBox,
+    Theme
 } from '../../src/index';
 import {Svg} from "../../src/components/Svg";
 import taskData from '../data/task.json';
@@ -201,6 +202,9 @@ class Window extends React.Component {
                     }}>Test Alerts</Menu.Item>
                     <Menu.Item field="alerts-load" onClick={()=>{
                         this.alert.loading('这是测试');
+                    }}>Test Alerts loading</Menu.Item>
+                    <Menu.Item field="alerts-load" onClick={()=>{
+                        this.alert.show({content:'正常',theme:Theme.light});
                     }}>Test Alerts loading</Menu.Item>
                     <Menu.Item step/>
                     <Menu.Item field="asc">Asc</Menu.Item>

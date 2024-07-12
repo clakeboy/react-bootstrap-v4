@@ -709,7 +709,6 @@ export class Table extends React.Component<Props, State> {
     //touch scroll event
     touchScrollHandler() {
         if (Common.Version().mobile) {
-            console.log(Common.Version().mobile);
             this.mainDom.addEventListener('touchstart', this.touchStartHandler);
             this.mainDom.addEventListener('touchmove', this.touchMoveHandler)
         }

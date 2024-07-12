@@ -26,11 +26,13 @@ export interface ComboProps extends ComponentProps {
     header?: boolean
     searchType?: string // 'start','include'
     triangular?: string
+    empty?: string //empty data show text
 }
 
 interface State {
     data: any
     loading: boolean
+    emptyText: string
 }
 
 export class Combo extends React.Component<ComboProps,State> {
@@ -60,7 +62,8 @@ export class Combo extends React.Component<ComboProps,State> {
         this.isRemote = !!this.props.onSearch;
         this.state = {
             data:this.props.data,
-            loading:this.isRemote
+            loading:this.isRemote,
+            emptyText:this.props.empty??'Not Data'
         };
 
         this.search = this.props.search??'';
@@ -138,7 +141,7 @@ export class Combo extends React.Component<ComboProps,State> {
         // document.querySelectorAll('.ck-combo').forEach((item)=>{
         //     item.classList.add('d-none');
         // });
-        this.mainDom.classList.remove("d-none");
+        this.mainDom.classList.remove("ck-none");
         this.filter(search??'');
         if (typeof this.props.onShow === 'function') {
             this.props.onShow();
@@ -286,7 +289,7 @@ export class Combo extends React.Component<ComboProps,State> {
 
     hide = () => {
         window.removeEventListener('mousedown',this.hide,false);
-        this.mainDom.classList.add("d-none");
+        this.mainDom.classList.add("ck-none");
         if (this.conDom) {
             this.conDom.style.overflowY = 'none';
             this.conDom.style.height = '100%';
@@ -408,7 +411,7 @@ export class Combo extends React.Component<ComboProps,State> {
     }
 
     getClasses() {
-        let base = 'ck-combo border d-none shadow';
+        let base = 'ck-combo border ck-none shadow';
 
         if (this.props.triangular) {
             base = classNames(base,'ck-calendar-'+this.props.triangular)
@@ -455,13 +458,13 @@ export class Combo extends React.Component<ComboProps,State> {
 
     renderLoading() {
         return (
-            <div className='ck-combo-nofound' style={{height:'100%'}}><Load/></div>
+            <div className='ck-combo-nofound'><Load/></div>
         )
     }
 
     renderNotResult() {
         return (
-            <div className='ck-combo-nofound' style={{height:'100%'}}>no data</div>
+            <div className='ck-combo-nofound'>{this.state.emptyText}</div>
         )
     }
     renderList() {

@@ -1,6 +1,6 @@
 {
   "name": "@clake/react-bootstrap4",
-  "version": "2.2.3",
+  "version": "2.2.4",
   "description": "react bootstrap v4",
   "main": "lib/index.js",
   "unpkg": "./dist/react-bootstrap-v4.js",
@@ -14,7 +14,7 @@
     "lint": "eslint --ext .ts --ext .tsx src/",
     "clean": "gulp clean",
     "start dev": "NODE_OPTIONS=--openssl-legacy-provider NODE_ENV=development gulp",
-    "start-win": "set NODE_ENV=development&gulp",
+    "start-win": "set NODE_OPTIONS=--openssl-legacy-provider&gulp",
     "build": "NODE_OPTIONS=--openssl-legacy-provider NODE_ENV=production gulp build",
     "build-win": "set NODE_ENV=production&gulp build",
     "build-publish": "NODE_OPTIONS=--openssl-legacy-provider gulp build-publish && tsc -d --declarationDir lib/types --declarationMap --emitDeclarationOnly",

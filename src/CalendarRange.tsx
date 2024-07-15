@@ -31,6 +31,7 @@ interface Props extends ComponentProps {
     textClass?: string
     width?: string
     data?: string
+    limit?: { lt?: any, gt?: any } //{lt:'',gt:''}
 }
 
 interface State {
@@ -231,7 +232,7 @@ export class CalendarRange extends React.PureComponent<Props,State> {
 
     renderCalendar() {
         return <div ref={c => this.calendar_panel = c as HTMLDivElement} className='c-panel d-flex p-1 shadow rounded d-none'>
-            <Calendar ref={(c:any) => this.minCalendar = c} target={this.inputMin} value={this.state.min} onSelect={(val:any) => {
+            <Calendar ref={(c:any) => this.minCalendar = c} limit={this.props.limit} target={this.inputMin} value={this.state.min} onSelect={(val:any) => {
                 let max = this.state.max;
                 const flag = this.maxCalendar.setFailRange(new Date(val), this.props.days as number);
                 if (!flag) {

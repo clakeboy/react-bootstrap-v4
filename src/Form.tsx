@@ -22,6 +22,7 @@ export class Form extends React.PureComponent<Props,any> {
     components:any
     events:any
     newColumn:any
+    lastValidItem:any
     constructor(props:any) {
         super(props);
         this.vals = {};
@@ -56,10 +57,15 @@ export class Form extends React.PureComponent<Props,any> {
             if (item && typeof item.check === 'function') {
                 if (!item.check()) {
                     valid = false
+                    this.lastValidItem = item
                 }
             }
         })
         return valid;
+    }
+
+    getLastErrorCheck() {
+        return this.lastValidItem;
     }
 
     setValues(vals:any) {

@@ -191,6 +191,21 @@ class Window extends React.Component {
                 <Card header='SVG 测试'>
                     <div id='svg_con'></div>
                 </Card>
+                <Card header='Card 测试'>
+                    <div className="row">
+                        <div className="col">
+                            <Card header='默认' divider={false}>
+                                asdfasdf
+                            </Card>
+                        </div>
+                        <div className="col">
+                            <Card header='text-dark bg-light' divider={false} className='text-dark bg-light'>
+                                asdfasdf
+                            </Card>
+                        </div>
+                        
+                    </div>
+                </Card>
                 <Menu ref={c=>this.mainMenu=c} onClick={(key)=>{
                     console.log(key);
                 }}>

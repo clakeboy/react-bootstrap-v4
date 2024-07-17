@@ -125,7 +125,6 @@ export class Input extends React.Component<Props, State> {
     this.input.addEventListener('blur', this.blurClearHandler, false);
     this.input.addEventListener('mousedown', stopEvent, false);
     if (this.props.validate && this.props.validate?.tip) {
-      
       this.tip = new Tooltip(document.getElementById(this.domId) as HTMLElement,{
         trigger: 'manual',
         template:
@@ -141,7 +140,7 @@ export class Input extends React.Component<Props, State> {
 
   componentWillUnmount() {
     if (this.props.validate && this.props.validate?.tip) {
-      this.tip.dispose()
+      this.tip.hide()
     }
   }
 
@@ -287,14 +286,18 @@ export class Input extends React.Component<Props, State> {
   validate(val: string) {
     if (this.props.validate) {
       const vali = this.props.validate;
-      let valid;
+      let valid:boolean;
       if (typeof vali.rule === 'function') {
         valid = vali.rule(val);
       } else {
         valid = (vali.rule as RegExp).test(val);
       }
       if (vali.tip) {
-        valid?this.tip.hide():this.tip.show();
+        if (valid) {
+          this.tip.hide()
+        } else {
+          this.tip.show()
+        }
         // $('#' + this.domId).tooltip(valid ? 'hide' : 'show');
       }
       return valid;

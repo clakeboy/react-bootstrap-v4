@@ -126,6 +126,9 @@ class Main extends React.Component {
                     <CalendarRange placeholderMin='开始时间' placeholderMax='结束时间' onChange={(min,max)=>{
                         console.log(min,max)
                     }}/>
+                    <CalendarRange placeholderMin='开始时间' placeholderMax='结束时间' limit={{gt:'2024-7-15'}} onChange={(min,max)=>{
+                        console.log(min,max)
+                    }}/>
                 </Container>
                 <Card className='mb-2' header='User Info'>
                     <div className='row'>

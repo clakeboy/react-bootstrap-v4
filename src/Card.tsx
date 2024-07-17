@@ -5,7 +5,7 @@ import './css/Card.less'
 import Scroll from "./Scroll";
 import common from "./Common";
 import HScroll from "./HScroll";
-import { ComponentProps, StrObject } from './components/common';
+import { ComponentProps, StrObject, Theme } from './components/common';
 
 interface Props extends ComponentProps {
     header?: string | any
@@ -47,6 +47,11 @@ export class Card extends React.PureComponent<Props,any> {
         }
         if (this.props.divider) {
             base = classNames(base,'ck-card-divider');
+        }
+        //apply style
+        if (this.props.theme !== undefined) {
+            const themeStr:string = typeof this.props.theme === 'string'?this.props.theme:Theme[this.props.theme??0]
+            base = classNames(base,'bg-'+themeStr);
         }
         return classNames(base,this.props.className);
     }

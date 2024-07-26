@@ -622,6 +622,11 @@ export class Input extends React.Component<Props, State> {
     delete inputProps.calendarTime
     delete inputProps.calendarFormat
     delete inputProps.comboData
+    let val:string = this.state.value ?? '';
+    if (this.calendar && val !== "") {
+      val = this.calendar.format();
+    }
+
     return (
       <div ref={(c:any)=>{this.mainDom=c}}
         id={this.domId + '-main'}
@@ -639,7 +644,7 @@ export class Input extends React.Component<Props, State> {
           onChange={this.changeHandler}
           onKeyUp={this.keyUpHandler}
           onDoubleClick={this.dblHandler}
-          value={this.state.value ?? ''}
+          value={val}
           className={this.getInputClasses('')}
           style={this.getInputStyle()}
           id={this.domId}

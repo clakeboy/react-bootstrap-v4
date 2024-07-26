@@ -82,6 +82,7 @@ export class CDropdown extends React.Component<Props,State> {
                    data={active??this.props.data}
                    size={this.props.size}
                    validate={this.props.validate}
+                   disabled={this.props.disabled}
             />
         );
     }

@@ -708,14 +708,14 @@ export class Table extends React.Component<Props, State> {
     }
     //touch scroll event
     touchScrollHandler() {
-        if (Common.Version().mobile) {
+        if ('ontouchstart' in document.documentElement) {
             this.mainDom.addEventListener('touchstart', this.touchStartHandler);
             this.mainDom.addEventListener('touchmove', this.touchMoveHandler)
         }
     }
 
     unTouchScrollHandler() {
-        if (Common.Version().mobile) {
+        if ('ontouchstart' in document.documentElement) {
             this.mainDom.removeEventListener('touchstart', this.touchStartHandler);
             this.mainDom.removeEventListener('touchmove', this.touchMoveHandler);
         }

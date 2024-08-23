@@ -12,7 +12,6 @@ import HScroll from "./HScroll";
 import Menu from "./Menu";
 import { AnyObject, ComponentProps, StrObject, Theme } from './components/common';
 import Load from './Load';
-import Common from './Common';
 
 interface Props extends ComponentProps {
     theme?: Theme

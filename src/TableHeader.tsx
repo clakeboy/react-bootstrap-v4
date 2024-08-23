@@ -1,4 +1,5 @@
 import React from 'react';
+import { Theme } from './components/common';
 
 interface Props {
     onFormat?: (val: any, row: any, idx:any) => void
@@ -12,6 +13,8 @@ interface Props {
     hide?: boolean
     tree?: boolean
     width?: string
+    bgColor?: Theme | string
+    color?: Theme | string
     onClickTree?: () => void
     //static head
     afterHold?: boolean

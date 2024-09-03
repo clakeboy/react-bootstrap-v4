@@ -500,7 +500,7 @@ export class Input extends React.Component<Props, State> {
           sm={this.props.size === 'xs'}
           triangular="up"
         />
-        {!this.props.disabled ? (
+        {(!this.props.disabled && !this.props.readOnly) ? (
           <div
             className={input_icon}
             onMouseDown={(e) => {

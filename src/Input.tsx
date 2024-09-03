@@ -624,6 +624,7 @@ export class Input extends React.Component<Props, State> {
     delete inputProps.comboData
     let val:string = this.state.value ?? '';
     if (this.calendar && val !== "") {
+      this.calendar.setCurrentDate(val)
       val = this.calendar.format();
     }
 

@@ -30,7 +30,7 @@ interface Props extends ComponentProps {
     //filter column exp: ['name','age'] or [{field:'name',width:'100px'},{field:'age',width:'100px'}]
     filterColumns?: any
     noSearch?: boolean
-    header: boolean
+    header?: boolean
     size?: string
     value?: string
     text?: string
@@ -43,7 +43,6 @@ export class ComboBox extends React.Component<Props,any> {
     static Column = ComboBoxColumn;
 
     static defaultProps = {
-        label:null,
         showRows:5,
         data:[],
         search:"",

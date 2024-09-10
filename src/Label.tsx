@@ -50,7 +50,7 @@ export class Label extends React.PureComponent<Props,State> {
     }
 
     getStyles() {
-        const base:StrObject = {};
+        let base:StrObject = {};
         if (this.props.width) {
             base.width = this.props.width;
             base.paddingLeft = '0';
@@ -73,6 +73,9 @@ export class Label extends React.PureComponent<Props,State> {
         }
         if (this.props.align) {
             base.textAlign = this.props.align;
+        }
+        if (typeof this.props.style === 'object') {
+            base = {...base,...this.props.style}
         }
         return base;
     }

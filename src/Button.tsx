@@ -3,7 +3,7 @@ import classNames from 'classnames/bind';
 import Icon from './Icon';
 import './css/Button.less';
 import common from "./Common";
-import {ComponentProps, Theme} from './components/common';
+import {ComponentProps, StrObject, Theme} from './components/common';
 import {Tooltip} from 'bootstrap'
 
 interface Props extends ComponentProps {
@@ -91,7 +91,7 @@ export class Button extends React.PureComponent<Props,State> {
     }
 
     getStyles() {
-        const base:{[propName:string]:string} = {};
+        let base:StrObject = {};
         if (this.props.width) {
             base.width = this.props.width;
         }
@@ -104,6 +104,10 @@ export class Button extends React.PureComponent<Props,State> {
             base.position = 'absolute';
             base.left     = this.props.x??'';
             base.top      = this.props.y??'';
+        }
+
+        if (typeof this.props.style === 'object') {
+            base = {...base,...this.props.style}
         }
 
         return base;

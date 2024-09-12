@@ -306,7 +306,7 @@ class Main extends React.Component {
                             <div className='mb-1'>大于 2023-7-1 可选</div>
                             <Calendar onSelect={(value)=>{
                                 this.setState({chose_date:value})
-                            }} limit={{gt:'2023-7-1'}}/>
+                            }} limit={{gt:'2023-7-1'}} timeBar/>
                         </div>
                     </div>
                 </Card>

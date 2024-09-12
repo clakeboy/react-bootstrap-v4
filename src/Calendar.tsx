@@ -679,7 +679,7 @@ export class Calendar extends React.PureComponent<Props, State, any> {
                             <div id={this.domId + '-m'} className='h-100'>
                                 {this.minute.map((item,i) => {
                                     if (item === this.state.minute) {
-                                        return <div className='ck-calendar-time-item active'>{item}</div>
+                                        return <div key={i} className='ck-calendar-time-item active'>{item}</div>
                                     }
                                     return <div key={i} className='ck-calendar-time-item' onClick={() => {
                                         this.setState({

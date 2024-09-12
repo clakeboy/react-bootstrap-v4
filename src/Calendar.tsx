@@ -165,7 +165,7 @@ export class Calendar extends React.PureComponent<Props, State, any> {
         this.unTouchScrollHandler()
     }
 
-    componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>, snapshot?: any): void {
+    componentDidUpdate(): void {
         if (this.state.time) {
             this.touchScrollHandler();
         }

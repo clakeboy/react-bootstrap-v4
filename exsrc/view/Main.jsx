@@ -298,7 +298,7 @@ class Main extends React.Component {
                         </div>
                         <div>
                             <div className='mb-1'>小于 2023-6-1 可选</div>
-                            <Calendar onSelect={(value)=>{
+                            <Calendar size='lg' onSelect={(value)=>{
                                 this.setState({chose_date:value})
                             }} limit={{lt:'2023-6-1'}}/>
                         </div>

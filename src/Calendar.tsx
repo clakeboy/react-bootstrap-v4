@@ -162,6 +162,13 @@ export class Calendar extends React.PureComponent<Props, State, any> {
             this.parentDom.removeEventListener('keypress', this.keyPressHandler, false);
             this.parentDom.removeEventListener('click', this.checkShow, false);
         }
+        this.unTouchScrollHandler()
+    }
+
+    componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>, snapshot?: any): void {
+        if (this.state.time) {
+            this.touchScrollHandler();
+        }
     }
 
     UNSAFE_componentWillReceiveProps(nextProp: Props) {
@@ -480,10 +487,82 @@ export class Calendar extends React.PureComponent<Props, State, any> {
             }
         }
         //small
-        if (this.props.sm) {
+        if (this.props.sm || this.props.size === 'sm') {
             base = classNames(base, 'ck-calendar-sm');
         }
+
+        if (this.props.size === 'lg') {
+            base = classNames(base, 'ck-calendar-lg');
+        }
         return classNames(base, this.props.className);
+    }
+
+
+    touchStartX: number;
+    touchStartY: number;
+    touchScrollX: number;
+    touchScrollY: number;
+
+    touchStartHandler = (e: TouchEvent) => {
+        if (e.touches.length === 1 && e.currentTarget) {
+            const touch = e.touches[0];
+            const dom = e.currentTarget as HTMLElement
+            this.touchStartX = touch.pageX;
+            this.touchStartY = touch.pageY;
+            this.touchScrollX = dom.scrollLeft
+            this.touchScrollY = dom.scrollTop
+        }
+    }
+
+    touchMoveHandler = (e: TouchEvent) => {
+        if (e.touches.length === 1 && e.currentTarget) {
+            e.preventDefault();
+            const dom = e.currentTarget as HTMLElement
+            const touch = e.touches[0];
+            const diffX = this.touchStartX - touch.pageX;
+            const diffY = this.touchStartY - touch.pageY;
+            dom.scrollTo({
+                left: this.touchScrollX + diffX,
+                top: this.touchScrollY + diffY,
+                behavior: 'auto'
+            })
+            // this.mainDom.scrollLeft = this.touchScrollX + diffX;
+            // this.mainDom.scrollTop = this.touchScrollY + diffY;
+        }
+    }
+    //touch scroll event
+    touchScrollHandler() {
+        if (!this.props.timeBar) return
+        if ('ontouchstart' in document.documentElement) {
+            const hdom = document.querySelector<HTMLDivElement>('#'+this.domId + '-h')
+            hdom?.addEventListener('touchstart', this.touchStartHandler)
+            hdom?.addEventListener('touchmove', this.touchMoveHandler)
+            const mdom = document.querySelector<HTMLDivElement>('#'+this.domId + '-m')
+            mdom?.addEventListener('touchstart', this.touchStartHandler)
+            mdom?.addEventListener('touchmove', this.touchMoveHandler)
+            const sdom = document.querySelector<HTMLDivElement>('#'+this.domId + '-s')
+            sdom?.addEventListener('touchstart', this.touchStartHandler)
+            sdom?.addEventListener('touchmove', this.touchMoveHandler)
+            // this.mainDom.addEventListener('touchstart', this.touchStartHandler);
+            // this.mainDom.addEventListener('touchmove', this.touchMoveHandler)
+        }
+    }
+
+    unTouchScrollHandler() {
+        if (!this.props.timeBar) return
+        if ('ontouchstart' in document.documentElement) {
+            const hdom = document.querySelector<HTMLDivElement>('#'+this.domId + '-h')
+            hdom?.removeEventListener('touchstart', this.touchStartHandler)
+            hdom?.removeEventListener('touchmove', this.touchMoveHandler)
+            const mdom = document.querySelector<HTMLDivElement>('#'+this.domId + '-m')
+            mdom?.removeEventListener('touchstart', this.touchStartHandler)
+            mdom?.removeEventListener('touchmove', this.touchMoveHandler)
+            const sdom = document.querySelector<HTMLDivElement>('#'+this.domId + '-s')
+            sdom?.removeEventListener('touchstart', this.touchStartHandler)
+            sdom?.removeEventListener('touchmove', this.touchMoveHandler)
+            // this.mainDom.addEventListener('touchstart', this.touchStartHandler);
+            // this.mainDom.addEventListener('touchmove', this.touchMoveHandler)
+        }
     }
 
     renderMonth() {

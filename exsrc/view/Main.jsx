@@ -27,7 +27,9 @@ class Main extends React.Component {
 
         this.state = {
             testChecked: false,
-            pageData:{},
+            pageData:{
+                sss_date:'2018-8-3 17:00'
+            },
             chose_date:'2018-8-3',
             dropdown:{
                 drop1:'JSON数据',
@@ -150,7 +152,7 @@ class Main extends React.Component {
                         <Input className='col-6' label='Calendar Unix Timestamp' data='1518427253' calendarFormat='unix' calendar disabled onDblClick={()=>{
                             alert('双击');
                         }}/>
-                        <Input className='col-6' size='sm' label='Calendar' calendarTime={true} calendarFormat='YYYY-MM-DD H:I:S' data={this.state.pageData.chose_date} onChange={this.changeHandler('chose_date')} calendar readOnly/>
+                        <Input className='col-6' size='sm' label='Calendar' data={this.state.pageData.sss_date} onChange={this.changeHandler('sss_date')} calendar={{format:"YYYY-MM-DD HH:II",time:true}} readOnly/>
                     </div>
                     <div className='row'>
                         <Input className='col-6' size='lg' label='Calendar' data={this.state.pageData.chose_date} onChange={this.changeHandler('chose_date')} calendar={{format:"MM-DD-YYYY"}} readOnly/>

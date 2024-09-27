@@ -1,7 +1,7 @@
 import React, { KeyboardEvent } from 'react';
 import classNames from 'classnames/bind';
 import common from './Common';
-import Calendar from './Calendar';
+import Calendar,{format} from './Calendar';
 import Combo, { ComboProps } from './Combo';
 import Icon from './Icon';
 import i18n from './components/i18n';
@@ -243,7 +243,7 @@ export class Input extends React.Component<Props, State> {
       base = classNames(base, 'ck-input-valid');
     }
 
-    if ((this.props.calendar || this.props.combo) && !this.state.disabled) {
+    if ((this.props.calendar || this.props.combo) && (!this.state.disabled && !this.props.readOnly)) {
       base = classNames(base, 'ck-input-icon');
     }
 
@@ -623,9 +623,8 @@ export class Input extends React.Component<Props, State> {
     delete inputProps.calendarFormat
     delete inputProps.comboData
     let val:string = this.state.value ?? '';
-    if (this.calendar && val !== "") {
-      this.calendar.setCurrentDate(val)
-      val = this.calendar.format();
+    if (this.props.calendar && val !== "") {
+      val = format(this.props.calendar?.format??this.props.calendarFormat??'', new Date(val))
     }
 
     return (

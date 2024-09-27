@@ -319,7 +319,7 @@ export class Calendar extends React.PureComponent<Props, State, any> {
     }
 
     choseDay(year:any, month:any, day:any) {
-        const date = new Date(year, month, day);
+        const date = new Date(year, month, day,parseInt(this.state.hour),parseInt(this.state.minute),parseInt(this.state.second));
         this.setCurrentDate(date);
         this.setState({
             days: this.fillDateList()
@@ -346,35 +346,9 @@ export class Calendar extends React.PureComponent<Props, State, any> {
     };
 
     format(formatStr?:string) {
-        const keys:{[propName:string]:any} = {
-            "unix": Math.round(this.show_date.valueOf() / 1000),
-            "YYYY": this.show_date.getFullYear().toString(),
-            "MM": common.strpad((this.show_date.getMonth() + 1).toString(), 2, "0"),
-            "DD": common.strpad(this.show_date.getDate().toString(), 2, "0"),
-            "yy": this.show_date.getFullYear().toString().substring(2),
-            "mm": (this.show_date.getMonth() + 1).toString(),
-            "dd": this.show_date.getDate().toString(),
-            // "H":common.strpad(this.show_date.getHours(),2,"0"),
-            "HH": this.state.hour,
-            // "h":this.show_date.getHours().toString(),
-            "h": this.state.hour,
-            // "I":common.strpad(this.show_date.getMinutes(),2,"0"),
-            "II": this.state.minute,
-            // "i":this.show_date.getMinutes().toString(),
-            "i": this.state.minute,
-            // "S":common.strpad(this.show_date.getSeconds(),2,"0"),
-            "SS": this.state.second,
-            // "s":this.show_date.getSeconds().toString(),
-            "s": this.state.second,
-        };
-        let time_str = formatStr ?? this.props.format as string;
-        let regx;
-        for (const s in keys) {
-            regx = new RegExp(s, "g");
-            time_str = time_str.replace(regx, keys[s]);
-            regx = null;
-        }
-        return time_str;
+        const time_str = formatStr ?? this.props.format as string;
+        
+        return format(time_str,this.show_date);
     }
 
     hide = (e?:Event) => {
@@ -748,6 +722,8 @@ export class Calendar extends React.PureComponent<Props, State, any> {
                                     return <div key={i} className='ck-calendar-time-item' onClick={() => {
                                         this.setState({
                                             hour: item
+                                        },()=>{
+                                            this.show_date.setHours(parseInt(item))
                                         });
                                     }}>{item}</div>
                                 })}
@@ -763,6 +739,8 @@ export class Calendar extends React.PureComponent<Props, State, any> {
                                     return <div key={i} className='ck-calendar-time-item' onClick={() => {
                                         this.setState({
                                             minute: item
+                                        },()=>{
+                                            this.show_date.setMinutes(parseInt(item))
                                         });
                                     }}>{item}</div>
                                 })}
@@ -778,6 +756,8 @@ export class Calendar extends React.PureComponent<Props, State, any> {
                                     return <div key={i} className='ck-calendar-time-item' onClick={() => {
                                         this.setState({
                                             second: item
+                                        },()=>{
+                                            this.show_date.setSeconds(parseInt(item))
                                         });
                                     }}>{item}</div>
                                 })}
@@ -801,6 +781,38 @@ export class Calendar extends React.PureComponent<Props, State, any> {
             return this.renderDays();
         }
     }
+}
+
+export function format(formatStr:string,date:Date) {
+    const keys:{[propName:string]:any} = {
+        "unix": Math.round(date.valueOf() / 1000),
+        "YYYY": date.getFullYear().toString(),
+        "MM": common.strpad((date.getMonth() + 1).toString(), 2, "0"),
+        "DD": common.strpad(date.getDate().toString(), 2, "0"),
+        "yy": date.getFullYear().toString().substring(2),
+        "mm": (date.getMonth() + 1).toString(),
+        "dd": date.getDate().toString(),
+        "HH":common.strpad(date.getHours().toString(),2,"0"),
+        // "HH": this.state.hour,
+        "h":date.getHours().toString(),
+        // "h": this.state.hour,
+        "II":common.strpad(date.getMinutes().toString(),2,"0"),
+        // "II": this.state.minute,
+        "i":date.getMinutes().toString(),
+        // "i": this.state.minute,
+        "SS":common.strpad(date.getSeconds().toString(),2,"0"),
+        // "SS": this.state.second,
+        "s":date.getSeconds().toString(),
+        // "s": this.state.second,
+    };
+    let time_str = formatStr
+    let regx;
+    for (const s in keys) {
+        regx = new RegExp(s, "g");
+        time_str = time_str.replace(regx, keys[s]);
+        regx = null;
+    }
+    return time_str;
 }
 
 export default Calendar;

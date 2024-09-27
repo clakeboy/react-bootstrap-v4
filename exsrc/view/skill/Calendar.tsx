@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import '../../css/calendar.less';
-import { Button, Container,Card, Calendar, Icon, Scroll } from '../../../src';
+import { Button, Container,Card, Calendar, Icon, Scroll, Input } from '../../../src';
 
 const yearList:any[] = []
 
@@ -10,9 +10,11 @@ for(let i = 0; i < 300; i++) {
 
 export default function TestCalendar(props:any) {
     const arr = [...new Array<string>(39).keys()];
+    const [date, setDate] = React.useState('')
     useEffect(()=>{
         console.log(props);
-    })
+        setDate('2018-8-3 17:00')
+    },[])
 
     const heads:string[] = [
         '日','一','二','三','四','五','六'
@@ -77,6 +79,9 @@ export default function TestCalendar(props:any) {
                         })}
                     </div>
                 </div>
+                <Input size='sm' label='Calendar' data={date} onChange={(val)=>{
+                    setDate(val)
+                }} calendar={{format:"YYYY-MM-DD HH:II",time:true}}/>
             </div>
             <div className="col">
                 <div className='calendar-v2-main'>

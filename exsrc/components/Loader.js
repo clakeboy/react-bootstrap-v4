@@ -18,7 +18,7 @@ export default class Loader extends React.Component {
         this.loadComponent(this.props.loadPath);
     }
 
-    componentWillReceiveProps(nextProp) {
+    UNSAFE_componentWillReceiveProps(nextProp) {
         if (this.props.loadPath !== nextProp.loadPath) {
             this.setState({
                 instance:null,

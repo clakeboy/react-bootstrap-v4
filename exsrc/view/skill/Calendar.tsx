@@ -1,19 +1,20 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef,useState } from 'react'
 import '../../css/calendar.less';
-import { Button, Container,Card, Calendar, Icon, Scroll, Input } from '../../../src';
-
+import { Button, Container,Card, Calendar, Icon, Scroll, Input,CKModal } from '../../../src';
+import TestCalendar from './TestCalendar'
 const yearList:any[] = []
 
 for(let i = 0; i < 300; i++) {
     yearList.push(2017+i)
 }
 
-export default function TestCalendar(props:any) {
+export default function TestMainCalendar(props:any) {
     const arr = [...new Array<string>(39).keys()];
-    const [date, setDate] = React.useState('')
+    const [date, setDate] = useState('2018-8-3 17:00:01')
+    const modal = useRef<CKModal>(null)
     useEffect(()=>{
         console.log(props);
-        setDate('2018-8-3 17:00')
+        setDate('2018-8-3 17:00:02')
     },[])
 
     const heads:string[] = [
@@ -81,7 +82,13 @@ export default function TestCalendar(props:any) {
                 </div>
                 <Input size='sm' label='Calendar' data={date} onChange={(val)=>{
                     setDate(val)
-                }} calendar={{format:"YYYY-MM-DD HH:II",time:true}}/>
+                }} calendar={{format:"YYYY-MM-DD HH:II:SS",time:true}}/>
+                <Button onClick={()=>{
+                    modal.current?.view({
+                        content: <TestCalendar date={date}/>,
+                        shadowClose:true,
+                    })
+                }}>点击</Button>
             </div>
             <div className="col">
                 <div className='calendar-v2-main'>
@@ -111,5 +118,6 @@ export default function TestCalendar(props:any) {
             <Calendar lang='en' timeBar/>
         </div>
         </Card>
+        <CKModal ref={modal}/>
     </Container>
 }

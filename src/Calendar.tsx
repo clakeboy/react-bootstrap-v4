@@ -790,6 +790,7 @@ export function format(formatStr:string,date:Date) {
         "MM": common.strpad((date.getMonth() + 1).toString(), 2, "0"),
         "M": (date.getMonth() + 1).toString(),
         "DD": common.strpad(date.getDate().toString(), 2, "0"),
+        "D": common.strpad(date.getDate().toString(), 2, "0"),
         "yy": date.getFullYear().toString().substring(2),
         "dd": date.getDate().toString(),
         "HH":common.strpad(date.getHours().toString(),2,"0"),

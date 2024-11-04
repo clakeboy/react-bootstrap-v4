@@ -783,38 +783,54 @@ export class Calendar extends React.PureComponent<Props, State, any> {
     }
 }
 
+const sortMonth:string[] = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sept',
+    'Oct',
+    'Nov',
+    'Dec'
+];
+
 export function format(formatStr:string,date:Date) {
-    const keys:{[propName:string]:any} = {
-        "unix": Math.round(date.valueOf() / 1000),
-        "YYYY": date.getFullYear().toString(),
-        "MM": common.strpad((date.getMonth() + 1).toString(), 2, "0"),
-        "M": (date.getMonth() + 1).toString(),
-        "DD": common.strpad(date.getDate().toString(), 2, "0"),
-        "D": common.strpad(date.getDate().toString(), 2, "0"),
-        "yy": date.getFullYear().toString().substring(2),
-        "dd": date.getDate().toString(),
-        "HH":common.strpad(date.getHours().toString(),2,"0"),
+    const keys:{key:string,value:any}[] = [
+        {key:"unix",value: Math.round(date.valueOf() / 1000)},
+        {key:"YYYY",value: date.getFullYear().toString()},
+        {key:"MMM",value: sortMonth[date.getMonth()]},
+        {key:"MM",value: common.strpad((date.getMonth() + 1).toString(), 2, "0")},
+        {key:"M",value: (date.getMonth() + 1).toString()},
+        {key:"DD",value: common.strpad(date.getDate().toString(), 2, "0")},
+        {key:"D",value: common.strpad(date.getDate().toString(), 2, "0")},
+        {key:"yy",value: date.getFullYear().toString().substring(2)},
+        {key:"dd",value: date.getDate().toString()},
+        {key:"HH",value:common.strpad(date.getHours().toString(),2,"0")},
         // "HH": this.state.hour,
-        "h":date.getHours().toString(),
+        {key:"h",value:date.getHours().toString()},
         // "h": this.state.hour,
-        "II":common.strpad(date.getMinutes().toString(),2,"0"),
-        "mm":common.strpad(date.getMinutes().toString(),2,"0"),
+        {key:"II",value:common.strpad(date.getMinutes().toString(),2,"0")},
+        {key:"mm",value:common.strpad(date.getMinutes().toString(),2,"0")},
         // "II": this.state.minute,
-        "i":date.getMinutes().toString(),
+        {key:"i",value:date.getMinutes().toString()},
         // "i": this.state.minute,
-        "SS": common.strpad(date.getSeconds().toString(),2,"0"),
-        "ss": common.strpad(date.getSeconds().toString(),2,"0"),
+        {key:"SS",value: common.strpad(date.getSeconds().toString(),2,"0")},
+        {key:"ss",value: common.strpad(date.getSeconds().toString(),2,"0")},
         // "SS": this.state.second,
-        "s":date.getSeconds().toString(),
+        {key:"s",value:date.getSeconds().toString()},
         // "s": this.state.second,
-    };
+    ];
     let time_str = formatStr
     let regx;
-    for (const s in keys) {
-        regx = new RegExp(s, "g");
-        time_str = time_str.replace(regx, keys[s]);
+    keys.forEach((item)=>{
+        regx = new RegExp(item.key, "g");
+        time_str = time_str.replace(regx, item.value);
         regx = null;
-    }
+    })
     return time_str;
 }
 

@@ -152,7 +152,7 @@ class Main extends React.Component {
                         <Input className='col-6' label='Calendar Unix Timestamp' data='1518427253' calendarFormat='unix' calendar disabled onDblClick={()=>{
                             alert('双击');
                         }}/>
-                        <Input className='col-6' size='sm' label='Calendar' data={this.state.pageData.sss_date} onChange={this.changeHandler('sss_date')} calendar={{format:"YYYY-MM-DD HH:II",time:true}} readOnly/>
+                        <Input className='col-6' size='sm' label='Calendar' data={this.state.pageData.sss_date} onChange={this.changeHandler('sss_date')} calendar={{format:"YYYY-MM-DD HH:mm",time:true}} readOnly/>
                     </div>
                     <div className='row'>
                         <Input className='col-6' size='lg' label='Calendar' data={this.state.pageData.chose_date} onChange={this.changeHandler('chose_date')} calendar={{format:"MMM DD,YYYY"}} readOnly/>

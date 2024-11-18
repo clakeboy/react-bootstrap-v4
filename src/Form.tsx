@@ -13,7 +13,7 @@ import RadioGroup from "./RadioGroup";
 import { ComponentProps } from './components/common';
 
 interface Props extends ComponentProps {
-    onChange?: (field:any,val?:any,row?:any,combo?:boolean)=>void
+    onChange?: (field:any,val?:any,row?:any,combo?:any,comboField?:any)=>void
 }
 
 export class Form extends React.PureComponent<Props,any> {
@@ -90,11 +90,11 @@ export class Form extends React.PureComponent<Props,any> {
         };
     }
 
-    comboChangeHandler(field:any) {
+    comboChangeHandler(field:any,searchField?:any) {
         return (val:any,row:any)=>{
             this.vals[field] = {text:val,value:row};
             if (typeof this.props.onChange === 'function') {
-                this.props.onChange(field,val,row,true);
+                this.props.onChange(field,val,row,'combo',searchField);
             }
             if (typeof this.events[field] === 'function') {
                 this.events[field](val,row);
@@ -224,7 +224,8 @@ export class Form extends React.PureComponent<Props,any> {
                 }
 
                 if (item.props.combo) {
-                    props.onChange = this.comboChangeHandler(field);
+                    item.props.onChange = this.comboChangeHandler(field,item.props.field);
+                    this.newColumn[field] = {text:'',value:'',text_key:item.props.field.text_key};
                 } else {
                     props.onChange = this.inputChangeHandler(field);
                 }

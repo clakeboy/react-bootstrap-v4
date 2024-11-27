@@ -401,21 +401,21 @@ class TestModal extends React.PureComponent {
                         }} data={this.state?.inputData?.task_name?.text}/>
                         <Button onClick={()=>{
                             let data = [{
-                                "id"             : 3,
-                                "task_name"      : "改变值1",
+                                "id"             : 0,
+                                "task_name"      : 0,
                                 "time_rule"      : "0 * * * * *",
                                 "once"           : true,
                                 "is_execute"     : true,
                                 "disable"        : false,
                                 "notify_url"     : "http://localhost:9803/notify",
-                                "notify_method"  : "GET",
+                                "notify_method"  : 0,
                                 "notify_data"    : "",
                                 "notify_number"  : 6,
                                 "notified_number": 6,
                                 "source"         : "System",
                                 "created_date"   : 1530864160
                             }, {
-                                "id"             : 2,
+                                "id"             : 1,
                                 "task_name"      : "测试改变值",
                                 "time_rule"      : "* */1 * * * *",
                                 "once"           : true,

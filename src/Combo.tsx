@@ -491,8 +491,8 @@ export class Combo extends React.Component<ComboProps,State> {
         )
     }
     filterFormat = (val:any)=>{
-        const con = (val||'').toString();
-        this.search = (this.search||'').toString();
+        const con = (val??'').toString();
+        this.search = (this.search??'').toString();
         const idx = con.toLowerCase().indexOf(this.search.toLowerCase());
         if (idx === -1) {
             return val;

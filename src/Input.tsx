@@ -51,6 +51,7 @@ interface Props extends ComponentProps {
   multi?: { height?: string }; //
   max?:any;
   min?: any;
+  underline?: boolean
 }
 
 interface State {
@@ -257,6 +258,10 @@ export class Input extends React.Component<Props, State> {
 
     if (this.props.multi) {
       base = classNames(base, `ck-input-multi`);
+    }
+
+    if (this.props.underline) {
+      base = classNames(base, 'ck-input-underline');
     }
 
     return classNames(base, this.props.textClass, append);

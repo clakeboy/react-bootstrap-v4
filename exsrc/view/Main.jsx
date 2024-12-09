@@ -134,7 +134,7 @@ class Main extends React.Component {
                 </Container>
                 <Card className='mb-2' header='User Info'>
                     <div className='row'>
-                        <Input className='col-6' label='Name' plaintext data='Clake'/>
+                        <Input className='col-6' label='Name' plaintext underline data='Clake'/>
                         <Input className='col-6' label='Last Name' readOnly data={this.state.pageData.last_name} onChange={this.changeHandler('last_name')} validate={{rule:/.+/,text:'请填写用户名',tip:true}}/>
                     </div>
                     <div className='row'>

@@ -124,6 +124,7 @@ export class Input extends React.Component<Props, State> {
     }
     this.input.addEventListener('focus', this.focusClearHandler, false);
     this.input.addEventListener('blur', this.blurClearHandler, false);
+    this.input.addEventListener('blur', this.blurHandler, false);
     this.input.addEventListener('mousedown', stopEvent, false);
     if (this.props.validate && this.props.validate?.tip) {
       this.tip = new Tooltip(document.getElementById(this.domId) as HTMLElement,{
@@ -328,7 +329,7 @@ export class Input extends React.Component<Props, State> {
     });
   };
 
-  blurHandler = (e: React.FocusEvent) => {
+  blurHandler = (e: FocusEvent) => {
     this.setState({
       validate: this.validate((e.target as HTMLInputElement).value),
     });
@@ -645,7 +646,6 @@ export class Input extends React.Component<Props, State> {
           {...inputProps}
           size={undefined}
           ref={(c: any) => (this.input = c)}
-          onBlur={this.blurHandler}
           onChange={this.changeHandler}
           onKeyUp={this.keyUpHandler}
           onDoubleClick={this.dblHandler}
@@ -670,7 +670,6 @@ export class Input extends React.Component<Props, State> {
         <textarea
           {...this.props}
           ref={(c: any) => (this.input = c)}
-          onBlur={this.blurHandler}
           onChange={this.changeHandler}
           onKeyUp={this.keyUpHandler}
           onDoubleClick={this.dblHandler}

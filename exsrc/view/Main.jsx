@@ -135,7 +135,9 @@ class Main extends React.Component {
                 <Card className='mb-2' header='User Info'>
                     <div className='row'>
                         <Input className='col-6' label='Name' plaintext underline data='Clake'/>
-                        <Input className='col-6' label='Last Name' readOnly data={this.state.pageData.last_name} onChange={this.changeHandler('last_name')} validate={{rule:/.+/,text:'请填写用户名',tip:true}}/>
+                        <Input className='col-6' label='Last Name' readOnly data={this.state.pageData.last_name} onBlur={(e)=>{
+                            console.log('blur',e);
+                        }} onChange={this.changeHandler('last_name')} validate={{rule:/.+/,text:'请填写用户名',tip:true}}/>
                     </div>
                     <div className='row'>
                         <Select className='col-6' label='City Object' data={this.dataList} defaultValue='3'/>

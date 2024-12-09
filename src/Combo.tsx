@@ -37,7 +37,7 @@ interface State {
 
 export class Combo extends React.Component<ComboProps,State> {
     static defaultProps = {
-        showRows:5,
+        showRows:8,
         data:[],
         search:"",
         multi:false,

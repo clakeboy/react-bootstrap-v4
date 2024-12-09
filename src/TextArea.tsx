@@ -16,7 +16,7 @@ interface Props extends ComponentProps {
     readOnly?: boolean
     placeholder?: string
     plaintext?: boolean
-    onChange?: (val: any, row: any, obj?: any) => void
+    onChange?: (val: any, obj: any, evt?: any) => void
     row?: number
     htmlMode?: boolean
     htmlBar?: boolean
@@ -202,7 +202,7 @@ export class TextArea extends React.Component<Props,State> {
             value: e.target.value
         });
         if (this.props.onChange && typeof this.props.onChange === 'function') {
-            this.props.onChange(e.target.value, this);
+            this.props.onChange(e.target.value, this, e);
         }
     };
 

@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames/bind';
 import common from './Common';
 import Button from "./Button";
-import { ComponentProps, Theme } from './components/common';
+import { ComponentProps, StrObject, Theme } from './components/common';
 import * as bootstrap from 'bootstrap'
 
 interface ValueProps {
@@ -23,6 +23,7 @@ interface Props extends ComponentProps {
     theme?: Theme
     icon?: string
     grid?: boolean
+    locked?: boolean
 }
 
 interface State {
@@ -69,12 +70,15 @@ export class Dropdown extends React.PureComponent<Props,State> {
     }
 
     selectHandler = (e:any) => {
-        this.setState({
+        const val = {
             text: e.target.textContent,
             value: e.target.dataset.value,
-        });
+        }
+        if (!this.props.locked) {
+            this.setState(val);
+        }
         if (this.props.onChange && typeof this.props.onChange === 'function') {
-            this.props.onChange(e.target.textContent,e.target.dataset.value);
+            this.props.onChange(val.text,val.value);
         }
     };
 
@@ -115,9 +119,19 @@ export class Dropdown extends React.PureComponent<Props,State> {
 
     getStyles() {
         //default style
-        const def_style = {
+        const def_style: StrObject = {
             "width": this.props.width + "px"
         };
+
+        if (this.props.absolute) {
+            def_style.position = 'absolute';
+        }
+        if (this.props.x) {
+            def_style.left = this.props.x;
+        }
+        if (this.props.y) {
+            def_style.top = this.props.y;
+        }
 
         return common.extend(def_style, this.props.style)
     }

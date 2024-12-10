@@ -115,6 +115,9 @@ class Main extends React.Component {
                     <InputGroup className='me-1' ref={c=>this.ing=c} width={200} label="测试" data="11111"/>
                     <Dropdown className='me-1' text={this.state.dropdown.drop1} data={this.dataList}/>
                     <Dropdown className='me-1' text={this.state.dropdown.drop2} data={this.dataArrList}/>
+                    <Dropdown className='me-1' theme={Theme.primary} size='sm' text={"不作改变"} data={this.dataList} onChange={(text,val)=>{
+                        console.log(text,val);
+                    }}/>
                     <Button onClick={()=>{
                         this.setState({
                             dropdown:{

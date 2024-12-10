@@ -643,6 +643,7 @@ export class Input extends React.Component<Props, State> {
         {this.renderDisableMask()}
         <input
           type="text"
+          autoComplete='off'
           {...inputProps}
           size={undefined}
           ref={(c: any) => (this.input = c)}

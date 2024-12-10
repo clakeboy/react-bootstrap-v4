@@ -202,6 +202,7 @@ export class Combo extends React.Component<ComboProps,State> {
     }
 
     moveItem(step=0) {
+        console.log(this.nodeList);
         if (!this.nodeList) {
             return
         }

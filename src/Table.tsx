@@ -63,10 +63,10 @@ export class Table extends React.Component<Props, State> {
     static Header = TableHeader;
     static HeaderRow = TableHeaderRow;
 
-    static defaultProps = {
+    static defaultProps:Props = {
         data: [],
         dataCount: 1,
-        select: true,
+        select: false,
         header: true,
         currentPage: 1,
         hover: true,
@@ -76,7 +76,8 @@ export class Table extends React.Component<Props, State> {
         emptyText: 'Not data',
         serialNumber: true,
         truncate: false,
-        headerTheme: Theme.light
+        headerTheme: Theme.light,
+        sticky: true,
     };
     treeOpens: AnyObject
     select_all: boolean

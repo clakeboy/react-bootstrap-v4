@@ -115,7 +115,7 @@ class Main extends React.Component {
                     <InputGroup className='me-1' ref={c=>this.ing=c} width={200} label="测试" data="11111"/>
                     <Dropdown className='me-1' text={this.state.dropdown.drop1} data={this.dataList}/>
                     <Dropdown className='me-1' text={this.state.dropdown.drop2} data={this.dataArrList}/>
-                    <Dropdown className='me-1' theme={Theme.primary} size='sm' text={"不作改变"} data={this.dataList} onChange={(text,val)=>{
+                    <Dropdown className='me-1' theme={Theme.primary} size='sm' locked={true} text={"不作改变"} data={this.dataList} onChange={(text,val)=>{
                         console.log(text,val);
                     }}/>
                     <Button onClick={()=>{
@@ -138,7 +138,7 @@ class Main extends React.Component {
                 <Card className='mb-2' header='User Info'>
                     <div className='row'>
                         <Input className='col-6' label='Name' plaintext underline data='Clake'/>
-                        <Input className='col-6' label='Last Name' readOnly data={this.state.pageData.last_name} onBlur={(e)=>{
+                        <Input className='col-6' label='Last Name' data={this.state.pageData.last_name} onBlur={(e)=>{
                             console.log('blur',e);
                         }} onChange={this.changeHandler('last_name')} validate={{rule:/.+/,text:'请填写用户名',tip:true}}/>
                     </div>

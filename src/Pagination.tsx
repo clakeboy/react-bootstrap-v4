@@ -13,6 +13,7 @@ interface Props extends ComponentProps {
     align?: string
     info?: any //任意显示
     numberList?: any[]
+    sticky?: boolean
 }
 
 interface State {
@@ -33,6 +34,7 @@ export class Pagination extends React.PureComponent<Props,State> {
             // {text:'显示150条',value:150}
         ],
         info:null,
+        sticky:true
     };
 
     show_pages:number
@@ -131,6 +133,10 @@ export class Pagination extends React.PureComponent<Props,State> {
 
         if (this.props.size) {
             base = classNames(base,`pagination-${this.props.size}`);
+        }
+
+        if (this.props.sticky) {
+            base = classNames(base,"pagination-sticky");
         }
 
         return base;

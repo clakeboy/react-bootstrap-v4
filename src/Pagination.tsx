@@ -135,17 +135,13 @@ export class Pagination extends React.PureComponent<Props,State> {
             base = classNames(base,`pagination-${this.props.size}`);
         }
 
-        if (this.props.sticky) {
-            base = classNames(base,"pagination-sticky");
-        }
-
         return base;
     }
 
     render() {
         return (
-            <nav className={this.getClasses()}>
-                <ul>
+            <nav className={this.props.sticky?'pagination-sticky':''}>
+                <ul className={this.getClasses()}>
                     {this.props.numberList && this.props.numberList.length > 0 ? <li>
                         <CDropdown className='me-1' size={this.props.size??''} text='下拉选择' onChange={(val,row)=>{
                             if (this.props.onSelect)

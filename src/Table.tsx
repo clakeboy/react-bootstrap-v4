@@ -76,7 +76,7 @@ export class Table extends React.Component<Props, State> {
         emptyText: 'Not data',
         serialNumber: true,
         truncate: false,
-        headerTheme: Theme.light,
+        headerTheme: Theme.primary,
         sticky: true,
     };
     treeOpens: AnyObject

@@ -144,8 +144,8 @@ export class Pagination extends React.PureComponent<Props,State> {
 
     render() {
         return (
-            <nav >
-                <ul className={this.getClasses()}>
+            <nav className={this.getClasses()}>
+                <ul>
                     {this.props.numberList && this.props.numberList.length > 0 ? <li>
                         <CDropdown className='me-1' size={this.props.size??''} text='下拉选择' onChange={(val,row)=>{
                             if (this.props.onSelect)

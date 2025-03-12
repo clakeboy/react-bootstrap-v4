@@ -218,7 +218,7 @@ export class CKModal extends React.Component<Props,State> {
         }
     };
 
-    alert(opt:Options|string,cb?:()=>void):void {
+    alert(opt:Options|any,cb?:()=>void):void {
         const opts:Options = typeof opt === 'object'? opt:{
             content: opt
         }
@@ -255,7 +255,10 @@ export class CKModal extends React.Component<Props,State> {
      * }
      * @param opt
      */
-    confirm(opts:Options,cb?:(flag:number)=>void) {
+    confirm(opt:Options|any,cb?:(flag:number)=>void) {
+        const opts:Options = typeof opt === 'object'? opt:{
+            content: opt
+        }
         this.callback = opts.callback||cb||null;
         this.modalType = ModalConfirm;
         this.setState({

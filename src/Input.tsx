@@ -281,8 +281,8 @@ export class Input extends React.Component<Props, State> {
     return common.extend(base, this.props.textStyle);
   }
 
-  check() {
-    const validate = this.validate(this.state.value);
+  check(flag?:boolean) {
+    const validate = flag??this.validate(this.state.value);
     this.setState({
       validate: validate,
     });

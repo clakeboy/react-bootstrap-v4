@@ -961,7 +961,7 @@ export class Table extends React.Component<Props, State> {
         const dynamic_tree = typeof this.props.onClickTree === 'function';
         let classString = this.props.onClick ? 'click-row' : ''
         if (this.props.sticky) {
-            classString += ' sticky-thead-row'    
+            // classString += ' sticky-thead-row'    
         }
         classString += this.state.selectRows[i] ? ' ck-table-selected' : '';
         return (

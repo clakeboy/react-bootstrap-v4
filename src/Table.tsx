@@ -882,7 +882,7 @@ export class Table extends React.Component<Props, State> {
                         }
                         return (
                             <th key={key} data-key={'head_' + key} style={style}>
-                                {item.props.onSort ? <a href='javascript://' data-sort={item.props.sort??undefined}
+                                {item.props.onSort ? <a className='sort' data-sort={item.props.sort??undefined}
                                     onClick={this.sortHandler(item.props.field, item.props.onSort)}>
                                     {item.props.text}{'\u0020'}
                                     <Icon icon={sort_icon} /></a> : item.props.text}

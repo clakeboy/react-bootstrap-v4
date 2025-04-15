@@ -158,9 +158,9 @@ export class Pagination extends React.PureComponent<Props,State> {
                     </li>
                     <li className="page-item"><a className="page-link" onClick={this.clickHandler('first')}><Icon icon='step-backward'/></a></li>
                     <li className="page-item"><a className="page-link" onClick={this.clickHandler('prev')}><Icon icon='angle-double-left'/></a></li>
-                    {this.is_after?this.renderMore(this.is_after):null}
+                    {this.is_after?this.renderMore(this.state.data[0]-1):null}
                     {this.renderPages()}
-                    {this.is_more?this.renderMore(this.is_more):null}
+                    {this.is_more?this.renderMore(Number(this.state.data.at(-1))+1):null}
                     <li className="page-item"><a className="page-link" onClick={this.clickHandler('next')}><Icon icon='angle-double-right'/></a></li>
                     <li className="page-item"><a className="page-link" onClick={this.clickHandler('last')}><Icon icon='step-forward'/></a></li>
                 </ul>

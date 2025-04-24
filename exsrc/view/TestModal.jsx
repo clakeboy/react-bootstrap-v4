@@ -301,7 +301,9 @@ class TestModal extends React.PureComponent {
                         this.loadChild(row,callback);
                     }}>
                         <Table.Header text='任务ID' field='id'/>
-                        <Table.Header text='任务名称' field='task_name' tree/>
+                        <Table.Header text='任务名称' field='task_name' tree={(row)=>{
+                            return row.task_name !== "测试任务"
+                        }}/>
                         <Table.Header text='时间规则' field='time_rule'/>
                         <Table.Header text='执行一次' field='once' onFormat={val => {
                             return val ? <span className="badge bg-success">是</span> : '否';

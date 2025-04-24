@@ -87,7 +87,7 @@ export class Table extends React.Component<Props, State> {
     afterFields: any[]
     beforeFields: any[]
     tableHeaderRows: any[]
-    headers: any[]
+    headers: TableHeader[]
     width: number
     beforeHoldWidth: number
     afterHoldWidth: number
@@ -986,7 +986,7 @@ export class Table extends React.Component<Props, State> {
                         //set style
                         const style = { ...this.props.columnStyle };
 
-                        style.textAlign = item.props.align || this.props.align;
+                        style.textAlign = (item.props.align || this.props.align) ?? '';
                         if (item.props.width) {
                             style.width = item.props.width;
                         }
@@ -1005,58 +1005,64 @@ export class Table extends React.Component<Props, State> {
 
                         //set tree
                         let tree, parent;
+
                         if (item.props.tree) {
+                            const is_tree = (typeof item.props.tree === "function")?item.props.tree(row):item.props.tree;
                             if (parentRow) {
                                 parent = [];
                                 for (let i = 0; i < indent; i++) {
                                     parent.push(<span key={i} className='me-4' />)
                                 }
                             }
-                            tree = <Icon data-open={tree_status} onClick={(e: React.MouseEvent) => {
-                                const target = e.currentTarget as HTMLElement;
-                                if (target.dataset.open === 'close') {
-                                    if (typeof this.props.onClickTree === 'function') {
-                                        this.props.onClickTree(row, (data: any) => {
-                                            if (!data) {
-                                                return
-                                            }
+                            if (!is_tree) {
+                                tree = <i className='me-1 far fa-plus-square opacity-0'/>
+                            } else {
+                                tree = <Icon data-open={tree_status} onClick={(e: React.MouseEvent) => {
+                                    const target = e.currentTarget as HTMLElement;
+                                    if (target.dataset.open === 'close') {
+                                        if (typeof this.props.onClickTree === 'function') {
+                                            this.props.onClickTree(row, (data: any) => {
+                                                if (!data) {
+                                                    return
+                                                }
+                                                const tree = Object.assign({}, this.state.tree);
+                                                tree[i] = data;
+                                                // this.state.tree = null;
+                                                this.setState({
+                                                    tree: tree
+                                                })
+                                            });
+                                        } else {
+                                            this.treeOpens[i] = 'open';
                                             const tree = Object.assign({}, this.state.tree);
-                                            tree[i] = data;
+                                            tree[i] = row.children;
                                             // this.state.tree = null;
                                             this.setState({
                                                 tree: tree
                                             })
-                                        });
+                                        }
+                                        target.dataset.open = 'open';
+                                        target.classList.remove('fa-plus-square');
+                                        target.classList.add('fa-minus-square');
                                     } else {
-                                        this.treeOpens[i] = 'open';
+                                        this.treeOpens[i] = 'close';
+                                        target.dataset.open = 'close';
+                                        target.classList.remove('fa-minus-square');
+                                        target.classList.add('fa-plus-square');
                                         const tree = Object.assign({}, this.state.tree);
-                                        tree[i] = row.children;
+                                        delete tree[i];
                                         // this.state.tree = null;
                                         this.setState({
                                             tree: tree
                                         })
                                     }
-                                    target.dataset.open = 'open';
-                                    target.classList.remove('fa-plus-square');
-                                    target.classList.add('fa-minus-square');
-                                } else {
-                                    this.treeOpens[i] = 'close';
-                                    target.dataset.open = 'close';
-                                    target.classList.remove('fa-minus-square');
-                                    target.classList.add('fa-plus-square');
-                                    const tree = Object.assign({}, this.state.tree);
-                                    delete tree[i];
-                                    // this.state.tree = null;
-                                    this.setState({
-                                        tree: tree
-                                    })
-                                }
-                            }} className='me-1 text-primary' icon={tree_status === 'open' ? 'minus-square' : 'plus-square'} iconType='regular' />
+                                }} className='me-1 text-primary' icon={tree_status === 'open' ? 'minus-square' : 'plus-square'} iconType='regular' />
+                            }
                         }
 
                         if (item.props.children) {
                             return (
-                                <td className={item.props.className} style={style} key={'col_' + key}>{parent}{tree}{React.cloneElement(item, {
+                                <td className={item.props.className} style={style} key={'col_' + key}>{parent}{tree}{React.cloneElement(item.props.children, {
                                     text: item.props.text,
                                     row: row,
                                     value: row[item.props.field]

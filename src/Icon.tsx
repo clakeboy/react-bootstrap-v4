@@ -79,7 +79,7 @@ export class Icon extends React.PureComponent<Props,State> {
 
     render() {
         return (
-            <i className={this.getClasses()} onClick={this.props.onClick}/>
+            <i {...this.props} className={this.getClasses()} onClick={this.props.onClick}/>
         );
     }
 }

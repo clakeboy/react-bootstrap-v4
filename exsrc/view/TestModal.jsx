@@ -297,7 +297,7 @@ class TestModal extends React.PureComponent {
                     this.props.history.goBack();
                 }}>返回主页</Button>
                 <Card header='测试加载'>
-                    <Table striped={true} tree headerTheme={Theme.primary} bordered sm data={this.state.data} onClickTree={(row,callback)=>{
+                    <Table striped={true} tree headerTheme={Theme.primary} move bordered sm data={this.state.data} onClickTree={(row,callback)=>{
                         this.loadChild(row,callback);
                     }}>
                         <Table.Header text='任务ID' field='id'/>
@@ -327,7 +327,7 @@ class TestModal extends React.PureComponent {
                 </Card>
                 <Card header='测试静态数据'>
                     <div id='main-table' className='position-relative' style={{overflow:'auto'}}>
-                        <Table select={false} className='border border-success' striped={false} height='500px' width='100%' tree data={this.state.treeData}>
+                        <Table select={false} className='border border-success' move striped={false} height='500px' width='100%' tree data={this.state.treeData}>
                             <Table.Header text='任务ID' field='id' width='80px' beforeHold/>
                             <Table.Header text='任务名称' field='task_name' width='150px' beforeHold tree/>
                             <Table.Header text='时间规则' field='time_rule' width='150px'/>

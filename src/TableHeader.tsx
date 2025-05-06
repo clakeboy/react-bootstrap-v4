@@ -2,7 +2,7 @@ import React from 'react';
 import { ComponentProps, Theme } from './components/common';
 
 interface Props extends ComponentProps {
-    onFormat?: (val: any, row: any, idx:any) => void
+    onFormat?: (val: any, row: any, idx:any, col?:any,field?:any) => void
     text?: string | any
     field: string
     value?: string

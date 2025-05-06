@@ -434,19 +434,6 @@ export class CKModal extends React.Component<Props,State> {
     }
 
     render() {
-        // const modalIndex = {zIndex:BaseModal+this.offsetIndex+2};
-        // const shadowIndex = {zIndex:BaseModal+this.offsetIndex+1};
-        // let content: JSX.Element
-        // if (this.state.empty) {
-        //     content = (
-        //         <>
-        //             <div ref={c=>this._modal=c as HTMLDivElement}>
-        //                 {this.state.content}
-        //             </div>
-        //             <div ref={c=>this._shadow=c as HTMLDivElement} className={this.getShadowClasses()} id={`${this.domId}-shadow`}/>
-        //         </>
-        //     )
-        // } else {
         const content =  (
                 <>
                     <div ref={c=>this._modal=c as HTMLDivElement} className={this.getClasses()}  tabIndex={-1} id={this.domId} role="dialog" onMouseUp={this.state.shadowClose ? ()=>{

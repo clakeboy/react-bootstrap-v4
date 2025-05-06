@@ -12,6 +12,8 @@ import HScroll from "./HScroll";
 import Menu from "./Menu";
 import { AnyObject, ComponentProps, StrObject, Theme } from './components/common';
 import Load from './Load';
+import Drag from './components/Drag';
+import Common from './Common';
 
 interface Props extends ComponentProps {
     theme?: Theme
@@ -106,6 +108,12 @@ export class Table extends React.Component<Props, State> {
     mainMenu: Menu
     allchk: CCheckbox
     renderCheckes: any[]
+    // drag split
+    drag: Drag
+    headerSplits:any[]
+    dragColumnLeft:number
+    dragWidth:number
+    split:HTMLElement
     constructor(props: any) {
         super(props);
 
@@ -118,6 +126,8 @@ export class Table extends React.Component<Props, State> {
             selectAll: false,
             selectHalf: false,
         };
+
+        this.headerSplits = [];
 
         this.treeOpens = {};
 
@@ -156,6 +166,7 @@ export class Table extends React.Component<Props, State> {
         this.holdShow();
         this.sticky();
         this.touchScrollHandler();
+        this.bindSplit();
     }
 
     componentWillUnmount() {
@@ -228,13 +239,13 @@ export class Table extends React.Component<Props, State> {
         if (this.afterBody || this.beforeBody) {
             for (let i = 0; i < this.tableBody.tBodies[0].rows.length; i++) {
                 // console.log(beforeTable.tBodies[0].rows[i]);
-                let height = this.tableBody.tBodies[0].rows[i].getBoundingClientRect().height
-                if (this.beforeBody) {
-                    height = this.beforeBody.tBodies[0].rows[i].getBoundingClientRect().height > height ? this.beforeBody.tBodies[0].rows[i].getBoundingClientRect().height : height
-                }
-                if (this.afterBody) {
-                    height = this.afterBody.tBodies[0].rows[i].getBoundingClientRect().height > height ? this.afterBody.tBodies[0].rows[i].getBoundingClientRect().height : height
-                }
+                const height = this.tableBody.tBodies[0].rows[i].getBoundingClientRect().height
+                // if (this.beforeBody) {
+                //     height = this.beforeBody.tBodies[0].rows[i].getBoundingClientRect().height > height ? this.beforeBody.tBodies[0].rows[i].getBoundingClientRect().height : height
+                // }
+                // if (this.afterBody) {
+                //     height = this.afterBody.tBodies[0].rows[i].getBoundingClientRect().height > height ? this.afterBody.tBodies[0].rows[i].getBoundingClientRect().height : height
+                // }
                 if (this.beforeBody) {
                     this.beforeBody.tBodies[0].rows[i].style.height = height + 'px';
                 }
@@ -242,9 +253,9 @@ export class Table extends React.Component<Props, State> {
                     this.afterBody.tBodies[0].rows[i].style.height = height + 'px';
                 }
 
-                if (this.tableBody.tBodies[0].rows[i].getBoundingClientRect().height < height) {
-                    this.tableBody.tBodies[0].rows[i].style.height = height + 'px';
-                }
+                // if (this.tableBody.tBodies[0].rows[i].getBoundingClientRect().height < height) {
+                //     this.tableBody.tBodies[0].rows[i].style.height = height + 'px';
+                // }
             }
         }
 
@@ -289,6 +300,7 @@ export class Table extends React.Component<Props, State> {
             //     this.allchk.setHalf(false);
             // }
             const treeData:AnyObject = {}
+            this.treeOpens = {};
             this.initTreeData(nextProps.data??[], treeData)
             this.setState({
                 data: nextProps.data ?? [],
@@ -398,6 +410,56 @@ export class Table extends React.Component<Props, State> {
             }
         });
         this.tableHeaderRows.push(headerRow);
+    }
+
+     /**
+     * binding column split
+     */
+     bindSplit() {
+        if (this.props.move && this.props.width) {
+            this.headerSplits.forEach((split:any) => {
+                if (!this.drag) {
+                    this.dragColumnLeft = 0;
+                    this.dragWidth      = 0;
+                    this.drag           = new Drag(this.split, split, {
+                        start: (dragDom, eventDom) => {
+                            this.rootDom.classList.add('user-select-none')
+                            const column_key              = eventDom.dataset.key;
+                            this.dragWidth = parseInt(document.querySelector<HTMLTableColElement>(`#${column_key}`)?.width??"0")
+                            const xy              = Common.GetDomXY(eventDom, this.rootDom);
+                            // this.dragWidth      = parseInt((eventDom?.parentNode as HTMLElement).style.width);
+                            this.dragColumnLeft = (xy.left - this.mainDom.scrollLeft);
+                            dragDom.style.left  = this.dragColumnLeft + 'px';
+                            dragDom.classList.remove('d-none');
+                            // console.log(this.dragWidth,this.dragColumnLeft,dragDom)
+                            return true;
+                        },
+                        move : (move, dragDom, eventDom) => {
+                            if (this.dragWidth + (move.x - this.dragColumnLeft) < 50) {
+                                move.x = this.dragColumnLeft - this.dragWidth + 50;
+                            }
+                        },
+                        end  : (dragDom, eventDom) => {
+                            dragDom.classList.add('d-none');
+                            const column_key              = eventDom.dataset.key;
+                            const diff                    = parseInt(dragDom.style.left) - this.dragColumnLeft;
+                            this.width                  = (this.width + diff);
+                            // this.tableHeader.style.width = `${this.width}px`;
+                            // this.tableBody.style.width = `${this.width}px`;
+                            document.querySelectorAll(`#${column_key}`).forEach((item:any) => {
+                                // console.log(`${this.dragWidth + diff}px`,`#${column_key}`);
+                                item.width = `${this.dragWidth + diff}px`;
+                            });
+                            this.syncRowsHeight()
+                            this.rootDom.classList.remove('user-select-none')
+                            return true;
+                        }
+                    });
+                } else {
+                    this.drag.setEventDom(split);
+                }
+            });
+        }
     }
 
     //checkbox handler
@@ -518,7 +580,6 @@ export class Table extends React.Component<Props, State> {
 
     /**
      * 得到所有选中的行
-     * @returns {*}
      */
     getSelectRows() {
         return this.selectRows.map((item) => {
@@ -531,8 +592,6 @@ export class Table extends React.Component<Props, State> {
 
     /**
      * 设置选中的行
-     * @param key 对应行数据的KEY值
-     * @param list 要选中的数据值
      */
     setSelectRows(key: string, list: any[]): void {
         const selectRows: any = {}
@@ -779,6 +838,7 @@ export class Table extends React.Component<Props, State> {
                         <Load/>
                     </div>
                 </div>
+                <div ref={(c:any) => this.split = c} className='ck-table-split d-none'/>
             </div>
         );
     }
@@ -795,7 +855,7 @@ export class Table extends React.Component<Props, State> {
                 if (item.props.hide) {
                     return null;
                 }
-                return <col key={idx} width={item.props.width} />
+                return <col key={idx} id={this.domId + '-' + idx} width={item.props.width} />
             })}
         </colgroup>
     }
@@ -886,7 +946,7 @@ export class Table extends React.Component<Props, State> {
                                     onClick={this.sortHandler(item.props.field, item.props.onSort)}>
                                     {item.props.text}{'\u0020'}
                                     <Icon icon={sort_icon} /></a> : item.props.text}
-                                {this.props.move ? <span className='column-split' /> : null}
+                                {this.props.move ? <span ref={c => this.headerSplits.push(c)} data-key={this.domId + '-' + key} className='column-split'/> : null}
                             </th>
                         );
                     })}
@@ -1069,7 +1129,7 @@ export class Table extends React.Component<Props, State> {
                                 })}</td>
                             );
                         } else {
-                            return <td className={this.props.truncate ? 'text-truncate' : ''} style={style} key={'col_' + key}>{parent}{dynamic_tree || row.children ? tree : null}{item.props.onFormat ? item.props.onFormat(row[item.props.field], row, i) : row[item.props.field]}</td>;
+                            return <td className={this.props.truncate ? 'text-truncate' : ''} style={style} key={'col_' + key}>{parent}{dynamic_tree || row.children ? tree : null}{item.props.onFormat ? item.props.onFormat(row[item.props.field], row, i,key,item.props.field) : row[item.props.field]}</td>;
                         }
                     })}
                 </tr>

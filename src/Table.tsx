@@ -289,6 +289,7 @@ export class Table extends React.Component<Props, State> {
         this.holdShow();
         this.unSticky();
         this.sticky()
+        this.bindSplit();
     }
 
     UNSAFE_componentWillReceiveProps(nextProps: Props) {
@@ -417,7 +418,8 @@ export class Table extends React.Component<Props, State> {
      */
      bindSplit() {
         if (this.props.move && this.props.width) {
-            this.headerSplits.forEach((split:any) => {
+            const list = this.rootDom.querySelectorAll<HTMLElement>('.column-split')
+            list.forEach((split:HTMLElement) => {
                 if (!this.drag) {
                     this.dragColumnLeft = 0;
                     this.dragWidth      = 0;
@@ -946,7 +948,7 @@ export class Table extends React.Component<Props, State> {
                                     onClick={this.sortHandler(item.props.field, item.props.onSort)}>
                                     {item.props.text}{'\u0020'}
                                     <Icon icon={sort_icon} /></a> : item.props.text}
-                                {this.props.move ? <span ref={c => this.headerSplits.push(c)} data-key={this.domId + '-' + key} className='column-split'/> : null}
+                                {this.props.move ? <span data-key={this.domId + '-' + key} className='column-split'/> : null}
                             </th>
                         );
                     })}

@@ -354,13 +354,13 @@ class TestModal extends React.PureComponent {
                 </Card>
                 <Card header='测试动态表头'>
                     <Button onClick={()=>{
-                        this.setState({headers:['task_name_eng','task_name','time_rule'],data:this.state.data})
+                        this.setState({headers:['task_name_eng','task_name','time_rule'],data:[...this.state.data]})
                     }}>测试加载</Button>
-                <Table striped={true} tree headerTheme={Theme.primary} bordered sm data={this.state.data} onClickTree={(row,callback)=>{
+                    <Table striped={true} tree headerTheme={Theme.primary} bordered sm data={this.state.data} move width='100%' onClickTree={(row,callback)=>{
                         this.loadChild(row,callback);
                     }}>
                         {this.state.headers.map((item,idx)=>{
-                            return <Table.Header key={idx} field='item' text={item}/>
+                            return <Table.Header key={idx} field='item' text={item} width='200px'/>
                         })}
                     </Table>
                 </Card>

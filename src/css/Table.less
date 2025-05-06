@@ -5,6 +5,10 @@
         font-size: 0.9rem;
     }
 
+    th {
+        position: relative;
+    }
+
     // tbody td {
     //     // background-color: unset
     // }
@@ -16,9 +20,11 @@
     }
 
     .column-split {
-        float: right;
+        position: absolute;
+        top: 0;
+        right: 0;
         width: 5px;
-        height: 20px;
+        height: 100%;
         cursor: move;
         // background-color: red;
     }

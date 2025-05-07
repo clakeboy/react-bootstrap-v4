@@ -1133,7 +1133,11 @@ export class Table extends React.Component<Props, State> {
                         } else {
                             return <td className={this.props.truncate ? 'text-truncate' : ''} 
                                         style={style} 
-                                        onDoubleClick={item.props.onDbClick}
+                                        onDoubleClick={()=>{
+                                            if (typeof item.props.onDbClick === 'function') {
+                                                item.props.onDbClick(item.props.field,row);
+                                            }
+                                        }}
                                         key={'col_' + key}>
                                             {parent}{dynamic_tree || row.children ? tree : null}{item.props.onFormat ? item.props.onFormat(row[item.props.field], row, i,key,item.props.field) : row[item.props.field]}
                                         </td>;

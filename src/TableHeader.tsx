@@ -16,7 +16,7 @@ interface Props extends ComponentProps {
     bgColor?: Theme | string
     color?: Theme | string
     onClickTree?: () => void
-    onDbClick?: (row:any) => void
+    onDbClick?: (field:any,row:any) => void
     //static head
     afterHold?: boolean
     beforeHold?: boolean

@@ -436,7 +436,7 @@ export class Table extends React.Component<Props, State> {
                             // console.log(this.dragWidth,this.dragColumnLeft,dragDom)
                             return true;
                         },
-                        move : (move, dragDom, eventDom) => {
+                        move : (move) => {
                             if (this.dragWidth + (move.x - this.dragColumnLeft) < 50) {
                                 move.x = this.dragColumnLeft - this.dragWidth + 50;
                             }
@@ -1131,7 +1131,12 @@ export class Table extends React.Component<Props, State> {
                                 })}</td>
                             );
                         } else {
-                            return <td className={this.props.truncate ? 'text-truncate' : ''} style={style} key={'col_' + key}>{parent}{dynamic_tree || row.children ? tree : null}{item.props.onFormat ? item.props.onFormat(row[item.props.field], row, i,key,item.props.field) : row[item.props.field]}</td>;
+                            return <td className={this.props.truncate ? 'text-truncate' : ''} 
+                                        style={style} 
+                                        onDoubleClick={item.props.onDbClick}
+                                        key={'col_' + key}>
+                                            {parent}{dynamic_tree || row.children ? tree : null}{item.props.onFormat ? item.props.onFormat(row[item.props.field], row, i,key,item.props.field) : row[item.props.field]}
+                                        </td>;
                         }
                     })}
                 </tr>

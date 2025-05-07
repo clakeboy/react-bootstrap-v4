@@ -115,7 +115,10 @@ export class CKModal extends React.Component<Props,State> {
         if (nextState.content !== null && nextState.content.props) {
             nextState.content = React.cloneElement(nextState.content,{...nextState.content.props,parent:this})
         }
-        return this.state.content !== nextState.content
+        if (this.state.content !== nextState.content) {
+            return true;
+        }
+        return this.state.show !== nextState.show
     }
 
     componentDidMount() {
@@ -136,70 +139,77 @@ export class CKModal extends React.Component<Props,State> {
     }
 
     open() {
-        if (this.state.fade) {
-            this._modal.classList.add("ck-modal-fade");
-            this._shadow.classList.add('ck-modal-shadow-fade');
-        }
-        this._modal.classList.add("visible");
-        this._modal.classList.remove("invisible",'ck-modal-close-an');
-        this._shadow.classList.add('visible');
-        this._shadow.classList.remove("invisible",'ck-modal-shadow-close');
-        let modals = parseInt(document.body.dataset.modals??'0');
-        if (!modals) {
-            modals = 0;
-        }
-        if (!this.is_open) {
-            modals += 1;
-        }
-        this.offsetIndex = parseInt(document.body.dataset.modals??'0') * 10
-        this._modal.style.zIndex = `${BaseModal+this.offsetIndex+2}`
-        this._shadow.style.zIndex = `${BaseModal+this.offsetIndex+1}`
-        document.body.dataset.modals = modals+'';
-        document.body.classList.add("modal-open");
-        if (this.hasScrollbar()) {
-            document.body.style.paddingRight = '15px';
-        }
-        this.is_open = true;
-        if (this.props.blurSelector) {
-            const selector = document.querySelector(this.props.blurSelector);
-            if (selector) {
-                selector.classList.add("ck-model-blur");
+        this.setState({
+            show: true
+        },()=>{
+            if (this.is_open) return
+            this.is_open = true
+            let modals = parseInt(document.body.dataset.modals??'0');
+            if (!modals) {
+                modals = 0;
             }
-        }
+            modals += 1;
+            this.offsetIndex = modals * 10
+            this._modal.style.zIndex = `${BaseModal+this.offsetIndex+2}`
+            this._shadow.style.zIndex = `${BaseModal+this.offsetIndex+1}`
+            document.body.dataset.modals = modals+'';
+            document.body.classList.add("modal-open");
+            if (this.hasScrollbar()) {
+                document.body.style.paddingRight = '15px';
+            }
+            if (this.props.blurSelector) {
+                const selector = document.querySelector(this.props.blurSelector);
+                if (selector) {
+                    selector.classList.add("ck-model-blur");
+                }
+            }
+        });
+        // if (this.state.fade) {
+        //     this._modal.classList.add("ck-modal-fade");
+        //     this._shadow.classList.add('ck-modal-shadow-fade');
+        // }
+        // this._modal.classList.add("visible");
+        // this._modal.classList.remove("invisible",'ck-modal-close-an');
+        // this._shadow.classList.add('visible');
+        // this._shadow.classList.remove("invisible",'ck-modal-shadow-close');
+        
         // document.body.classList.add("ck-model-blur")
     }
 
     close() {
-        if (!this.is_open) {
-            return;
-        }
-        this._modal.classList.remove("visible");
-        this._shadow.classList.remove("visible");
-        this._modal.classList.add("invisible");
-        this._shadow.classList.add("invisible");
-        if (this.state.fade) {
-            this._modal.classList.add("ck-modal-close-an");
-            this._shadow.classList.add('ck-modal-shadow-close');
-        }
-        let modals = parseInt(document.body.dataset.modals??'1');
-        modals -= 1;
-        document.body.dataset.modals = modals+'';
-        if (modals === 0) {
-            setTimeout(()=>{
-                document.body.classList.remove("modal-open");
-                if (this.hasScrollbar()) {
-                    document.body.style.paddingRight = '0';
-                }
-            },this.state.fade?300:0)
-            if (this.props.blurSelector) {
-                const selector = document.querySelector(this.props.blurSelector);
-                if (selector) {
-                    selector.classList.remove("ck-model-blur");
+        this.setState({
+            show: false
+        },()=>{
+            if (!this.is_open) return
+            this.is_open = false
+            let modals = parseInt(document.body.dataset.modals??'1');
+            modals -= 1;
+            document.body.dataset.modals = modals+'';
+            if (modals === 0) {
+                setTimeout(()=>{
+                    document.body.classList.remove("modal-open");
+                    if (this.hasScrollbar()) {
+                        document.body.style.paddingRight = '0';
+                    }
+                },this.state.fade?300:0)
+                if (this.props.blurSelector) {
+                    const selector = document.querySelector(this.props.blurSelector);
+                    if (selector) {
+                        selector.classList.remove("ck-model-blur");
+                    }
                 }
             }
-        }
-        this.is_open = false;
-        this.closeHandler();
+            this.closeHandler();
+        });
+        // this._modal.classList.remove("visible");
+        // this._shadow.classList.remove("visible");
+        // this._modal.classList.add("invisible");
+        // this._shadow.classList.add("invisible");
+        // if (this.state.fade) {
+        //     this._modal.classList.add("ck-modal-close-an");
+        //     this._shadow.classList.add('ck-modal-shadow-close');
+        // }
+        
     }
 
     closeHandler = ()=>{
@@ -273,6 +283,7 @@ export class CKModal extends React.Component<Props,State> {
             shadowClose:opts.shadowClose??this.props.shadowClose,
             fade:opts.fade??this.props.fade,
             empty:opts.empty??false,
+            // show:true,
         },()=>{
             this.open();
         });
@@ -298,6 +309,7 @@ export class CKModal extends React.Component<Props,State> {
             shadowClose:opts.shadowClose??this.props.shadowClose,
             fade:opts.fade??this.props.fade,
             empty:opts.empty??false,
+            // show:true,
         },()=>{
             this.open();
         });
@@ -328,13 +340,14 @@ export class CKModal extends React.Component<Props,State> {
             fade:opts.fade??this.props.fade,
             size: opts.size??'lg',  // sm,lg(default),xl
             empty:opts.empty??false,
+            // show:true,
         },()=>{
             this.open();
         });
     }
 
     getClasses() {
-        let base = 'modal d-block ck-modal-close-an';
+        let base = 'modal d-block';
         if (this.modalType === ModalView) {
             base = classNames(base,"bd-example-modal-lg");
         }
@@ -345,7 +358,7 @@ export class CKModal extends React.Component<Props,State> {
         if (this.state.show) {
             base = classNames(base,'visible');
         } else {
-            base = classNames(base,'invisible');
+            base = classNames(base,'invisible',this.state.fade?'ck-modal-close-an':'');
         }
 
         if (this.state.empty) {
@@ -381,7 +394,7 @@ export class CKModal extends React.Component<Props,State> {
         if (this.state.show) {
             base = classNames(base,'visible');
         } else {
-            base = classNames(base,'invisible');
+            base = classNames(base,'invisible',this.state.fade?'ck-modal-shadow-close':'');
         }
 
         if (this.state.fade) {

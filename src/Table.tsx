@@ -37,6 +37,7 @@ interface Props extends ComponentProps {
     onClickTree?: (row: any, callback: (data: any) => any) => void
     onClick?: (row: any, i: string) => void
     onCheck?: (chk: boolean, row: any) => void
+    onCheckAll?: (chk: boolean, rows: any[]) => void
     move?: boolean
     onRefresh?: () => void
     refreshText?: string
@@ -577,6 +578,10 @@ export class Table extends React.Component<Props, State> {
             selectRows: selectRows,
             selectAll: checked,
             selectHalf: half
+        },()=>{
+            if (typeof this.props.onCheckAll === "function") {
+                this.props.onCheckAll(checked, this.getSelectRows());
+            }
         })
     };
 

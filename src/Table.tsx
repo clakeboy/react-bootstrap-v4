@@ -229,18 +229,24 @@ export class Table extends React.Component<Props, State> {
     }
 
     syncRowsHeight() {
+        // 同步多表头高度
         if (this.beforeBody) {
             this.setRowsHeight(this.beforeBody?.tHead?.rows, this.tableBody?.tHead?.rows);
             // this.beforeBody.tHead.rows[0].style.height = this.tableBody.tHead.rows[0].clientHeight + 'px';
         }
+        // 同步多表头高度
         if (this.afterBody) {
             this.setRowsHeight(this.afterBody?.tHead?.rows, this.tableBody?.tHead?.rows);
         }
-
+        //同步内容高度
         if (this.afterBody || this.beforeBody) {
             for (let i = 0; i < this.tableBody.tBodies[0].rows.length; i++) {
                 // console.log(beforeTable.tBodies[0].rows[i]);
-                const height = this.tableBody.tBodies[0].rows[i].getBoundingClientRect().height
+                const bodyHeight = this.tableBody.tBodies[0].rows[i].getBoundingClientRect().height
+                const beforeHeight = this.beforeBody?.tBodies[0].rows[i].getBoundingClientRect().height ?? 0
+                const afterHeight = this.afterBody?.tBodies[0].rows[i].getBoundingClientRect().height ?? 0
+
+                const height = Math.max(bodyHeight, beforeHeight, afterHeight)
                 // if (this.beforeBody) {
                 //     height = this.beforeBody.tBodies[0].rows[i].getBoundingClientRect().height > height ? this.beforeBody.tBodies[0].rows[i].getBoundingClientRect().height : height
                 // }
@@ -253,7 +259,7 @@ export class Table extends React.Component<Props, State> {
                 if (this.afterBody) {
                     this.afterBody.tBodies[0].rows[i].style.height = height + 'px';
                 }
-
+                this.tableBody.tBodies[0].rows[i].style.height = height + 'px';
                 // if (this.tableBody.tBodies[0].rows[i].getBoundingClientRect().height < height) {
                 //     this.tableBody.tBodies[0].rows[i].style.height = height + 'px';
                 // }

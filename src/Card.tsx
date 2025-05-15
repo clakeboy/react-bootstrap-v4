@@ -14,6 +14,8 @@ interface Props extends ComponentProps {
     sm?: boolean
     scroll?: boolean
     divider?: boolean
+    headClass?: string
+    bodyClass?: string
 }
 
 export class Card extends React.PureComponent<Props,any> {
@@ -56,6 +58,10 @@ export class Card extends React.PureComponent<Props,any> {
         return classNames(base,this.props.className);
     }
 
+    getBodyClasses() {
+        return classNames('card-body',this.props.bodyClass);
+    }
+
     getStyle() {
         const def:StrObject = {};
         if (this.props.absolute) {
@@ -84,6 +90,7 @@ export class Card extends React.PureComponent<Props,any> {
         if (this.props.sm) {
             base = classNames(base,'ck-card-sm');
         }
+        base = classNames(base,this.props.headClass);
         return (
             <div className={base}>{this.props.header}</div>
         )
@@ -93,7 +100,7 @@ export class Card extends React.PureComponent<Props,any> {
         return (
             <div className={this.getClasses()} style={this.getStyle()}>
                 {this.renderHeader()}
-                <div id={this.domId} className="card-body">
+                <div id={this.domId} className={this.getBodyClasses()}>
                     {this.props.children}
                 </div>
                 {this.props.scroll?

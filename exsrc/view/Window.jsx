@@ -164,9 +164,13 @@ class Window extends React.Component {
                                 <CDropdown.Value text='选项2' value={222222} />
                             </CDropdown>
                         </GroupStyle>
-                        <GroupStyle left='加Switch'>
+                        <GroupStyle left='加Switch small' leftClass={this.state?.schk?' bg-primary text-white':''} size='sm'>
                             <GroupStyle.Content>
-                                <Switch field='test-switch'/>
+                                <Switch size='sm' field='test-switch' checked={this.state?.schk} theme={Theme.success} onChange={(chk)=>{
+                                    this.setState({
+                                        schk: chk
+                                    })
+                                }}/>
                             </GroupStyle.Content>
                         </GroupStyle>
                         <GroupStyle left='金额' right='元' leftClass='bg-white'>
@@ -175,9 +179,13 @@ class Window extends React.Component {
                         <GroupStyle className='me-2' left='测试组'>
                             <Input width='200px' field='test-input' placeholder='宽度定义200px'/>
                         </GroupStyle>
-                        <GroupStyle left='加Check' >
+                        <GroupStyle left='加Check' leftClass={this.state?.checked?'bg-success text-white':''}>
                             <GroupStyle.Content>
-                                <CCheckbox field='test-check'/>
+                                <CCheckbox field='test-check' theme={Theme.success} checked={this.state?.checked} onChange={(check)=>{
+                                    this.setState({
+                                        checked: check
+                                    })
+                                }}/>
                             </GroupStyle.Content>
                         </GroupStyle>
                         <GroupStyle left='复杂组件'>

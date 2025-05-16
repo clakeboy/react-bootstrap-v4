@@ -3,7 +3,7 @@ import classNames from 'classnames/bind';
 import common from './Common';
 import Icon from './Icon';
 import './css/CCheck.less';
-import { ComponentProps, StrObject } from './components/common';
+import { ComponentProps, StrObject, Theme } from './components/common';
 
 interface Props extends ComponentProps {
     inline?: boolean;
@@ -75,6 +75,12 @@ export class CCheckbox extends React.Component<Props, State> {
 
         if (this.props.absolute) {
             base = classNames(base, 'position-absolute');
+        }
+
+        //apply theme
+        if (this.props.theme !== undefined) {
+            const themeStr:string = typeof this.props.theme === 'string'?this.props.theme:Theme[this.props.theme??0]
+            base = classNames(base, 'text-'+themeStr);
         }
 
         return classNames(base, this.props.className);
@@ -155,8 +161,8 @@ export class CCheckbox extends React.Component<Props, State> {
                 onKeyUp={this.keyUpHandler}
                 onClick={this.changeHandler}>
                 <Icon
+                    className='ck-check-icon'
                     ref={(c: any) => (this.icon = c)}
-                    className="ck-check-icon"
                     icon={this.getCheckedIcon('icon')}
                     iconType={this.getCheckedIcon('type')}
                 />

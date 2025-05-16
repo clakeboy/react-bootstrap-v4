@@ -130,7 +130,7 @@ export class Input extends React.Component<Props, State> {
       this.tip = new Tooltip(document.getElementById(this.domId) as HTMLElement,{
         trigger: 'manual',
         template:
-          '<div class="tooltip ck-input-tip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner bg-danger"></div></div>',
+          '<div class="tooltip ck-input-tip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner bg-danger"></div></div>',
       })
     }
 

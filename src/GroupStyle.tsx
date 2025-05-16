@@ -2,8 +2,8 @@ import React from 'react';
 import classNames from 'classnames/bind';
 import './css/GroupStyle.less';
 interface Props extends React.ComponentProps<any>{
-    right?: string | JSX.Element | undefined //组右边内容
-    left?: string | JSX.Element | undefined //组左边内容
+    right?: string | JSX.Element  //组右边内容
+    left?: string | JSX.Element  //组左边内容
     leftClass?: string
     rightClass?: string
     size?: string
@@ -16,9 +16,9 @@ interface Props extends React.ComponentProps<any>{
 class GroupStyleContent extends React.Component<any, any> {
     render() {
         return <div className="input-group">
-                <div className='custom custom-right bg-body'>
-                    {this.props.children}
-                </div>
+            <div className='custom custom-right bg-body'>
+                {this.props.children}
+            </div>
         </div>;
     }
 }

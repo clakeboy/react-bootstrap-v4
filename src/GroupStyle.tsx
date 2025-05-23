@@ -1,6 +1,7 @@
 import React from 'react';
 import classNames from 'classnames/bind';
 import './css/GroupStyle.less';
+import Button from './Button';
 interface Props extends React.ComponentProps<any>{
     right?: string | JSX.Element  //组右边内容
     left?: string | JSX.Element  //组左边内容
@@ -70,32 +71,76 @@ export class GroupStyle extends React.Component<Props, any> {
 
     renderLeft() {
         if (this.props.left === null) return null
-        const isStr = typeof this.props.left === 'string'
+        let typeStr = ''
+        if (typeof this.props.left === 'string') {
+            typeStr = 'string'
+        } else if (typeof this.props.left === 'object') {
+            if (this.props.left.type === Button) {
+                typeStr = 'button'
+            } else {
+                typeStr = 'component'
+            }
+        } else {
+            typeStr = 'component'
+        }
+        let con;
+        // console.log(typeStr)
+        switch (typeStr) {
+            case 'string':
+                con = <div className={classNames('input-group-text',this.props.leftClass)}>
+                        {this.props.left}
+                    </div>
+                break;
+            case 'button':
+                con = this.props.left
+                break;
+            default:
+                con = <div className={classNames('custom custom-left',this.props.leftClass)}>
+                        {this.props.left}
+                    </div>     
+        }
+
         return (
             <>
-                {isStr ?
-                    <div className={classNames('input-group-text',this.props.leftClass)}>
-                        {this.props.left}
-                    </div>:
-                    <div className={classNames('custom custom-left',this.props.leftClass)}>
-                        {this.props.left}
-                    </div>}
+                {con}
             </>
         )
     }
 
     renderRight() {
         if (!this.props.right) return null
-        const isStr = typeof this.props.right === 'string'
+        let typeStr = ''
+        if (typeof this.props.right === 'string') {
+            typeStr = 'string'
+        } else if (typeof this.props.left === 'object') {
+            if (this.props.left.type === Button) {
+                typeStr = 'button'
+            } else {
+                typeStr = 'component'
+            }
+        }else {
+            typeStr = 'component'
+        }
+
+        let con;
+        switch (typeStr) {
+            case 'string':
+                con = <div className={classNames('input-group-text',this.props.rightClass)}>
+                        {this.props.right}
+                    </div>
+                break;
+            case 'button':
+                con = this.props.right
+                break;
+            default:
+                con = <div className={classNames('custom custom-right',this.props.rightClass)}>
+                        {this.props.right}
+                    </div>     
+        }
+
         return (
             <>
-                {isStr ?
-                    <div className={classNames('input-group-text',this.props.rightClass)}>
-                        {this.props.right}
-                    </div>:
-                    <div className={classNames('custom custom-right',this.props.rightClass)}>
-                        {this.props.right}
-                    </div>}
+                {con}
             </>
         )
     }

@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames/bind';
 import common from './Common';
-import Icon from './Icon';
+import Icon,{IconRef} from './Icon';
 import './css/CCheck.less';
 import { ComponentProps, StrObject, Theme } from './components/common';
 
@@ -30,7 +30,7 @@ export class CCheckbox extends React.Component<Props, State> {
 
     domId: string;
 
-    icon: Icon;
+    icon: IconRef;
 
     constructor(props: any) {
         super(props);

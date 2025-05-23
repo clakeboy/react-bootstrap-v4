@@ -3,7 +3,7 @@ import classNames from 'classnames/bind';
 import common from './Common';
 import Calendar,{format} from './Calendar';
 import Combo, { ComboProps } from './Combo';
-import Icon from './Icon';
+import Icon,{IconRef} from './Icon';
 import i18n from './components/i18n';
 
 import './css/Input.less';
@@ -78,7 +78,7 @@ export class Input extends React.Component<Props, State> {
   input: HTMLInputElement;
   calendar: Calendar;
   combo: Combo;
-  clearIcon: Icon;
+  clearIcon: IconRef;
   tip: Tooltip;
   mainDom: HTMLElement;
   constructor(props: any) {
@@ -254,7 +254,13 @@ export class Input extends React.Component<Props, State> {
     }
 
     if (this.props.align) {
-      base = classNames(base, `text-${this.props.align}`);
+      if (this.props.align === 'left') {
+          base = classNames(base, `text-start`);
+      } else if (this.props.align === 'right') {
+          base = classNames(base, `text-end`);
+      } else {
+          base = classNames(base, `text-${this.props.align}`);
+      }
     }
 
     if (this.props.multi) {

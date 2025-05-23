@@ -1,52 +1,56 @@
-import React from 'react';
+import React, { useEffect, useState, useCallback, forwardRef, useImperativeHandle } from 'react';
 import classNames from 'classnames/bind';
 import { ComponentProps } from './components/common';
 
 interface Props extends ComponentProps {
-    iconType?: string
-    icon?: string
-    //icon to rotate
-    spin?: boolean
-    //bootstrap font icons
-    bs?: boolean
-    onClick?: (event: React.MouseEvent) => void
+    iconType?: string;
+    icon?: string;
+    spin?: boolean; // Spin icon
+    bs?: boolean; // Bootstrap icon
+    onClick?: (event: React.MouseEvent) => void;
 }
 
-interface State {
-    icon:string
+export interface IconRef {
+    setIcon: (icon: string) => void;
 }
 
-export class Icon extends React.PureComponent<Props,State> {
-    static defaultProps = {
-        iconType: 'solid',
-        icon: '',
-    };
-    constructor(props:any) {
-        super(props);
-        this.state = {
-            icon:this.props.icon??''
+const Icon = forwardRef<IconRef, Props>(({
+    iconType = 'solid',
+    icon = '',
+    spin,
+    bs,
+    className,
+    onClick,
+    ...restProps
+}, ref) => {
+    const [currentIcon, setCurrentIcon] = useState(icon);
+
+    useEffect(() => {
+        setCurrentIcon(icon ?? '');
+    }, [icon]);
+    
+    useImperativeHandle(ref, () => {
+        return {
+            setIcon: (icon: string) => {
+                setCurrentIcon(icon);
+            },
         };
-    }
+    }, []);
 
-    UNSAFE_componentWillReceiveProps(nextProps:Props) {
-        // this.setState({
-        //     icon: nextProps.icon,
-        // });
-        this.setIcon(nextProps.icon??'');
-    }
+    const getBsClasses = useCallback(() => {
+        let base;
+        if (currentIcon) {
+            base = classNames(base, currentIcon);
+        }
+        return classNames(base, className);
+    }, [currentIcon, className]);
 
-    setIcon(icon:string) {
-        this.setState({
-            icon: icon
-        });
-    }
-
-    getClasses() {
-        if (this.props.bs) {
-            return this.getBsClasses();
+    const getClasses = useCallback(() => {
+        if (bs) {
+            return getBsClasses();
         }
         let base;
-        switch(this.props.iconType) {
+        switch (iconType) {
             case 'regular':
                 base = 'far';
                 break;
@@ -59,29 +63,26 @@ export class Icon extends React.PureComponent<Props,State> {
             default:
                 base = 'fas';
         }
-        if (this.state.icon) {
-            base = classNames(base,'fa-'+this.state.icon);
+        if (currentIcon) {
+            base = classNames(base, 'fa-' + currentIcon);
         }
-        if (this.props.spin) {
-            base = classNames(base,'fa-spin');
+        if (spin) {
+            base = classNames(base, 'fa-spin');
         }
+        return classNames(base, className);
+    }, [bs, iconType, currentIcon, spin, className, getBsClasses]);
 
-        return classNames(base,this.props.className);
-    }
+    // 不传递 iconType 给 <i>
+    // const { iconType: icontype, ...btnProps } = restProps;
 
-    getBsClasses() {
-        let base;
-        if (this.state.icon) {
-            base = classNames(base, this.state.icon);
-        }
-        return classNames(base,this.props.className);
-    }
-
-    render() {
-        return (
-            <i {...this.props} className={this.getClasses()} onClick={this.props.onClick}/>
-        );
-    }
-}
+    return (
+        <i
+            {...restProps}
+            className={getClasses()}
+            onClick={onClick}
+        />
+    );
+});
+Icon.displayName = 'Icon';
 
 export default Icon;

@@ -6,7 +6,6 @@ export * from './Input';
 export * from './InputStyle';
 export * from "./InputGroup";
 export * from './Button';
-export * from './Icon';
 export * from './Card';
 export * from './CCheckbox';
 export * from './Checkbox';
@@ -16,7 +15,6 @@ export * from './TableHeaderRow';
 export * from './Select';
 export * from './Calendar';
 export * from './TextArea';
-export * from './CKModal';
 export * from './Tree';
 export * from './ButtonGroup';
 export * from './Title';
@@ -49,11 +47,16 @@ export * from './Row';
 export * from './Alerts';
 export * from './GroupStyle';
 export * from './components/common'
+export * from './Icon'
 import Modal from "./CKModal";
 import Common from "./Common";
 import LoaderComponent from "./components/LoaderComponent";
+import Icon from './Icon';
 export {
-    Modal,Common,LoaderComponent
+    Modal,
+    Common,
+    LoaderComponent,
+    Icon
 }
 // import Dropdown from "./Dropdown";
 // import Pagination from "./Pagination";

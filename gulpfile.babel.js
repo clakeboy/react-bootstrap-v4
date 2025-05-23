@@ -30,6 +30,7 @@ gulp.task('server', () => {
 
     bs.init({
         logPrefix: 'AMT',
+        port: 5600,
         server: {
             baseDir: ['examples'],
             middleware: [

@@ -193,6 +193,9 @@ class Window extends React.Component {
                                 console.log(val,list);
                             }}/>
                         </GroupStyle>
+                        <GroupStyle left={<Button>按钮</Button>} right='元'>
+                            <Input width='150px' field='test-price' align='right' type='number' disableClear placeholder='按钮组合'/>
+                        </GroupStyle>
                     </div>
                     </Form>
                 </Card>

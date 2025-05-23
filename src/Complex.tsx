@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames/bind';
 import './css/Complex.less'
-import Icon from './Icon';
+import Icon,{IconRef} from './Icon';
 import Combo, { ComboProps } from "./Combo";
 import { ComponentProps, StrObject, Theme } from './components/common';
 
@@ -40,7 +40,7 @@ export class Complex extends React.Component<Props,State> {
     combo: Combo
     input: HTMLInputElement
     isFocus: boolean
-    clearIcon: Icon
+    clearIcon: IconRef
     main:HTMLDivElement
     constructor(props:any) {
         super(props);

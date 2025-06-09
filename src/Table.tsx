@@ -302,7 +302,8 @@ export class Table extends React.Component<Props, State> {
     UNSAFE_componentWillReceiveProps(nextProps: Props) {
         if (this.props.data !== nextProps.data) {
             // this.select_all = false;
-            // this.selectRows = [];
+            this.selectRows = [];
+            this.renderCheckes = [];
             // if (this.allchk) {
             //     this.allchk.setChecked(false);
             //     this.allchk.setHalf(false);

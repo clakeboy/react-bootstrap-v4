@@ -52,6 +52,7 @@ interface Props extends ComponentProps {
   max?:any;
   min?: any;
   underline?: boolean
+  color?: string
 }
 
 interface State {
@@ -283,6 +284,9 @@ export class Input extends React.Component<Props, State> {
       base.height = this.props.height;
     } else if (this.props.multi) {
       base.height = 'calc(1.5em + .75rem + 2px)';
+    }
+    if (this.props.color) {
+      base.color = this.props.color;
     }
     return common.extend(base, this.props.textStyle);
   }

@@ -327,7 +327,7 @@ class TestModal extends React.PureComponent {
                 </Card>
                 <Card header='测试静态数据'>
                     <div id='main-table' className='position-relative' style={{overflow:'auto'}}>
-                        <Table select={false} className='border border-success' move striped={false} height='500px' width='100%' tree data={this.state.treeData}>
+                        <Table id='static_data' select={false} className='border border-success' move striped={false} height='500px' width='100%' tree data={this.state.treeData}>
                             <Table.Header text='任务ID' field='id' width='80px' beforeHold/>
                             <Table.Header text='任务名称' field='task_name' width='150px' beforeHold tree/>
                             <Table.Header text='时间规则' field='time_rule' width='150px'/>

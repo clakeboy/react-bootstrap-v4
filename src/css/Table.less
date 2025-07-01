@@ -26,9 +26,16 @@
         width: 5px;
         height: 80%;
         cursor: move;
-        border-right: 1px solid var(--bs-gray-500);
-        // background-color: red;
+        &:hover {
+            background-color: var(--bs-gray-500);
+        }
     }
+
+    .column-split-show {
+        border-left: 1px solid var(--bs-gray-500);
+    }
+
+    
 
     .click-row {
         cursor: pointer;
@@ -93,6 +100,7 @@
     .fixed {
         table-layout: fixed;
     }
+    
 }
 
 .table-font-sm {
@@ -169,4 +177,19 @@
 .ck-table-hover>* {
     --bs-table-color-state: var(--bs-table-hover-color);
     --bs-table-bg-state: var(--bs-table-hover-bg);
+}
+
+.table-column-split-btn {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    z-index: 1;
+    width: 24px;
+    height: 24px;
+    border: 1px solid var(--bs-border-color);
+    font-size: .8rem;
+    &:hover {
+        background-color: var(--bs-primary);
+        color: var(--bs-white);
+    }
 }

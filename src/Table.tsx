@@ -66,7 +66,7 @@ export class Table extends React.Component<Props, State> {
     static Header = TableHeader;
     static HeaderRow = TableHeaderRow;
 
-    static defaultProps:Props = {
+    static defaultProps: Props = {
         data: [],
         dataCount: 1,
         select: false,
@@ -111,10 +111,11 @@ export class Table extends React.Component<Props, State> {
     renderCheckes: any[]
     // drag split
     drag: Drag
-    headerSplits:any[]
-    dragColumnLeft:number
-    dragWidth:number
-    split:HTMLElement
+    headerSplits: any[]
+    dragColumnLeft: number
+    dragWidth: number
+    split: HTMLElement
+    dragCache: { [key: string]: string } = {}
     constructor(props: any) {
         super(props);
 
@@ -157,6 +158,7 @@ export class Table extends React.Component<Props, State> {
         this.domId = 'table-' + common.RandomString(16);
         if (this.props.id) {
             this.domId = this.props.id;
+            this.dragCache = JSON.parse(localStorage.getItem('table-cache-' + this.props.id) ?? '{}');
         }
     }
 
@@ -243,10 +245,11 @@ export class Table extends React.Component<Props, State> {
             for (let i = 0; i < this.tableBody.tBodies[0].rows.length; i++) {
                 // console.log(beforeTable.tBodies[0].rows[i]);
                 const bodyHeight = this.tableBody.tBodies[0].rows[i].getBoundingClientRect().height
-                const beforeHeight = this.beforeBody?.tBodies[0].rows[i].getBoundingClientRect().height ?? 0
-                const afterHeight = this.afterBody?.tBodies[0].rows[i].getBoundingClientRect().height ?? 0
+                // const beforeHeight = this.beforeBody?.tBodies[0].rows[i].getBoundingClientRect().height ?? 0
+                // const afterHeight = this.afterBody?.tBodies[0].rows[i].getBoundingClientRect().height ?? 0
 
-                const height = Math.max(bodyHeight, beforeHeight, afterHeight)
+                // const height = Math.max(bodyHeight, beforeHeight, afterHeight)
+                const height = bodyHeight
                 // if (this.beforeBody) {
                 //     height = this.beforeBody.tBodies[0].rows[i].getBoundingClientRect().height > height ? this.beforeBody.tBodies[0].rows[i].getBoundingClientRect().height : height
                 // }
@@ -259,7 +262,7 @@ export class Table extends React.Component<Props, State> {
                 if (this.afterBody) {
                     this.afterBody.tBodies[0].rows[i].style.height = height + 'px';
                 }
-                this.tableBody.tBodies[0].rows[i].style.height = height + 'px';
+                // this.tableBody.tBodies[0].rows[i].style.height = height + 'px';
                 // if (this.tableBody.tBodies[0].rows[i].getBoundingClientRect().height < height) {
                 //     this.tableBody.tBodies[0].rows[i].style.height = height + 'px';
                 // }
@@ -308,15 +311,15 @@ export class Table extends React.Component<Props, State> {
             //     this.allchk.setChecked(false);
             //     this.allchk.setHalf(false);
             // }
-            const treeData:AnyObject = {}
+            const treeData: AnyObject = {}
             this.treeOpens = {};
-            this.initTreeData(nextProps.data??[], treeData)
+            this.initTreeData(nextProps.data ?? [], treeData)
             this.setState({
                 data: nextProps.data ?? [],
                 selectAll: false,
                 selectHalf: false,
                 selectRows: {},
-                tree:treeData
+                tree: treeData
             }, () => {
                 if (this.hScroll) {
                     this.hScroll.initAlignParent();
@@ -342,17 +345,17 @@ export class Table extends React.Component<Props, State> {
         return nextState.tree !== this.state.tree;
     }
 
-    initTreeData(data:any[],treeData:AnyObject): AnyObject {
-        data.forEach((item:any,i:number)=>{
+    initTreeData(data: any[], treeData: AnyObject): AnyObject {
+        data.forEach((item: any, i: number) => {
             if (item.children) {
                 treeData[i.toString()] = item.children
-                this.initTreeData(item.children,treeData)
+                this.initTreeData(item.children, treeData)
             }
         })
         return treeData
     }
 
-    initTableWidth(children:any) {
+    initTableWidth(children: any) {
         // if (this.props.width) {
         this.width = 0;
         this.beforeHoldWidth = 0;
@@ -360,7 +363,7 @@ export class Table extends React.Component<Props, State> {
         const reg = /(\d+)(px|rem|cm|mm|pt)$/;
         let unit = 0;
         React.Children.map(children, (item) => {
-            if(!item) {
+            if (!item) {
                 return
             }
             if (item.type === TableHeader) {
@@ -411,7 +414,7 @@ export class Table extends React.Component<Props, State> {
     initTableHeaderRow(row: any) {
         const headerRow: any[] = [];
         React.Children.map(row.props.children, (item) => {
-            if(!item) {
+            if (!item) {
                 return
             }
             if (item.type === TableHeader) {
@@ -421,47 +424,53 @@ export class Table extends React.Component<Props, State> {
         this.tableHeaderRows.push(headerRow);
     }
 
-     /**
-     * binding column split
-     */
-     bindSplit() {
+    /**
+    * binding column split
+    */
+    bindSplit() {
         if (this.props.move && this.props.width) {
             const list = this.rootDom.querySelectorAll<HTMLElement>('.column-split')
-            list.forEach((split:HTMLElement) => {
+            list.forEach((split: HTMLElement) => {
                 if (!this.drag) {
                     this.dragColumnLeft = 0;
-                    this.dragWidth      = 0;
-                    this.drag           = new Drag(this.split, split, {
+                    this.dragWidth = 0;
+                    this.drag = new Drag(this.split, split, {
                         start: (dragDom, eventDom) => {
                             this.rootDom.classList.add('user-select-none')
-                            const column_key              = eventDom.dataset.key;
-                            this.dragWidth = parseInt(document.querySelector<HTMLTableColElement>(`#${column_key}`)?.width??"0")
-                            const xy              = Common.GetDomXY(eventDom, this.rootDom);
+                            const column_key = eventDom.dataset.key;
+                            this.dragWidth = parseInt(document.querySelector<HTMLTableColElement>(`#${column_key}`)?.width ?? "0")
+                            const xy = Common.GetDomXY(eventDom, this.rootDom);
                             // this.dragWidth      = parseInt((eventDom?.parentNode as HTMLElement).style.width);
                             this.dragColumnLeft = (xy.left - this.mainDom.scrollLeft);
-                            dragDom.style.left  = this.dragColumnLeft + 'px';
+                            dragDom.style.left = this.dragColumnLeft + 'px';
                             dragDom.classList.remove('d-none');
                             // console.log(this.dragWidth,this.dragColumnLeft,dragDom)
                             return true;
                         },
-                        move : (move) => {
+                        move: (move) => {
                             if (this.dragWidth + (move.x - this.dragColumnLeft) < 50) {
                                 move.x = this.dragColumnLeft - this.dragWidth + 50;
                             }
                         },
-                        end  : (dragDom, eventDom) => {
+                        end: (dragDom, eventDom) => {
                             dragDom.classList.add('d-none');
-                            const column_key              = eventDom.dataset.key;
-                            const diff                    = parseInt(dragDom.style.left) - this.dragColumnLeft;
-                            this.width                  = (this.width + diff);
+                            const column_key = eventDom.dataset.key;
+                            const diff = parseInt(dragDom.style.left) - this.dragColumnLeft;
+                            this.width = (this.width + diff);
                             // this.tableHeader.style.width = `${this.width}px`;
                             // this.tableBody.style.width = `${this.width}px`;
-                            document.querySelectorAll(`#${column_key}`).forEach((item:any) => {
+                            document.querySelectorAll(`#${column_key}`).forEach((item: any) => {
                                 // console.log(`${this.dragWidth + diff}px`,`#${column_key}`);
                                 item.width = `${this.dragWidth + diff}px`;
+                                if (this.props.id && column_key) {
+                                    this.dragCache[column_key] = `${this.dragWidth + diff}px`;
+                                }
                             });
                             this.syncRowsHeight()
                             this.rootDom.classList.remove('user-select-none')
+                            if (this.props.id) {
+                                localStorage.setItem('table-cache-' + this.props.id, JSON.stringify(this.dragCache))
+                            }
                             return true;
                         }
                     });
@@ -470,6 +479,19 @@ export class Table extends React.Component<Props, State> {
                 }
             });
         }
+    }
+
+    resetColumnWidth = () => {
+        this.dragCache = {};
+        localStorage.removeItem('table-cache-' + this.props.id);
+        this.headers.map((item, idx) => {
+            const col:any = document.querySelector(`#${this.domId}-${idx}`)
+            if (col) {
+                col.width = item.props.width;
+            }
+        })
+        this.syncRowsHeight();
+        // this.setState({data:[...this.state.data]})
     }
 
     //checkbox handler
@@ -557,14 +579,14 @@ export class Table extends React.Component<Props, State> {
     sortHandler(field: string, callback: (field: string, type: string) => void) {
         return (e: React.MouseEvent) => {
             const dom = e.currentTarget as HTMLElement;
-            let sort_type:string
+            let sort_type: string
             if (dom.dataset.sort) {
                 sort_type = dom.dataset.sort === 'asc' ? 'desc' : 'asc';
             } else {
                 sort_type = 'asc'
             }
             callback(field, sort_type);
-            dom.dataset.sort = sort_type ;
+            dom.dataset.sort = sort_type;
             this.sortList[field] = sort_type;
             const child = dom.querySelector('i') as HTMLElement;
             child.classList.remove('fa-sort', 'fa-sort-alpha-up', 'fa-sort-alpha-down');
@@ -585,7 +607,7 @@ export class Table extends React.Component<Props, State> {
             selectRows: selectRows,
             selectAll: checked,
             selectHalf: half
-        },()=>{
+        }, () => {
             if (typeof this.props.onCheckAll === "function") {
                 this.props.onCheckAll(checked, this.getSelectRows());
             }
@@ -829,6 +851,9 @@ export class Table extends React.Component<Props, State> {
         this.renderCheckes = [];
         return (
             <div ref={(c: any) => this.rootDom = c} className={divClass} id={this.domId + '_main'} style={this.getMainStyle()}>
+                {this.props.move && this.props.id ? <div className='table-column-split-btn rounded-circle d-flex justify-content-center align-items-center'>
+                    <div title='恢复列宽' onClick={this.resetColumnWidth}><Icon icon="bars"/></div>
+                </div> : null}
                 <div ref={(c: any) => this.mainDom = c} id={this.domId} className={this.getMainClass()} style={this.getStyles()}>
                     {this.state.refresh ? (
                         <Button className='ck-table-refresh-btn' icon='sync-alt' onClick={this.props.onRefresh} size="sm" theme={Theme.dark}>
@@ -847,12 +872,12 @@ export class Table extends React.Component<Props, State> {
                 {this.props.height ? <Scroll selector={`#${this.domId}`} /> : null}
                 {this.props.width ? <HScroll ref={(c: any) => this.hScroll = c} showSelector={`#${this.domId}_main`} selector={`#${this.domId}`} alignParent /> : null}
                 {this.menu}
-                <div className={'ck-table-loading '+(this.props.loading?'':'d-none')}>
+                <div className={'ck-table-loading ' + (this.props.loading ? '' : 'd-none')}>
                     <div className='text-center mt-5'>
-                        <Load/>
+                        <Load />
                     </div>
                 </div>
-                <div ref={(c:any) => this.split = c} className='ck-table-split d-none'/>
+                <div ref={(c: any) => this.split = c} className='ck-table-split d-none' />
             </div>
         );
     }
@@ -861,7 +886,7 @@ export class Table extends React.Component<Props, State> {
         return <colgroup>
             {this.props.serialNumber && filter_type !== 'after' ? <col width='30px' /> : null}
             {this.state.select && filter_type !== 'after' ? <col width={'30px'} /> : null}
-            {this.headers.map((item,idx) => {
+            {this.headers.map((item, idx) => {
                 //hold column
                 if (filter && filter.indexOf(item.props.field) === -1) {
                     return null;
@@ -869,7 +894,12 @@ export class Table extends React.Component<Props, State> {
                 if (item.props.hide) {
                     return null;
                 }
-                return <col key={idx} id={this.domId + '-' + idx} width={item.props.width} />
+                const col_id = this.domId + '-' + idx
+                let width = item.props.width;
+                if (this.dragCache[col_id]) {
+                    width = this.dragCache[col_id];
+                }
+                return <col key={idx} id={this.domId + '-' + idx} width={width} />
             })}
         </colgroup>
     }
@@ -888,7 +918,7 @@ export class Table extends React.Component<Props, State> {
             headers.push(
                 <tr>
                     {offset > 0 && filter_type !== 'after' ? <th colSpan={offset} /> : null}
-                    {list.map((item: any,idx:number) => {
+                    {list.map((item: any, idx: number) => {
                         let colsCount = item.props.cols;
                         if (filter && totalCols >= filter.length) return null;
                         if (filter && colsCount > filter.length) {
@@ -929,7 +959,7 @@ export class Table extends React.Component<Props, State> {
                         <th className='chk' style={{ textAlign: 'center', width: '30px' }}>
                             <CCheckbox ref={(c: any) => { this.allchk = c }} onChange={this.selectAll} checked={this.state.selectAll} half={this.state.selectHalf} />
                         </th> : null}
-                    {this.headers.map((item:TableHeader, key) => {
+                    {this.headers.map((item: TableHeader, key) => {
                         if (!item || item.props.hide) {
                             return null;
                         }
@@ -939,7 +969,7 @@ export class Table extends React.Component<Props, State> {
                         }
                         const align = this.props.headerAlign || item.props.align || this.props.align;
                         const style: StrObject = {
-                            'textAlign': align??'',
+                            'textAlign': align ?? '',
                         };
                         if (item.props.width) {
                             style.width = item.props.width;
@@ -956,11 +986,11 @@ export class Table extends React.Component<Props, State> {
                         }
                         return (
                             <th key={key} data-key={'head_' + key} style={style}>
-                                {item.props.onSort ? <a className='sort' data-sort={item.props.sort??undefined}
+                                {item.props.onSort ? <a className='sort' data-sort={item.props.sort ?? undefined}
                                     onClick={this.sortHandler(item.props.field, item.props.onSort)}>
                                     {item.props.text}{'\u0020'}
                                     <Icon icon={sort_icon} /></a> : item.props.text}
-                                {this.props.move ? <span data-key={this.domId + '-' + key} className='column-split'/> : null}
+                                {this.props.move && this.props.width ? <span data-key={this.domId + '-' + key} className={'column-split ' + (!this.props.bordered ? 'column-split-show' : '')} /> : null}
                             </th>
                         );
                     })}
@@ -1046,7 +1076,7 @@ export class Table extends React.Component<Props, State> {
                     this.mainMenu.show({ evt: e, type: 'mouse', data: row });
                 }} onMouseOver={this.hoverAuthorRow} onMouseOut={this.hoverAuthorRow} className={classString} onClick={this.clickHandler(row, i)}>
                     {this.props.serialNumber && filter_type !== 'after' ?
-                        <th className={'sn text-nowrap' + (this.props.headerTheme?' table-' + Theme[this.props.headerTheme]:'')} style={{ textAlign: 'center', width: '30px' }}>
+                        <th className={'sn text-nowrap' + (this.props.headerTheme ? ' table-' + Theme[this.props.headerTheme] : '')} style={{ textAlign: 'center', width: '30px' }}>
                             {this.formatSn(i)}
                         </th> : null}
                     {this.state.select && filter_type !== 'after' ?
@@ -1081,7 +1111,7 @@ export class Table extends React.Component<Props, State> {
                         let tree, parent;
 
                         if (item.props.tree) {
-                            const is_tree = (typeof item.props.tree === "function")?item.props.tree(row):item.props.tree;
+                            const is_tree = (typeof item.props.tree === "function") ? item.props.tree(row) : item.props.tree;
                             if (parentRow) {
                                 parent = [];
                                 for (let i = 0; i < indent; i++) {
@@ -1089,7 +1119,7 @@ export class Table extends React.Component<Props, State> {
                                 }
                             }
                             if (!is_tree) {
-                                tree = <i className='me-1 far fa-plus-square opacity-0'/>
+                                tree = <i className='me-1 far fa-plus-square opacity-0' />
                             } else {
                                 tree = <Icon data-open={tree_status} onClick={(e: React.MouseEvent) => {
                                     const target = e.currentTarget as HTMLElement;
@@ -1143,16 +1173,16 @@ export class Table extends React.Component<Props, State> {
                                 })}</td>
                             );
                         } else {
-                            return <td className={this.props.truncate ? 'text-truncate' : ''} 
-                                        style={style} 
-                                        onDoubleClick={()=>{
-                                            if (typeof item.props.onDbClick === 'function') {
-                                                item.props.onDbClick(item.props.field,row);
-                                            }
-                                        }}
-                                        key={'col_' + key}>
-                                            {parent}{dynamic_tree || row.children ? tree : null}{item.props.onFormat ? item.props.onFormat(row[item.props.field], row, i,key,item.props.field) : row[item.props.field]}
-                                        </td>;
+                            return <td className={this.props.truncate ? 'text-truncate' : ''}
+                                style={style}
+                                onDoubleClick={() => {
+                                    if (typeof item.props.onDbClick === 'function') {
+                                        item.props.onDbClick(item.props.field, row);
+                                    }
+                                }}
+                                key={'col_' + key}>
+                                {parent}{dynamic_tree || row.children ? tree : null}{item.props.onFormat ? item.props.onFormat(row[item.props.field], row, i, key, item.props.field) : row[item.props.field]}
+                            </td>;
                         }
                     })}
                 </tr>

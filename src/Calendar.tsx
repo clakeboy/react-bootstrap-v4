@@ -792,7 +792,7 @@ const sortMonth:string[] = [
     'Jun',
     'Jul',
     'Aug',
-    'Sept',
+    'Sep',
     'Oct',
     'Nov',
     'Dec'

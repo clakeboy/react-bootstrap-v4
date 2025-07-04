@@ -111,7 +111,12 @@ class Main extends React.Component {
                 <Container className='p-0 mb-1 comm-form' inline fluid>
                     <Input className='me-1' disabled size='sm' absolute x='50px' y='150px' width='100px' placeholder='用户名' onChange={this.changeHandler('user_name')} data={this.state.pageData.user_name}/>
                     <Input className='me-1' placeholder='密码' type='password'/>
-                    <Input className='me-1' placeholder='日期' calendar/>
+                    <Input className='me-1' placeholder='日期' calendar={{format:'MMM DD, YYYY'}} data={this.state.chose_date} onChange={(val)=>{
+                        console.log(val);
+                        this.setState({
+                            chose_date:val
+                        })
+                    }}/>
                     <InputGroup className='me-1' ref={c=>this.ing=c} width={200} label="测试" data="11111"/>
                     <Dropdown className='me-1' text={this.state.dropdown.drop1} data={this.dataList}/>
                     <Dropdown className='me-1' text={this.state.dropdown.drop2} data={this.dataArrList}/>

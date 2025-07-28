@@ -117,6 +117,12 @@ class Main extends React.Component {
                             chose_date:val
                         })
                     }}/>
+                    <Input className='me-1' placeholder='日期' locked calendar={{format:'MMM DD, YYYY'}} data={this.state.chose_date} onChange={(val)=>{
+                        console.log(val);
+                        this.setState({
+                            chose_date:val
+                        })
+                    }}/>
                     <InputGroup className='me-1' ref={c=>this.ing=c} width={200} label="测试" data="11111"/>
                     <Dropdown className='me-1' text={this.state.dropdown.drop1} data={this.dataList}/>
                     <Dropdown className='me-1' text={this.state.dropdown.drop2} data={this.dataArrList}/>
@@ -159,7 +165,7 @@ class Main extends React.Component {
                         }} data={this.dataArrList} value={this.state.pageData.city} defaultValue='Dropdown Text2' summary='下载文本'/>
                     </div>
                     <div className='row'>
-                        <Input className='col-6' label='Calendar Unix Timestamp' data='1518427253' calendarFormat='unix' calendar disabled onDblClick={()=>{
+                        <Input className='col-6' label='Calendar Unix Timestamp' data='1518427253' calendar={{format:"unix"}} disabled onDblClick={()=>{
                             alert('双击');
                         }}/>
                         <Input className='col-6' size='sm' label='Calendar' data={this.state.pageData.sss_date} onChange={this.changeHandler('sss_date')} calendar={{format:"YYYY-MM-DD HH:mm",time:true}} readOnly/>

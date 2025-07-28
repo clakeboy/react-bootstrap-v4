@@ -31,6 +31,7 @@ interface Props extends ComponentProps {
   data?: any;
   summary?: string;
   readOnly?: boolean;
+  locked?: boolean|string;
   placeholder?: string;
   calendar?: CalendarProps; //{format:'',time:false,limit:{lt:'',gt:''}}
   onChange?: (val: any, row: any, obj?: any) => void;
@@ -246,7 +247,7 @@ export class Input extends React.Component<Props, State> {
       base = classNames(base, 'ck-input-valid');
     }
 
-    if ((this.props.calendar || this.props.combo) && (!this.state.disabled && !this.props.readOnly)) {
+    if ((this.props.calendar || this.props.combo) && (!this.state.disabled && !this.props.locked)) {
       base = classNames(base, 'ck-input-icon');
     }
 
@@ -480,7 +481,7 @@ export class Input extends React.Component<Props, State> {
   }
 
   renderCalendar() {
-    if (!this.props.calendar) {
+    if (!this.props.calendar || this.props.locked) {
       return null;
     }
     let input_icon = 'ck-input-calendar-icon';
@@ -516,7 +517,7 @@ export class Input extends React.Component<Props, State> {
           sm={this.props.size === 'xs'}
           triangular="up"
         />
-        {(!this.props.disabled && !this.props.readOnly) ? (
+        {(!this.props.disabled && !this.props.locked) ? (
           <div
             className={input_icon}
             onMouseDown={(e) => {
@@ -581,7 +582,8 @@ export class Input extends React.Component<Props, State> {
       this.props.calendar ||
       this.props.plaintext ||
       this.props.disableClear ||
-      this.props.readOnly
+      this.props.readOnly ||
+      this.props.locked
     ) {
       return null;
     }
@@ -638,6 +640,10 @@ export class Input extends React.Component<Props, State> {
     delete inputProps.calendarTime
     delete inputProps.calendarFormat
     delete inputProps.comboData
+    if (this.props.locked) {
+      inputProps.readOnly = true;
+      inputProps.locked = "true";
+    }
     let val:string = this.state.value ?? '';
     if (this.props.calendar && val !== "") {
       val = format(this.props.calendar?.format??this.props.calendarFormat??'', new Date(val))

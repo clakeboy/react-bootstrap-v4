@@ -162,6 +162,9 @@ export class Input extends React.Component<Props, State> {
     if (nextProps.disabled !== this.props.disabled) {
       return true;
     }
+    if (nextProps.locked !== this.props.locked) {
+      return true;
+    }
     if (nextProps.label !== this.props.label) {
       return true;
     }
@@ -640,6 +643,7 @@ export class Input extends React.Component<Props, State> {
     delete inputProps.calendarTime
     delete inputProps.calendarFormat
     delete inputProps.comboData
+    delete inputProps.underline
     if (this.props.locked) {
       inputProps.readOnly = true;
       inputProps.locked = "true";

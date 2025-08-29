@@ -15,6 +15,7 @@ import sourcemaps from 'gulp-sourcemaps';
 import historyApiFallback from 'connect-history-api-fallback';
 import header from 'gulp-header';
 import gulpLoadPlugins from 'gulp-load-plugins';
+import concat from 'gulp-concat';
 let $ = gulpLoadPlugins();
 
 const banner = `/* ${pkg.name} v${pkg.version} | by Clake
@@ -137,6 +138,12 @@ gulp.task('build:over',()=>{
         .pipe(header(banner))
         .pipe(gulp.dest('dist/'));
 });
+
+gulp.task("merge:tds",()=>{
+    return gulp.src('lib/types/src/**/*.d.ts')
+        .pipe(concat('index.d.ts'))
+        .pipe(gulp.dest('dist/'))
+})
 
 gulp.task('default', gulp.series('server'));
 

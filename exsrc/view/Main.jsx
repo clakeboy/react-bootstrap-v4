@@ -180,6 +180,14 @@ class Main extends React.Component {
                     <TextArea label='Summary' htmlMode height='500px' data={this.state.pageData.text_area}/>
 
                     <TextArea label='Summary' height='500px' data={this.state.pageData.text_area}/>
+                    <div className="row mt-2">
+                        <div className="col">
+                            <TextArea htmlMode height='500px' data={this.state.pageData.text_area}/>
+                        </div>
+                        <div className="col">
+                            <TextArea label='Summary' height='500px' locked data={this.state.pageData.text_area}/>
+                        </div>
+                    </div>
                 </Card>
                 <Card header='absolute card small size' absolute sm x='0' y='0' width='100px' height='100px'>
 

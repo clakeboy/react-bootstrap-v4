@@ -1,6 +1,4 @@
-textarea {
-  resize:none;
-}
+
 .ck-text-html {
   &::before {
     z-index: 3;
@@ -14,6 +12,9 @@ textarea {
 }
 
 .ck-text-area {
+  textarea {
+    resize:none;
+  }
   z-index: 1;
   position: relative;
 
@@ -91,7 +92,12 @@ textarea {
       background-color: #fff;
       border-radius: 50%;
     }
-    
+  }
+
+  .input-control {
+    &[locked] {
+      background-color: var(--bs-secondary-bg);
+    }
   }
 }
 

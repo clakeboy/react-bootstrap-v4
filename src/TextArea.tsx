@@ -20,6 +20,7 @@ interface Props extends ComponentProps {
     row?: number
     htmlMode?: boolean
     htmlBar?: boolean
+    locked?: boolean|string;
 }
 
 interface State {
@@ -76,6 +77,9 @@ export class TextArea extends React.Component<Props,State> {
         }
         if (this.props.disabled !== nextProps.disabled) {
             return true
+        }
+        if (nextProps.locked !== this.props.locked) {
+            return true;
         }
 
         if (this.props.htmlMode) {
@@ -159,7 +163,7 @@ export class TextArea extends React.Component<Props,State> {
     }
 
     getInputClasses() {
-        let base = 'form-control';
+        let base = 'form-control input-control';
         //readonly
         if (this.props.plaintext) {
             base = 'form-control-plaintext';
@@ -408,6 +412,10 @@ export class TextArea extends React.Component<Props,State> {
         delete inputProps.htmlBar
         delete inputProps.plaintext
         delete inputProps.htmlMode
+        if (this.props.locked) {
+            inputProps.readOnly = true;
+            inputProps.locked = "true";
+        }
         return <textarea ref={(c:any) => this.input = c} {...inputProps} style={style} onChange={this.changeHandler} value={this.state.value ?? ''} className={this.getInputClasses()} id={this.domId} />
     }
 
@@ -416,8 +424,9 @@ export class TextArea extends React.Component<Props,State> {
         if (this.props.height) {
             style.height = this.props.height;
         }
+
         return <div ref={(c:any) => this.input = c}
-            contentEditable={!this.props.readOnly}
+            contentEditable={!this.props.readOnly && !this.props.locked}
             id={this.domId}
             className={this.getInputClasses()}
             style={style}

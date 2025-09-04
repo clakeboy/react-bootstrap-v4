@@ -47,6 +47,7 @@ export class TextArea extends React.Component<Props,State> {
     mainDom:HTMLElement
     isFull:boolean
     fullBtn:HTMLElement
+    currntPos:number
     constructor(props: any) {
         super(props);
         this.state = {
@@ -211,6 +212,7 @@ export class TextArea extends React.Component<Props,State> {
     };
 
     inputHandler = () => {
+        // this.currntPos = getCaret(this.input as HTMLDivElement)
         this.setState({
             html: this.input.innerHTML,
             // value: this.input.innerHTML
@@ -218,6 +220,9 @@ export class TextArea extends React.Component<Props,State> {
             if (this.props.onChange && typeof this.props.onChange === 'function') {
                 this.props.onChange(this.state.html, this);
             }
+            // replaceCaret(this.input)
+            // setCaret(this.input as HTMLDivElement,this.currntPos)
+            // this.input.focus();
         });
     };
 
@@ -435,8 +440,8 @@ export class TextArea extends React.Component<Props,State> {
             // onDragOver={e=>{e.preventDefault();}}
             // onDragEnd={this.dragEndHandler}
             onDrop={this.dropHandler}
-            dangerouslySetInnerHTML={{ __html: this.getContent() }}
-        />
+            dangerouslySetInnerHTML={{ __html: this.props.data ?? '' }}
+        ></div>
     }
 
     getContent() {
@@ -514,5 +519,23 @@ export class TextArea extends React.Component<Props,State> {
     }
 }
 
+function replaceCaret(el: HTMLElement) {
+  // Place the caret at the end of the element
+  const target = document.createTextNode('');
+  el.appendChild(target);
+  // do not move caret if element was not focused
+  const isTargetFocused = document.activeElement === el;
+  if (target !== null && target.nodeValue !== null && isTargetFocused) {
+    const sel = window.getSelection();
+    if (sel !== null) {
+      const range = document.createRange();
+      range.setStart(target, target.nodeValue.length);
+      range.collapse(true);
+      sel.removeAllRanges();
+      sel.addRange(range);
+    }
+    if (el instanceof HTMLElement) el.focus();
+  }
+}
 
 export default TextArea;

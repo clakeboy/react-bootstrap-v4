@@ -177,9 +177,21 @@ class Main extends React.Component {
                     <div className='row'>
                         <CalendarRange className='col-6' label='Calendar Range'/>
                     </div>
-                    <TextArea label='Summary' htmlMode height='500px' data={this.state.pageData.text_area}/>
+                    <TextArea label='Summary' htmlMode height='500px' data={this.state.pageData.text_area} onChange={(val)=>{
+                        this.setState({
+                            pageData:{
+                                text_area:val
+                            }
+                        })
+                    }}/>
 
-                    <TextArea label='Summary' height='500px' data={this.state.pageData.text_area}/>
+                    <TextArea label='Summary' height='500px' data={this.state.pageData.text_area} onChange={(val)=>{
+                        this.setState({
+                            pageData:{
+                                text_area:val
+                            }
+                        })
+                    }}/>
                     <div className="row mt-2">
                         <div className="col">
                             <TextArea htmlMode height='500px' data={this.state.pageData.text_area}/>

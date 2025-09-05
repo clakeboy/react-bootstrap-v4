@@ -103,7 +103,9 @@ export class Input extends React.Component<Props, State> {
       this.input.addEventListener(
         'focus',
         (e) => {
-          this.calendar.show(e.currentTarget as HTMLElement);
+          if (!this.props.disabled && !this.props.locked) {
+            this.calendar.show(e.currentTarget as HTMLElement);
+          }
         },
         false
       );

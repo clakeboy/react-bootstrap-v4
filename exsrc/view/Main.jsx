@@ -172,7 +172,7 @@ class Main extends React.Component {
                     </div>
                     <div className='row'>
                         <Input className='col-6' size='lg' label='Calendar' data={this.state.pageData.chose_date} onChange={this.changeHandler('chose_date')} calendar={{format:"MMM DD,YYYY"}} readOnly/>
-                        <Input className='col-6' size='xs' label='Calendar' data={this.state.pageData.chose_date} onChange={this.changeHandler('chose_date')} calendar readOnly/>
+                        <Input className='col-6' size='xs' label='Calendar' data={this.state.pageData.chose_date} locked onChange={this.changeHandler('chose_date')} calendar readOnly/>
                     </div>
                     <div className='row'>
                         <CalendarRange className='col-6' label='Calendar Range'/>

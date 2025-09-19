@@ -111,6 +111,9 @@ export class Pagination extends React.PureComponent<Props,State> {
         for (let i=start;i<=end;i++) {
             if (i <= this.count) {
                 arr.push(i);
+                if (i === this.count) {
+                    this.is_more = false;
+                }
             } else {
                 this.is_more = false;
                 break;

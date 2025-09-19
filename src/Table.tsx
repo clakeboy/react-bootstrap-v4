@@ -177,6 +177,7 @@ export class Table extends React.Component<Props, State> {
         this.unSticky();
         this.unTouchScrollHandler();
     }
+
     //表头随页面滚动自动浮动到顶部
     sticky() {
         if (!this.props.sticky) return
@@ -227,6 +228,17 @@ export class Table extends React.Component<Props, State> {
             if (this.beforeHeader) {
                 this.beforeHeader.style.transform = `translate3d(0,0,10px)`;
             }
+        }
+    }
+
+    clearSticky() {
+        if (this.tableHeader)
+            this.tableHeader.style.transform = `translate3d(0,0,10px)`;
+        if (this.afterHeader) {
+            this.afterHeader.style.transform = `translate3d(0,0,10px)`;
+        }
+        if (this.beforeHeader) {
+            this.beforeHeader.style.transform = `translate3d(0,0,10px)`;
         }
     }
 
@@ -297,8 +309,10 @@ export class Table extends React.Component<Props, State> {
     componentDidUpdate() {
         this.syncRowsHeight();
         this.holdShow();
+        // this.clearSticky();
         this.unSticky();
         this.sticky()
+        this.stickyHeader();
         this.bindSplit();
     }
 
@@ -1097,9 +1111,9 @@ export class Table extends React.Component<Props, State> {
                         //hold column
                         if (filter) {
                             if (filter_type === 'main') {
-                                if (filter.includes(item.props.field)) {
-                                    return <td className={this.props.truncate ? 'text-truncate' : ''} style={style} key={'col_' + key} />
-                                }
+                                // if (filter.includes(item.props.field)) {
+                                //     return <td className={this.props.truncate ? 'text-truncate' : ''} style={style} key={'col_' + key} />
+                                // }
                             } else {
                                 if (!filter.includes(item.props.field)) {
                                     return null

@@ -107,6 +107,9 @@ class Main extends React.Component {
                     <Button className='me-1' onClick={e=>{
                         this.props.history.push('/mobile',this.state);
                     }}>转到移动端测试 &gt;</Button>
+                    <Button className='me-1' onClick={e=>{
+                        this.props.history.push('/table_test',this.state);
+                    }}>转到 Table</Button>
                 </Container>
                 <Container className='p-0 mb-1 comm-form' inline fluid>
                     <Input className='me-1' disabled size='sm' absolute x='50px' y='150px' width='100px' placeholder='用户名' onChange={this.changeHandler('user_name')} data={this.state.pageData.user_name}/>

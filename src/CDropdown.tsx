@@ -18,8 +18,9 @@ interface State {
 }
 
 interface ValueProps {
-    text: string
+    text: any
     value: any
+    format?: any
     active?: boolean
 }
 
@@ -33,7 +34,7 @@ export class CDropdown extends React.Component<Props,State> {
     static defaultProps = {
         data: '',
         text: '',
-        showRows: 5,
+        showRows: 8,
         dropWidth: '100%',
     };
 
@@ -61,6 +62,7 @@ export class CDropdown extends React.Component<Props,State> {
                     list.push({
                         text: item.props.text,
                         value: item.props.value,
+                        format: item.props.format,
                     });
                     if (item.props.active) {
                         active = item.props.text;

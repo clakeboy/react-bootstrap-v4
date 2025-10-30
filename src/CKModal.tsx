@@ -176,7 +176,7 @@ export class CKModal extends React.Component<Props,State> {
         // document.body.classList.add("ck-model-blur")
     }
 
-    close() {
+    close(callback_close?:()=>void) {
         this.setState({
             show: false
         },()=>{
@@ -190,6 +190,9 @@ export class CKModal extends React.Component<Props,State> {
                     document.body.classList.remove("modal-open");
                     if (this.hasScrollbar()) {
                         document.body.style.paddingRight = '0';
+                    }
+                    if (typeof callback_close === 'function') {
+                        callback_close();
                     }
                 },this.state.fade?300:0)
                 if (this.props.blurSelector) {

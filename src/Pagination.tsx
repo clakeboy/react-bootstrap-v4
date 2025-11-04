@@ -70,7 +70,7 @@ export class Pagination extends React.PureComponent<Props,State> {
         }
     }
 
-    clickHandler(page:string) {
+    clickHandler(page:string|number) {
         return (e:React.MouseEvent)=>{
             e.preventDefault();
             if (!this.props.onSelect) return
@@ -194,7 +194,7 @@ export class Pagination extends React.PureComponent<Props,State> {
         return this.state.data.map((v,idx)=>{
             return (
                 <li key={idx} className={this.current === v?"page-item active":"page-item"}>
-                    {this.current === v?<a className="page-link" onClick={this.clickHandler('stop')}>{v}</a>:<a className="page-link" onClick={this.clickHandler(v.toString())}>{v}</a>}
+                    {this.current === v?<a className="page-link" onClick={this.clickHandler('stop')}>{v}</a>:<a className="page-link" onClick={this.clickHandler(v)}>{v}</a>}
                 </li>
             )
         });

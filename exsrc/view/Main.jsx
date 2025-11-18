@@ -70,6 +70,7 @@ class Main extends React.Component {
 
     changeHandler(name){
         return (val)=>{
+            console.log(name,val);
             let data = this.state.pageData;
             data[name] = val;
             this.setState({

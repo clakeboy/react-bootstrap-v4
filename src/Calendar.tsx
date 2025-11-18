@@ -435,6 +435,10 @@ export class Calendar extends React.PureComponent<Props, State, any> {
             if (typeof this.props.onSelect === 'function') {
                 this.props.onSelect(this.format());
             }
+        } else if (val === '') {
+            if (typeof this.props.onSelect === 'function') {
+                this.props.onSelect("");
+            }
         }
     }
 

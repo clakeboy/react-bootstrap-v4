@@ -85,8 +85,9 @@ export class Input extends React.Component<Props, State> {
   mainDom: HTMLElement;
   constructor(props: any) {
     super(props);
+
     this.state = {
-      value: this.props.data,
+      value: this.formatValue(this.props.data),
       validate: true,
       disabled: this.props.disabled ?? false,
       comboData: this.props.comboData,
@@ -179,6 +180,13 @@ export class Input extends React.Component<Props, State> {
     return nextState.value !== this.state.value;
   }
 
+  formatValue(val:string) {
+    if (this.props.calendar && val !== "") {
+      val = format(this.props.calendar?.format??this.props.calendarFormat??'', new Date(val))
+    }
+    return val
+  }
+
   getValue() {
     return this.state.value;
   }
@@ -219,7 +227,6 @@ export class Input extends React.Component<Props, State> {
         base.height = 'calc(1.5em + .75rem + 2px)'
       }
     }
-
     return common.extend(base, this.props.style);
   }
 
@@ -336,7 +343,8 @@ export class Input extends React.Component<Props, State> {
     };
 
     this.setState(state, () => {
-      if (typeof this.props.onChange === 'function') {
+      if (typeof this.props.onChange === 'function' 
+        && !this.props.calendar) {
         this.props.onChange(state.value, null, this);
       }
       if (this.combo) {
@@ -650,10 +658,7 @@ export class Input extends React.Component<Props, State> {
       inputProps.readOnly = true;
       inputProps.locked = "true";
     }
-    let val:string = this.state.value ?? '';
-    if (this.props.calendar && val !== "") {
-      val = format(this.props.calendar?.format??this.props.calendarFormat??'', new Date(val))
-    }
+    const val:string = this.state.value ?? '';
 
     return (
       <div ref={(c:any)=>{this.mainDom=c}}

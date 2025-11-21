@@ -37,6 +37,7 @@ class Coupon extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            chose_date:"2018-01-01",
             data:{},
             tree:[
                 {
@@ -203,6 +204,17 @@ class Coupon extends React.Component {
                         <Input calendar readOnly width='120px' data={'2023-10-21'} disabled onDblClick={()=>{
                             this.modal.alert('双击');
                         }}/>
+                        <Input className='me-1' placeholder='日期' calendar={{format:'MMM DD, YYYY'}} data={this.state.chose_date} onChange={(val)=>{
+                            console.log(val);
+                            this.setState({
+                                chose_date:val
+                            })
+                        }}/>
+                        <Button onClick={()=>{
+                            this.setState({
+                                chose_date:'2023-10-21'
+                            })
+                        }}>设置</Button>
                     </Container>
                     <Form onChange={(field,val,row)=>{
                         console.log(field,val,row);

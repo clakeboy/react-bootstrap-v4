@@ -54,6 +54,7 @@ interface Props extends ComponentProps {
   min?: any;
   underline?: boolean
   color?: string
+  hidden?: boolean //是否隐藏
 }
 
 interface State {
@@ -153,7 +154,7 @@ export class Input extends React.Component<Props, State> {
 
   UNSAFE_componentWillReceiveProps(nextProps: Props) {
     this.setState({
-      value: nextProps.data,
+      value: this.formatValue(nextProps.data),
       comboData: nextProps.comboData,
     });
   }
@@ -163,6 +164,9 @@ export class Input extends React.Component<Props, State> {
       return true;
     }
     if (nextProps.disabled !== this.props.disabled) {
+      return true;
+    }
+    if (nextProps.hidden !== this.props.hidden) {
       return true;
     }
     if (nextProps.locked !== this.props.locked) {

@@ -185,7 +185,7 @@ export class Input extends React.Component<Props, State> {
   }
 
   formatValue(val:string) {
-    if (this.props.calendar && val !== "") {
+    if (this.props.calendar && val) {
       val = format(this.props.calendar?.format??this.props.calendarFormat??'', new Date(val))
     }
     return val

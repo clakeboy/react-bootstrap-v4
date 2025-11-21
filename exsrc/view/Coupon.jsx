@@ -37,7 +37,6 @@ class Coupon extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            chose_date:"2018-01-01",
             data:{},
             tree:[
                 {
@@ -215,6 +214,11 @@ class Coupon extends React.Component {
                                 chose_date:'2023-10-21'
                             })
                         }}>设置</Button>
+                        <Button onClick={()=>{
+                            this.setState({
+                                chose_date:''
+                            })
+                        }}>设置空</Button>
                     </Container>
                     <Form onChange={(field,val,row)=>{
                         console.log(field,val,row);

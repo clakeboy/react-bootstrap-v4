@@ -37,6 +37,7 @@ class Coupon extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            chose_date:'2018-10-21',
             data:{},
             tree:[
                 {

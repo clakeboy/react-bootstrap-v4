@@ -216,7 +216,7 @@ class Main extends React.Component {
                         </Button>
                     </Container>
                     <Container inline>
-                        <CCheckbox label='clake' disabled className='me-2'/>
+                        <CCheckbox label='clake' locked className='me-2'/>
                         <CCheckbox label='clake' disabled checked className='me-2'/>
                     </Container>
                     <Container inline>

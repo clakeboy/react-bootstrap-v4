@@ -11,6 +11,7 @@ interface Props extends ComponentProps {
     checked?: boolean;
     onChange?: (checked: boolean, e?: Event) => void;
     half?: boolean;
+    locked?: boolean;
 }
 
 interface State {
@@ -52,6 +53,9 @@ export class CCheckbox extends React.Component<Props, State> {
 
     shouldComponentUpdate(nextProps: Props, nextState: State) {
         if (nextProps.disabled !== this.props.disabled) {
+            return true;
+        }
+        if (nextProps.locked !== this.props.locked) {
             return true;
         }
         if (nextProps.label !== this.props.label) {
@@ -130,7 +134,7 @@ export class CCheckbox extends React.Component<Props, State> {
     }
 
     changeHandler = (e: any) => {
-        if (this.props.disabled) return;
+        if (this.props.disabled || this.props.locked) return;
         const chk = !this.state.checked;
         this.setState({ checked: chk, half: false });
         if (typeof this.props.onChange === 'function') {
@@ -139,7 +143,7 @@ export class CCheckbox extends React.Component<Props, State> {
     };
 
     keyUpHandler = (e: any) => {
-        if (this.props.disabled) return;
+        if (this.props.disabled || this.props.locked) return;
         if (e.key !== 'Enter' && e.key !== ' ') return;
         const chk = !this.state.checked;
         this.setState({ checked: chk, half: false });

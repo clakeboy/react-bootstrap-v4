@@ -107,12 +107,12 @@ export class Upload {
             })
         }
         const xhr = new XMLHttpRequest();
+        xhr.open("post",this.uploadHost,true);
         if (headers) {
             Common.map(headers,(item:any,key:string)=>{
                 xhr.setRequestHeader(key,item);
             })
         }
-        xhr.open("post",this.uploadHost,true);
         // 请求成功回调函数
         xhr.addEventListener('load', (e: ProgressEvent) => {
             const status = xhr.status;

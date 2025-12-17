@@ -437,7 +437,7 @@ class TestModal extends React.PureComponent {
                                 console.log(data);
                             });
                         }}>改变值</Button>
-                        <Input label="测试本地数据 Combo (超小)" size={'xs'} combo={{
+                        <Input label="测试本地数据 Combo (超小)" disabled size={'xs'} combo={{
                             searchColumn:'task_name',
                             header:true,
                             showRows:5,

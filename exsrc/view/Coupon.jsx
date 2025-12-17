@@ -233,7 +233,7 @@ class Coupon extends React.Component {
                     }}>
                         <div className='row comm-box-hover'>
                             <Input className='col-6' field='name' label='Name' data={this.state.data.name} multi={{height:'100px'}} validate={{text:'请选择下拉选择',rule:/.+/}}/>
-                            <ComboBox className='col-6' field='task_combo' label='Task' width='100%' searchColumn='task_name_eng'
+                            <ComboBox className='col-6' field='task_combo' locked label='Task' width='100%' searchColumn='task_name_eng'
                                       data={this.child} value={this.state.data.task_combo} validate={{text:'请选择Task',rule:/.+/}}>
                                 <ComboBox.Column text='任务名英文' field='task_name_eng'/>
                                 <ComboBox.Column text='任务名' field='task_name'/>
@@ -241,7 +241,7 @@ class Coupon extends React.Component {
                             </ComboBox>
                         </div>
                         <div className='row'>
-                            <CDropdown className='col-6' field='text_drop' label='asdf' text='下拉选择' data={this.state.data.text_drop} validate={{text:'请选择下拉选择',rule:/.+/}}>
+                            <CDropdown className='col-6' field='text_drop' locked label='asdf' text='下拉选择' data={this.state.data.text_drop} validate={{text:'请选择下拉选择',rule:/.+/}}>
                                 <CDropdown.Value text="选项1" value={11111} active={this.state.data.text_drop==='选项1'}/>
                                 <CDropdown.Value text='选项2' value={222222} active={this.state.data.text_drop==='选项2'}/>
                             </CDropdown>

@@ -94,7 +94,7 @@ export class Upload {
         fileDom.click();
     }
     //upload to host
-    up(post_data:{[propName: string]: any}) {
+    up(post_data?:{[propName: string]: any},headers?:{[propName: string]: string}) {   
         if (!this.currentFile) {
             return
         }
@@ -107,6 +107,11 @@ export class Upload {
             })
         }
         const xhr = new XMLHttpRequest();
+        if (headers) {
+            Common.map(headers,(item:any,key:string)=>{
+                xhr.setRequestHeader(key,item);
+            })
+        }
         xhr.open("post",this.uploadHost,true);
         // 请求成功回调函数
         xhr.addEventListener('load', (e: ProgressEvent) => {

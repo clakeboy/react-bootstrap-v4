@@ -66,14 +66,29 @@ export class Upload {
             dragDom = dom as HTMLElement;
         }
         if (dragDom) {
+            dragDom.addEventListener("dragover",this.dragOver,false);
+            dragDom.addEventListener("dragleave",this.dropHandler,false);
             dragDom.addEventListener("drop",this.dropHandler,false);
         }
         this.isInit = true;
     }
 
-    dropHandler = (e:DragEvent)=> {
-        e.stopPropagation();
+    dragOver = (e:DragEvent)=> { 
         e.preventDefault();
+        const dom = e.currentTarget as HTMLElement;
+        dom.style.border = "1px solid #0095ff"
+    }
+
+    dragLeave = (e:DragEvent)=> {
+        e.preventDefault();
+        const dom = e.currentTarget as HTMLElement;
+        dom.style.border = "none"
+    }
+
+    dropHandler = (e:DragEvent)=> {
+        e.preventDefault();
+        const dom = e.currentTarget as HTMLElement;
+        dom.style.border = "none"
         if (e.dataTransfer && e.dataTransfer.files.length > 0) {
             this.currentFile = e.dataTransfer.files[0];
             if (typeof this.changeEvent === 'function') {

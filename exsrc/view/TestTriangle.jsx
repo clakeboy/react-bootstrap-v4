@@ -5,6 +5,7 @@
 import React from 'react';
 import {Button, Card, Container, Input, DropPanel,Upload} from "../../src";
 import '../../src/css/Triangle.less';
+import '../css/upload.less'
 
 class TestTriangle extends React.Component {
     upload;
@@ -20,8 +21,8 @@ class TestTriangle extends React.Component {
             error: this.uploadError,      //错误回调
             field: 'update_file',      //上传文件 POST的字段名
             host: 'http://localhost:12345/upload',  //上传后端地址
-            // drag_target: 'drag_file',//上传文件拖动
-            drag_target: this.dragDom,//上传文件拖动对像,可以直接传react ref对像
+            drag_target: 'drop_file',//上传文件拖动
+            // drag_target: this.dragDom,//上传文件拖动对像,可以直接传react ref对像
         });
     }
 
@@ -63,7 +64,10 @@ class TestTriangle extends React.Component {
                     <Button onClick={()=>{
                         this.upload.choose();
                     }}>点击上传文件</Button>
-                    <Input ref={c=>this.dragDom=c} label='文件' data={this.state?.filename}/>
+                    <Input label='文件' data={this.state?.filename}/>
+                    <div id="drop_file" className="up-drop d-flex align-items-center justify-content-center" style={{height:"300px"}}>
+                        <div>拖入文件上传</div>
+                    </div>
                     <div className='cleafix'>
                         <div className='position-relative d-inline border p-2 float-end' id='test_drop_panel_left'>
                             <span>点击测试</span>

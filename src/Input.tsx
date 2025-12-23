@@ -1,9 +1,9 @@
 import React, { KeyboardEvent } from 'react';
 import classNames from 'classnames/bind';
 import common from './Common';
-import Calendar,{format} from './Calendar';
+import Calendar, { format } from './Calendar';
 import Combo, { ComboProps } from './Combo';
-import Icon,{IconRef} from './Icon';
+import Icon, { IconRef } from './Icon';
 import i18n from './components/i18n';
 
 import './css/Input.less';
@@ -31,7 +31,7 @@ interface Props extends ComponentProps {
   data?: any;
   summary?: string;
   readOnly?: boolean;
-  locked?: boolean|string;
+  locked?: boolean | string;
   placeholder?: string;
   calendar?: CalendarProps; //{format:'',time:false,limit:{lt:'',gt:''}}
   onChange?: (val: any, row: any, obj?: any) => void;
@@ -50,12 +50,12 @@ interface Props extends ComponentProps {
   labelClass?: string;
   disableClear?: boolean;
   multi?: { height?: string }; //
-  max?:any;
+  max?: any;
   min?: any;
   underline?: boolean
   color?: string
   hidden?: boolean //是否隐藏
-  onFromat?: (val: any) => any; //格式化数据
+  onFormat?: (val: any) => any; //格式化数据
 }
 
 interface State {
@@ -64,6 +64,7 @@ interface State {
   disabled: boolean;
   comboData: any;
   icon: string;
+  originValue: any;
 }
 
 export class Input extends React.Component<Props, State> {
@@ -94,6 +95,7 @@ export class Input extends React.Component<Props, State> {
       disabled: this.props.disabled ?? false,
       comboData: this.props.comboData,
       icon: this.props.combo ? 'angle-down' : this.props.calendar ? 'calendar-alt' : '',
+      originValue: this.props.data,
     };
 
     this.domId = this.props.id ?? 'input-' + common.RandomString(16);
@@ -134,7 +136,7 @@ export class Input extends React.Component<Props, State> {
     this.input.addEventListener('blur', this.blurHandler, false);
     this.input.addEventListener('mousedown', stopEvent, false);
     if (this.props.validate && this.props.validate?.tip) {
-      this.tip = new Tooltip(document.getElementById(this.domId) as HTMLElement,{
+      this.tip = new Tooltip(document.getElementById(this.domId) as HTMLElement, {
         trigger: 'manual',
         template:
           '<div class="tooltip ck-input-tip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner bg-danger"></div></div>',
@@ -156,6 +158,7 @@ export class Input extends React.Component<Props, State> {
   UNSAFE_componentWillReceiveProps(nextProps: Props) {
     this.setState({
       value: this.formatValue(nextProps.data),
+      originValue: nextProps.data,
       comboData: nextProps.comboData,
     });
   }
@@ -185,9 +188,11 @@ export class Input extends React.Component<Props, State> {
     return nextState.value !== this.state.value;
   }
 
-  formatValue(val:string) {
+  formatValue(val: string) {
     if (this.props.calendar && val) {
-      val = format(this.props.calendar?.format??this.props.calendarFormat??'', new Date(val))
+      val = format(this.props.calendar?.format ?? this.props.calendarFormat ?? '', new Date(val))
+    } else if (this.props.onFormat && val) {
+      val = this.props.onFormat(val);
     }
     return val
   }
@@ -203,7 +208,7 @@ export class Input extends React.Component<Props, State> {
   getMainClasses() {
     let base = this.props.label ? 'mb-3' : '';
     if (this.props.hidden) {
-        base =  classNames(base, 'd-none');
+      base = classNames(base, 'd-none');
     }
     return classNames(base, this.props.className);
   }
@@ -264,7 +269,7 @@ export class Input extends React.Component<Props, State> {
       base = classNames(base, 'ck-input-valid');
     }
 
-    if ((this.props.calendar || this.props.combo) && (!this.state.disabled && !this.props.locked)) {
+    if ((this.props.calendar || this.props.combo || this.state.icon) && (!this.state.disabled && !this.props.locked)) {
       base = classNames(base, 'ck-input-icon');
     }
 
@@ -274,11 +279,11 @@ export class Input extends React.Component<Props, State> {
 
     if (this.props.align) {
       if (this.props.align === 'left') {
-          base = classNames(base, `text-start`);
+        base = classNames(base, `text-start`);
       } else if (this.props.align === 'right') {
-          base = classNames(base, `text-end`);
+        base = classNames(base, `text-end`);
       } else {
-          base = classNames(base, `text-${this.props.align}`);
+        base = classNames(base, `text-${this.props.align}`);
       }
     }
 
@@ -309,8 +314,8 @@ export class Input extends React.Component<Props, State> {
     return common.extend(base, this.props.textStyle);
   }
 
-  check(flag?:boolean) {
-    const validate = flag??this.validate(this.state.value);
+  check(flag?: boolean) {
+    const validate = flag ?? this.validate(this.state.value);
     this.setState({
       validate: validate,
     });
@@ -320,7 +325,7 @@ export class Input extends React.Component<Props, State> {
   validate(val: string) {
     if (this.props.validate) {
       const vali = this.props.validate;
-      let valid:boolean;
+      let valid: boolean;
       if (typeof vali.rule === 'function') {
         valid = vali.rule(val);
       } else {
@@ -345,11 +350,13 @@ export class Input extends React.Component<Props, State> {
   changeHandler = (e: any) => {
     const state = {
       value: e.target ? e.target.value : e,
+      originValue: e.target ? e.target.value : e,
     };
 
     this.setState(state, () => {
-      if (typeof this.props.onChange === 'function' 
-        && !this.props.calendar) {
+      if (typeof this.props.onChange === 'function'
+        && !this.props.calendar 
+        && !this.props.onFormat) {
         this.props.onChange(state.value, null, this);
       }
       if (this.combo) {
@@ -361,6 +368,11 @@ export class Input extends React.Component<Props, State> {
   blurHandler = (e: FocusEvent) => {
     this.setState({
       validate: this.validate((e.target as HTMLInputElement).value),
+      value: this.formatValue(this.state.originValue),
+    },()=>{
+      if (typeof this.props.onChange === 'function' && this.props.onFormat) {
+        this.props.onChange(this.state.originValue, null, this);
+      }
     });
   };
 
@@ -399,6 +411,11 @@ export class Input extends React.Component<Props, State> {
       });
       // this.clearIcon.setIcon('times-circle');
     }
+    if (this.props.onFormat) {
+      this.setState({
+        value: this.state.originValue
+      });
+    }
   };
 
   //is multi show
@@ -412,10 +429,10 @@ export class Input extends React.Component<Props, State> {
     // this.multi.style.width = width+'px';
     // this.multi.style.height = this.props.multi.height ?? '100px';
     // this.input.style.height = this.props.multi.height ?? '100px';
-    
+
     this.input.style.width = window.getComputedStyle(this.input).width;
     this.input.classList.add('ck-input-multi-show', 'shadow');
-    
+
     this.input.style.height = this.props?.multi?.height ?? '100px';
   };
 
@@ -478,7 +495,7 @@ export class Input extends React.Component<Props, State> {
       return null;
     }
     return (
-      <label htmlFor={this.domId} className={'form-label '+this.props.labelClass}>
+      <label htmlFor={this.domId} className={'form-label ' + this.props.labelClass}>
         {this.props.label}
       </label>
     );
@@ -570,7 +587,7 @@ export class Input extends React.Component<Props, State> {
           sm={this.props.size === 'sm' || this.props.size === 'xs'}
           data={this.state.comboData}
           noSearch={this.props.readOnly}
-          onShow={() => {}}
+          onShow={() => { }}
           onSelect={this.selectHandler}
         />
         <div
@@ -649,7 +666,7 @@ export class Input extends React.Component<Props, State> {
     if (this.props.multi) {
       return this.renderMulti();
     }
-    const inputProps:Props = {...this.props}
+    const inputProps: Props = { ...this.props }
     delete inputProps.absolute
     delete inputProps.disableClear
     delete inputProps.calendar
@@ -663,10 +680,10 @@ export class Input extends React.Component<Props, State> {
       inputProps.readOnly = true;
       inputProps.locked = "true";
     }
-    const val:string = this.state.value ?? '';
+    const val: string = this.state.value ?? '';
 
     return (
-      <div ref={(c:any)=>{this.mainDom=c}}
+      <div ref={(c: any) => { this.mainDom = c }}
         id={this.domId + '-main'}
         className={this.getMainClasses()}
         style={this.getMainStyles()}
@@ -698,7 +715,7 @@ export class Input extends React.Component<Props, State> {
 
   renderMulti() {
     return (
-      <div id={this.domId + '-main'} ref={(c:any)=>{this.mainDom=c}} className={this.getMainClasses()} style={this.getMainStyles()}>
+      <div id={this.domId + '-main'} ref={(c: any) => { this.mainDom = c }} className={this.getMainClasses()} style={this.getMainStyles()}>
         {this.renderLabel()}
         <textarea
           {...this.props}

@@ -10,12 +10,14 @@ import {
 
 import App from './components/App';
 import Doc from './doc/Main';
+import InputOnFormatTest from './view/InputOnFormatTest';
 
 const routes = (
     <Router>
         <Switch>
-            <Route path='/doc/:path*' component={Doc}/>
-            <Route component={App}/>
+            <Route path='/doc/:path*' component={Doc} />
+            <Route path='/test/input-format' component={InputOnFormatTest} />
+            <Route component={App} />
         </Switch>
     </Router>
 );

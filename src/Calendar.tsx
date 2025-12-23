@@ -208,6 +208,14 @@ export class Calendar extends React.PureComponent<Props, State, any> {
         if (value) {
             if (/^\d{1,10}$/.test(value)) {
                 this.current_date = new Date(value * 1000);
+            } else if (/^\d{1,2}(\.|-|\/)\d{1,2}$/g.test(value)) {
+                const arr = value.split(/\.|-|\//);
+                const month = parseInt(arr[0]);
+                const day = parseInt(arr[1]);
+                const currDate = new Date();
+                currDate.setMonth(month - 1);
+                currDate.setDate(day);
+                this.current_date = currDate;
             } else {
                 this.current_date = new Date(value);
             }

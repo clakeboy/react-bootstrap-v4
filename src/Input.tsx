@@ -55,6 +55,7 @@ interface Props extends ComponentProps {
   underline?: boolean
   color?: string
   hidden?: boolean //是否隐藏
+  onFromat?: (val: any) => any; //格式化数据
 }
 
 interface State {

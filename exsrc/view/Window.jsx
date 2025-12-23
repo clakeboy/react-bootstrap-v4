@@ -78,6 +78,10 @@ class Window extends React.Component {
             "source"         : "",
             "created_date"   : 1530767866
         }];
+
+        this.state = {
+            number: 1234567.39
+        }
     }
 
     componentDidMount() {
@@ -198,6 +202,24 @@ class Window extends React.Component {
                         </GroupStyle>
                     </div>
                     </Form>
+                </Card>
+                <Card header='数字 format 测试'>
+                    <div>
+                        <Input label={'原始数据'} width='300px' data={this.state.number} onChange={(val)=>{
+                            this.setState({
+                                number: val
+                            })
+                        }}/>
+                    </div>
+                    <div>
+                        <span>数字</span> {Intl.NumberFormat("en-US",{minimumFractionDigits:2}).format(this.state.number)}
+                    </div>
+                    <div>
+                        <span>货币</span> {Intl.NumberFormat("en-US",{style:"currency",currency:"USD",minimumFractionDigits:2}).format(this.state.number)}
+                    </div>
+                    <div>
+                        <span>百分比</span> {Intl.NumberFormat("en-US",{style:"percent",minimumFractionDigits:2}).format(this.state.number)}
+                    </div>
                 </Card>
                 <Card header='SVG 测试'>
                     <div id='svg_con'></div>

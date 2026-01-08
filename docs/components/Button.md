@@ -1,20 +1,14 @@
 # Button 组件
 
-Button组件是一个功能丰富的按钮组件，支持多种主题、尺寸和状态。
+Button 组件用于触发操作，支持主题、轮廓样式、加载态和尺寸变化。
 
 ## 基本用法
 
 ```jsx
 import { Button } from '@clake/react-bootstrap4';
 
-// 基本按钮
-<Button>点击我</Button>
-
-// 主要主题按钮
+<Button>默认按钮</Button>
 <Button theme="primary">主要按钮</Button>
-
-// 次要主题按钮
-<Button theme="secondary">次要按钮</Button>
 ```
 
 ## 属性
@@ -30,44 +24,27 @@ import { Button } from '@clake/react-bootstrap4';
 | size | string | 'df' | 按钮大小（lg, sm, xs）|
 | onClick | function | null | 点击事件处理函数 |
 
-## 示例
+## 进阶用法
 
-### 基本按钮
-
-```jsx
-<Button theme="primary">主要按钮</Button>
-<Button theme="secondary">次要按钮</Button>
-<Button theme="success">成功按钮</Button>
-```
-
-### 轮廓按钮
+### 轮廓与主题
 
 ```jsx
 <Button outline theme="primary">轮廓主要按钮</Button>
-<Button outline theme="secondary">轮廓次要按钮</Button>
+<Button theme="success">成功按钮</Button>
 ```
 
-### 带图标按钮
+### 图标与加载态
 
 ```jsx
 <Button icon="home">首页</Button>
 <Button icon="user">用户</Button>
-```
-
-### 加载状态按钮
-
-```jsx
 <Button loading>加载中...</Button>
 ```
 
-### 大小按钮
+### 尺寸与块级
 
 ```jsx
 <Button size="lg">大按钮</Button>
 <Button size="sm">小按钮</Button>
-```
-
-### 块级按钮
-
-```jsx
 <Button block theme="primary">块级按钮</Button>
+```

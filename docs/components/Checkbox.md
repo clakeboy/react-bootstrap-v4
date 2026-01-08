@@ -46,32 +46,3 @@ import { Checkbox } from '@clake/react-bootstrap4';
 ```jsx
 <Checkbox label="选项1" onChange={(evt, obj) => console.log(evt, obj)} />
 ```
-
-### 内联复选框
-
-```jsx
-<Checkbox inline label="选项2" onChange={(evt, obj) => console.log(evt, obj)} />
-```
-
-### 设置默认选中状态
-
-```jsx
-<Checkbox label="选项3" checked onChange={(evt, obj) => console.log(evt, obj)} />
-```
-
-### 禁用复选框
-
-```jsx
-<Checkbox label="选项4" disabled onChange={(evt, obj) => console.log(evt, obj)} />
-```
-
-### 设置绝对定位
-
-```jsx
-<Checkbox label="选项5" absolute x="10px" y="20px" onChange={(evt, obj) => console.log(evt, obj)} />
-```
-
-### 使用自定义类名
-
-```jsx
-<Checkbox label="选项6" className="custom-checkbox" onChange={(evt, obj) => console.log(evt, obj)} />

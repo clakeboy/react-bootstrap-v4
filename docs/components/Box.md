@@ -43,26 +43,3 @@ import { Box } from '@clake/react-bootstrap4';
 ```jsx
 <Box>这是一个基本的容器</Box>
 ```
-
-### 绝对定位容器
-
-```jsx
-<Box absolute x="10px" y="20px">这是一个绝对定位的容器</Box>
-```
-
-### 设置宽度和高度
-
-```jsx
-<Box width="200px" height="100px">这是一个宽度为200px，高度为100px的容器</Box>
-```
-
-### 设置边框宽度和颜色
-
-```jsx
-<Box borderWidth="2px" borderColor="#ff0000">这是一个边框宽度为2px，颜色为红色的容器</Box>
-```
-
-### 设置背景颜色
-
-```jsx
-<Box backColor="#f0f0f0">这是一个背景颜色为浅灰色的容器</Box>

@@ -45,38 +45,3 @@ import { Calendar } from '@clake/react-bootstrap4';
 ```jsx
 <Calendar onSelect={(date) => console.log(date)} />
 ```
-
-### 带有时钟的日历选择器
-
-```jsx
-<Calendar format="YYYY-MM-DD HH:mm:ss" onSelect={(date) => console.log(date)} />
-```
-
-### 设置初始日期
-
-```jsx
-<Calendar value="2023-10-01" onSelect={(date) => console.log(date)} />
-```
-
-### 设置语言
-
-```jsx
-<Calendar lang="en" onSelect={(date) => console.log(date)} />
-```
-
-### 设置日期范围限制
-
-```jsx
-<Calendar limit={{ lt: '2023-01-01', gt: '2023-12-31' }} onSelect={(date) => console.log(date)} />
-```
-
-### 使用三角形指示器
-
-```jsx
-<Calendar triangular="up" onSelect={(date) => console.log(date)} />
-```
-
-### 使用小尺寸样式
-
-```jsx
-<Calendar sm onSelect={(date) => console.log(date)} />

@@ -1,6 +1,6 @@
 # Input 组件
 
-Input组件是一个功能强大的输入框组件，支持多种类型和扩展功能，如日历选择器、下拉选择等。
+Input 组件用于文本输入与校验，支持日历选择器、下拉选择等扩展能力。
 
 ## 基本用法
 
@@ -70,44 +70,3 @@ import { Input } from '@clake/react-bootstrap4';
 ```jsx
 <Input placeholder="请输入文本" />
 ```
-
-### 带标签的输入框
-
-```jsx
-<Input label="姓名" placeholder="请输入您的姓名" />
-```
-
-### 带日历的输入框
-
-```jsx
-<Input 
-  label="选择日期" 
-  calendar={{ format: 'YYYY-MM-DD' }} 
-/>
-```
-
-### 带下拉选择的输入框
-
-```jsx
-<Input 
-  label="选择城市" 
-  combo={{ 
-    data: [
-      { text: '北京', value: 'beijing' },
-      { text: '上海', value: 'shanghai' }
-    ] 
-  }} 
-/>
-```
-
-### 带验证的输入框
-
-```jsx
-<Input 
-  label="邮箱" 
-  validate={{ 
-    rule: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 
-    text: '请输入有效的邮箱地址',
-    tip: true
-  }} 
-/>

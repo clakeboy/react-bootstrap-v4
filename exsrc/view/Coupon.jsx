@@ -1,22 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames/bind';
-import {GetComponent} from "../common/Funcs";
 import {
     Container,
     Input,
-    InputGroup,
     Button,
     ButtonGroup,
     Card,
-    CCheckbox,
-    Checkbox,
-    Table,
-    Pagination,
-    Dropdown,
-    Select,
-    Calendar,
-    Modal,
     Theme,
     Tree,
     Title,
@@ -29,7 +17,6 @@ import {
     InputStyle,
     Complex, ComboBox, Radio, RadioGroup
 } from '../../src/index';
-import Loader from '../components/Loader';
 import AddCoupon from "./skill/AddCoupon";
 import Common from "../../src/Common";
 

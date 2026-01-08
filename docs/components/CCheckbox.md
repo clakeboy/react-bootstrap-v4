@@ -50,38 +50,3 @@ import { CCheckbox } from '@clake/react-bootstrap4';
 ```jsx
 <CCheckbox label="选项1" onChange={(checked) => console.log(checked)} />
 ```
-
-### 内联复选框
-
-```jsx
-<CCheckbox inline label="选项2" onChange={(checked) => console.log(checked)} />
-```
-
-### 禁用复选框
-
-```jsx
-<CCheckbox label="选项3" disabled onChange={(checked) => console.log(checked)} />
-```
-
-### 半选复选框
-
-```jsx
-<CCheckbox label="选项4" half onChange={(checked) => console.log(checked)} />
-```
-
-### 设置主题
-
-```jsx
-<CCheckbox label="选项5" theme="primary" onChange={(checked) => console.log(checked)} />
-```
-
-### 绝对定位
-
-```jsx
-<CCheckbox label="选项6" absolute x="10px" y="20px" onChange={(checked) => console.log(checked)} />
-```
-
-### 使用自定义类名
-
-```jsx
-<CCheckbox label="选项7" className="custom-class" onChange={(checked) => console.log(checked)} />

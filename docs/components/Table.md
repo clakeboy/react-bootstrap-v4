@@ -1,6 +1,6 @@
 # Table 组件
 
-Table组件是一个功能强大的表格组件，支持数据展示、选择、排序、树形结构等高级功能。
+Table 组件用于数据展示与交互，支持选择、排序、树形结构等能力。
 
 ## 基本用法
 
@@ -57,52 +57,3 @@ import { Table } from '@clake/react-bootstrap4';
   <Table.Header field="email" text="邮箱" />
 </Table>
 ```
-
-### 带选择功能的表格
-
-```jsx
-<Table data={data} select={true} onCheck={(checked, row) => console.log(checked, row)}>
-  <Table.Header field="name" text="姓名" />
-  <Table.Header field="age" text="年龄" />
-</Table>
-```
-
-### 带排序功能的表格
-
-```jsx
-<Table data={data}>
-  <Table.Header field="name" text="姓名" sort="asc" onSort={(field, type) => console.log(field, type)} />
-  <Table.Header field="age" text="年龄" sort="desc" onSort={(field, type) => console.log(field, type)} />
-</Table>
-```
-
-### 带树形结构的表格
-
-```jsx
-<Table data={treeData} tree={true} onClickTree={(row, callback) => {
-  // 加载子节点数据
-  callback(childrenData);
-}}>
-  <Table.Header field="name" text="名称" />
-</Table>
-```
-
-### 带自定义列的表格
-
-```jsx
-<Table data={data}>
-  <Table.Header field="name" text="姓名" />
-  <Table.Header field="actions" text="操作">
-    {row => (
-      <Button size="sm" onClick={() => console.log('编辑', row)}>编辑</Button>
-    )}
-  </Table.Header>
-</Table>
-```
-
-### 带分页的表格
-
-```jsx
-<Table data={data} currentPage={currentPage} onRefresh={() => console.log('刷新')}>
-  <Table.Header field="name" text="姓名" />
-</Table>

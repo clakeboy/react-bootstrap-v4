@@ -190,6 +190,10 @@ export class Input extends React.Component<Props, State> {
 
   formatValue(val: string) {
     if (this.props.calendar && val) {
+      //判断是否是日期格式
+      if (isNaN((new Date(val)).getTime())) {
+        return val
+      }
       val = format(this.props.calendar?.format ?? this.props.calendarFormat ?? '', new Date(val))
     } else if (this.props.onFormat && val) {
       val = this.props.onFormat(val);
@@ -370,7 +374,7 @@ export class Input extends React.Component<Props, State> {
       validate: this.validate((e.target as HTMLInputElement).value),
       value: this.formatValue(this.state.originValue),
     },()=>{
-      if (typeof this.props.onChange === 'function' && this.props.onFormat) {
+      if (typeof this.props.onChange === 'function') {
         this.props.onChange(this.state.originValue, null, this);
       }
     });

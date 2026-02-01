@@ -65,7 +65,9 @@ class Main extends React.Component {
     }
 
     componentDidMount() {
-
+        this.setState({
+            input_format: 9999.9999
+        })
     }
 
     changeHandler(name){
@@ -116,7 +118,8 @@ class Main extends React.Component {
                     <Input className='me-1' disabled size='sm' absolute x='50px' y='150px' width='100px' placeholder='用户名' onChange={this.changeHandler('user_name')} data={this.state.pageData.user_name}/>
                     <Input className='me-1' placeholder='密码' type='password'/>
                     <Input className='me-1' placeholder='日期' calendar={{format:'MMM DD, YYYY'}} data={this.state.chose_date} onChange={(val)=>{
-                        console.log("main:",val);
+                        console.log("main:",new Date(val), isNaN(new Date(val)));
+                        
                         this.setState({
                             chose_date:val
                         })
@@ -180,6 +183,9 @@ class Main extends React.Component {
                     </div>
                     <div className='row'>
                         <CalendarRange className='col-6' label='Calendar Range'/>
+                        <Input className='col-6' data={this.state.input_format} label='OnFormat Test' onFormat={(val)=>{
+                            return val?Intl.NumberFormat("en-US",{style:"percent",minimumFractionDigits:2}).format(val):''
+                        }}/>
                     </div>
                     <TextArea label='Summary' htmlMode height='500px' data={this.state.pageData.text_area} onChange={(val)=>{
                         this.setState({

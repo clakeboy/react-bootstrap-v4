@@ -374,7 +374,7 @@ export class Input extends React.Component<Props, State> {
       validate: this.validate((e.target as HTMLInputElement).value),
       value: this.formatValue(this.state.originValue),
     },()=>{
-      if (typeof this.props.onChange === 'function') {
+      if (typeof this.props.onChange === 'function' && (this.props.onFormat || this.props.calendar)) {
         this.props.onChange(this.state.originValue, null, this);
       }
     });

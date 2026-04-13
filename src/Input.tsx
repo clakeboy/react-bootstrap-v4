@@ -195,7 +195,7 @@ export class Input extends React.Component<Props, State> {
         return val
       }
       val = format(this.props.calendar?.format ?? this.props.calendarFormat ?? '', new Date(val))
-    } else if (this.props.onFormat && val) {
+    } else if (this.props.onFormat) {
       val = this.props.onFormat(val);
     }
     return val

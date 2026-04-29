@@ -202,11 +202,10 @@ export class Combo extends React.Component<ComboProps,State> {
     }
 
     moveItem(step=0) {
-        console.log(this.nodeList);
         if (!this.nodeList) {
             return
         }
-        if (!this.currentSelect) {
+        if (this.currentSelect === undefined || this.currentSelect === null) {
             this.currentSelect = 0;
         } else {
             if (this.nodeList[this.currentSelect]) {
@@ -257,7 +256,7 @@ export class Combo extends React.Component<ComboProps,State> {
     }
 
     selectItem() {
-        if (this.nodeList && this.currentSelect && this.nodeList[this.currentSelect]) {
+        if (this.nodeList && this.currentSelect !== undefined && this.nodeList[this.currentSelect]) {
             this.nodeList[this.currentSelect].click();
         }
     }
@@ -305,6 +304,7 @@ export class Combo extends React.Component<ComboProps,State> {
         }
         this.clearSelect();
         this.isClose = true;
+        this.currentSelect = undefined;
     };
 
     selectHandler = (row:any,i:string)=>{

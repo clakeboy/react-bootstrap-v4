@@ -7,6 +7,7 @@ interface Props extends ComponentProps{
     active  ?: boolean
     fade    ?: boolean
     disabled?: boolean
+    hidden  ?: boolean
     onClick ?: () => void
 }
 

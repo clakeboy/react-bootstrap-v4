@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import classNames from 'classnames/bind';
 import './css/Calender.less';
 import Icon from './Icon';
@@ -157,6 +158,9 @@ export class Calendar extends React.PureComponent<Props, State, any> {
     componentWillUnmount() {
         // $(window).off('mousedown',this.hide);
         window.removeEventListener('mousedown', this.hide, false);
+        if (this.props.absolute) {
+            window.removeEventListener('scroll', this.fixPosition, true);
+        }
         if (this.parentDom) {
             this.parentDom.removeEventListener('blur', this.hide, false);
             this.parentDom.removeEventListener('keypress', this.keyPressHandler, false);
@@ -367,6 +371,9 @@ export class Calendar extends React.PureComponent<Props, State, any> {
         this.mainDom.classList.add('ck-calendar-none');
         this.isClose = true;
         window.removeEventListener('mousedown', this.hide, false);
+        if (this.props.absolute) {
+            window.removeEventListener('scroll', this.fixPosition, true);
+        }
         // this.parentDom.removeEventListener('blur',this.hide,false);
         // this.parentDom.removeEventListener('click',this.checkShow,false);
         // this.parentDom.removeEventListener('keypress',this.keyPressHandler,false);
@@ -380,9 +387,9 @@ export class Calendar extends React.PureComponent<Props, State, any> {
         // });
         if (this.props.absolute) {
             window.addEventListener('mousedown', this.hide, false);
-            //fixed out window area
-            this.fixPosition();
+            window.addEventListener('scroll', this.fixPosition, true);
             this.mainDom.classList.remove('ck-calendar-none');
+            this.fixPosition();
         }
         this.parentDom.addEventListener('blur', this.hide, false);
         this.parentDom.addEventListener('click', this.checkShow, false);
@@ -395,12 +402,19 @@ export class Calendar extends React.PureComponent<Props, State, any> {
         this.clientWidth = this.mainTable.clientWidth;
     }
 
-    fixPosition() {
-        const scrollParent = common.hasScrolledParent(this.parentDom) ?? document.documentElement;
-        const position = common.GetDomXY(this.parentDom, null);
-        if (position.top + this.parentDom.clientHeight + this.mainDom.offsetHeight >
-            scrollParent.scrollTop + scrollParent.clientHeight) {
-            this.mainDom.style.top = -(this.parentDom.offsetHeight + this.mainDom.offsetHeight) + 'px';
+    fixPosition = () => {
+        if (!this.parentDom || !this.mainDom) {
+            return
+        }
+        const rect = this.parentDom.getBoundingClientRect();
+        const scrollX = window.scrollX || document.documentElement.scrollLeft;
+        const scrollY = window.scrollY || document.documentElement.scrollTop;
+        
+        this.mainDom.style.left = (rect.left + scrollX) + 'px';
+        
+        const calendarHeight = this.mainDom.offsetHeight;
+        if (rect.bottom + calendarHeight > window.innerHeight) {
+            this.mainDom.style.top = (rect.top + scrollY - calendarHeight) + 'px';
             this.mainDom.classList.remove('ck-calendar-up');
             this.mainDom.classList.add('ck-calendar-bottom');
             if (this.props.sm) {
@@ -408,7 +422,7 @@ export class Calendar extends React.PureComponent<Props, State, any> {
                 this.mainDom.classList.add('ck-calendar-bottom-sm');
             }
         } else {
-            this.mainDom.style.top = '0';
+            this.mainDom.style.top = (rect.bottom + scrollY) + 'px';
             this.mainDom.classList.remove('ck-calendar-bottom');
             this.mainDom.classList.add('ck-calendar-up');
             if (this.props.sm) {
@@ -683,6 +697,9 @@ export class Calendar extends React.PureComponent<Props, State, any> {
             </div>
         );
 
+        if (this.props.absolute) {
+            return ReactDOM.createPortal(content, document.body);
+        }
         return content;
     }
 

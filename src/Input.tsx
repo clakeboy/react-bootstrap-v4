@@ -386,7 +386,7 @@ export class Input extends React.Component<Props, State> {
    * @param row object
    */
   selectHandler = (text: string, row: any) => {
-    this.setState({ value: text }, () => {
+    this.setState({ value: text, originValue:text }, () => {
       if (typeof this.props.onChange === 'function') {
         this.props.onChange(text, row, this);
       }
@@ -540,6 +540,7 @@ export class Input extends React.Component<Props, State> {
           onSelect={(val: any) => {
             this.setState({
               value: val,
+              originValue: val,
             });
             if (this.props.onChange && typeof this.props.onChange === 'function') {
               this.props.onChange(val, this);

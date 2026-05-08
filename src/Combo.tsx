@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import classNames from 'classnames/bind';
 import Table from './Table';
 import TableHeader from './TableHeader';
@@ -33,6 +34,8 @@ interface State {
     data: any
     loading: boolean
     emptyText: string
+    width: string | undefined
+    show: boolean
 }
 
 export class Combo extends React.Component<ComboProps,State> {
@@ -63,9 +66,10 @@ export class Combo extends React.Component<ComboProps,State> {
         this.state = {
             data:this.props.data,
             loading:this.isRemote,
-            emptyText:this.props.empty??'Not Data'
+            emptyText:this.props.empty??'Not Data',
+            width:this.props.width,
+            show:false
         };
-
         this.search = this.props.search??'';
         this.isClose = true;
         this.isMobile = Common.Version().mobile;
@@ -138,20 +142,24 @@ export class Combo extends React.Component<ComboProps,State> {
         this.parentDom.addEventListener('blur',this.hide,false);
         this.parentDom.addEventListener('click',this.checkShow,false);
         window.addEventListener('mousedown',this.hide,false);
+        window.addEventListener('scroll',this.fixPosition,true);
         // document.querySelectorAll('.ck-combo').forEach((item)=>{
         //     item.classList.add('d-none');
         // });
-        this.mainDom.classList.remove("ck-none");
-        this.filter(search??'');
-        if (typeof this.props.onShow === 'function') {
-            this.props.onShow();
-        }
-        this.isClose = false;
-        
+        this.setState({
+            show:true,
+        },()=>{
+            this.filter(search??'');
+            if (typeof this.props.onShow === 'function') {
+                this.props.onShow();
+            }
+            this.isClose = false;
+            this.fixPosition();
+        });
     }
 
     checkShow = ()=> {
-        if (this.isClose) {
+        if (!this.state.show) {
             this.show(this.search,this.parentDom as HTMLElement);
         }
     };
@@ -261,15 +269,19 @@ export class Combo extends React.Component<ComboProps,State> {
         }
     }
 
-    fixPosition() {
-        if (this.isMobile) {
+    fixPosition = () => {
+        if (this.isMobile || !this.parentDom || !this.mainDom) {
             return
         }
-        const scrollParent = common.hasScrolledParent(this.parentDom) ?? document.documentElement;
-        const position = common.GetDomXY(this.parentDom,null);
-        if (position.top + this.parentDom.clientHeight + this.mainDom.offsetHeight >
-            scrollParent.scrollTop + scrollParent.clientHeight) {
-            this.mainDom.style.top = -(this.parentDom.offsetHeight+this.mainDom.offsetHeight)+'px';
+        const rect = this.parentDom.getBoundingClientRect();
+        const scrollX = window.scrollX || document.documentElement.scrollLeft;
+        const scrollY = window.scrollY || document.documentElement.scrollTop;
+        
+        this.mainDom.style.left = (rect.left + scrollX) + 'px';
+        
+        const comboHeight = this.mainDom.offsetHeight;
+        if (rect.bottom + comboHeight > window.innerHeight) {
+            this.mainDom.style.top = (rect.top + scrollY - comboHeight) + 'px';
             this.mainDom.classList.remove('ck-combo-up');
             this.mainDom.classList.add('ck-combo-bottom');
             if (this.props.sm) {
@@ -277,7 +289,7 @@ export class Combo extends React.Component<ComboProps,State> {
                 this.mainDom.classList.add('ck-combo-bottom-sm');
             }
         } else {
-            this.mainDom.style.top = '0';
+            this.mainDom.style.top = (rect.bottom + scrollY) + 'px';
             this.mainDom.classList.remove('ck-combo-bottom');
             this.mainDom.classList.add('ck-combo-up');
             if (this.props.sm) {
@@ -288,23 +300,27 @@ export class Combo extends React.Component<ComboProps,State> {
     }
 
     hide = () => {
-        window.removeEventListener('mousedown',this.hide,false);
-        this.mainDom.classList.add("ck-none");
-        if (this.conDom) {
-            this.conDom.style.overflowY = 'none';
-            this.conDom.style.height = '100%';
-        }
-        if (typeof this.props.onClose === 'function') {
-            this.props.onClose();
-        }
-        if (this.isRemote) {
-            this.setState({
-                loading:true
-            });
-        }
-        this.clearSelect();
-        this.isClose = true;
-        this.currentSelect = undefined;
+        this.setState({
+            show:false,
+        },()=>{
+            window.removeEventListener('mousedown',this.hide,false);
+            window.removeEventListener('scroll',this.fixPosition,true);
+            if (this.conDom) {
+                this.conDom.style.overflowY = 'none';
+                this.conDom.style.height = '100%';
+            }
+            if (typeof this.props.onClose === 'function') {
+                this.props.onClose();
+            }
+            if (this.isRemote) {
+                this.setState({
+                    loading:true
+                });
+            }
+            this.clearSelect();
+            this.isClose = true;
+            this.currentSelect = undefined;
+        });
     };
 
     selectHandler = (row:any,i:string)=>{
@@ -412,7 +428,7 @@ export class Combo extends React.Component<ComboProps,State> {
     }
 
     getClasses() {
-        let base = 'ck-combo border ck-none shadow';
+        let base = 'ck-combo border shadow';
 
         if (this.props.triangular) {
             base = classNames(base,'ck-calendar-'+this.props.triangular)
@@ -427,6 +443,10 @@ export class Combo extends React.Component<ComboProps,State> {
         if (this.isMobile) {
             base = classNames(base,'ck-combo-mobile');
         }
+        
+        if (!this.state.show) {
+            base = classNames(base,'ck-none');
+        }
 
         return classNames(base,this.props.className);
     }
@@ -436,16 +456,20 @@ export class Combo extends React.Component<ComboProps,State> {
         if (this.props.height) {
             base.height = this.props.height;
         }
-        if (this.props.width && !this.state.loading && this.state.data) {
-            base.width = this.props.width;
+        if (this.state.width && !this.state.loading && this.state.data) {
+            base.width = this.state.width;
         } else {
-            base.width = 'auto';
+            if (this.parentDom) {
+                base.width = this.parentDom.clientWidth+'px';
+            } else {
+                base.width = 'auto';
+            }
         }
         return base;
     }
 
     render() {
-        return (
+        const content = (
             <div ref={c=>this.mainDom=c as HTMLDivElement} className={this.getClasses()} style={this.getStyles()}
                  onMouseDown={(e)=>{
                      e.stopPropagation();
@@ -455,6 +479,7 @@ export class Combo extends React.Component<ComboProps,State> {
                     this.state.data?this.renderList():this.renderNotResult()}
             </div>
         );
+        return ReactDOM.createPortal(content, document.body);
     }
 
     renderLoading() {

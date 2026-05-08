@@ -49,6 +49,7 @@ export class ComboBox extends React.Component<Props,any> {
         multi:false,
         multiDef:null,
         header:false,
+        width:'auto',
     };
     main:Input
     constructor(props:any) {

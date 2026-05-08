@@ -176,7 +176,7 @@ class Coupon extends React.Component {
         return (
             <Container>
                 <h1>React Bootstrap v5 Demo 2</h1>
-                <Button onClick={()=>{
+                <Button className={this.state.btn_hidden?'d-none':''} onClick={()=>{
                     this.props.history.goBack();
                 }}>返回主页</Button>
                 <Card className='mt-2 comm-box-hover' custom header="Load 动画组件">

@@ -75,7 +75,6 @@ export class CDropdown extends React.Component<Props,State> {
             <Input ref={(c:any)=>this.main=c} className={this.props.className} width={this.props.width} combo={{
                 searchColumn:'text',
                 noSearch:true,
-                width: this.props.dropWidth,
                 filterColumns: ['text'],
                 showRows: this.props.showRows,
             }} comboData={this.listData} label={this.props.label} readOnly

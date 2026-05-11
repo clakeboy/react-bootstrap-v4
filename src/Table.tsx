@@ -181,7 +181,6 @@ export class Table extends React.Component<Props, State> {
     //表头随页面滚动自动浮动到顶部
     sticky() {
         if (!this.props.sticky) return
-        console.log(this.props.sticky, this.headers)
         const parentScroll = hasScrolledParent(this.mainDom)
         if (parentScroll === undefined) {
             document.addEventListener('scroll', this.stickyHeader, false)

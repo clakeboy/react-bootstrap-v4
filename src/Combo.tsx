@@ -497,7 +497,7 @@ export class Combo extends React.Component<ComboProps,State> {
         const columns = this.filterColumns();
         return (
             <div ref={c=>this.conDom=c as HTMLDivElement} className='ck-combo-content'>
-                <Table ref={(c:any)=>this.table=c} height='100px' select={this.props.multi}
+                <Table ref={(c:any)=>this.table=c} height='100px' sticky={false} select={this.props.multi}
                        header={this.props.header}
                        headerTheme={Theme.light}
                        truncate={true}

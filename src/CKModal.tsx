@@ -185,21 +185,19 @@ export class CKModal extends React.Component<Props,State> {
             let modals = parseInt(document.body.dataset.modals??'1');
             modals -= 1;
             document.body.dataset.modals = modals+'';
-            if (modals === 0) {
-                setTimeout(()=>{
-                    document.body.classList.remove("modal-open");
-                    if (this.hasScrollbar()) {
-                        document.body.style.paddingRight = '0';
-                    }
-                    if (typeof callback_close === 'function') {
-                        callback_close();
-                    }
-                },this.state.fade?300:0)
-                if (this.props.blurSelector) {
-                    const selector = document.querySelector(this.props.blurSelector);
-                    if (selector) {
-                        selector.classList.remove("ck-model-blur");
-                    }
+            setTimeout(()=>{
+                document.body.classList.remove("modal-open");
+                if (this.hasScrollbar()) {
+                    document.body.style.paddingRight = '0';
+                }
+                if (typeof callback_close === 'function') {
+                    callback_close();
+                }
+            },this.state.fade?300:0)
+            if (this.props.blurSelector) {
+                const selector = document.querySelector(this.props.blurSelector);
+                if (selector) {
+                    selector.classList.remove("ck-model-blur");
                 }
             }
             this.closeHandler();

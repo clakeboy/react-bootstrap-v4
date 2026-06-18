@@ -488,6 +488,9 @@ export class Input extends React.Component<Props, State> {
   mainDblHandler = () => {
     if (typeof this.props.onDblClick === 'function') {
       this.props.onDblClick();
+      if (this.combo) {
+        this.combo.hide();
+      }
     }
   };
 
@@ -605,6 +608,7 @@ export class Input extends React.Component<Props, State> {
               if (this.props?.combo?.multi) {
                 this.combo.clearMulti();
               }
+              this.combo.clear();
             } else {
               this.input.focus();
             }

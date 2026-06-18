@@ -37,6 +37,7 @@ interface Props extends ComponentProps {
     validate?: any
     placeholder?: string
     readOnly?: boolean
+    canInputText?: boolean //can input text in combo 
 }
 
 export class ComboBox extends React.Component<Props,any> {

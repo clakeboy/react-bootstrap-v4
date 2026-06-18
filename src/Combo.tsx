@@ -28,6 +28,7 @@ export interface ComboProps extends ComponentProps {
     searchType?: string // 'start','include'
     triangular?: string
     empty?: string //empty data show text
+    canInputText?: boolean //can input text in combo 
 }
 
 interface State {
@@ -46,7 +47,8 @@ export class Combo extends React.Component<ComboProps,State> {
         multi:false,
         multiDef:null,
         header:false,
-        searchType: 'start'
+        searchType: 'start',
+        canInputText:false
     };
 
     isRemote:boolean
@@ -60,6 +62,7 @@ export class Combo extends React.Component<ComboProps,State> {
     currentSelect?:number
     filterTime?:any
     isMobile:boolean
+    selectItemData:any
     constructor(props:any) {
         super(props);
         this.isRemote = !!this.props.onSearch;
@@ -73,6 +76,7 @@ export class Combo extends React.Component<ComboProps,State> {
         this.search = this.props.search??'';
         this.isClose = true;
         this.isMobile = Common.Version().mobile;
+        this.selectItemData = null;
     }
 
     componentDidMount() {
@@ -320,6 +324,11 @@ export class Combo extends React.Component<ComboProps,State> {
             this.clearSelect();
             this.isClose = true;
             this.currentSelect = undefined;
+            if (!this.selectItemData && !this.props.canInputText 
+                && !this.props.multi
+                && typeof this.props.onSelect === 'function') {
+                this.props.onSelect('',null);
+            }
         });
     };
 
@@ -334,6 +343,7 @@ export class Combo extends React.Component<ComboProps,State> {
             this.props.onSelect(row[searchColumn],row);
         }
         this.search = row[searchColumn];
+        this.selectItemData = row;
         this.hide();
     };
 
@@ -351,6 +361,10 @@ export class Combo extends React.Component<ComboProps,State> {
 
     clearMulti() {
         this.table.selectAll(false);
+    }
+
+    clear() {
+        this.selectItemData = null;
     }
 
     filter(search:string) {

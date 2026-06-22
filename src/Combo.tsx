@@ -63,6 +63,7 @@ export class Combo extends React.Component<ComboProps,State> {
     filterTime?:any
     isMobile:boolean
     selectItemData:any
+    dirty:boolean
     constructor(props:any) {
         super(props);
         this.isRemote = !!this.props.onSearch;
@@ -77,6 +78,7 @@ export class Combo extends React.Component<ComboProps,State> {
         this.isClose = true;
         this.isMobile = Common.Version().mobile;
         this.selectItemData = null;
+        this.dirty = false;
     }
 
     componentDidMount() {
@@ -137,6 +139,9 @@ export class Combo extends React.Component<ComboProps,State> {
     }
 
     setSearchText(text:string) {
+        if (text !== this.search) {
+            this.dirty = true;
+        }
         this.search = text;
     }
 
@@ -154,6 +159,7 @@ export class Combo extends React.Component<ComboProps,State> {
             show:true,
         },()=>{
             this.filter(search??'');
+            this.dirty = false;
             if (typeof this.props.onShow === 'function') {
                 this.props.onShow();
             }
@@ -304,8 +310,10 @@ export class Combo extends React.Component<ComboProps,State> {
     }
 
     hide = () => {
+        if (!this.state.show) return
         this.setState({
             show:false,
+            loading:this.isRemote?true:false
         },()=>{
             window.removeEventListener('mousedown',this.hide,false);
             window.removeEventListener('scroll',this.fixPosition,true);
@@ -316,18 +324,19 @@ export class Combo extends React.Component<ComboProps,State> {
             if (typeof this.props.onClose === 'function') {
                 this.props.onClose();
             }
-            if (this.isRemote) {
-                this.setState({
-                    loading:true
-                });
-            }
             this.clearSelect();
             this.isClose = true;
             this.currentSelect = undefined;
-            if (!this.selectItemData && !this.props.canInputText 
+            if (!this.props.canInputText 
                 && !this.props.multi
+                && this.dirty
                 && typeof this.props.onSelect === 'function') {
-                this.props.onSelect('',null);
+                if (this.selectItemData) {
+                    this.props.onSelect(this.selectItemData[this.props.searchColumn??''],this.selectItemData);
+                } else {
+                    this.props.onSelect('',null);
+                }
+                
             }
         });
     };
@@ -369,6 +378,7 @@ export class Combo extends React.Component<ComboProps,State> {
 
     filter(search:string) {
         this.search = search;
+        this.dirty = true
         if (typeof this.props.onSearch === 'function') {
             clearTimeout(this.filterTime);
             this.filterTime = setTimeout(()=>{

@@ -64,7 +64,14 @@ const Icon = forwardRef<IconRef, Props>(({
                 base = 'fas';
         }
         if (currentIcon) {
-            base = classNames(base, 'fa-' + currentIcon);
+            const reg = /^fa[rlbs]-/
+            if (reg.test(currentIcon)) {
+                base = currentIcon.substring(0,3)
+                base = classNames(base, 'fa-' + currentIcon.substring(4));
+            } else {
+                base = classNames(base, 'fa-' + currentIcon);
+            }
+            
         }
         if (spin) {
             base = classNames(base, 'fa-spin');

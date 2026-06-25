@@ -38,6 +38,7 @@ interface Props extends ComponentProps {
     placeholder?: string
     readOnly?: boolean
     canInputText?: boolean //can input text in combo 
+    inputWidth?: string //input width in combo
 }
 
 export class ComboBox extends React.Component<Props,any> {
@@ -90,6 +91,7 @@ export class ComboBox extends React.Component<Props,any> {
                    onChange={this.props.onChange}
                    combo={props}
                    validate={this.props.validate}
+                   width={this.props.inputWidth}
                    comboData={this.props.data}/>
         );
     }

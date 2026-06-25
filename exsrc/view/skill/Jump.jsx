@@ -44,7 +44,14 @@ class Jump extends React.PureComponent {
                 <Button onClick={e => {
                     this.props.history.push('/skill/calendar',this.state);
                 }}>测试样式</Button>
-                <Card>
+                <Card className='mt-2'>
+                    <div>
+                        测试样式
+                        <Icon icon='check'/> 
+                        <Icon icon='times'/> 
+                        <Icon icon='info'/> 
+                        <Icon icon='fab-gg'/>
+                    </div>
                     <Container className='p-0 mb-1' inline fluid>
                         <Input className='me-1' disabled placeholder='用户名'/>
                         <Switch className='me-1' theme={Theme.success} size='lg' checked={this.state.checked} onChange={(checked) => {

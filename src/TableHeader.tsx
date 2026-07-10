@@ -15,6 +15,8 @@ interface Props extends ComponentProps {
     width?: string
     bgColor?: Theme | string
     color?: Theme | string
+    HeaderBgColor?: Theme | string
+    HeaderColor?: Theme | string
     onClickTree?: () => void
     onDbClick?: (field:any,row:any) => void
     //static head

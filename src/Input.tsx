@@ -274,7 +274,7 @@ export class Input extends React.Component<Props, State> {
       base = classNames(base, 'ck-input-valid');
     }
 
-    if ((this.props.calendar || this.props.combo || this.state.icon) && (!this.state.disabled && !this.props.locked)) {
+    if ((this.props.calendar || this.props.combo || this.state.icon) && (!this.state.disabled && !this.props.locked && !this.props.disableIcon)) {
       base = classNames(base, 'ck-input-icon');
     }
 

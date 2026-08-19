@@ -27,6 +27,7 @@ interface Props extends ComponentProps {
     move?: boolean
     sort?: string
     textOver?: boolean
+    disabledFunc?: ((row:any) => boolean)
 }
 
 export class TableHeader extends React.Component<Props> {

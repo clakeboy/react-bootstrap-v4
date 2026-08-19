@@ -49,6 +49,7 @@ interface Props extends ComponentProps {
   textStyle?: StrObject;
   labelClass?: string;
   disableClear?: boolean;
+  disableIcon?: boolean;
   multi?: { height?: string }; //
   max?: any;
   min?: any;
@@ -560,7 +561,7 @@ export class Input extends React.Component<Props, State> {
           sm={this.props.size === 'xs'}
           triangular="up"
         />
-        {(!this.props.disabled && !this.props.locked) ? (
+        {(!this.props.disabled && !this.props.locked && !this.props.disableIcon) ? (
           <div
             className={input_icon}
             onMouseDown={(e) => {

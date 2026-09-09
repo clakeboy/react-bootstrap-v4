@@ -4,9 +4,8 @@ import classNames from 'classnames/bind';
 import './css/Calender.less';
 import Icon from './Icon';
 import common, { strpad } from './Common';
-import Button from "./Button";
 import Scroll from "./Scroll";
-import { ComponentProps, Theme } from './components/common';
+import { ComponentProps } from './components/common';
 const i18n:{[propName:string]:any} = {
     'zh': {
         'week': [
@@ -105,7 +104,8 @@ export class Calendar extends React.PureComponent<Props, State, any> {
         format: 'YYYY-MM-DD'//unix,
     }
 
-    year:{start:number,end:number} = {start:0,end:0}
+    yearSpan = 30
+    panelIsOpen = false
     isClose = true
     hours: string[]
     minute: string[]
@@ -115,8 +115,6 @@ export class Calendar extends React.PureComponent<Props, State, any> {
     failRange?: { start: any, end: any }
     domId: string
     show_date: Date
-    mainTable: HTMLTableElement
-    clientWidth: number
     mainDom: HTMLDivElement
     constructor(props: any) {
         super(props);
@@ -151,10 +149,6 @@ export class Calendar extends React.PureComponent<Props, State, any> {
         };
     }
 
-    componentDidMount() {
-        this.clientWidth = this.mainTable.clientWidth;
-    }
-
     componentWillUnmount() {
         // $(window).off('mousedown',this.hide);
         window.removeEventListener('mousedown', this.hide, false);
@@ -172,6 +166,21 @@ export class Calendar extends React.PureComponent<Props, State, any> {
     componentDidUpdate(): void {
         if (this.state.time) {
             this.touchScrollHandler();
+        }
+        const is_open = this.state.year || this.state.month;
+        if (is_open && !this.panelIsOpen) {
+            this.panelIsOpen = true;
+            this.locatePanel();
+        } else if (!is_open) {
+            this.panelIsOpen = false;
+        }
+    }
+
+    locatePanel() {
+        const panel = document.getElementById(this.domId + '-panel');
+        const active = panel?.querySelector('.active') as HTMLElement | null;
+        if (panel && active) {
+            panel.scrollTop = active.offsetTop - (panel.clientHeight - active.offsetHeight) / 2;
         }
     }
 
@@ -268,19 +277,11 @@ export class Calendar extends React.PureComponent<Props, State, any> {
     }
 
     privMonth() {
-        if (this.state.year) {
-            this.setYear(this.year.end - 10, true);
-        } else {
-            this.setMonth(this.show_date.getMonth() - 1)
-        }
+        this.setMonth(this.show_date.getMonth() - 1)
     }
 
     nextMonth() {
-        if (this.state.year) {
-            this.setYear(this.year.end + 10, true);
-        } else {
-            this.setMonth(this.show_date.getMonth() + 1)
-        }
+        this.setMonth(this.show_date.getMonth() + 1)
     }
 
     setMonth(month:any) {
@@ -297,12 +298,12 @@ export class Calendar extends React.PureComponent<Props, State, any> {
         });
     }
 
-    setYear(year:any, show:any) {
+    setYear(year:any) {
         this.show_date.setFullYear(year)
         this.setState({
             days: this.fillDateList(),
             month: false,
-            year: show,
+            year: false,
         });
     }
 
@@ -394,12 +395,6 @@ export class Calendar extends React.PureComponent<Props, State, any> {
         this.parentDom.addEventListener('blur', this.hide, false);
         this.parentDom.addEventListener('click', this.checkShow, false);
         this.parentDom.addEventListener('keypress', this.keyPressHandler, false);
-
-        this.refreshWidth();
-    }
-
-    refreshWidth() {
-        this.clientWidth = this.mainTable.clientWidth;
     }
 
     fixPosition = () => {
@@ -465,7 +460,7 @@ export class Calendar extends React.PureComponent<Props, State, any> {
     }
 
     getClasses() {
-        let base = 'ck-calendar border p-1';
+        let base = 'ck-calendar calendar-v2-main';
         //display none
         if (this.props.none) {
             base = classNames(base, 'ck-calendar-none');
@@ -486,15 +481,17 @@ export class Calendar extends React.PureComponent<Props, State, any> {
                 base = classNames(base, cls + '-sm');
             }
         }
-        //small
-        if (this.props.sm || this.props.size === 'sm') {
-            base = classNames(base, 'ck-calendar-sm');
-        }
-
-        if (this.props.size === 'lg') {
-            base = classNames(base, 'ck-calendar-lg');
-        }
         return classNames(base, this.props.className);
+    }
+
+    getSizeClass() {
+        if (this.props.sm || this.props.size === 'sm') {
+            return 'sm';
+        }
+        if (this.props.size === 'lg') {
+            return 'lg';
+        }
+        return '';
     }
 
 
@@ -532,7 +529,7 @@ export class Calendar extends React.PureComponent<Props, State, any> {
     }
     //touch scroll event
     touchScrollHandler() {
-        if (!this.props.timeBar) return
+        if (!this.isTimeBar()) return
         if ('ontouchstart' in document.documentElement) {
             const hdom = document.querySelector<HTMLDivElement>('#'+this.domId + '-h')
             hdom?.addEventListener('touchstart', this.touchStartHandler)
@@ -549,7 +546,7 @@ export class Calendar extends React.PureComponent<Props, State, any> {
     }
 
     unTouchScrollHandler() {
-        if (!this.props.timeBar) return
+        if (!this.isTimeBar()) return
         if ('ontouchstart' in document.documentElement) {
             const hdom = document.querySelector<HTMLDivElement>('#'+this.domId + '-h')
             hdom?.removeEventListener('touchstart', this.touchStartHandler)
@@ -565,94 +562,73 @@ export class Calendar extends React.PureComponent<Props, State, any> {
         }
     }
 
-    renderMonth() {
-        const divStyle = {
-            width: this.clientWidth + 'px'
-        };
-        const lang = i18n[this.props.lang as string];
-        return (
-            <tr>
-                <td colSpan={7}>
-                    <div className='ck-calendar-list' style={divStyle}>
-                        {lang.month.map((item:any, i:number) => {
-                            let class_name = 'item';
-                            if (this.show_date.getMonth() === i) {
-                                class_name = 'item active';
-                            }
-                            return <span key={i} className={class_name} onClick={() => {
-                                this.setMonth(i)
-                            }}>{item}</span>
-                        })}
-                    </div>
-                </td>
-            </tr>
-        )
+    yearList() {
+        const year = this.show_date.getFullYear();
+        const list: number[] = [];
+        for (let i = year - this.yearSpan; i <= year + this.yearSpan; i++) {
+            list.push(i);
+        }
+        return list;
     }
 
-    renderYear() {
-        let cur_year = this.show_date.getFullYear();
-        while (cur_year % 10 !== 0) {
-            cur_year += 1;
+    renderPanel() {
+        const { year, month } = this.state;
+        if (!year && !month) {
+            return null;
         }
-        const start_year = cur_year - 11;
-        this.year.start = start_year;
-        this.year.end = cur_year;
-        const year_list = [];
-        for (let i = start_year; i < start_year + 12; i++) {
-            year_list.push(i);
-        }
-        const divStyle = {
-            width: this.clientWidth + 'px'
-        };
+        const lang = i18n[this.props.lang as string];
+        const list: any[] = year ? this.yearList() : lang['month'];
         return (
-            <tr>
-                <td colSpan={7}>
-                    <div className='ck-calendar-list' style={divStyle}>
-                        {year_list.map((item,i) => {
-                            let class_name = 'item';
-                            if (this.show_date.getFullYear() === item) {
-                                class_name = 'item active';
+            <React.Fragment>
+                <div id={this.domId + '-panel'} className={classNames('year', this.getSizeClass())}>
+                    {list.map((item, i) => {
+                        const is_active = year
+                            ? item === this.show_date.getFullYear()
+                            : i === this.show_date.getMonth();
+                        let class_name = 'item';
+                        if (is_active) {
+                            class_name = 'item active';
+                        }
+                        return <div key={i} className={class_name} onClick={() => {
+                            if (year) {
+                                this.setYear(item);
+                            } else {
+                                this.setMonth(i);
                             }
-                            return <span key={i} className={class_name} onClick={() => {
-                                this.setYear(item, false);
-                            }}>{item}</span>
-                        })}
-                    </div>
-                </td>
-            </tr>
+                        }}>{item}</div>
+                    })}
+                </div>
+                <Scroll selector={'#' + this.domId + '-panel'} />
+            </React.Fragment>
         )
     }
 
     renderDays() {
-        const lang = i18n[this.props.lang as string];
-        return (
-            <React.Fragment>
-                <tr className='header'>
-                    {lang.week.map((item:any,i:number) => {
-                        return <th key={i}>{item}</th>
-                    })}
-                </tr>
-                {this.state.days.map((row,k) => {
-                    return <tr key={k}>
-                        {row.map((item:any,i:number) => {
-                            if (item.disabled) {
-                                return <td key={i} className='disable'>{item.value}</td>
-                            }
-                            let class_name = 'day';
-                            if (item.value === this.current_date.getDate() &&
-                                this.current_date.getFullYear() === this.show_date.getFullYear() &&
-                                this.current_date.getMonth() === this.show_date.getMonth()) {
-                                class_name = classNames(class_name, 'active');
-                            }
+        const cells: React.ReactNode[] = [];
+        this.state.days.forEach((row, k) => {
+            row.forEach((item: any, i: number) => {
+                const key = k + '-' + i;
+                if (!item) {
+                    cells.push(<div key={key} className='item empty' />);
+                    return;
+                }
+                if (item.disabled) {
+                    cells.push(<div key={key} className='item disable'>{item.value}</div>);
+                    return;
+                }
+                let class_name = 'item c-btn';
+                if (item.value === this.current_date.getDate() &&
+                    this.current_date.getFullYear() === this.show_date.getFullYear() &&
+                    this.current_date.getMonth() === this.show_date.getMonth()) {
+                    class_name = classNames(class_name, 'active');
+                }
 
-                            return <td key={i} className={class_name} onClick={() => {
-                                this.choseDay(this.show_date.getFullYear(), this.show_date.getMonth(), item.value);
-                            }}>{item.value}</td>
-                        })}
-                    </tr>
-                })}
-            </React.Fragment>
-        )
+                cells.push(<div key={key} className={class_name} onClick={() => {
+                    this.choseDay(this.show_date.getFullYear(), this.show_date.getMonth(), item.value);
+                }}>{item.value}</div>);
+            });
+        });
+        return cells;
     }
 
     render() {
@@ -662,38 +638,34 @@ export class Calendar extends React.PureComponent<Props, State, any> {
                 e.stopPropagation();
                 e.preventDefault();
             }}>
-                <table ref={c => this.mainTable = c as HTMLTableElement}>
-                    <thead>
-                        <tr className='top-header'>
-                            <th className='th-btn' onClick={() => this.privMonth()}><Icon icon='arrow-left' /></th>
-                            <th colSpan={5}>
-                                <div className='row no-gutters'>
-                                    <div className='col-6 text-center th-btn th-div' onClick={() => {
-                                        this.setState({
-                                            month: false,
-                                            year: true,
-                                            time: false,
-                                        });
-                                    }}>{this.show_date.getFullYear()}</div>
-                                    <div className='col-6 text-center th-btn th-div' onClick={() => {
-                                        this.setState({
-                                            month: true,
-                                            year: false,
-                                            time: false,
-                                        });
-                                    }}>
-                                        {lang['month'][this.show_date.getMonth()]}
-                                    </div>
-                                </div>
-                            </th>
-                            <th className='th-btn' onClick={() => this.nextMonth()}><Icon icon='arrow-right' /></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.renderContent()}
-                        {this.isTimeBar() ? this.renderTimeBar() : null}
-                    </tbody>
-                </table>
+                {this.state.time ? this.renderTimePanel() : this.renderPanel()}
+                <div className={classNames('calendar-v2', this.getSizeClass())}>
+                    <div className='head-btn btn-pr w-100 c-btn' onClick={() => this.privMonth()}><Icon icon='chevron-left' /></div>
+                    <div className="header d-flex">
+                        <div className='head-btn c-btn py-2 w-50' onClick={() => {
+                            this.setState({
+                                month: false,
+                                year: true,
+                                time: false,
+                            });
+                        }}>{this.show_date.getFullYear()}</div>
+                        <div className='head-btn c-btn py-2 w-50' onClick={() => {
+                            this.setState({
+                                month: true,
+                                year: false,
+                                time: false,
+                            });
+                        }}>
+                            {lang['month'][this.show_date.getMonth()]}
+                        </div>
+                    </div>
+                    <div className='head-btn btn-nx w-100 c-btn' onClick={() => this.nextMonth()}><Icon icon='chevron-right' /></div>
+                    {lang.week.map((item:any,i:number) => {
+                        return <div key={i} className='title'>{item}</div>
+                    })}
+                    {this.renderDays()}
+                    {this.isTimeBar() ? this.renderTimeBar() : null}
+                </div>
             </div>
         );
 
@@ -706,109 +678,88 @@ export class Calendar extends React.PureComponent<Props, State, any> {
     renderTimeBar() {
         const lang = i18n[this.props.lang as string];
         return (
-            <tr>
-                <td colSpan={7}>
-                    <div className='row no-gutters border-top'>
-                        <div className='col p-1 d-flex align-items-center justify-content-center'>
-                            <span>{this.state.hour}:{this.state.minute}:{this.state.second}</span>
-                        </div>
-                        <div className='col'>
-                            <Button onClick={this.selectTimeHandler} theme={Theme.link} size={this.props.sm ? 'sm' : undefined} block>
-                                {this.state.time ? lang['time']['confirm'] : lang['time']['time']}
-                            </Button>
-                        </div>
-                    </div>
-                </td>
-            </tr>
+            <div className='timer'>
+                <div className='time text-center'>
+                    {this.state.hour}:{this.state.minute}:{this.state.second}
+                </div>
+                <div className='time-btn c-btn text-center rounded' onClick={this.selectTimeHandler}>
+                    {this.state.time ? lang['time']['confirm'] : lang['time']['time']}
+                </div>
+            </div>
         );
     }
 
-    renderTime() {
+    renderTimePanel() {
         const lang = i18n[this.props.lang as string];
         return (
-            <tr>
-                <td colSpan={7}>
-                    <div className='row no-gutters bd-highlight'>
-                        <div className='col bd-highlight'>
-                            {lang['time']['hour']}
-                        </div>
-                        <div className='col bd-highlight'>
-                            {lang['time']['min']}
-                        </div>
-                        <div className='col bd-highlight'>
-                            {lang['time']['sec']}
-                        </div>
+            <div className={classNames('time-panel', this.getSizeClass())}>
+                <div className='time-head'>
+                    {lang['time']['hour']}
+                </div>
+                <div className='time-head'>
+                    {lang['time']['min']}
+                </div>
+                <div className='time-head'>
+                    {lang['time']['sec']}
+                </div>
+                <div className='time-col'>
+                    <div id={this.domId + '-h'} className='time-list'>
+                        {this.hours.map((item,i) => {
+                            if (item === this.state.hour) {
+                                return <div key={i} className='item active'>{item}</div>
+                            }
+                            return <div key={i} className='item' onClick={() => {
+                                this.setState({
+                                    hour: item
+                                },()=>{
+                                    this.show_date.setHours(parseInt(item))
+                                });
+                            }}>{item}</div>
+                        })}
                     </div>
-                    <div className='row no-gutters bd-highlight' style={{
-                        'height': '150px'
-                    }}>
-                        <div className='col h-100 bd-highlight border position-relative'>
-                            <div id={this.domId + '-h'} className='h-100'>
-                                {this.hours.map((item,i) => {
-                                    if (item === this.state.hour) {
-                                        return <div key={i} className='ck-calendar-time-item active'>{item}</div>
-                                    }
-                                    return <div key={i} className='ck-calendar-time-item' onClick={() => {
-                                        this.setState({
-                                            hour: item
-                                        },()=>{
-                                            this.show_date.setHours(parseInt(item))
-                                        });
-                                    }}>{item}</div>
-                                })}
-                            </div>
-                            <Scroll selector={'#' + this.domId + '-h'} />
-                        </div>
-                        <div className='col h-100 bd-highlight border position-relative'>
-                            <div id={this.domId + '-m'} className='h-100'>
-                                {this.minute.map((item,i) => {
-                                    if (item === this.state.minute) {
-                                        return <div key={i} className='ck-calendar-time-item active'>{item}</div>
-                                    }
-                                    return <div key={i} className='ck-calendar-time-item' onClick={() => {
-                                        this.setState({
-                                            minute: item
-                                        },()=>{
-                                            this.show_date.setMinutes(parseInt(item))
-                                        });
-                                    }}>{item}</div>
-                                })}
-                            </div>
-                            <Scroll selector={'#' + this.domId + '-m'} />
-                        </div>
-                        <div className='col h-100 bd-highlight border position-relative'>
-                            <div id={this.domId + '-s'} className='h-100'>
-                                {this.sec.map((item,i) => {
-                                    if (item === this.state.second) {
-                                        return <div key={i} className='ck-calendar-time-item active'>{item}</div>
-                                    }
-                                    return <div key={i} className='ck-calendar-time-item' onClick={() => {
-                                        this.setState({
-                                            second: item
-                                        },()=>{
-                                            this.show_date.setSeconds(parseInt(item))
-                                        });
-                                    }}>{item}</div>
-                                })}
-                            </div>
-                            <Scroll selector={'#' + this.domId + '-s'} />
-                        </div>
+                    <Scroll selector={'#' + this.domId + '-h'} />
+                </div>
+                <div className='time-col'>
+                    <div id={this.domId + '-m'} className='time-list'>
+                        {this.minute.map((item,i) => {
+                            if (item === this.state.minute) {
+                                return <div key={i} className='item active'>{item}</div>
+                            }
+                            return <div key={i} className='item' onClick={() => {
+                                this.setState({
+                                    minute: item
+                                },()=>{
+                                    this.show_date.setMinutes(parseInt(item))
+                                });
+                            }}>{item}</div>
+                        })}
                     </div>
-                </td>
-            </tr>
+                    <Scroll selector={'#' + this.domId + '-m'} />
+                </div>
+                <div className='time-col'>
+                    <div id={this.domId + '-s'} className='time-list'>
+                        {this.sec.map((item,i) => {
+                            if (item === this.state.second) {
+                                return <div key={i} className='item active'>{item}</div>
+                            }
+                            return <div key={i} className='item' onClick={() => {
+                                this.setState({
+                                    second: item
+                                },()=>{
+                                    this.show_date.setSeconds(parseInt(item))
+                                });
+                            }}>{item}</div>
+                        })}
+                    </div>
+                    <Scroll selector={'#' + this.domId + '-s'} />
+                </div>
+                <div className='time-foot'>
+                    <div className='time-btn c-btn text-center rounded' onClick={this.selectTimeHandler}>
+                        {lang['time']['confirm']}
+                    </div>
+                </div>
+            </div>
         );
-    }
-
-    renderContent() {
-        if (this.state.month) {
-            return this.renderMonth();
-        } else if (this.state.year) {
-            return this.renderYear();
-        } else if (this.state.time) {
-            return this.renderTime();
-        } else {
-            return this.renderDays();
-        }
     }
 }
 

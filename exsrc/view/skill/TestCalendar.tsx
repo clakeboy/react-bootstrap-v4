@@ -1,5 +1,4 @@
 import React, { useEffect, useRef,useState } from 'react'
-import '../../css/calendar.less';
 import { Button, Container,Card, Calendar, Icon, Scroll, Input,CKModal } from '../../../src';
 
 interface Props{

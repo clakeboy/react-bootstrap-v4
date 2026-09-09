@@ -558,6 +558,7 @@ export class Input extends React.Component<Props, State> {
           none
           shadow
           absolute
+          size={this.props.size}
           sm={this.props.size === 'xs'}
           triangular="up"
         />

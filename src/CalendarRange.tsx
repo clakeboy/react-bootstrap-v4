@@ -183,8 +183,6 @@ export class CalendarRange extends React.PureComponent<Props,State> {
     show = () => {
         this.calendar_panel.classList.remove('d-none')
         this.calendar_panel.style.top = this.mainDom.offsetHeight + 'px'
-        this.minCalendar.refreshWidth();
-        this.maxCalendar.refreshWidth();
     }
 
     hide = () => {

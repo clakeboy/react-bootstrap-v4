@@ -1,67 +1,8 @@
 .ck-calendar {
   position: relative;
-  color: #555555;
   display: inline-block;
   z-index: 1160;
   background-color: white;
-  table {
-    max-width: 100%;
-    background-color: transparent;
-    empty-cells: show;
-    border-collapse: collapse;
-    border-spacing: 0;
-    table-layout: fixed;
-  }
-
-  th,td {
-    text-align: center;
-    display: table-cell;
-    vertical-align: inherit;
-    padding: .2rem .3rem;
-  }
-
-  .top-header {
-    background-color: #17a2b8!important;
-    color: white;
-    .th-btn {
-      cursor: pointer;
-    }
-    .th-div {
-      height:100%;
-    }
-    .th-btn:hover {
-      background-color: #1d86a2;
-    }
-    .th-btn:active {
-      background-color: #2198b8;
-    }
-  }
-
-  .header {
-    color: #0c80ba;
-    border-top: 1px solid #F0F0F0;
-  }
-
-  .day {
-    cursor: pointer;
-  }
-
-  .day:hover {
-    background-color: #F0F0F0;
-  }
-
-  .active {
-    background-color: #17a2b8;
-    color: white;
-    cursor: pointer;
-  }
-  .active:hover {
-    background-color: #17a2b8;
-  }
-
-  .disable {
-    color: #dddddd!important;
-  }
 
   &:before,&:after {
     position:absolute;
@@ -71,18 +12,10 @@
   }
 }
 
-.ck-calendar-sm {
-  font-size: .75rem;
-}
-
-.ck-calendar-lg {
-  font-size: 1.25rem;
-} 
-
 .ck-calendar-absolute {
   position: absolute!important;
 }
-.ck-calendar-none {
+.ck-calendar.ck-calendar-none {
   display: none;
 }
 
@@ -171,56 +104,190 @@
   left:10px;
 }
 
-.ck-calendar-bottom-sm {
-  &:before {
-    border-width: 6px!important;
-    bottom: -12px !important;
-    left: 4px !important;
-  }
-  &:after {
-    border-width: 4px!important;
-    bottom: -8px !important;
-    left: 6px !important;
-  }
-}
-
 .ck-shadow {
   box-shadow: 0 .1rem 1rem rgba(0,0,0,.1)!important;
 }
 
-.ck-calendar-list {
-  white-space: break-spaces;
-  background-color: white;
-  border: 1px solid #dee2e6;
-  padding: 0.3rem;
-  text-align: center;
-  .item {
+.calendar-v2-main {
+    position: relative;
     display: inline-block;
-    cursor: pointer;
-    padding: .2rem .3rem;
-    width: 33%;
-    &:hover {
-      background-color: #F0F0F0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    user-select: none;
+    padding: 5px;
+    .lg {
+        font-size: 1.2rem;
+        &.year,
+        &.time-panel {
+            top: 58px;
+        }
     }
-    &:active {
-      background-color: #dedede;
+    .sm {
+        font-size: .8rem;
+        &.year,
+        &.time-panel {
+            top: 45px;
+        }
+    }
+    .year {
+        display: inline-grid;
+        grid-template-columns: repeat(3,1fr);
+        align-content: start;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        top: 50px;
+        background-color: white;
+        overflow-y: auto;
+        text-align: center;
+        .item {
+            cursor: pointer;
+            padding: .3rem 0;
+            align-content: center;
+            &:hover {
+                background-color: var(--bs-primary);
+                color: var(--bs-white);
+            }
+        }
+        .active {
+            background-color: var(--bs-primary);
+            color: var(--bs-white);
+        }
     }
 
-    .active {
-      background-color: #17a2b8;
-      color: white;
+    .time-panel {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        top: 50px;
+        display: inline-grid;
+        grid-template-columns: repeat(3,1fr);
+        grid-template-rows: auto 1fr auto;
+        background-color: white;
+        text-align: center;
+        .time-head {
+            padding: .3rem 0;
+            border-bottom: 1px solid #ccc;
+            color: #666;
+            font-weight: bold;
+        }
+        .time-foot {
+            grid-column: 1/4;
+            border-top: 1px solid #ccc;
+            padding: .5rem .3rem;
+            .time-btn {
+                border: 1px solid #ccc;
+            }
+        }
+        .time-col {
+            position: relative;
+            overflow: hidden;
+            border-left: 1px solid #ccc;
+            &:first-child {
+                border-left: none;
+            }
+            .time-list {
+                height: 100%;
+                overflow-y: auto;
+            }
+            .item {
+                cursor: pointer;
+                padding: .3rem 0;
+                white-space: nowrap;
+                &:hover {
+                    background-color: var(--bs-primary);
+                    color: var(--bs-white);
+                }
+            }
+            .active {
+                background-color: var(--bs-primary);
+                color: var(--bs-white);
+            }
+        }
     }
-    .active:hover {
-      background-color: #17a2b8!important;
+
+    .timer {
+        grid-column: 1/8;
+        display: inline-grid;
+        grid-template-columns: repeat(5,1fr);
+        width: 100%;
+        align-items: center;
+        border-top: 1px solid #ccc;
+        padding-top: .5rem;
+        padding-bottom: .25rem;
+        .time {
+            grid-column: 1/4;
+        }
+        .time-btn {
+            grid-column: 4/6;
+            border: 1px solid #ccc;
+        }
     }
-  }
+
+    .c-btn {
+        cursor: pointer;
+        &:hover {
+            background-color: var(--bs-primary);
+            color: var(--bs-white);
+        }
+    }
 }
 
-.ck-calendar-time-item {
-  padding: 3px 1rem;
-  cursor: pointer;
-  white-space: nowrap;
-  &:hover {
-    background-color: #F0F0F0;
-  }
+.calendar-v2 {
+    display: inline-grid;
+    // 宽度随字号缩放，与语言无关；sm/lg 只改 font-size，整体等比变化
+    width: 12.5em;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    justify-items: center;
+    overflow: hidden;
+    color: #333;
+    align-content: center;
+    .item {
+        width: 100%;
+        height: 100%;
+        padding: .2rem .3rem;
+        text-align: center;
+        white-space: nowrap;
+    }
+    .title {
+        color: #666;
+        width: 100%;
+        height: 100%;
+        padding: .2rem .3rem;
+        text-align: center;
+        user-select: none;
+        font-weight: bold;
+        white-space: nowrap;
+    }
+    .header {
+        grid-column: 2 / 7;
+        width: 100%;
+        text-align: center;
+        border-bottom: 1px solid #ccc;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+    .active {
+        background-color: var(--bs-primary);
+        color: var(--bs-white);
+        border-radius: 50%;
+    }
+    .disable {
+        color: #dddddd;
+        pointer-events: none;
+    }
+    .head-btn {
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .btn-pr {
+        grid-column: 1;
+    }
+    .btn-nx {
+        grid-column: 7/8;
+    }
 }

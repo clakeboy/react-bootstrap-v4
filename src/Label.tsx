@@ -9,6 +9,8 @@ interface Props extends ComponentProps {
     backColor?: string
     sm       ?: boolean
     align?: string
+    onClick?: (text:string) => void
+    onDoubleClick?: (text:string) => void
 }
 
 interface State {
@@ -80,9 +82,17 @@ export class Label extends React.PureComponent<Props,State> {
         return base;
     }
 
+    clickHandler = () => {
+        this.props.onClick?.(this.state.text);
+    }
+
+    doubleClickHandler = () => {
+        this.props.onDoubleClick?.(this.state.text);
+    }
+
     render() {
         return (
-            <div className={this.getClasses()} style={this.getStyles()}>
+            <div className={this.getClasses()} style={this.getStyles()} onClick={this.clickHandler} onDoubleClick={this.doubleClickHandler}>
                 {this.state.text}
             </div>
         );

@@ -1,6 +1,5 @@
 import React, { useEffect, useRef,useState } from 'react'
-import '../../css/calendar.less';
-import { Button, Container,Card, Calendar, Icon, Scroll, Input,CKModal } from '../../../src';
+import { Button, Container,Card, Calendar, Icon, Scroll, Input,CKModal, Label } from '../../../src';
 import TestCalendar from './TestCalendar'
 const yearList:any[] = []
 const monthList:any[] = [
@@ -39,6 +38,11 @@ export default function TestMainCalendar(props:any) {
             props.history.go(-1)
         }}>返回</Button>
         <Card header="新版 Calendar 样式">
+            <Label text={date} onClick={(text)=>{
+                // modal.current?.alert("单点了"+text)
+            }} onDoubleClick={(text)=>{
+                modal.current?.alert("双点了"+text)
+            }}/>
         <div className="row">
             <div className="col">
                 <div className='calendar-v2-main'>

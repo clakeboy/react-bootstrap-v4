@@ -94,6 +94,8 @@ export class Table extends React.Component<Props, State> {
     width: number
     beforeHoldWidth: number
     afterHoldWidth: number
+    //hold 层当前是否处于显示状态（需要横向滚动时才显示）
+    holdShown = false
     domId: string
     mainDom: HTMLDivElement
     rootDom: HTMLDivElement
@@ -244,6 +246,8 @@ export class Table extends React.Component<Props, State> {
     }
 
     syncRowsHeight() {
+        //hold 层隐藏时（display:none）测得的行高为 0，跳过同步，避免恢复显示后与主表行错位
+        if (!this.needHold()) return;
         // 同步多表头高度
         if (this.beforeBody) {
             this.setRowsHeight(this.beforeBody?.tHead?.rows, this.tableBody?.tHead?.rows);
@@ -294,16 +298,42 @@ export class Table extends React.Component<Props, State> {
         }
     }
 
+    /**
+     * 是否需要显示 hold 层
+     * 只有当表格实际渲染宽度大于容器宽度（存在横向溢出）时，固定列才有意义；
+     * 容器宽度 >= 各列宽之和时，所有列已完整可见，hold 层不再显示。
+     */
+    needHold() {
+        if (!this.mainDom || !this.tableBody) {
+            return false;
+        }
+        const width = this.mainDom.clientWidth;
+        //容器未布局（在 display:none 的 tab/modal 中）时无法判定，按原逻辑保持显示
+        if (width === 0 || this.tableBody.clientWidth === 0) {
+            return true;
+        }
+        return this.tableBody.clientWidth > width;
+    }
+
     holdShow = () => {
-        if (this.mainDom.clientWidth >= this.tableBody.clientWidth) {
-            if (this.afterBody && this.afterBody.parentNode) {
-                (this.afterBody.parentNode as HTMLElement).style.right = (this.mainDom.clientWidth - this.tableBody.clientWidth) + 'px';
-            }
-        } else {
-            if (this.afterBody && this.afterBody.parentNode) {
-                (this.afterBody.parentNode as HTMLElement).style.right = '0'
+        if (!this.mainDom || !this.tableBody) return;
+        const need = this.needHold();
+
+        if (this.beforeBody && this.beforeBody.parentNode) {
+            (this.beforeBody.parentNode as HTMLElement).classList.toggle('d-none', !need);
+        }
+        if (this.afterBody && this.afterBody.parentNode) {
+            const parent = this.afterBody.parentNode as HTMLElement;
+            parent.classList.toggle('d-none', !need);
+            if (need) {
+                parent.style.right = '0';
+                if (!this.holdShown) {
+                    // 由隐藏恢复显示：隐藏期间测得的行高为 0，需要重新同步
+                    this.syncRowsHeight();
+                }
             }
         }
+        this.holdShown = need;
         this.holdShadow();
     };
 
@@ -482,6 +512,7 @@ export class Table extends React.Component<Props, State> {
                                 }
                             });
                             this.syncRowsHeight()
+                            this.holdShow()
                             this.rootDom.classList.remove('user-select-none')
                             if (this.props.id) {
                                 localStorage.setItem('table-cache-' + this.props.id, JSON.stringify(this.dragCache))
@@ -506,6 +537,7 @@ export class Table extends React.Component<Props, State> {
             }
         })
         this.syncRowsHeight();
+        this.holdShow();
         // this.setState({data:[...this.state.data]})
     }
 
@@ -771,15 +803,17 @@ export class Table extends React.Component<Props, State> {
     }
 
     scrollHandler = (e: Event) => {
+        const scrollTop = (e.currentTarget as HTMLElement).scrollTop;
         if (this.beforeBody) {
-            const dom = document.querySelector('.ck-table-hold-before') as HTMLElement;
-            dom.scrollTop = (e.currentTarget as HTMLElement).scrollTop
+            //限定在本 table 内查找，避免同页多个 table 时同步到别的 hold 层
+            const dom = this.rootDom?.querySelector('.ck-table-hold-before');
+            if (dom) dom.scrollTop = scrollTop;
             // let head = this.beforeBody.querySelector('thead')
             // if (head) head.style.transform = `translate3d(0,${e.currentTarget.scrollTop}px,10px)`;
         }
         if (this.afterBody) {
-            const dom = document.querySelector('.ck-table-hold-after') as HTMLElement
-            dom.scrollTop = (e.currentTarget as HTMLElement).scrollTop
+            const dom = this.rootDom?.querySelector('.ck-table-hold-after');
+            if (dom) dom.scrollTop = scrollTop;
             // let head = this.afterBody.querySelector('thead')
             // if (head) head.style.transform = `translate3d(0,${e.currentTarget.scrollTop}px,10px)`;
         }
